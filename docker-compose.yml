@@ -21,9 +21,9 @@ services:
         UME_APIC_USE_CATALOG      : "true"       # Enable or disable connection to Api Catalog
         UME_APIC_PUBLICKEY        : "/opt/axway/configs/catalog-public-key.pem"
         UME_APIC_PRIVATEKEY       : "/opt/axway/configs/catalog-private-key.pem"
-        UME_APIC_HOST             : "https://apicentral.test.apicentral-k8s.axwaytest.net"
+        UME_APIC_HOST             : "https://apicentral.axway.com"
         UME_APIC_CLIENTID         : "DOSA_XXXXXXXXXXXXXXXXXXXX"           # This must be filled in after you log into api catalog and register the keys
-        UME_APIC_TOKENURL         : "https://login-preprod.axway.com/auth/realms/Broker/protocol/openid-connect/token"
+        UME_APIC_TOKENURL         : "https://login.axway.com/auth/realms/Broker/protocol/openid-connect/token"
 
         ### Mongo ###
         MONGODB_HOST              : "fcmongo"
