@@ -136,14 +136,14 @@ SECURITY_CG_UI_FILE          |  \<string>   |  File name and path to the UI cert
 IDP_CONFIGURATION                   |  \<string>   |  Flow Central's internal configurations type.
 BUSINESS_CA_CERTIF_ALIAS            |  \<string>   |  Custom business certificate's internal alias.
 BUSINESS_CA_PASSWORD                |  \<string>   |  Custom business certificate's password.
-BUSINESS_USE_CUSTOM                 |  \<string>   |  Flag which tells Flow Central to use a custom certificate file (\*.jks).
-BUSINESS_CA_JKS                     |  \<string>   |  Path towards the BUSINESS certificate file (java keystore).
+BUSINESS_USE_CUSTOM                 |  \<string>   |  Flag which tells Flow Central to use a custom certificate file 
+BUSINESS_CA                         |  \<string>   |  Path towards the BUSINESS certificate file.
 GOVERNANCE_CA_CERTIF_ALIAS          |  \<string>   |  Custom governance certificate internal alias.
 GOVERNANCE_CA_PASSWORD              |  \<string>   |  Custom governance certificate password.
-GOVERNANCE_CA                       |  \<string>   |  Path towards the GOVERNANCE certificate file (java keystore).
+GOVERNANCE_CA                       |  \<string>   |  Path towards the GOVERNANCE certificate file.
 SECURITY_CG_UI_ALIAS                |  \<string>   |  UI's certificate alias.
 SECURITY_CG_UI_PASSWORD             |  \<string>   |  UI's s certificate password.
-SECURITY_CG_UI_JKS                  |  \<string>   |  Path towards the UI certificate file (java keystore).
+SECURITY_CG_UI                      |  \<string>   |  Path towards the UI certificate file.
 CERTIFICATE_EXPIRATION_NOTIFICATION |  \<number>   |  Certificate expiration notification
 GENERAL_CUSTOM_LOCATION_ENABLED     |  \<string>   |  Flag which indicates the use of a custom log location.
 GENERAL_CUSTOM_LOCATION_PATH        |  \<string>   |  Path towards the Flow Central's log directory.
