@@ -1,0 +1,638 @@
+LICENSE, SUPPORT, AND SERVICES AGREEMENT 
+General Conditions
+
+This License Support and Services Agreement is an agreement between the 
+entity receiving the accompanying product(s), documentation or services 
+("Customer") and Axway Inc. (or, based on where Customer acquired the 
+licenses, one of its affiliates) ("Axway"). This Agreement, including 
+any and all Order Forms and SOWs (as defined below) (collectively, this 
+"Agreement"), governs the products(s), documentation and services that 
+accompany this Agreement.  
+
+Click-through Agreement. BY INSTALLING, COPYING OR USING THE PRODUCT(S) OR 
+DOCUMENTATION ACCOMPANYING THIS AGREEMENT AND/OR CLICKING ON THE "I 
+ACCEPT" BUTTON OF ANY ELECTRONIC VERSION OF THIS AGREEMENT, YOU (AS THE 
+INDIVIDUAL SIGNING OR CLICKING ON THIS AGREEMENT) AS THE CUSTOMER 
+REPRESENT AND WARRANT THAT YOU ARE DULY AUTHORIZED ON BEHALF OF CUSTOMER 
+TO ENTER INTO THIS AGREEMENT ON BEHALF OF CUSTOMER, AND CUSTOMER CONSENTS 
+TO AND AGREES TO BE BOUND BY THE TERMS AND CONDITIONS OF THIS AGREEMENT.  
+IF CUSTOMER DOES NOT AGREE TO ALL OF THE TERMS AND CONDITIONS OF THIS 
+AGREEMENT, CLICK THE "I DO NOT ACCEPT" BUTTON. IF THIS IS AN ELECTRONIC 
+VERSION OF THIS AGREEMENT, DO NOT INSTALL, COPY OR USE THE PRODUCT(S) OR 
+DOCUMENTATION, AND IMMEDIATELY RETURN THE PRODUCT(S) AND DOCUMENTATION TO 
+AXWAY.
+
+ARTICLE 1 - DEFINITIONS AND INTERPRETATION 1.1. In this Agreement and any 
+Schedules, Order Forms or Statements of Work ("SOWs"), the following terms 
+are defined as follows, and additional definitions applicable to the Order 
+Forms are included in Attachment A: 
+"Additional Services" means the Services described in Article 7 as 
+contained in any Order Forms or SOWs; 
+"Agreement" means these General Conditions and the Software/Services Order 
+Form (or Specific Conditions) and Schedules (together, the "Order Form"); 
+"Business Partner" or "Trading Partner" means any external computer 
+interoperating with a Licensed Component through one or more protocols, one 
+or more networks, or one or more adapters; 
+"Defect" means a reproducible error or defect in the Product that prevents 
+it from operating materially in accordance with its Documentation; 
+"Delivery" means delivery of license keys which unlock the Licensed 
+Component, enabling electronic delivery of the Licensed Component for 
+download, or shipment of one or more CD ROMs or DVDs which contain the 
+Licensed Component, or shipment of the Hardware Product; 
+"Documentation" means the documents delivered with 
+the Product which contains Axway's published specifications and user guide 
+of the Product;
+"Effective Date" for an Order Form means the date when Customer executes an 
+Order Form unless specified otherwise in an Order Form; 
+"Hardware Product" means any hardware appliance or other item of equipment 
+that is delivered to Customer; 
+"Licensed Component" means the computer program described in the Order 
+Form, as well as: 
+(i) the Documentation, in either machine-readable or printed form; and 
+(ii) all entire or partial authorized copies of such items made by 
+Customer; and 
+(iii) any software release provided by Axway to Customer (provided that 
+Customer is still a subscriber to Support Services); 
+"Operating Environment" means any operating system based environment 
+hosting the running of a Licensed Component, defined by its resources: 
+Computer, its number of CPUs, its number of Cores per CPUs, its number of 
+Partitions, the type of its Partitions and the number of CPUs per 
+Partitions; 
+"Parties" means Axway and the party identified as Customer in the Order 
+Form; 
+"Product" means Hardware Product(s) and Licensed Component(s); 
+"Site" means the physical location of the Operating Environment, such 
+address as is provided in the Order Form; "Support Services" means annual 
+Product support provided under Axway's policies for the level of Support 
+Services ordered in the Order Form; "Third Party Software" means any third 
+party program or software included as an integral part of the Product and 
+delivered with the Product; such program or software is solely for use as 
+embedded with the Product; 
+"Use" means the installation, loading, utilization, storage or display of 
+the Product by Customer within the constraints in the Order Form; 
+1.2. Headings are used in this Agreement for ease of reference only and 
+shall not affect interpretation. References in this Agreement to Articles 
+or Sections are references to the Articles or Sections of the General 
+Conditions unless inconsistent with the context. 
+1.3. The words "include", "includes", "including" and "included" will be 
+construed without limitation unless inconsistent with the context.
+
+ARTICLE 2 - CONTRACT DOCUMENTS 
+2.1. This Agreement consists of these General Conditions, and any Order 
+Form(s) or Specific Conditions, which prevail over these General Conditions 
+to the extent of any conflict. 
+2.2. This Agreement forms the entire agreement between the Parties relating 
+to this subject matter, replaces and supersedes any previous proposals, 
+correspondence and understandings, whether written or oral; including any 
+Customer terms and conditions, which shall not apply. 
+2.3. This Agreement may not be altered, modified, amended, changed, 
+rescinded or discharged in whole or in part, except by written agreement 
+signed by both Customer and Axway.  
+2.4. Nothing contained in any document or purchase order submitted by 
+Customer shall in any way modify or add to the terms of this Agreement.
+
+ARTICLE 3 - TERM 
+3.1. This Agreement shall remain in effect unless terminated in accordance 
+with Article 17. The right of Use is granted from the Effective Date, or if 
+none stated, upon Delivery by Axway. 
+3.2. If purchased by Customer, Support Services shall commence on the 
+Effective Date and shall continue for an initial period of one year 
+("Initial Support Term") except as otherwise set forth in the Order Form. 
+Upon expiration of the Initial Support Term, the Support Services shall be 
+automatically renewed for one-year periods, with payments required prior to 
+the start of the new support term, unless and until terminated in 
+accordance with Article 17. 
+3.3 The terms of this Section 3.3 apply if Customer is obtaining an 
+evaluation license.  Subject to the terms of this Agreement, Axway grants 
+to Customer (i) a non-exclusive, nontransferable license, without right of 
+sublicense, to install and Use the evaluation version of the Licensed 
+Component, in object code form and/or (ii) the right to Use the Hardware 
+Product for evaluation and trial purposes only.  The term of this license 
+begins upon delivery or download and ends 30 days thereafter, or extends 
+for such longer period as Axway shall have agreed to in writing (the 
+"Evaluation Period").  When the Evaluation Period expires Customer must 
+stop Using the Licensed Component, and return any Product to Axway. Axway 
+disclaims all warranties during this Evaluation Period and Customer waives 
+all claims against Axway related to this Evaluation Period.
+
+ARTICLE 4 - USE OF THE PRODUCT 
+4.1. As of the Effective Date of this Agreement, Axway grants to Customer, 
+subject to the terms and conditions of this Agreement, a non-exclusive, non-
+assignable and non-transferable right to Use the Licensed Component for 
+Customer's own internal business purposes only. Any delay in any payment of 
+the fees related to this Agreement as set forth in Article 8 thirty (30) 
+days beyond the payment date will automatically suspend the right to Use 
+the Licensed Component for Customer, upon written notice by Axway. The 
+Product, including portions and information or materials thereof, may not 
+be used for any purpose that would be a violation of this Agreement. All 
+rights not addressed herein are specifically reserved by Axway. Customer 
+shall not Use the Product to provide services to third parties, including 
+ASP, facilities management, outsourcing, unless expressly provided for in 
+an Order Form. 
+4.2. If Customer has purchased a license for Products which are used by 
+Customer to distribute to any third party Trading Partner that has a 
+business need to securely transfer files to or from Customer, then the 
+sublicense such Trading Partner has conveys the right to Use the Product 
+for the purpose of transferring files to and from Customer in the 
+furtherance of Customer's internal business purposes only. 
+4.3. If Customer wishes to permanently transfer the Licensed Component to a 
+new Operating Environment, the Order Form associated with this Agreement 
+will have to be updated accordingly. Once the transfer has been made to the 
+new authorized Operating Environment, Customer shall erase the Licensed 
+Component from the former Operating Environment, within the time frame 
+allowed in the Order Form or, if none stated, then sixty days. 
+4.4. Customer has the right to make one back-up copy of the Licensed 
+Component for archival purpose only. Any other copies, reproductions and 
+summaries of the Licensed Component or Documentation are prohibited. 
+
+ARTICLE 5 - DELIVERY AND WARRANTY 
+5.1. Axway shall provide Customer with the Licensed Component in object 
+code form and with the Documentation.  Full title to the Hardware Product 
+passes to Customer upon Delivery.  Products are delivered Free On Board 
+(FOB) shipping point with freight and insurance prepaid.  
+5.2. The Use of certain Licensed Components will require a key. The key 
+will be generated by Axway based on computer- dependent Customer 
+information. Customer agrees to provide the necessary information as 
+required to generate and activate the key. 
+5.3. Axway represents and warrants that, for a period of 90 days from 
+Delivery ("Warranty Period"), the Product will conform to and perform in 
+accordance with the Documentation.  Unless certified by Axway, Axway does 
+not warrant that the Product will operate in combination with other 
+software selected by Customer, or that the Product will operate 
+uninterrupted or free of non- material errors.  Axway will use commercially 
+reasonable efforts to modify, repair or replace the Product, at no 
+additional charge, to correct any Defect, provided that Customer reports 
+the Defect to Axway during the Warranty Period.  Axway further warrants 
+that the Product as provided by Axway will not contain any malicious code, 
+program, or internal component (e.g., computer worm) and will have been 
+screened using customary procedures in the industry for viruses. THE 
+REMEDIES DESCRIBED IN THIS ARTICLE 5 SHALL BE THE SOLE AND EXCLUSIVE 
+REMEDIES FOR DEFECTS CONTAINED IN AND FOR THE PERFORMANCE OF THE PRODUCT. 
+5.4. The limited warranties in Section 5.3 are conditioned upon Customer's 
+Use of the Product in accordance with the terms of the Documentation, and 
+shall not apply to the extent that an error occurs because of and would not 
+have occurred but for:  (i) modifications made to the Product by a party 
+other than Axway; (ii) Customer's failure to implement enhancements 
+provided by Axway; or (iii) Use of the Product in connection with any 
+operating system, computer equipment or device which does not meet the 
+minimum requirements set forth in the Documentation. 5.5. EXCEPT FOR THE 
+EXPRESS WARRANTIES SET FORTH IN THIS ARTICLE 5,TO THE EXTENT PERMITTED BY 
+APPLICABLE LAW, AXWAY DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, 
+TITLE AND FITNESS FOR A PARTICULAR USE OR PURPOSE.
+
+ARTICLE 6 - SUPPORT SERVICES 
+6.1. Upon payment of the applicable fees, Axway will provide technical 
+Support Services, at the level specified on the Order Form or other 
+applicable ordering documentation. 
+6.2. Axway is under no obligation to provide Support Services (i) if there 
+has been a modification or attempted modification of the Product (other 
+than modifications made by Axway and delivered as part of the Product) or 
+the Product has been improperly installed by Customer or operated or used 
+other than in accordance with this Agreement and the Documentation; or (ii) 
+if Customer has refused, delayed or otherwise failed to implement a release 
+or other modification that Axway has provided or recommended.
+
+ARTICLE 7 - ADDITIONAL SERVICES 
+7.1. In accordance with its expertise and availability, Axway will, if 
+ordered by Customer, provide services that may include installation, 
+implementation, technical and training assistance services for the Product, 
+or subscription-based or hosting services (each considered individually, 
+"Additional Services") to Customer at the rates set forth in the Order Form 
+or, if no rates are set forth, the rates in effect at the time that such 
+Services are provided. 
+7.2. Except for Retained Works (defined below), all right and title to 
+professional services deliverables shall belong to Customer.  Axway will be 
+the owner of any Retained Works, which are defined to include:  (i) any pre-
+existing materials, including any of Axway's preexisting software code, 
+proprietary software tools, or training materials incorporated into the 
+deliverables; (ii) any customized modifications to the Licensed Component 
+unless an applicable work order, SOW or other such similar document 
+expressly provides that such modifications are assigned to Customer; and 
+(iii) any third party programs which are integrated with or incorporated 
+into the deliverables.  For any Retained Works incorporated into a 
+deliverable, Axway grants Customer a nonexclusive, worldwide, royalty-free 
+license to use such Retained Works to the same extent that Customer is 
+licensed to use any related Licensed Component.  
+
+ARTICLE 8 - PAYMENT TERMS AND CONDITIONS 
+8.1. The fees for the Products and Support Services are listed in the Order 
+Form. In addition to the fees listed in the Order Form, Customer shall be 
+responsible for all personal property, sales, use, value-added, withholding 
+and similar taxes (other than taxes on Axway's net income) arising from the 
+transactions described in this Agreement.  Where Customer's Use of the 
+Software or receipt of Services is exempt from sales or other taxes, 
+Customer shall provide Axway with the appropriate exemption certificate. 
+All amounts payable under this Agreement shall be paid net 30 days from the 
+invoice date, unless stated otherwise in an Order Form. 
+8.2. The Product fees are fixed and not subject to revision.  It shall be 
+invoiced in full on the Effective Date, unless stated otherwise in an Order 
+Form. 
+8.3. Support Services fees shall be invoiced on the Effective Date and are 
+due net 30 unless otherwise stated in an Order Form. 
+8.4. Fees for professional services shall be invoiced at the end of the 
+month in which they are provided.  Travel and accommodation expenses 
+incurred to provide training, technical assistance, support and services 
+shall be invoiced to Customer based on the actual and reasonable costs 
+incurred by Axway.  Supporting documents will be provided upon reasonable 
+request. 
+8.5. Fees or other amounts remaining unpaid for thirty (30) days following 
+the date of invoice shall be considered overdue and shall remain payable by 
+Customer together with interest for late payment from the date payable at 
+the rate of 1% per month. In addition to the above provision for late 
+payment, Axway reserves the right to suspend performance of any Additional 
+Services (which includes hosting services, as applicable). 
+
+ARTICLE 9 - CUSTOMER RESPONSIBILITIES 
+9.1. Unless the hosted option is selected, Customer shall be responsible 
+for operating the Product and shall: 
+ -	ensure that the hardware, base program, network and operating system 
+ configuration are suitable, 
+ -	develop the operating measures, control procedures and security 
+ measures required for data backup and replacement in the event of 
+ interruption in Product operation, 
+9.2. Customer is also responsible for: 
+  -	protecting its own recorded data, and 
+  - the results obtained and any direct or indirect consequences thereof, 
+  - make qualified personnel available to resolve any problems, and 
+  - appoint one of its employees to serve as the primary point of contact 
+  with Axway for any technical issues. 
+9.3. Customer shall take all measures required to protect Axway's 
+intellectual property rights in the Product and Documentation, including in 
+particular retaining any reference to Axway's copyright notice(s) and any 
+other legend on any authorized copy in accordance with Axway's 
+instructions. In the event any third party attempts to attach or seize the 
+Product or challenge Axway's intellectual property rights in any other 
+manner, Customer must immediately notify Axway, contest the attachment and 
+take all steps required to make the intellectual property rights in 
+question known, subject always to Article 10 below.
+
+ARTICLE 10 - INTELLECTUAL PROPERTY 
+10.1. Only a right to Use the Licensed Component is granted to Customer; 
+any extension of the right granted shall be subject to Axway's prior 
+written consent.  The parties acknowledge and agree that Customer has only 
+Use rights with respect to the Licensed Component, but Customer owns the 
+Hardware Product. Axway retains title in and to the Licensed Component, 
+including any portion thereof and information, materials or copy made from 
+it or any part of it and copyright in the Licensed Component. 
+10.2. If Customer wishes to make the Product interoperable with other 
+programs, other than as envisaged in the Documentation, the parties will 
+work together to create an interoperability plan that does not violate this 
+Article. 
+10.3. Except as otherwise provided for in this Agreement or permitted under 
+applicable law, Customer will not, directly or through any person or 
+entity, in any form or manner (i) copy, sublicense, lease, assign, 
+distribute, reproduce, incorporate, use or allow access to the Product or 
+modify, prepare derivative works from the Licensed Component except as 
+explicitly permitted under this Agreement or (ii) decrypt, extract, 
+decompile or otherwise reverse engineer the Licensed Component, or 
+otherwise disassemble, derive or attempt to derive the source code of, or 
+any processes, methods, specifications, protocols, algorithms, interfaces, 
+data structures, or other information embodied or used in, the Product. The 
+restrictions of this Article 10 shall survive the termination of the 
+Agreement. If Customer has purchased licenses for a Trading Partner, 
+Customer shall ensure each Trading Partner is bound to provisions at least 
+as protective of Axway as Articles 4, 10, 12, 14 and 15. Customer shall 
+promptly notify Axway of any unauthorized use, disclosure, reproduction, or 
+distribution of any Product, which comes to Customer's attention, or which 
+Customer reasonably suspects.  Customer may Use any Third Party Software 
+products or modules supplied by Axway solely with the Licensed 
+Component. 
+10.4. If, in the performance of any Additional Services hereunder, Axway is 
+required to use any Customer supplied programs, Customer hereby warrants 
+that it has obtained any necessary authorizations and licenses required to 
+allow Axway to access and use such program as necessary for performance of 
+the Services. Customer shall provide any associated supporting 
+documentation to Axway promptly upon request.
+
+ARTICLE 11 - INDEMNIFICATION 
+11.1. Axway agrees to defend, settle and indemnify Customer from and 
+against any amounts payable under judgment, court order or settlement 
+brought by any unaffiliated third party against Customer to the extent that 
+such action results from actual or alleged infringement by any Product of 
+any third party copyright, trade secret or patent existing or issued as of 
+the date that Axway initially Delivered the applicable version of such 
+Product to Customer. In connection with any allegation of infringement of 
+any third party rights, Customer shall (and it shall be a condition of 
+reliance upon the indemnity for Customer to): 
+  - immediately notify Axway in writing of the allegation;  and 
+  -	allow Axway sole control of the defense and any related settlement 
+  negotiations; and 
+  -	cooperate in good faith in the said defense and comply with all of 
+  Axway's reasonable requests (at Axway's expense) in defending or settling 
+  the claim. 
+11.2. Should Customer's use of the Product be determined to have infringed 
+any third party rights, or if in Axway's judgment, such use is likely to be 
+infringing, Axway shall endeavor at its option do one of the following, at 
+its own expense: 
+  -	procure for Customer the right to continue owning or using the Product, 
+  as applicable, 
+  -	replace or modify the Product to make its Use non-infringing while 
+  yielding substantially equivalent functionality. 
+If and only if the previous options are not, in Axway's reasonable 
+judgment, commercially reasonable, then Axway may terminate this Agreement 
+as it applies to the specific Product and the corresponding rights of Use. 
+Customer agrees to destroy or return the affected Product to Axway on its 
+written request and Axway will then return the Product license fees to 
+Customer as prorated over a five year term commencing on the date of 
+Delivery of the applicable Product by Axway. The obligations of Axway in 
+this Article 11 will not apply to the extent that the infringement or claim 
+thereof is based on (i) Use of the Product other than in accordance with 
+this Agreement, or (ii) modifications or additions to the Product by 
+Customer personnel (other than modifications at Axway's direction) or (iii) 
+use of other than the most recent version of any Product if and from the 
+time Axway informs Customer in writing that infringement or 
+misappropriation may be avoided by use of the most recent version of such 
+Product. THIS ARTICLE 11 SETS FORTH THE FULL SCOPE OF AXWAY'S LIABILITY AND 
+CUSTOMER'S EXCLUSIVE REMEDY, TO THE EXTENT PERMITTED BY LAW, FOR ANY ACTUAL 
+OR ALLEGED INFRINGEMENT OF THIRD PARTY RIGHTS IN CONNECTION WITH THE 
+PRODUCT.
+
+ARTICLE 12 - LIABILITY 
+12.1. EXCEPT FOR AXWAY'S OBLIGATIONS WITH RESPECT TO INDEMNIFICATION OR 
+CONFIDENTIALITY, AXWAY IS NOT LIABLE FOR ANY SPECIAL, INDIRECT, EXEMPLARY, 
+INCIDENTAL, PUNITIVE OR CONSEQUENTIAL DAMAGES OF ANY KIND, INCLUDING, 
+WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, LOST 
+PROFITS, LOST DATA OR COMPUTER HARDWARE OR SOFTWARE DAMAGE, FAILURE OR 
+MALFUNCTION, WHETHER OR NOT AXWAY HAS BEEN ADVISED OF THE POSSIBILITY OF 
+SUCH DAMAGES; EXCEPT FOR AXWAY'S OBLIGATIONS WITH RESPECT TO 
+INDEMNIFICATION OR CONFIDENTIALITY, AXWAY'S LIABILITY HEREUNDER SHALL NOT 
+EXCEED THE TOTAL AMOUNT OF LICENSE AND SERVICES FEES INVOICED UNDER THIS 
+AGREEMENT FOR THE SOFTWARE GIVING RISE TO SUCH LIABILITY DURING THE 
+CALENDAR YEAR IN WHICH THE CLAIM AROSE.  THE FOREGOING LIMITATIONS OF 
+LIABILITY AND DISCLAIMERS OF DAMAGES APPLY REGARDLESS OF THE FORM IN WHICH 
+AN ACTION (LEGAL, EQUITABLE OR OTHERWISE) MAY BE BROUGHT, WHETHER IN 
+CONTRACT, TORT, OR OTHERWISE.  THE LIMITATIONS OF LIABILITIES, DISCLAIMERS 
+OF WARRANTIES, EXCLUSIVITY OF REMEDIES AND OTHER LIMITATIONS SET FORTH 
+HEREIN ARE AN ESSENTIAL ELEMENT OF THE BARGAIN BETWEEN THE PARTIES (WITHOUT 
+WHICH THE TRANSACTIONS CONTEMPLATED BY THIS AGREEMENT WOULD NOT OCCUR) AND 
+WILL APPLY EVEN IF A REMEDY FAILS IN ITS ESSENTIAL PURPOSE. 
+12.2. This Agreement is enforceable by the Parties to it and by their 
+permitted assignees. A person who is not a party to this Agreement shall 
+have no right to enforce or rely on any of the terms of this Agreement. The 
+terms of this Article 12 shall survive termination of this Agreement.
+
+ARTICLE 13 - ADVERTISING 
+The Customer must include Axway's name any time it refers to the Product in 
+writing. The Customer hereby authorizes Axway to include its name in a 
+customer list.
+
+ARTICLE 14 - ADMINISTRATIVE REQUIREMENTS 
+The Customer is responsible for obtaining any required legal authorizations 
+arising out of Customer's particular use of the Products and is responsible 
+for its compliance with applicable data protection legislation. 
+
+ARTICLE 15 - CONFIDENTIALITY 
+15.1. Each Party recognizes that under this Agreement either Party may have 
+access to or otherwise receive trade secrets and confidential or 
+proprietary information of the other, including information concerning 
+products, including but not limited to the names of Customer's clients, 
+financial or contractual arrangements. All such information shall 
+constitute "Confidential Information". The Products, including any 
+Documentations or portions thereof and information, material or copy 
+derived there from, is proprietary and confidential to Axway. Each Party 
+agrees not to use, other than for the purposes for which it was disclosed 
+or divulged the other party's Confidential Information and to limit 
+disclosure of same to those of its employees and independent contractors 
+who have a need to know the same and to use all reasonable endeavors to 
+prevent its disclosure to or access by any third party without the prior 
+written consent of the disclosing party. 
+15.2. Confidential Information does not include information that: (i) is or 
+becomes a part of the public domain through no act or omission of the 
+receiving Party; (ii) was in the receiving Party's lawful possession prior 
+to the disclosure and had not been obtained by the receiving Party either 
+directly or indirectly from the disclosing Party; (iii) is lawfully 
+disclosed to the receiving Party by a third party without restriction on 
+disclosure; (iv) is independently developed by the receiving Party without 
+reference to the disclosing Party's Confidential Information; or (v) is 
+required to be disclosed by any court of competent jurisdiction or by a 
+governmental or regulatory authority or where there is a legal right, duty 
+or requirement to disclose. In such event, the receiving Party will (and 
+without breaching any legal or regulatory requirement) where reasonably 
+practicable give the disclosing Party prompt notice in writing of the 
+requirement to disclose. 
+15.3. The rights and obligations of the Parties under this Article 15 shall 
+continue for three years following expiration or termination of this 
+Agreement.
+
+ARTICLE 16 - NON-SOLICITATION 
+16.1. For the duration of this Agreement and for the period of 12 months 
+following its termination or expiration, neither Party shall, without the 
+prior written consent of the other Party, actively endeavor to solicit or 
+entice away any person employed or engaged by the other Party in the 
+performance or administration of this Agreement. 
+16.2. If a Party breaches the foregoing obligation, the breaching party 
+shall pay to the other Party twelve times the prior monthly base salary of 
+the relevant person, such sum being deemed by both Parties to be fair 
+compensation for the loss suffered as a result of the breach.  
+16.3. The provisions of Section 16.2 shall not apply to any individual who 
+can be proven to have responded to a bona fide published recruitment 
+advertisement where the recruited person is not recruited to work for or 
+with a party's personnel or department involved in this Agreement.  Nothing 
+in this Article 16 is intended to restrict the right of any individual to 
+seek employment with whomsoever they wish, but is intended to provide for 
+due compensation where such a situation occurs as a result of entering into 
+this Agreement recognizing that loss of experienced personnel can have a 
+serious effect upon any employer.
+
+ARTICLE 17 - TERMINATION 
+17.1. This Agreement may be terminated by either Party immediately upon 
+written notice if the other Party is in material or continuing breach of 
+any of its obligations under this Agreement and fails to remedy that breach 
+(if capable of remedy) within thirty (30) days after receiving written 
+notice of such breach. 
+17.2. Either Party may terminate this Agreement forthwith on giving written 
+notice to the other Party if such Party has had a receiver or 
+administrative receiver appointed over the whole or any part of its 
+undertaking or assets or passes a resolution for winding up, or a court of 
+competent jurisdiction makes an order to that effect or if the other Party 
+enters into any voluntary arrangement with its creditors or becomes subject 
+to a bankruptcy administration order or ceases to carry on business. 
+17.3. Upon termination of the Agreement Customer must, depending on the 
+method of Product delivery, either: (i) return the Licensed Component and 
+the Documentation to Axway and destroy or return any copies of the Licensed 
+Component that it may have made within fifteen days from the termination 
+date or (ii) remove all copies of the Licensed Component and certify in 
+writing that all copies have been removed and destroyed. 
+17.4. After the Initial Support Term or any of the annual renewal of 
+Support Services terms, either Party may terminate the Support Services on 
+six months' prior written notice. 
+
+ARTICLE 18 - WAIVER 
+The fact that either Party fails to take action after a breach by the other 
+Party of any of its obligations arising hereunder shall not be construed or 
+operate as a waiver of the obligation in question or of any later breach.
+
+ARTICLE 19 - SEVERABILITY 
+If any of the provisions of this Agreement, or any part thereof, is judged 
+to be illegal or unenforceable, the remaining provisions will continue in 
+full force and effect for the remainder of this Agreement and shall not be 
+prejudiced, unless the substantive purpose of this Agreement is thereby 
+frustrated, in which case either Party may terminate this Agreement 
+forthwith on written notice. 
+
+ARTICLE 20 - ASSIGNMENT 
+This Agreement and the license granted hereunder may not be assigned or 
+transferred in whole or in part by Customer without Axway's prior written 
+consent. Axway may assign and transfer its complete rights and obligations 
+under this Agreement, without the consent of Customer, to any corporation 
+that is a wholly owned subsidiary or parent or sister corporation of Axway.
+
+ARTICLE 21 - AUDIT 
+Axway hereby reserves the right to conduct an on-site audit of Customer to 
+verify compliance with the Licensed Component license granted herein by 
+providing at least three (3) days prior written notice.  Customer consents 
+to audit compliance software being run on Customer systems. The Customer 
+hereby agrees to cooperate with the audit in good faith, to grant Axway 
+access to all relevant information and to provide copies of relevant 
+information on request.  In addition, Customer agrees, upon request by 
+Axway from time to time, to provide Axway with a written report, certified 
+by an officer, stating the physical Site(s) and computer systems with 
+respect to which Customer is using the Licensed Component.
+
+ARTICLE 22 - UNITED STATES GOVERNMENT END USERS 
+As defined in Federal Acquisition Regulations ("FAR") Section 2.101, 
+Department of Defense Federal Acquisition Regulations ("DFARs") Section 
+252.227-7014(a)(1) and DFAR Section 252.227-7014(a)(5), the computer 
+programs included in or with the Products and the Documentation are 
+"commercial items," "commercial computer software" and "commercial computer 
+software documentation," as applicable.  Consistent with FAR Section 12.212 
+and DFAR Section 227.7202 and any successor sections, any use, 
+modification, reproduction, release, performance, display or disclosure of 
+such computer programs and Documentation by the United States Government 
+shall be governed solely by the terms of this Agreement.
+
+ARTICLE 23 - EXPORT 
+Customer shall not export, ship, transmit or re-export the Products or 
+Documentation in violation of any applicable law or regulation.
+
+ARTICLE 24 - THIRD PARTY SOFTWARE 
+Certain Third Party Software may be provided with the Licensed Component(s) 
+that is subject to the accompanying license(s), if any, of its respective 
+owner(s). To the extent portions of the Software are distributed under and 
+subject to open source licenses obligating Axway to make the source code 
+for such portions publicly available (such as the GNU General Public 
+License ("GPL") or the GNU Library General Public License ("LGPL")), Axway 
+will make such source code portions (including Axway modifications, as 
+appropriate) available upon request for a period of up to three years from 
+the date of distribution. Such request can be made in writing to Axway 
+Inc., 6811 E. Mayo Blvd., Suite 400, Phoenix, Arizona 85054, ATTN: Legal 
+Department. Customer may obtain a copy of the GPL at 
+http://www.gnu.org/licenses/gpl.html, and a copy of the LGPL at 
+http://www.gnu.org/licenses/lgpl.html.
+
+ARTICLE 25 - NOTICES 
+All notices, demands, consents, approvals and other communications shall be 
+sufficient if in writing and sent by facsimile transmission (with a hard 
+copy mailed on the same date) or registered or certified mail, return 
+receipt requested, postage prepaid, or overnight courier service to the 
+other party at its address set out in the Order Form or to such other 
+superseding notice address that it has subsequently provided to other Party 
+in writing. Each such notice shall be deemed to have been served: in the 
+case of by hand and special delivery, when actually received; or if posted 
+by recorded delivery shall be deemed to have been accepted on the expiry of 
+forty eight hours after posting and on proving posting it shall be 
+sufficient to produce a copy of the notice properly addressed with the 
+relevant post office receipt for its dispatch by recorded delivery.
+
+ARTICLE 26 - GOVERNING LAW and DISPUTES 
+26.1. This Agreement will be governed by and interpreted in accordance with 
+the laws of Arizona. Should any dispute arise, the Parties will use all 
+reasonable efforts to attempt to resolve the dispute in good faith by 
+senior level negotiations. The dispute shall be referred by a written 
+request to an officer of each Party who has authority to resolve the 
+dispute and who is not directly involved with the subject matter of this 
+Agreement who shall meet within 15 days from the dispatch of the written 
+request in order to attempt to resolve the dispute. 
+26.2. If the dispute is not resolved through negotiation, both Parties 
+agree that the Courts of Arizona will have exclusive jurisdiction in 
+connection with the resolution of the dispute. The United Nations 
+Convention on the International Sale of Goods shall not apply to this 
+Agreement.
+
+
+
+ATTACHMENT A ADDITIONAL DEFINITIONS
+
+To the extent used in the Order Forms pursuant to this Agreement, the 
+following definitions have the following meanings:
+
+"Active (Production) License" means a license for Use of the Product in a 
+production environment.  An Active/Active  configuration refers to a shared 
+cluster configuration whereby applications and data are simultaneously 
+available to all server Instances in the cluster. Consequently, 
+Active/Active clusters support high availability ; 
+"Computer" means one or a group of physical hardware machines processing 
+data and hosting the running of one or more operating systems as defined in 
+the Order Form;
+"Core" means the main part of CPU that interprets the instructions and 
+performs the binary calculations. Every CPU has at least one Core, but can 
+be composed of several Cores; 
+"CPU" (Central Processing Unit) means a functional unit in a computer that 
+interprets and executes instructions. A CPU may contain multiple Cores with 
+a Computer system or server. If the right of Use is based on CPUs and if 
+the Licensed Component is used on a single computer with multiple CPUs, the 
+CPU license must correspond with the number of respective Cores contained 
+within such Computer. For example, a server that uses one dual-Core CPU 
+requires two CPU licenses, and a server that uses four dual-Core CPUs 
+requires eight CPU licenses;
+"Instance" means a single occurrence of a Licensed Component. For 
+clarification, if Customer has purchased only one Active Production 
+Instance, Customer may run a single occurrence of the Licensed Component in 
+RAM (Random Access Memory); "Named User" means a physical person 
+susceptible to establish a session with the Licensed Component; 
+"Node" means a running instance of a Axway program, i.e. a JVM (Java 
+Virtual Machine) running an Axway application; 
+"Partition" means a reserved part of the resources of an Operating 
+Environment that is set aside for a specific purpose; Such as:
+   - "Capped-Partition" means the Sub-Capacity Partition using a determined 
+   maximum subset of the resources of an Operating Environment.
+   - "Floating Partition" means the Sub-Capacity Partition using a 
+   dynamically allocated subset of the resources of an Operating 
+   Environment. The maximum potential of resources used by a Sub- Capacity 
+   Partition equals the overall resources of the Operating Environment;
+   - "Full-Capacity Partition" means a Partition using all the resources of 
+   an Operating Environment. There can only be one "Full- Capacity 
+   Partition" per Operating Environment. If there is another partition, 
+   then both Partitions are "Sub-Capacity Partitions"; 
+   - "Sub- Capacity Partition" means a partition using a subset of the 
+   resources of an Operating Environment; 
+"Passive (Non-Production) License" refers to a cluster fail over or 
+disaster recovery software architecture. The passive software doesn't 
+execute unless the licensed production copy of the Licensed Component 
+fails. Where Customer is not able to use its licensed production copy of 
+the Licensed Component in the event of fail over, the Passive license will 
+start executing after a service interruption. A Passive License may also 
+include those for test, development, archiving or quality control/quality 
+assurance; 
+"User" means, unless otherwise stated in the applicable Order: (a) with 
+respect to all Products other than Products that are part of Axway's 
+Validation Authority or SecureTransport product suites, any person who is 
+assigned login or Use rights or credentials  by Customer to access the 
+applicable Product, whether directly, through another application or 
+otherwise; (b) with respect to any Product included in Axway's 
+SecureTransport product suite, any person or system who is assigned login 
+or Use rights or credentials  by Customer to access the applicable Product, 
+whether directly, through another application or otherwise; and (c) with 
+respect to any Product included in Axway's Validation Authority product 
+suite, any Validation Authority User. 
+"Validation Authority User" means any Human User, Group User or Non-Human 
+User.
+   - "Human User" means, with respect to the applicable Product included in 
+   Axway's Validation Authority product line, any human who has one or more 
+   associated digital certificates associated with such human that: (i) 
+   uniquely identify such human; and (ii) are contained in a database or 
+   other repository that can be queried through Customer's implementation 
+   of such Product.
+   - "Group User" means, with respect to the applicable Product included in 
+   Axway's Validation Authority product line, any group of humans that has 
+   one or more associated digital certificates that: (i) uniquely identify 
+   such group; and (ii) are contained in a database or other repository 
+   that can be queried through Customer's implementation of such Product.
+   - "Non-Human User" means, with respect to the applicable Product 
+   included in Axway's Validation Authority product line, anything other 
+   than a Human User or Group User (such as a device) ("Non-Human") that 
+   has one or more associated digital certificates that: (i) uniquely 
+   identify such Non-Human; and (ii) are contained in a database or other 
+   repository that can be queried through Customer's implementation of such 
+   Product.
