@@ -80,7 +80,7 @@ Before you start, you must specify the Flow Central image you want to use. For t
 
 Example:
  ```console
-  image: axway/flowcentral:1.0
+  image: axway/flowcentral:1.0.1
 ```
 Moreover please make sure that the folders created at the previous step (i.e. **Create volumes for persistence data** ) correspond with those specified in the docker-compose file.
 
