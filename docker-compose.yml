@@ -1,0 +1,162 @@
+version: '3.4'
+services:
+  fchost:
+    #image: fc:test
+    build: .
+    stdin_open: true
+    hostname: "fchost"
+    tty: true
+    expose: [8081]
+    environment:
+        ### EULA ###
+        ACCEPT_EULA: "yes"
+
+        ### General ###
+        FQDN                      : "fchost"
+        HOSTNAME                  : "fchost"
+        CG_SHARED_SECRET          : "Secret01"
+        ENCRYPTION_KEY            : "Secret01"
+        GENERAL_LOGGING_LEVEL     : "INFO"
+
+        ### APIC settings ###
+        UME_APIC_USE_CATALOG      : "false"
+        UME_APIC_PUBLICKEY        : "/opt/axway/configs/public_key.pem"
+        UME_APIC_PRIVATEKEY       : "/opt/axway/configs/private_key.pem"
+        UME_APIC_HOST             : "https://apicentral.test.apicentral-k8s.axwaytest.net"
+        UME_APIC_CLIENTID         : "DOSA_977f7227974b4a959acadc8a40a3d229"
+        UME_APIC_TOKENURL         : "https://login-preprod.axway.com/auth/realms/Broker/protocol/openid-connect/token"
+
+        ### Mongo ###
+        MONGODB_HOST              : "fcmongo"
+        MONGODB_PORT              : "27018"
+        MONGODB_ROOT_NAME         : "root"
+        MONGODB_USER_NAME         : "storage"
+        MONGODB_USER_PASSWORD     : "storage"
+
+        ### Flow Central configuration type ###
+        IDP_CONFIGURATION         : "internal"
+
+        ### Buisness ###
+        BUSINESS_USE_CUSTOM       : "true"
+        BUSINESS_CA_CERTIF_ALIAS  : "inter_bus"
+        BUSINESS_CA_FILE          : "/opt/axway/configs/businessca.jks"
+        BUSINESS_CA_PASSWORD      : "Secret01"
+
+        ### Governance ###
+        GOVERNANCE_CA_CERTIF_ALIAS: "passportcaproduct"
+        GOVERNANCE_CA_FILE        : "/opt/axway/configs/governanceca.jks"
+        GOVERNANCE_CA_PASSWORD    : "Secret01"
+
+        ### Security ###
+        SECURITY_CG_UI_ALIAS      : "apicertificate"
+        SECURITY_CG_UI            : "/opt/axway/configs/uicert.jks"
+        SECURITY_CG_UI_PASSWORD   : "Secret01"
+
+        ### Certificates ###
+        CERTIFICATE_EXPIRATION_NOTIFICATION: "60"
+    ports:
+      - 8081:8081
+      - 12553:8081
+    depends_on:
+      - fcmongo
+    volumes:
+     - "./mounts/fc_logs:/opt/axway/fc_logs"
+     - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
+     - "./mounts/configs:/opt/axway/configs"
+     - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
+
+  fcmongo:
+    build: ./mongo-3.4/ 
+    expose:
+      - 27018
+    volumes:
+      - "./mounts/mongo_data:/data/db/"
+    ports:
+      - 27018:27018
+    environment:
+      MONGODB_ADMIN_USER              : root
+      MONGODB_ADMIN_PASS              : storage
+      MONGODB_APPLICATION_DATABASE    : umcft
+      MONGODB_APPLICATION_USER        : storage
+      MONGODB_APPLICATION_PASS        : storage
+  
+  cft:
+    image: cgqajenkins.lab.buch.axway.int:8083/docker-cft:3.3.2
+    hostname: cft
+    environment:
+      FC_HOST: "fchost"
+      FC_PORT: "8081"
+      FC_SHARED_SECRET: "Secret01"
+      FC_PERIODICITY: "30"
+      CFT_CG_HOST: "fchost"
+      CFT_CG_PORT: "8081"
+      CFT_CG_SHARED_SECRET: "Secret01"
+      CFT_CG_PERIODICITY: "30"
+      CFT_HOST: "cft"
+      CFT_PORT: 8093
+      CFT_GROUP: "Production.Linux"
+      CFT_KEY: "cat /run/secrets/cft-license"
+      CFT_POLICY: ""
+      CFT_PESIT_PORT: "1761"
+      CFT_PESITSSL_PORT: "8092"
+      CFT_FQDN:               "cft"
+      CFT_INSTANCE_ID:        "cft_docker_0"
+      CFT_INSTANCE_GROUP:     "dev.docker"
+      CFT_CATALOG_SIZE:       "1000"
+      CFT_COM_SIZE:           "1000"
+      CFT_COMS_PORT:          "1765"
+      CFT_COPILOT_PORT:       "1766"
+      CFT_COPILOT_CG_PORT:    "1767"
+      CFT_RESTAPI_PORT:       "1768"
+      CFT_CG_ENABLE:          "YES"
+      CFT_CG_POLICY:          ""
+      CFT_JVM:                "1024"
+      CFT_CFTDIRRUNTIME:      "./data/runtime"
+    ports:
+      - "1761:1761"
+      - "1762:1762"
+      - "1765:1765"
+      - "1766:1766"
+      - "1767:1767"
+      - "1768:1768"
+      - "8092:8092"
+    secrets:
+      - cft-license
+    depends_on:
+      - fchost
+    #volumes:
+    #    #  - "data:/home/cft/data"
+
+  st:
+    image: cgqajenkins.lab.buch.axway.int:8083/st:5.3.6
+    #build: ./st-5.3.6/Dockerfile
+    hostname: docker-st
+    ports:
+      - "17617:17617"
+      - "8444:444"
+      - "8821:8821"
+      - "8880:8880"
+      - "8443:8443"
+      - "8822:8822"
+      - "47617:47617"
+      - "47627:47627"
+      - "49617:49617"
+      - "49627:49627"
+      - "47637:47637"
+    expose:
+      - 5701
+    depends_on:
+      - fchost
+    secrets:
+      - st-license
+      - filedrive-license
+    #volumes:
+    #  - "/home/userdpg/demo/st_dir:/aaa/"
+
+secrets:
+  cft-license:
+    file: ./licenses/cft-license.txt
+  st-license:
+    file: ./licenses/st.license
+  filedrive-license:
+    file: ./licenses/filedrive.license
