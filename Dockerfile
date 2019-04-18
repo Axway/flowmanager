@@ -17,35 +17,35 @@ RUN echo "Adding username [axway] to the system." && \
 
 # install FC OS prerequisites
 RUN yum -y update && \
-    yum install --quiet -y wget unzip zip java-1.8.0-openjdk 
+    yum install --quiet -y wget unzip zip java-1.8.0-openjdk-1.8.0.201.b09 
 
-COPY resources /opt/axway/resources
-
-#ARG FC_URL="http://repository4.ecd.axway.int/content/repositories/cg-snapshot/com/axway/flowcentral/lightdistrib/flowcentral-delivery-light-distrib/1.0.0-SNAPSHOT/"
+ARG FC_URL="http://repository4.ecd.axway.int/content/repositories/cg-snapshot/com/axway/flowcentral/lightdistrib/flowcentral-delivery-light-distrib/"
 # SNAPSHOT VERSION OR RELEASE NUMBER
-#ARG FC_RELEASE_TYPE="<fc_release_type>"
+ARG FC_RELEASE_TYPE="<fc_release_type>"
 # FC ARTIFACT
-#ARG FC_ARTIFACT="flowcentral-delivery-light-distrib-1.0.0-20190415.221121-2.zip"
+ARG FC_ARTIFACT="<fc_artifact>"
 
-#ARG FC_CFT_PLUGIN_URL="http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cft-release//com/axway/cft/cg/plugin/cft-cg-plugin-distrib/"
+ARG FC_CFT_PLUGIN_URL="http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cft-release//com/axway/cft/cg/plugin/cft-cg-plugin-distrib/"
 # SNAPSHOT VERSION OR RELEASE NUMBER
-#ARG FC_CFT_RELEASE_TYPE="1.24.0-SNAPSHOT"
+ARG FC_CFT_RELEASE_TYPE="<fc_cft_release_type>"
 # FC_CFT_PLUGIN ARTIFACT
-ARG FC_CFT_PLUGIN_ARTIFACT="cft-cg-plugin-distrib-2.17.0-2-plugin.zip"
+ARG FC_CFT_PLUGIN_ARTIFACT="<fc_cft_plugin>"
 
-ARG FC_ST_PLUGIN_URL="http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cg-snapshot/com/axway/securetransport/securetransport-plugin-distrib/"
+ARG FC_ST_PLUGIN_URL="http://swf-artifactory.lab1.lab.ptx.axway.int:80/artifactory/com.axway.cg-snapshot/com/axway/securetransport/securetransport-plugin-distrib/"
 #SNAPSHOT VERSION OR RELEASE NUMBER
-ARG FC_ST_RELEASE_TYPE="1.16.0-SNAPSHOT"
+ARG FC_ST_RELEASE_TYPE="<fc_st_release_type>"
 # FC_ST_PLUGIN ARTIFACT
-ARG FC_ST_PLUGIN_ARTIFACT="securetransport-plugin-distrib-1.16.0-20190417.050518-8-plugin.zip"
+ARG FC_ST_PLUGIN_ARTIFACT="<fc_st_plugin>"
 
-RUN wget http://repository4.ecd.axway.int/content/repositories/cg-snapshot/com/axway/flowcentral/lightdistrib/flowcentral-delivery-light-distrib/1.0.0-SNAPSHOT/flowcentral-delivery-light-distrib-1.0.0-20190415.221121-2.zip -P /home/axway/FC_KIT && \
-    wget http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cft-release//com/axway/cft/cg/plugin/cft-cg-plugin-distrib/2.17.0-2/cft-cg-plugin-distrib-2.17.0-2-plugin.zip -P /home/axway/CFT_PLUGIN_KIT && \
-    wget http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cg-snapshot/com/axway/securetransport/securetransport-plugin-distrib/1.16.0-SNAPSHOT/securetransport-plugin-distrib-1.16.0-20190417.050518-8-plugin.zip -P /home/axway/ST_PLUGIN_KIT && \
-    unzip /home/axway/FC_KIT/flowcentral-delivery-light-distrib-1.0.0-20190415.221121-2.zip -d /opt/axway/FlowCentral/ && \
-    unzip /home/axway/CFT_PLUGIN_KIT/cft-cg-plugin-distrib-2.17.0-2-plugin.zip -d /opt/axway/FlowCentral/ && \
-    unzip /home/axway/ST_PLUGIN_KIT/securetransport-plugin-distrib-1.16.0-20190417.050518-8-plugin.zip -d /opt/axway/FlowCentral/ && \
+RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE_TYPE$FC_ARTIFACT" -P /home/axway/FC_KIT && \
+    wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_CFT_PLUGIN_URL$FC_CFT_RELEASE_TYPE$FC_CFT_PLUGIN_ARTIFACT" -P /home/axway/CFT_PLUGIN_KIT && \
+    wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_ST_PLUGIN_URL$FC_ST_RELEASE_TYPE$FC_ST_PLUGIN_ARTIFACT" -P /home/axway/ST_PLUGIN_KIT && \
+    unzip /home/axway/FC_KIT/$FC_ARTIFACT -d /opt/axway/FlowCentral/ && \
+    unzip /home/axway/CFT_PLUGIN_KIT/$FC_CFT_PLUGIN_ARTIFACT -d /opt/axway/FlowCentral/ && \
+    unzip /home/axway/ST_PLUGIN_KIT/$FC_ST_PLUGIN_ARTIFACT -d /opt/axway/FlowCentral/ && \
     rm -rf /opt/axway/FlowCentral/resources/*
+    
+COPY resources /opt/axway/resources
 
 FROM centos:7.6.1810
 
@@ -56,7 +56,7 @@ RUN echo "Adding username [axway] to the system." && \
     useradd -r -g axway axway
 
 RUN yum -y update && \
-    yum install --quiet -y jq  java-1.8.0-openjdk \
+    yum install --quiet -y jq java-1.8.0-openjdk-1.8.0.201.b09 && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     chown -R axway:axway /opt/axway/ && \
@@ -76,3 +76,9 @@ WORKDIR /opt/axway
 USER axway
 
 CMD ["/opt/axway/scripts/start.sh"]
+
+HEALTHCHECK --interval=1m \
+            --timeout=5s \
+            --start-period=5m \
+            --retries=3 \
+            CMD . java -jar opcmd.jar status
