@@ -1,8 +1,7 @@
 version: '3.4'
 services:
   fchost:
-    #image: fc:test
-    build: .
+    image: fc:test
     stdin_open: true
     hostname: "fchost"
     tty: true
