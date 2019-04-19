@@ -124,8 +124,6 @@ services:
       - cft-license
     depends_on:
       - fchost
-    #volumes:
-    #    #  - "data:/home/cft/data"
 
   st:
     image: cgqajenkins.lab.buch.axway.int:8083/st:5.3.6
@@ -150,8 +148,7 @@ services:
     secrets:
       - st-license
       - filedrive-license
-    #volumes:
-    #  - "/home/userdpg/demo/st_dir:/aaa/"
+
 
 secrets:
   cft-license:
