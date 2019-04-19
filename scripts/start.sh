@@ -109,7 +109,7 @@ if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then
   
   cd /opt/axway/FlowCentral
   echo "Configuring Product Starting"
-  time java -jar opcmd.jar configure -s /opt/axway/FlowCentral/conf.properties -consolelog -debug
+  time java -jar opcmd.jar configure -s /opt/axway/FlowCentral/conf.properties
   echo "Configuring Product Ended"
   cd /opt/axway/FlowCentral
   touch $PWD/runtime/initialized
