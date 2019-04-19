@@ -5,7 +5,7 @@ RUN echo "Adding username [axway] to the system." && \
     useradd -r -g axway axway && \
     mkdir -p /opt/axway/FlowCentral/runtime && \
     mkdir -p /opt/axway/FlowCentral/logs && \
-    mkdir -p /opt/axway/FlowCentral/data/CGLicense && \
+    mkdir -p /opt/axway/FlowCentral/conf/license && \
     mkdir -p /opt/axway/configs && \
     mkdir -p /opt/axway/FlowCentral/data/keys/com.axway.nodes.ume && \
     mkdir -p /home/axway && \
@@ -45,11 +45,11 @@ RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE
     unzip /home/axway/ST_PLUGIN_KIT/$FC_ST_PLUGIN_ARTIFACT -d /opt/axway/FlowCentral/ && \
     rm -rf /opt/axway/FlowCentral/resources/*
     
-COPY resources /opt/axway/resources
+
 
 FROM centos:7.6.1810
 
-COPY --from=builder  /opt/axway /opt/axway
+COPY --from=builder  /opt/axway/FlowCentral /opt/axway/FlowCentral
 
 RUN echo "Adding username [axway] to the system." && \
     groupadd -r axway && \
@@ -69,6 +69,7 @@ RUN yum -y update && \
 
 RUN usermod -u 1000 axway
 
+COPY resources /opt/axway/resources
 COPY scripts/start.sh /opt/axway/scripts/start.sh
 
 WORKDIR /opt/axway
