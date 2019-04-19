@@ -17,7 +17,7 @@ RUN echo "Adding username [axway] to the system." && \
 
 # install FC OS prerequisites
 RUN yum -y update && \
-    yum install --quiet -y wget unzip zip java-1.8.0-openjdk-1.8.0.201.b09 
+    yum install --quiet -y wget unzip zip
 
 ARG FC_URL="http://repository4.ecd.axway.int/content/repositories/cg-snapshot/com/axway/flowcentral/lightdistrib/flowcentral-delivery-light-distrib/"
 # SNAPSHOT VERSION OR RELEASE NUMBER
