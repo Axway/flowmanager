@@ -26,12 +26,34 @@ UME_APIC_HOST="${UME_APIC_HOST}"
 UME_APIC_CLIENTID="${UME_APIC_CLIENTID}"
 CERTIFICATE_EXPIRATION_NOTIFICATION="${CERTIFICATE_EXPIRATION_NOTIFICATION:-60}"
 
+set_status() {
+  cd /opt/axway/FlowCentral/
+  echo "$1" > "/opt/axway/FlowCentral/"$(dirname $(find runtime -name "index.html" | grep "ROOT/login/index.html"))/status.html
+}
+
+
 subst() {
      sed -i 's#'$1'.*#'$1'='$2'#g' /opt/axway/FlowCentral/conf.properties
 }
 
 function get_current_field_value() {
   CURRENT_FIELD_VALUE=$(cat /opt/axway/FlowCentral/conf.properties | grep "$1" | cut -d '=' -f2 | sed 's/"//g')
+}
+
+function get_test_case_status {
+    TC_NAME=$1
+    EXPECTED_RESULT=$2
+    ACTUAL_RESULT=$3
+
+    RED='\033[0;31m'
+    NC='\033[0m' # No Color
+    GREEN='\033[0;32m'
+
+    if [[ ACTUAL_RESULT -eq EXPECTED_RESULT ]]; then
+    echo -e "PASSED ${GREEN}"$1"${NC}"
+    else
+    echo -e "FAILED ${RED}"$1"${NC}"
+    fi
 }
 
 
@@ -107,15 +129,30 @@ if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then
   subst UME_APIC_PUBLICKEY ${UME_APIC_PUBLICKEY}
   subst UME_APIC_PRIVATEKEY ${UME_APIC_PRIVATEKEY}
   
+  set_status "STARTING"
   cd /opt/axway/FlowCentral
+  sleep 20
+  timestart=$(date +%s)
+  echo $timestart" Flow Central Starting"
+  cat /opt/axway/FlowCentral/conf.properties
   echo "Configuring Product Starting"
   time java -jar opcmd.jar configure -s /opt/axway/FlowCentral/conf.properties
   echo "Configuring Product Ended"
   cd /opt/axway/FlowCentral
-  touch $PWD/runtime/initialized
+  touch ./runtime/initialized
+  set_status "READY"
+  timeend=$(date +%s)
+  echo $timeend" Flow Central Started"
+  echo " Flow Central Started in: "$( expr $timeend - $timestart )
 else
+  set_status "STARTING"
   cd /opt/axway/FlowCentral/
   tail -F $(find /opt/axway/fc_logs -name "*.log") &
   cd /opt/axway/FlowCentral
   time java -jar opcmd.jar start
+  set_status "READY"
 fi
+
+while true status; do
+  sleep 600
+done
