@@ -112,7 +112,7 @@ if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then
   time java -jar opcmd.jar configure -s /opt/axway/FlowCentral/conf.properties -consolelog -debug
   echo "Configuring Product Ended"
   cd /opt/axway/FlowCentral
-  touch ./runtime/initialized
+  touch $PWD/runtime/initialized
 else
   cd /opt/axway/FlowCentral/
   tail -F $(find /opt/axway/fc_logs -name "*.log") &
