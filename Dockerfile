@@ -77,9 +77,3 @@ WORKDIR /opt/axway
 USER axway
 
 CMD ["/opt/axway/scripts/start.sh"]
-
-HEALTHCHECK --interval=1m \
-            --timeout=5s \
-            --start-period=5m \
-            --retries=3 \
-            CMD . $PWD/FlowCentral/java -jar opcmd.jar status
