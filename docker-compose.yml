@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   fchost:
-    image: fc:test
+    image: cgqajenkins.lab.buch.axway.int:8083/flowcentral-uma:latest
     stdin_open: true
     hostname: "fchost"
     tty: true
