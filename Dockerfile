@@ -81,4 +81,4 @@ HEALTHCHECK --interval=1m \
             --timeout=5s \
             --start-period=5m \
             --retries=3 \
-            CMD . java -jar opcmd.jar status
+            CMD . /opt/axway/FlowCentral/java -jar opcmd.jar status
