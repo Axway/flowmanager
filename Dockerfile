@@ -54,6 +54,9 @@ COPY --from=builder  /opt/axway/FlowCentral /opt/axway/FlowCentral
 RUN echo "Adding username [axway] to the system." && \
     groupadd -r axway && \
     useradd -r -g axway axway
+    
+COPY resources /opt/axway/resources
+COPY scripts/start.sh /opt/axway/scripts/start.sh
 
 RUN yum -y update && \
     yum install --quiet -y jq java-1.8.0-openjdk-1.8.0.201.b09 && \
@@ -68,9 +71,6 @@ RUN yum -y update && \
     echo "*       soft    nofile   65535" >> /etc/security/limits.conf
 
 RUN usermod -u 1000 axway
-
-COPY resources /opt/axway/resources
-COPY scripts/start.sh /opt/axway/scripts/start.sh
 
 WORKDIR /opt/axway
 
