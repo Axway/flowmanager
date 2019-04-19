@@ -19,12 +19,12 @@ services:
         GENERAL_LOGGING_LEVEL     : "INFO"
 
         ### APIC settings ###
-        UME_APIC_USE_CATALOG      : "false"
+        UME_APIC_USE_CATALOG      : "true"
         UME_APIC_PUBLICKEY        : "/opt/axway/configs/public_key.pem"
         UME_APIC_PRIVATEKEY       : "/opt/axway/configs/private_key.pem"
-        UME_APIC_HOST             : "https://apicentral.test.apicentral-k8s.axwaytest.net"
+        UME_APIC_HOST             : "https://apicentral.axway.com"
         UME_APIC_CLIENTID         : "DOSA_977f7227974b4a959acadc8a40a3d229"
-        UME_APIC_TOKENURL         : "https://login-preprod.axway.com/auth/realms/Broker/protocol/openid-connect/token"
+        UME_APIC_TOKENURL         : "https://login.axway.com/auth/realms/Broker/protocol/openid-connect/token"
 
         ### Mongo ###
         MONGODB_HOST              : "fcmongo"
