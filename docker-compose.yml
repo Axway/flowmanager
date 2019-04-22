@@ -55,7 +55,6 @@ services:
         CERTIFICATE_EXPIRATION_NOTIFICATION: "60"
     ports:
       - 8081:8081
-      - 12553:8081
     depends_on:
       - fcmongo
     volumes:
