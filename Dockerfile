@@ -59,7 +59,7 @@ COPY resources /opt/axway/resources
 COPY scripts/start.sh /opt/axway/scripts/start.sh
 
 RUN yum -y update && \
-    yum install --quiet -y jq java-1.8.0-openjdk-1.8.0.201.b09 && \
+    yum install --quiet -y java-1.8.0-openjdk-1.8.0.201.b09 && \
     yum clean all && \
     rm -rf /var/cache/yum && \
     chmod -R 777 /opt/axway/ && \
