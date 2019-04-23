@@ -18,7 +18,7 @@ CFT_USE_APP_FOR_PARTNER_ID="${CFT_USE_APP_FOR_PARTNER_ID:-true}"
 CERTIFICATE_EXPIRATION_NOTIFICATION="${CERTIFICATE_EXPIRATION_NOTIFICATION:-60}"
 
 subst() {
-     sed -i 's#'$1'.*#'$1'='$2'#g' /opt/axway/FlowCentral/conf.properties
+     sed -i 's#'$1='.*#'$1'='$2'#g' /opt/axway/FlowCentral/conf.properties
 }
 
 set_status() {
@@ -74,7 +74,7 @@ if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then
 
   #HTTPS
   subst HTTPS_USE_CUSTOM_CERT ${HTTPS_USE_CUSTOM_CERT}
-  # subst HTTPS_KEYSTORE ${HTTPS_KEYSTORE}
+  subst HTTPS_KEYSTORE ${HTTPS_KEYSTORE}
   subst HTTPS_CERT_ALIAS ${HTTPS_CERT_ALIAS}
   subst HTTPS_KEYSTORE_PASSWORD ${HTTPS_KEYSTORE_PASSWORD}
   # subst HTTPS_CORS ${HTTPS_CORS}
