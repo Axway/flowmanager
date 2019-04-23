@@ -21,6 +21,12 @@ subst() {
      sed -i 's#'$1'.*#'$1'='$2'#g' /opt/axway/FlowCentral/conf.properties
 }
 
+set_status() {
+  cd /opt/axway/FlowCentral/
+  echo "$1" > "/opt/axway/FlowCentral/"$(dirname $(find runtime -name "index.html" | grep "ROOT/login/index.html"))/status.html
+}
+
+
 function get_current_field_value() {
   CURRENT_FIELD_VALUE=$(cat /opt/axway/FlowCentral/conf.properties | grep "$1" | cut -d '=' -f2 | sed 's/"//g')
 }
@@ -115,15 +121,24 @@ if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then
   time java -jar opcmd.jar configure -s /opt/axway/FlowCentral/conf.properties -n
   echo "Configuring Product Ended"
   echo "Flow Central Starting"
+  set_status "STARTING"
   time java -jar opcmd.jar start
+  set_status "READY"
   echo "Flow Central Started" 
   echo "Create initialized file"
   cd /opt/axway/FlowCentral
   touch ./runtime/initialized
   echo "Finished creating file"
 else
+  set_status "STARTING"
   cd /opt/axway/FlowCentral/
   tail -F $(find /opt/axway/fc_logs -name "*.log") &
   cd /opt/axway/FlowCentral
   time java -jar opcmd.jar start
+  set_status "READY"
 fi
+
+while true status; do
+  sleep 600
+done
+
