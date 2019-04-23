@@ -53,8 +53,8 @@ monitor_log &
 if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then
   cp /opt/axway/resources/conf_to_import.txt /opt/axway/FlowCentral/conf.properties 
   #General
-  subst GENERAL_FQDN ${GENERAL_FQDN}
-  subst GENERAL_HOSTNAME ${GENERAL_HOSTNAME}
+  subst GENERAL_FQDN ${FQDN}
+  subst GENERAL_HOSTNAME ${HOSTNAME}
   # subst GENERAL_UI_PORT ${GENERAL_UI_PORT}
   # subst GENERAL_MAX_RETRIES_DB_CONN ${GENERAL_MAX_RETRIES_DB_CONN}
   subst GENERAL_ENCRYPTION_KEY ${GENERAL_ENCRYPTION_KEY}

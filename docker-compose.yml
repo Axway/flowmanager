@@ -13,7 +13,6 @@ services:
         ### General ###
         FQDN                      : "fchost"
         HOSTNAME                  : "fchost"
-        CFT_SHARED_SECRET         : "Secret01"
         GENERAL_ENCRYPTION_KEY    : "Secret01"
         GENERAL_LOGGING_LEVEL     : "INFO"
 
@@ -28,12 +27,13 @@ services:
         ### Mongo ###
         MONGODB_HOST              : "fcmongo"
         MONGODB_PORT              : "27018"
-        MONGODB_ROOT_NAME         : "root"
         MONGODB_USER_NAME         : "storage"
         MONGODB_USER_PASSWORD     : "storage"
 
-
-        ### Buisness ###
+        #CFT
+        CFT_SHARED_SECRET         : "Secret01"
+        
+        ### Business ###
         BUSINESS_CA_CERTIF_ALIAS  : "inter_bus"
         BUSINESS_CA_FILE          : "/opt/axway/configs/businessca.jks"
         BUSINESS_CA_PASSWORD      : "Secret01"
@@ -43,14 +43,13 @@ services:
         GOVERNANCE_CA_FILE        : "/opt/axway/configs/governanceca.jks"
         GOVERNANCE_CA_PASSWORD    : "Secret01"
 
-        ### Security ###
+        ### Certificates ###
         HTTPS_USE_CUSTOM_CERT     : "true"
         HTTPS_CERT_ALIAS          : "apicertificate"
         HTTPS_KEYSTORE            : "/opt/axway/configs/uicert.jks"
         HTTPS_KEYSTORE_PASSWORD   : "Secret01"
-
-        ### Certificates ###
         CERTIFICATE_EXPIRATION_NOTIFICATION: "60"
+        
     ports:
       - 8081:8081
     depends_on:
