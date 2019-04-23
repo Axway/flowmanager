@@ -33,12 +33,10 @@ For unix /etc/docker/daemon.json
 !!! The docker service needs to be restarted in order to apply the changes.
 
 
-Deploy
-In the directory containing this readme file (flowcentral-docker-master\fc-1.0.0) run the following commands:
-  docker login cgqajenkins.lab.buch.axway.int:8083 -u admin -p admin123
-  docker-compose up --build
-The environment deployment using docker-compose up --build command takes around 7-12 minutes.
-This includes: start containers, register products ( CFT, ST ) in Flow Central and create predefined objects (depending on the configuration of you machine).
+Login to local docker registry
+
+*Note*  docker login cgqajenkins.lab.buch.axway.int:8083 -u admin -p admin123
+
 
 
 ##### Installing Git
