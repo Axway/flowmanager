@@ -49,7 +49,7 @@ RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE
 
 FROM centos:7.6.1810
 
-COPY --from=builder  /opt/axway/FlowCentral /opt/axway/FlowCentral
+COPY --from=builder  --chown=axway:axway /opt/axway/FlowCentral /opt/axway/FlowCentral
 
 RUN echo "Adding username [axway] to the system." && \
     groupadd -r axway && \
@@ -62,7 +62,6 @@ RUN yum -y update && \
     yum install --quiet -y jq java-1.8.0-openjdk-1.8.0.201.b09 && \
     yum clean all && \
     rm -rf /var/cache/yum && \
-    chown -R axway:axway /opt/axway/ && \
     chmod -R 777 /opt/axway/ && \
     chmod -R 777 /tmp && \
     echo "*       hard    nproc   65535" >> /etc/security/limits.conf && \
