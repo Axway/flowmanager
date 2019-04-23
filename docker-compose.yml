@@ -21,7 +21,7 @@ services:
         APIC_PUBLICKEY            : "/opt/axway/configs/public_key.pem"
         APIC_PRIVATEKEY           : "/opt/axway/configs/private_key.pem"
         APIC_HOST                 : "https://apicentral.axway.com"
-        APIC_CLIENTID             : "DOSA_977f7227974b4a959acadc8a40a3d229"
+        APIC_CLIENTID             : "DOSA_3c4ebd8cc4254c69a63ba3c0930ffe5b"
         APIC_TOKENURL             : "https://login.axway.com/auth/realms/Broker/protocol/openid-connect/token"
 
         ### Mongo ###
