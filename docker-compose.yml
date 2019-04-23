@@ -49,7 +49,6 @@ services:
         HTTPS_KEYSTORE            : "/opt/axway/configs/uicert.jks"
         HTTPS_KEYSTORE_PASSWORD   : "Secret01"
         CERTIFICATE_EXPIRATION_NOTIFICATION: "60"
-        
     ports:
       - 8081:8081
     depends_on:
