@@ -49,11 +49,12 @@ RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE
 
 FROM centos:7.6.1810
 
-COPY --from=builder  --chown=axway:axway /opt/axway/FlowCentral /opt/axway/FlowCentral
-
 RUN echo "Adding username [axway] to the system." && \
     groupadd -r axway && \
     useradd -r -g axway axway
+    
+COPY --from=builder  --chown=axway:axway /opt/axway/FlowCentral /opt/axway/FlowCentral
+
     
 COPY resources /opt/axway/resources
 COPY scripts/start.sh /opt/axway/scripts/start.sh
