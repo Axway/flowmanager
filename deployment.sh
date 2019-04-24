@@ -23,6 +23,6 @@ chmod 777 mongo-3.4/*.sh
 
 unzip -o licenses/apic.z_i_p -d $PWD/mounts/configs && rm -rf $PWD/mounts/configs/*.der
 
-cp ./licenses/*.jks "$PWD/mounts/configs" && rm -rf "$PWD/mounts/configs/truststore.jks" && rm -rf "$PWD/mounts/configs/keycloak.jks"
+cp ./licenses/*.jks "$PWD/mounts/configs"
 
 cp ./licenses/license.xml "$PWD/mounts/configs"
