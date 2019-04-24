@@ -25,25 +25,8 @@ ARG FC_RELEASE_TYPE="<fc_release_type>"
 # FC ARTIFACT
 ARG FC_ARTIFACT="<fc_artifact>"
 
-ARG FC_CFT_PLUGIN_URL="http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cft-release//com/axway/cft/cg/plugin/cft-cg-plugin-distrib/"
-# SNAPSHOT VERSION OR RELEASE NUMBER
-ARG FC_CFT_RELEASE_TYPE="<fc_cft_release_type>"
-# FC_CFT_PLUGIN ARTIFACT
-ARG FC_CFT_PLUGIN_ARTIFACT="<fc_cft_plugin>"
-
-ARG FC_ST_PLUGIN_URL="http://swf-artifactory.lab1.lab.ptx.axway.int:80/artifactory/com.axway.cg-snapshot/com/axway/securetransport/securetransport-plugin-distrib/"
-#SNAPSHOT VERSION OR RELEASE NUMBER
-ARG FC_ST_RELEASE_TYPE="<fc_st_release_type>"
-# FC_ST_PLUGIN ARTIFACT
-ARG FC_ST_PLUGIN_ARTIFACT="<fc_st_plugin>"
-
 RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE_TYPE$FC_ARTIFACT" -P /home/axway/FC_KIT && \
-    wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_CFT_PLUGIN_URL$FC_CFT_RELEASE_TYPE$FC_CFT_PLUGIN_ARTIFACT" -P /home/axway/CFT_PLUGIN_KIT && \
-    wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_ST_PLUGIN_URL$FC_ST_RELEASE_TYPE$FC_ST_PLUGIN_ARTIFACT" -P /home/axway/ST_PLUGIN_KIT && \
-    unzip /home/axway/FC_KIT/$FC_ARTIFACT -d /opt/axway/FlowCentral/ && \
-    unzip /home/axway/CFT_PLUGIN_KIT/$FC_CFT_PLUGIN_ARTIFACT -d /opt/axway/FlowCentral/ && \
-    unzip /home/axway/ST_PLUGIN_KIT/$FC_ST_PLUGIN_ARTIFACT -d /opt/axway/FlowCentral/ && \
-    rm -rf /opt/axway/FlowCentral/resources/*
+    unzip /home/axway/FC_KIT/$FC_ARTIFACT -d /opt/axway/FlowCentral/
     
 
 
@@ -55,8 +38,11 @@ RUN echo "Adding username [axway] to the system." && \
     
 COPY --from=builder  --chown=axway:axway /opt/axway/FlowCentral /opt/axway/FlowCentral
 
-    
-COPY resources /opt/axway/resources
+RUN usermod -u 1000 axway
+
+USER axway
+
+COPY resources/conf_to_import.txt /opt/axway/resources/conf_to_import.txt
 COPY scripts/start.sh /opt/axway/scripts/start.sh
 
 RUN yum -y update && \
@@ -70,10 +56,6 @@ RUN yum -y update && \
     echo "*       hard    nofile   65535" >> /etc/security/limits.conf && \
     echo "*       soft    nofile   65535" >> /etc/security/limits.conf
 
-RUN usermod -u 1000 axway
-
 WORKDIR /opt/axway
-
-USER axway
 
 CMD ["/opt/axway/scripts/start.sh"]
