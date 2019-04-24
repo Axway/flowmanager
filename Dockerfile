@@ -40,8 +40,6 @@ COPY --from=builder  --chown=axway:axway /opt/axway/FlowCentral /opt/axway/FlowC
 
 RUN usermod -u 1000 axway
 
-USER axway
-
 COPY resources/conf_to_import.txt /opt/axway/resources/conf_to_import.txt
 COPY scripts/start.sh /opt/axway/scripts/start.sh
 
@@ -57,5 +55,7 @@ RUN yum -y update && \
     echo "*       soft    nofile   65535" >> /etc/security/limits.conf
 
 WORKDIR /opt/axway
+
+USER axway
 
 CMD ["/opt/axway/scripts/start.sh"]
