@@ -1,12 +1,25 @@
 # Changelog
+All notable changes to this project will be documented in this file.
 
-## [v1.0.1](https://git.ecd.axway.int/flowcentral/flowcentral-internal/tree/v1.0.1)
-[Full Changelog]((https://git.ecd.axway.int/flowcentral/flowcentral-internal/tree/)
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-**Implemented enhancements:**
+## [Unreleased]
 
-- Changed image base to openjdk:8u201-jdk-alpine
+## [1.0] - data
+### Added
+- Updata agent SSO Certificate
+- Upload public/private keys for Api Central
+- Ui Partner List
+- UI Partner Detail
 
-**Fixed bugs:**
+### Changed
+- ce am modificat
 
-- Api Central Token Regeneration
+### Removed
+- ce am scos
+
+### Improved
+- Docker base image to openjdk:8u201-jdk-alpine
+- Docker image size from 1.07GB to 272MB
+- 
