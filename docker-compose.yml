@@ -22,8 +22,6 @@ services:
         FC_HTTPS_CERT_ALIAS                          : "apicertificate"
         FC_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
 
-        #CERTIFICATE
-        FC_CERTIFICATE_EXPIRATION_NOTIFICATION       : "60"
 
         #CFT
         FC_CFT_SHARED_SECRET                         : "Secret01"
