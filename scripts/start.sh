@@ -16,7 +16,7 @@ set_status() {
 
   cd /opt/axway/FlowCentral
   echo "Configuring Product Started"
-  time java -jar opcmd.jar configure -n -s /opt/axway/FlowCentral/conf.properties -env --debug
+  time java -jar opcmd.jar configure -n -s /opt/axway/FlowCentral/conf.properties -env -debug -consolelog
   echo "Configuring Product Ended"
 
 tail -F $(find /opt/axway/fc_logs -name "*.log") &
