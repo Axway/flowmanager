@@ -16,7 +16,7 @@ set_status() {
 
   cd /opt/axway/FlowCentral
   echo "Configuring Product Started"
-  time java -jar opcmd.jar configure -n -s /opt/axway/FlowCentral/conf.properties -env
+  time java -jar opcmd.jar configure -n -s /opt/axway/FlowCentral/conf.properties -env --debug
   echo "Configuring Product Ended"
 
 tail -F $(find /opt/axway/fc_logs -name "*.log") &
@@ -24,7 +24,7 @@ if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then
   set_status "STARTING"
   touch ./runtime/initialized
   echo "Flow Central Starting"
-  time java -jar opcmd.jar start
+  time java -jar opcmd.jar start 
   echo "Flow Central Started"
   set_status "READY"
 else
