@@ -19,7 +19,26 @@ set_status() {
   time java -jar opcmd.jar configure -n -s /opt/axway/FlowCentral/conf.properties -env
   echo "Configuring Product Ended"
 
-tail -F $(find /opt/axway/fc_logs -name "*.log") &
+function monitor_log() {
+  echo > /opt/axway/monitored
+  local new=""
+  while true; do
+    new=""
+    (find $FC_GENERAL_CUSTOM_LOCATION_PATH -name "*.log" -o -name "*.log.0" || echo "") | while read file; do
+      if ! grep "$file" /opt/axway/monitored >/dev/null; then
+        echo $file >> /opt/axway/monitored;
+        new="$new $file"
+        tail -F $file | awk '{print "'"[$(basename "$file")] "'"$0}'&
+      fi
+    done
+    if [ ! -z "$new" ]; then
+      echo "[LOG MONITORING] $new"
+    fi
+    sleep 5
+  done
+}
+monitor_log &
+
 if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then 
   set_status "STARTING"
   touch ./runtime/initialized
