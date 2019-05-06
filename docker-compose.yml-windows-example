@@ -53,15 +53,15 @@ services:
     ports:
       - 8081:8081
     volumes:
-     - "./mounts/fc_logs:/opt/axway/fc_logs"
-     - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
-     - "./mounts/configs:/opt/axway/configs"
-     - "./mounts/configs:/opt/axway/FlowCentral/conf/license"
+     - "//D//flowcentral//mounts//fc_logs:/opt/axway/fc_logs"
+     - "//D//flowcentral//mounts//fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
+     - "//D//flowcentral//mounts//configs:/opt/axway/configs"
+     - "//D//flowcentral//mounts//configs:/opt/axway/FlowCentral/conf/license"
 
   fcmongo:
-    build: ./mongo-3.4/
+    image: axway/mongodb
     volumes:
-      - "./mounts/mongo_data:/data/db/"
+      - "mongo_data:/data/db/" # docker volume create mongo_data ## please be aware that on docker-compose down -v all data stored inside mongo_data volume will be deleted
     ports:
       - 27018:27018
     environment:
@@ -70,3 +70,7 @@ services:
       MONGODB_APPLICATION_DATABASE    : umcft
       MONGODB_APPLICATION_USER        : storage
       MONGODB_APPLICATION_PASS        : storage
+      
+volumes:
+  mongo_data:
+    driver: local
