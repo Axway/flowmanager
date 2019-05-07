@@ -52,6 +52,8 @@ services:
         FC_GOVERNANCE_CA_PASSWORD                    : "Secret01"
     ports:
       - 8081:8081
+    depends_on:
+      - fcmongo
     volumes:
      - "./mounts/fc_logs:/opt/axway/fc_logs"
      - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
