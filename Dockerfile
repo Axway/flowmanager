@@ -49,3 +49,9 @@ WORKDIR /opt/axway/FlowCentral
 
 
 CMD ["/opt/axway/scripts/start.sh"]
+
+HEALTHCHECK --interval=1m \
+            --timeout=5s \
+            --start-period=1m \
+            --retries=3 \
+            CMD java -jar opcmd.jar status
