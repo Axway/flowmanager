@@ -18,7 +18,7 @@ If needed, see [Get started with Docker](https://docs.docker.com/get-started/) f
 - Docker-Compose version 1.17.0 or higher
 - Create the directories where you wish to bind your volumes
 - License and certificates
--	Optional: MongoDB instance
+- Optional: MongoDB instance
 
 *Note* You may use an existing MongoDB instance or our bundled up MongoDB service which will be deployed by default when running with our docker-compose.
 
@@ -37,7 +37,7 @@ For unix /etc/docker/daemon.json
 
 Login to local docker registry
 
-*Note*  docker login cgqajenkins.lab.buch.axway.int:8083 -u admin -p admin123
+*Note* docker login cgqajenkins.lab.buch.axway.int:8083 -u admin -p admin123
 
 
 
