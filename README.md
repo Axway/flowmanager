@@ -27,9 +27,11 @@ If needed, see [Get started with Docker](https://docs.docker.com/get-started/) f
 Add local registry to docker installation daemon.conf file:
 
 For unix /etc/docker/daemon.json
+
 {
 "insecure-registries": ["cgqajenkins.lab.buch.axway.int:8083"]
 }
+
 !!! The docker service needs to be restarted in order to apply the changes.
 
 
