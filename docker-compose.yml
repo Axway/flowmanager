@@ -164,4 +164,4 @@ services:
 
 secrets:
   cft-license:
-    file: ./cft.key
+    file: ./licenses/cft.key
