@@ -17,7 +17,7 @@ RUN echo "Adding username [axway] to the system." && \
 # install FC OS prerequisites
 RUN yum install --quiet -y wget unzip
 
-ARG FC_URL="http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cg-snapshot/com/axway/products/ume/fc/ume-product-opnode-flowcentral/"
+ARG FC_URL="http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cg-snapshot/com/axway/products/ume/fc/ume-product-opnode-flowcentral-distrib/"
 #ARG FC_URL="http://repository4.ecd.axway.int/content/repositories/cg-snapshot/com/axway/flowcentral/delivery/flowcentral-delivery-light-distrib/"
 # SNAPSHOT VERSION OR RELEASE NUMBER
 ARG FC_RELEASE_TYPE="<fc_release_type>"
