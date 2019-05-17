@@ -10,7 +10,7 @@ GENERAL_SMTP_HOST=localhost
 GENERAL_SMTP_PORT=25
 
 #Certificates
-FC_CERTIFICATE_EXPIRATION_NOTIFICATION=60
+CERTIFICATE_EXPIRATION_NOTIFICATION=60
 
 #APIC
 APIC_TOKENURL=https://login.axway.com/auth/realms/Broker/protocol/openid-connect/token
