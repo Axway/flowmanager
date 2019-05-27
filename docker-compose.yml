@@ -17,6 +17,7 @@ services:
         FC_GENERAL_LOGGING_LEVEL                     : "INFO"
         FC_GENERAL_LICENSE                           : "license.xml"
         FC_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/fc_logs"
+        FC_LOGS_CONSOLE                              : "yes"
 
         #HTTPS
         FC_HTTPS_USE_CUSTOM_CERT                     : "true"
