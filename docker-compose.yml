@@ -16,7 +16,7 @@ services:
         FC_GENERAL_ENCRYPTION_KEY                    : "Secret01"
         FC_GENERAL_LOGGING_LEVEL                     : "INFO"
         FC_GENERAL_LICENSE                           : "license.xml"
-        FC_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/fc_logs"
+        FC_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/FlowCentral/logs"
         FC_LOGS_CONSOLE                              : "yes"
 
         #HTTPS
@@ -41,6 +41,9 @@ services:
         FC_MONGODB_PORT                              : "27018"
         FC_MONGODB_USER_NAME                         : "storage"
         FC_MONGODB_USER_PASSWORD                     : "storage"
+        FC_MONGODB_USE_SSL                           : "false"
+        FC_MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/truststore.jks"
+        FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
         FC_BUSINESS_CA_CERTIF_ALIAS                  : "inter_bus"
@@ -57,7 +60,7 @@ services:
     depends_on:
       - fcmongo
     volumes:
-     - "./mounts/fc_logs:/opt/axway/fc_logs"
+     #- "./mounts/fc_logs:/opt/axway/fc_logs"
      - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
      - "./mounts/configs:/opt/axway/configs"
      - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
