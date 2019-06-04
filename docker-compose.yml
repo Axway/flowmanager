@@ -42,7 +42,7 @@ services:
         FC_MONGODB_USER_NAME                         : "storage"
         FC_MONGODB_USER_PASSWORD                     : "storage"
         FC_MONGODB_USE_SSL                           : "false"
-        FC_MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/truststore.jks"
+        MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/truststore.jks"
         FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
