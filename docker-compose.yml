@@ -61,7 +61,7 @@ services:
         FC_JVM_XMN                                   : "768M"
         FC_JVM_DEBUG_ENABLED                         : "false"
         FC_JVM_DEBUG_PORT                            : "8000"
-        FC_JVM_DEBUG_SUPSEND                         : "true"
+        FC_JVM_DEBUG_SUSPEND                         : "true"
         #FC_JVM_CUSTOM_ARGS                          : "IF NEEDED"
         
         #EXTERNAL
