@@ -54,7 +54,21 @@ services:
         FC_GOVERNANCE_CA_CERTIF_ALIAS                : "passportcaproduct"
         FC_GOVERNANCE_CA_FILE                        : "/opt/axway/configs/governanceca.jks"
         FC_GOVERNANCE_CA_PASSWORD                    : "Secret01"
+        
+        #JVM
+        FC_JVM_XMX                                   : "2G"
+        FC_JVM_XMS                                   : "512M"
+        FC_JVM_XMN                                   : "768M"
+        FC_JVM_DEBUG_ENABLED                         : "false"
+        FC_JVM_DEBUG_PORT                            : "8000"
+        FC_JVM_DEBUG_SUPSEND                         : "true"
+        #FC_JVM_CUSTOM_ARGS                          : "IF NEEDED"
+        
+        #EXTERNAL
+        FC_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"                      
+        FC_EXTERNAL_UI_PORT                          : "31617"
 
+        
     ports:
       - 8081:8081
     depends_on:
