@@ -61,12 +61,12 @@ services:
         FC_JVM_XMN                                   : "768M"
         FC_JVM_DEBUG_ENABLED                         : "false"
         FC_JVM_DEBUG_PORT                            : "8000"
-        FC_JVM_DEBUG_SUSPEND                         : "true"
+        FC_JVM_DEBUG_SUSPEND                         : "false"
         #FC_JVM_CUSTOM_ARGS                          : "IF NEEDED"
         
         #EXTERNAL
-        FC_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"                      
-        FC_EXTERNAL_UI_PORT                          : "31617"
+        FC_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"    #EXTERNAL_FQDN                  
+        FC_EXTERNAL_UI_PORT                          : "31617"                                #EXTERNAL_PORT 
 
         
     ports:
