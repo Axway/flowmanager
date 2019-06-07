@@ -4,7 +4,7 @@ set -m
 mongodb_cmd="mongod --storageEngine $STORAGE_ENGINE"
 cmd="$mongodb_cmd --httpinterface --rest --master"
 if [ "$AUTH" == "yes" ]; then
-    cmd="$cmd --port=27018 --auth"
+    cmd="$cmd --port=27030 --auth"
 fi
  
 if [ "$JOURNALING" == "no" ]; then
