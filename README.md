@@ -83,12 +83,13 @@ cd docker-flowcentral
  - mkdir -p /home/$USER/mounts/fc_plugins
 *Note* In order to persist data from the MongoDB container we create volumes where the Mongo data and Mongo configuration files will be stored. **TAKE HEED**, you may use any MongoDB image you desire as Axway does not offer support and/or maintenance for the MongoDB image bundled alongside Flow Central.
 
- - mkdir -p /home/$USER/volume_mount/mongo_data      # Mongo Database files.
- - mkdir -p /home/$USER/volume_mount/mongo_conf      # Mongo Database configuration folder.
+ - mkdir -p /home/$USER/mounts/mongo_data      # Mongo Database files.
+ - mkdir -p /home/$USER/mounts/mongo_config      # Mongo Database configuration folder.
+ - mkdir -p /home/$USER/mounts/mongo_certificates #Mongo Certificates 
 
 *Note* In order for the Flow Central and MongoDB services to be able to operate you have to give the appropriate permissions to folder where the volumes will be mounted.
 
-Example : chmod -R 777 /home/$USER/volume_mount
+Example : chmod -R 777 /home/$USER/mounts
 
 *Note* For additional details regarding the keys used for connecting and authenticating to the Axway services refer to the section **Service authentication and authorization** at the following URL: https://techweb.axway.com/confluence/display/DOCFC/Docker+compose+API+Central+parameters.
 
