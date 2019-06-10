@@ -7,6 +7,8 @@ RUN echo "Adding username [axway] to the system." && \
     mkdir -p /opt/axway/FlowCentral/logs && \
     mkdir -p /opt/axway/FlowCentral/conf/license && \
     mkdir -p /opt/axway/configs && \
+    mkdir -p /opt/axway/FlowCentral/resources && \
+    mkdir -p /opt/axway/FlowCentral/conf/schemas/storage/ && \
     mkdir -p /opt/axway/FlowCentral/data/keys/com.axway.nodes.ume && \
     mkdir -p /home/axway && \
     chown -R axway:axway /home/axway && \
