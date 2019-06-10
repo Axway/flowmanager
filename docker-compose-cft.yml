@@ -98,3 +98,98 @@ services:
       MONGODB_USE_SSL                 : "true"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
+      
+  cft-332:
+    image: cgqajenkins.lab.buch.axway.int:8083/docker-cft:3.3.2
+    hostname: "cft-332"
+    environment:
+      FC_HOST:                "flowcentral"
+      FC_PORT:                "8081"
+      FC_SHARED_SECRET:       "Secret01"
+      FC_PERIODICITY:         "30"
+      CFT_CG_HOST:            "flowcentral"
+      CFT_CG_PORT:            "8081"
+      CFT_CG_SHARED_SECRET:   "Secret01"
+      CFT_CG_PERIODICITY:     "30"
+      CFT_HOST:               "cft-332"
+      CFT_PORT:               "8093"
+      CFT_GROUP:              "Production.Linux"
+      CFT_KEY:                "cat /run/secrets/cft-license"
+      CFT_POLICY:             ""
+      CFT_PESIT_PORT:         "17611"
+      CFT_PESITSSL_PORT:      "18092"
+      CFT_FQDN:               "cft-332"
+      CFT_INSTANCE_ID:        "cft-332"
+      CFT_INSTANCE_GROUP:     "dev.docker"
+      CFT_CATALOG_SIZE:       "1000"
+      CFT_COM_SIZE:           "1000"
+      CFT_COMS_PORT:          "17651"
+      CFT_COPILOT_PORT:       "17661"
+      CFT_COPILOT_CG_PORT:    "17671"
+      CFT_RESTAPI_PORT:       "17681"
+      CFT_CG_ENABLE:          "YES"
+      CFT_CG_POLICY:          ""
+      CFT_JVM:                "1024"
+      CFT_CFTDIRRUNTIME:      "/opt/axway/cft/runtime"
+    ports:
+      - "17611:17611"
+      - "17621:17621"
+      - "17651:17651"
+      - "17661:17661"
+      - "17671:17671"
+      - "17681:17681"
+      - "18092:18092"
+    secrets:
+      - cft-license
+    depends_on:
+      - flowcentral
+
+  cft-34:
+    image: cgqajenkins.lab.buch.axway.int:8083/docker-cft:3.4 
+    hostname: "docker-cft-34"
+    environment:
+      FC_HOST:                "flowcentral"
+      FC_PORT:                "8081"
+      FC_SHARED_SECRET:       "Secret01"
+      FC_PERIODICITY:         "30"
+      CFT_CG_HOST:            "flowcentral"
+      CFT_CG_PORT:            "8081"
+      CFT_CG_SHARED_SECRET:   "Secret01"
+      CFT_CG_PERIODICITY:     "30"
+      CFT_HOST:               "docker-cft-34"
+      CFT_PORT:               "8093"
+      CFT_GROUP:              "Production.Linux"
+      CFT_KEY:                "cat /run/secrets/cft-license"
+      CFT_POLICY:             ""
+      CFT_PESIT_PORT:         "1761"
+      CFT_PESITSSL_PORT:      "18092"
+      CFT_FQDN:               "cft-34"
+      CFT_INSTANCE_ID:        "cft-34"
+      CFT_INSTANCE_GROUP:     "docker"
+      CFT_CATALOG_SIZE:       "1000"
+      CFT_COM_SIZE:           "1000"
+      CFT_COMS_PORT:          "1765"
+      CFT_COPILOT_PORT:       "1766"
+      CFT_COPILOT_CG_PORT:    "1767"
+      CFT_RESTAPI_PORT:       "1768"
+      CFT_CG_ENABLE:          "YES"
+      CFT_CG_POLICY:          ""
+      CFT_JVM:                "1024"
+      CFT_CFTDIRRUNTIME:      "/opt/axway/cft/runtime"
+    ports:
+      - "1761:1761"
+      - "1762:1762"
+      - "1765:1765"
+      - "1766:1766"
+      - "1767:1767"
+      - "1768:1768"
+      - "8092:8092"
+    secrets:
+      - cft-license
+    depends_on:
+      - flowcentral
+
+secrets:
+  cft-license:
+    file: ./licenses/cft.key
+
