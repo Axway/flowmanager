@@ -131,7 +131,6 @@ The following tables illustrate a list of available parameters from the docker-c
 
  **Parameter**                   |  **Values**  |  **Description**
  ------------------------------- | :----------: | ---------------
-#General
 ACCEPT_EULA                      |  \<string>   |  Parameter which indicates your acceptance of the End User License Agreement (i.e. EULA).
 FC_GENERAL_FQDN                  |  \<string>   |  Host address of the Flow Central instance.
 FC_GENERAL_HOSTNAME              |  \<string>   |  Host name of the Flow Central instance.
@@ -141,24 +140,16 @@ FC_GENERAL_LOGGING_LEVEL         |  \<string>   |  Flow Central's Logging Level.
 FC_GENERAL_LICENSE               |  \<string>   |  Flow Central's license name.
 FC_GENERAL_CUSTOM_LOCATION_PATH  |  \<string>   |  Flow Central's logs location in docker container.
 FC_LOGS_CONSOLE                  |  \<string>   |  Flow Central's redirection of logs to console.
-
-#HTTPS
 FC_HTTPS_USE_CUSTOM_CERT         |  \<string>   |  Flow Central's custom https certificate.
 FC_HTTPS_KEYSTORE                |  \<string>   |  Flow Central's certificate file location inside docker container.
 FC_HTTPS_CERT_ALIAS              |  \<string>   |  Flow Central's UI certificate alias.
 FC_HTTPS_KEYSTORE_PASSWORD       |  \<string>   |  Flow Central's UI certificate password.
-
-#CFT
 FC_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret.
-
-#APIC
 FC_APIC_USE_CATALOG              |  \<string>   |  Enable or disable connection to ApiCatalog.
 FC_APIC_HOST                     |  \<string>   |  ApiCatalog Host.
 FC_APIC_CLIENTID                 |  \<string>   |  ApiCatalog Client ID.
 FC_APIC_PUBLICKEY                |  \<string>   |  ApiCatalog Public Key.
 FC_APIC_PRIVATEKEY               |  \<string>   |  ApiCatalog Private Key.
-
-#Mongo
 FC_MONGODB_HOST                  |  \<string>   |  MongoDB host name.
 FC_MONGODB_PORT                  |  \<number>   |  MongoDB port.
 FC_MONGODB_USER_NAME             |  \<string>   |  MongoDB user name.
@@ -166,29 +157,21 @@ FC_MONGODB_USER_PASSWORD         |  \<string>   |  MongoDB password.
 FC_MONGODB_USE_SSL               |  \<string>   |  MongoDB use ssl.
 FC_MONGODB_TRUSTSTORE_FILE       |  \<string>   |  MongoDB certificate.
 FC_DISABLE_CHECK_REACHABLE_HOST  |  \<string>   |  MongoDB disable host alive check.
-
-#Business
-FC_BUSINESS_CA_CERTIF_ALIAS     |  \<string>   |  Alias custom business certificate.
-FC_BUSINESS_CA_FILE             |  \<string>   |  File name of the custom business certificate.
-FC_BUSINESS_CA_PASSWORD         |  \<string>   |  Password of the custom business certificate.
-
-#GOVERNANCE
-FC_GOVERNANCE_CA_CERTIF_ALIAS   |  \<string>   |  Alias of the custom governance certificate.
-FC_GOVERNANCE_CA_FILE           |  \<string>   |  File name of the custom governance certificate.
-FC_GOVERNANCE_CA_PASSWORD       |  \<string>   |  Password of the custom governance certificate.
-        
-#JVM
-FC_JVM_XMX                      |  \<string>   |  JVM_XMX Custom Properties.
-FC_JVM_XMS                      |  \<string>   |  JVM_XMS Custom Properties.
-FC_JVM_XMN                      |  \<string>   |  JVM_XMN Custom Properties. 
-FC_JVM_DEBUG_ENABLED            |  \<string>   |  JVM Disable/Enable Debug.
-FC_JVM_DEBUG_PORT               |  \<string>   |  JVM Debug Port.
-FC_JVM_DEBUG_SUSPEND            |  \<string>   |  JVM Debug suspend.
-#FC_JVM_CUSTOM_ARGS             |  \<string>   |  JVM custom arguments.
-        
-#EXTERNAL
-FC_EXTERNAL_FQDN                |  \<string>   |  External FQDN.           
-FC_EXTERNAL_UI_PORT             |  \<string>   |  External Port.
+FC_BUSINESS_CA_CERTIF_ALIAS      |  \<string>   |  Alias custom business certificate.
+FC_BUSINESS_CA_FILE              |  \<string>   |  File name of the custom business certificate.
+FC_BUSINESS_CA_PASSWORD          |  \<string>   |  Password of the custom business certificate.
+FC_GOVERNANCE_CA_CERTIF_ALIAS    |  \<string>   |  Alias of the custom governance certificate.
+FC_GOVERNANCE_CA_FILE            |  \<string>   |  File name of the custom governance certificate.
+FC_GOVERNANCE_CA_PASSWORD        |  \<string>   |  Password of the custom governance certificate.
+FC_JVM_XMX                       |  \<string>   |  JVM_XMX Custom Properties.
+FC_JVM_XMS                       |  \<string>   |  JVM_XMS Custom Properties.
+FC_JVM_XMN                       |  \<string>   |  JVM_XMN Custom Properties. 
+FC_JVM_DEBUG_ENABLED             |  \<string>   |  JVM Disable/Enable Debug.
+FC_JVM_DEBUG_PORT                |  \<string>   |  JVM Debug Port.
+FC_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
+#FC_JVM_CUSTOM_ARGS              |  \<string>   |  JVM custom arguments.
+FC_EXTERNAL_FQDN                 |  \<string>   |  External FQDN.           
+FC_EXTERNAL_UI_PORT              |  \<string>   |  External Port.
 
 ## Flow Central service operations
 
