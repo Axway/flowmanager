@@ -14,24 +14,24 @@ RET=1
 while [[ RET -ne 0 ]]; do
     echo "=> Waiting for confirmation of MongoDB service startup..."
     sleep 5
-    mongo admin  --port=27030 --eval "help" >/dev/null 2>&1
+    mongo admin  --port=${MONGODB_PORT} --eval "help" >/dev/null 2>&1
     RET=$?
 done
 
 # Create the admin user
 echo "=> Creating admin user with a password in MongoDB"
-mongo admin  --port=27030 --eval "db.createUser({user: '$MONGODB_ADMIN_USER', pwd: '$MONGODB_ADMIN_PASS', roles:[{role:'root',db:'admin'}]});"
+mongo admin  --port=${MONGODB_PORT} --eval "db.createUser({user: '$MONGODB_ADMIN_USER', pwd: '$MONGODB_ADMIN_PASS', roles:[{role:'root',db:'admin'}]});"
 
 sleep 3
 
 # If we've defined the MONGODB_APPLICATION_DATABASE environment variable and it's a different database
 # than admin, then create the user for that database.
 # First it authenticates to Mongo using the admin user it created above.
-# Then it switches to the REST API database and runs the createUser command 
+# Then it switches to the REST API database and runs the createUser command
 # to actually create the user and assign it to the database.
 if [ "$MONGODB_APPLICATION_DATABASE" != "admin" ]; then
     echo "=> Creating an ${MONGODB_APPLICATION_DATABASE} user with a password in MongoDB"
-    mongo admin  --port=27030 -u $MONGODB_ADMIN_USER -p $MONGODB_ADMIN_PASS << EOF
+    mongo admin  --port=${MONGODB_PORT} -u $MONGODB_ADMIN_USER -p $MONGODB_ADMIN_PASS << EOF
 use $MONGODB_APPLICATION_DATABASE
 db.createUser({user: '$MONGODB_APPLICATION_USER', pwd: '$MONGODB_APPLICATION_PASS', roles:[{role:'dbOwner', db:'$MONGODB_APPLICATION_DATABASE'}]})
 EOF
@@ -47,7 +47,7 @@ touch /data/db/.mongodb_password_set
 echo "========================================================================"
 echo "You can now connect to the admin MongoDB server using:"
 echo ""
-echo "    mongo admin  --port=27030 -u $MONGODB_ADMIN_USER -p $MONGODB_ADMIN_PASS --host <host> --port <port>"
+echo "    mongo admin  --port ${MONGODB_PORT} -u $MONGODB_ADMIN_USER -p $MONGODB_ADMIN_PASS --host <host>"
 echo ""
 echo "Please remember to change the admin password as soon as possible!"
 echo "========================================================================"

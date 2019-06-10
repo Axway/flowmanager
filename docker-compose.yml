@@ -82,7 +82,8 @@ services:
      - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
 
   fcmongo:
-    image: cgqajenkins.lab.buch.axway.int:8083/flowcentral-mongo:3.6
+    build: ./mongo_3.6/
+    #image: cgqajenkins.lab.buch.axway.int:8083/flowcentral-mongo:3.6
     hostname: fcmongo
     volumes:
        - "./mounts/mongo_data:/data/db/"

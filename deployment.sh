@@ -16,13 +16,18 @@ cd Docker-FlowCentral
 mkdir -p ./mounts/configs
 mkdir -p ./mounts/fc_logs
 mkdir -p ./mounts/fc_keys
+mkdir -p ./mounts/fc_resources
+mkdir -p ./mounts/fc_plugins
+
 mkdir -p ./mounts/mongo_data
+mkdir -p ./mounts/mongo_certificates
+mkdir -p ./mounts/mongo_config
 
 chmod -R 777 $PWD/mounts/
-chmod 777 mongo-3.4/*.sh 
-
-unzip -o licenses/apic.z_i_p -d $PWD/mounts/configs && rm -rf $PWD/mounts/configs/*.der
+chmod 777 mongo_3.6/*.sh 
 
 cp ./licenses/*.jks "$PWD/mounts/configs"
-
+cp ./licenses/*.pem "$PWD/mounts/configs"
 cp ./licenses/license.xml "$PWD/mounts/configs"
+
+cp ./mongo_3.6/resources/ssl/*.pem "$PWD/mounts/mongo_certificates/"
