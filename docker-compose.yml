@@ -68,6 +68,14 @@ services:
         #FC_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"    #EXTERNAL_FQDN                  
         #FC_EXTERNAL_UI_PORT                          : "31617"                                #EXTERNAL_PORT 
 
+        #Sentinel 
+        FC_SENTINEL_AUDIT_ENABLED                     : "false"
+        FC_SENTINEL_FRONT_END_HOST                    : "localhost"
+        FC_SENTINEL_FRONT_END_PORT                    : "1305"
+        FC_SENTINEL_FRONT_END_SSL_PORT                : "1303"
+        FC_SENTINEL_UI_PORT                           : "1309"
+        FC_SENTINEL_USE_CG_CA                         : "true"
+
         
     ports:
       - 8081:8081
