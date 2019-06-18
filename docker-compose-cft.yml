@@ -1,4 +1,4 @@
-versioN: '3.4'
+version: '3.4'
 services:
   flowcentral:
     image: cgqajenkins.lab.buch.axway.int:8083/flowcentral-openjdk:latest
