@@ -36,6 +36,7 @@ FROM openjdk:8u201-jdk-alpine
 RUN apk add -q shadow && \
     groupadd axway && \
     adduser -D -u 1000 -h /opt/axway -g '' -G axway axway && \
+    apk add -q bind-tools && \
     echo "*       hard    nproc   65535" >> /etc/security/limits.conf && \
     echo "*       soft    nproc   65535" >> /etc/security/limits.conf && \
     echo "*       hard    nofile   65535" >> /etc/security/limits.conf && \
