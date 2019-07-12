@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowcentral:
-    image: axway/flowcentral:1.0.20190425
+    image: axway/flowcentral:1.0.20190712
     hostname: "flowcentral"
     stdin_open: true
     tty: true
@@ -16,6 +16,8 @@ services:
         FC_GENERAL_ENCRYPTION_KEY                    : "Secret01"
         FC_GENERAL_LOGGING_LEVEL                     : "INFO"
         FC_GENERAL_LICENSE                           : "license.xml"
+        FC_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/fc_logs"
+        FC_LOGS_CONSOLE                              : "yes"
 
         #HTTPS
         FC_HTTPS_USE_CUSTOM_CERT                     : "true"
@@ -40,6 +42,9 @@ services:
         FC_MONGODB_PORT                              : "27018"
         FC_MONGODB_USER_NAME                         : "storage"
         FC_MONGODB_USER_PASSWORD                     : "storage"
+        FC_MONGODB_USE_SSL                           : "false"
+        FC_MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/truststore.jks"
+        FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
         FC_BUSINESS_CA_CERTIF_ALIAS                  : "business"
@@ -50,25 +55,53 @@ services:
         FC_GOVERNANCE_CA_CERTIF_ALIAS                : "governance"
         FC_GOVERNANCE_CA_FILE                        : "/opt/axway/configs/governanceca.p12"
         FC_GOVERNANCE_CA_PASSWORD                    : "Secret01"
+
+        #JVM
+        FC_JVM_XMX                                   : "2G"
+        FC_JVM_XMS                                   : "512M"
+        FC_JVM_XMN                                   : "768M"
+        FC_JVM_DEBUG_ENABLED                         : "false"
+        FC_JVM_DEBUG_PORT                            : "8000"
+        FC_JVM_DEBUG_SUSPEND                         : "false"
+        #FC_JVM_CUSTOM_ARGS                          : ""
+        
+        #EXTERNAL
+        #FC_EXTERNAL_FQDN                            : "flowcentral.example.com"             
+        #FC_EXTERNAL_UI_PORT                         : "443"                                
+
+        #Sentinel 
+        FC_SENTINEL_AUDIT_ENABLED                    : "false"
+        FC_SENTINEL_FRONT_END_HOST                   : "localhost"
+        FC_SENTINEL_FRONT_END_PORT                   : "1305"
+        FC_SENTINEL_FRONT_END_SSL_PORT               : "1303"
+        FC_SENTINEL_UI_PORT                          : "1309"
+        FC_SENTINEL_USE_CG_CA                        : "true"
     ports:
       - 8081:8081
     depends_on:
       - fcmongo
     volumes:
+     - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
+     - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
      - "./mounts/fc_logs:/opt/axway/fc_logs"
      - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
      - "./mounts/configs:/opt/axway/configs"
      - "./mounts/configs:/opt/axway/FlowCentral/conf/license"
 
   fcmongo:
-    build: ./mongo-3.4/
+    build: ./mongo_3.6/
+    hostname: fcmongo
     volumes:
-      - "./mounts/mongo_data:/data/db/"
-    ports:
-      - 27018:27018
+       - "./mounts/mongo_data:/data/db/"
+       - "./mounts/mongo_certificates:/certificates"
+       - "./mounts/mongo_config:/configs"
     environment:
       MONGODB_ADMIN_USER              : root
       MONGODB_ADMIN_PASS              : storage
       MONGODB_APPLICATION_DATABASE    : umcft
       MONGODB_APPLICATION_USER        : storage
       MONGODB_APPLICATION_PASS        : storage
+      MONGODB_PORT                    : "27018" # MUST MATCH THE ONE SPECIFIED IN THE FLOWCENTRAL ENVIRONMENT VARIABLE
+      MONGODB_USE_SSL                 : "false"
+      MONGODB_ROOT_CA                 : "rootCA.pem"
+      MONGODB_CERTIFICATE             : "mongodb.pem"
