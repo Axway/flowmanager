@@ -249,4 +249,4 @@ Example:
 
 ## Security notices
 
-`*Note*` The image axway/mongodb is using the official mongo:3.4 image on top of it we added some scripts specific to the application **we are not managing the mongo:3.6 image**.
+`*Note*` The image axway/mongodb is using the official mongo:3.6 image on top of it we added some scripts specific to the application **we are not managing the mongo:3.6 image**.
