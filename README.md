@@ -152,7 +152,7 @@ FC_JVM_DEBUG_ENABLED               |  \<string>   |  JVM Debug.
 FC_JVM_DEBUG_PORT                  |  \<string>   |  JVM Debug Port.         
 FC_JVM_DEBUG_SUSPEND               |  \<string>   |  JVM Debug Suspend.  
 FC_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.
-FC_EXTERNAL_FQDN                   |  \<string>   |  FlowCentral external FQDN. (For when you are using the product alongside a loadbalancer)               
+FC_EXTERNAL_FQDN                   |  \<string>   |  FlowCentral external FQDN. (For when you are using the product from behind a loadbalancer)               
 FC_EXTERNAL_UI_PORT                |  \<string>   |  FlowCentral external port.           
 FC_SENTINEL_AUDIT_ENABLED          |  \<string>   |  Enable/Disable Sentinel audit.
 FC_SENTINEL_FRONT_END_HOST         |  \<string>   |  Sentinel FQDN.  
