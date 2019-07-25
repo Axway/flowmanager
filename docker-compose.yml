@@ -1,14 +1,14 @@
 version: '3.4'
 services:
   flowcentral:
-    image: axway/flowcentral:1.0.20190712
-    hostname: "flowcentral"
+    image: cgqajenkins.lab.buch.axway.int:8083/flowcentral-openjdk:latest
     stdin_open: true
+    hostname: "flowcentral"
     tty: true
     environment:
         ### EULA ###
-        ACCEPT_EULA: "no"
-
+        ACCEPT_EULA: "yes"
+        
         #General
         FC_GENERAL_FQDN                              : "flowcentral"
         FC_GENERAL_HOSTNAME                          : "flowcentral"
@@ -22,7 +22,7 @@ services:
         #HTTPS
         FC_HTTPS_USE_CUSTOM_CERT                     : "true"
         FC_HTTPS_KEYSTORE                            : "/opt/axway/configs/uicert.p12"
-        FC_HTTPS_CERT_ALIAS                          : "ui"
+        FC_HTTPS_CERT_ALIAS                          : "apicertificate"
         FC_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
 
 
@@ -32,30 +32,29 @@ services:
         #APIC
         FC_APIC_USE_CATALOG                          : "true"
         FC_APIC_HOST                                 : "https://apicentral.axway.com"
-        FC_APIC_CLIENTID                             : "DOSA_XXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        FC_APIC_CLIENTID                             : "DOSA_3c4ebd8cc4254c69a63ba3c0930ffe5b"
         FC_APIC_PUBLICKEY                            : "/opt/axway/configs/catalog-public-key.pem"
         FC_APIC_PRIVATEKEY                           : "/opt/axway/configs/catalog-private-key.pem"
-        FC_APIC_TOKENURL                             : "https://login.axway.com/auth/realms/Broker/protocol/openid-connect/token"
-
+        
         #Mongo
         FC_MONGODB_HOST                              : "fcmongo"
         FC_MONGODB_PORT                              : "27018"
         FC_MONGODB_USER_NAME                         : "storage"
         FC_MONGODB_USER_PASSWORD                     : "storage"
         FC_MONGODB_USE_SSL                           : "false"
-        FC_MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/truststore.jks"
+        FC_MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/mongodb.jks"
         FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
-        FC_BUSINESS_CA_CERTIF_ALIAS                  : "business"
+        FC_BUSINESS_CA_CERTIF_ALIAS                  : "inter_bus"
         FC_BUSINESS_CA_FILE                          : "/opt/axway/configs/businessca.p12"
         FC_BUSINESS_CA_PASSWORD                      : "Secret01"
 
         #GOVERNANCE
-        FC_GOVERNANCE_CA_CERTIF_ALIAS                : "governance"
+        FC_GOVERNANCE_CA_CERTIF_ALIAS                : "passportcaproduct"
         FC_GOVERNANCE_CA_FILE                        : "/opt/axway/configs/governanceca.p12"
         FC_GOVERNANCE_CA_PASSWORD                    : "Secret01"
-
+      
         #JVM
         FC_JVM_XMX                                   : "2G"
         FC_JVM_XMS                                   : "512M"
@@ -63,33 +62,25 @@ services:
         FC_JVM_DEBUG_ENABLED                         : "false"
         FC_JVM_DEBUG_PORT                            : "8000"
         FC_JVM_DEBUG_SUSPEND                         : "false"
-        #FC_JVM_CUSTOM_ARGS                          : ""
+        #FC_JVM_CUSTOM_ARGS                          : "IF NEEDED"
         
         #EXTERNAL
-        #FC_EXTERNAL_FQDN                            : "flowcentral.example.com"             
-        #FC_EXTERNAL_UI_PORT                         : "443"                                
+        #FC_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"    #EXTERNAL_FQDN                  
+        #FC_EXTERNAL_UI_PORT                          : "31617"                                #EXTERNAL_PORT 
 
-        #Sentinel 
-        FC_SENTINEL_AUDIT_ENABLED                    : "false"
-        FC_SENTINEL_FRONT_END_HOST                   : "localhost"
-        FC_SENTINEL_FRONT_END_PORT                   : "1305"
-        FC_SENTINEL_FRONT_END_SSL_PORT               : "1303"
-        FC_SENTINEL_UI_PORT                          : "1309"
-        FC_SENTINEL_USE_CG_CA                        : "true"
+        
     ports:
       - 8081:8081
     depends_on:
       - fcmongo
     volumes:
-     - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
-     - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
      - "./mounts/fc_logs:/opt/axway/fc_logs"
      - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
      - "./mounts/configs:/opt/axway/configs"
-     - "./mounts/configs:/opt/axway/FlowCentral/conf/license"
+     - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
 
   fcmongo:
-    build: ./mongo_3.6/
+    image: cgqajenkins.lab.buch.axway.int:8083/flowcentral-mongo:3.6
     hostname: fcmongo
     volumes:
        - "./mounts/mongo_data:/data/db/"
@@ -105,3 +96,4 @@ services:
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
+

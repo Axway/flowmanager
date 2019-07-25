@@ -48,7 +48,7 @@ default_days = 10
 
 EOF
 
-    openssl req -x509 -passin pass:$password -passout pass:$password -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU/ST=StateUnknown/L=NoWhere/emailAddress=$email"
+    openssl req -x509 -passin pass:$password -passout pass:$password -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
 }
 
 function gen_cert() {
@@ -57,7 +57,7 @@ function gen_cert() {
     local caroot=./custom-ca/$caname
     local site="$name.$caname.com"
     echo "gen_cert $caname $name $site  ..."
-    openssl req -passin pass:$password -passout pass:$password -batch -newkey rsa:2048 -out $caroot/$name-csr.pem -keyout $caroot/$name-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU/ST=StateUnknown/L=NoWhere/emailAddress=$email"
+    openssl req -passin pass:$password -passout pass:$password -batch -newkey rsa:2048 -out $caroot/$name-csr.pem -keyout $caroot/$name-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
     openssl ca -config $caroot/ca.cnf -passin pass:$password -batch -notext -in $caroot/$name-csr.pem -out $caroot/$name.pem
 }
 

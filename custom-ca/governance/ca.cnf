@@ -1,0 +1,19 @@
+
+[ ca ]
+default_ca = miniCA
+
+[policy_match]
+commonName = supplied
+countryName = optional
+stateOrProvinceName = optional
+
+[ miniCA ]
+certificate = ./custom-ca/governance/cacert.pem
+database = ./custom-ca/governance/index.txt
+private_key = ./custom-ca/governance/cacert-key.pem
+new_certs_dir = ./custom-ca/governance
+default_md = sha1
+policy = policy_match
+serial = ./custom-ca/governance/serial
+default_days = 10
+
