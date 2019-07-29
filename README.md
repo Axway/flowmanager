@@ -99,7 +99,8 @@ In order to use a custom MongoDB service you must first comment/remove the entri
 
 Furthermore you must edit the `flowcentral` service located in the same file. You must fill out the MongoDB environment variables with the appropriate values specific to your custom solution. Finally you must comment/remove the entry `depends_on` from the `flowcentral`.
 
-When using mongo with ssl the truststore must be generated and put in the apropriated path 
+When using mongo with ssl the truststore must be generated and put in the apropriated path.
+
 *Note* At this moment we support only jks truststores
 
 
