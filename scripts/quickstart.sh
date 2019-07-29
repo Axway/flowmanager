@@ -12,7 +12,7 @@ fi
 
 mkdir -p ./mounts/configs
 mkdir -p ./mounts/fc_logs
-mkdir -p ./mounts/fc_logs
+mkdir -p ./mounts/fc_keys
 mkdir -p ./mounts/fc_plugins
 mkdir -p ./mounts/fc_resources
 mkdir -p ./mounts/mongo_data
