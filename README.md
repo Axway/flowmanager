@@ -20,7 +20,6 @@ If needed, see [Get started with Docker](https://docs.docker.com/get-started/) f
 - License and certificates
 - MongoDB instance
 
-*Note* You may use an existing MongoDB instance or our bundled up MongoDB service which will be deployed by default when running with our docker-compose.
 
 #### Installing the necessary prerequisites  (Git, Docker Engine and Docker Compose)
 
@@ -89,8 +88,6 @@ Example:
 ```
 Make sure that the folders created at the previous step correspond with those specified in the docker-compose file.
 
-Finally please verify that the entry `hostname` under the service `flowcentral` has the same value as the parameters `FC_GENERAL_FQDN` and `FC_GENERAL_HOSTNAME` listed under the `environment` entry and that they correspond to the actual hostname of the machine running the Flow Central services.
-
 ## Conecting to Api Catalog
 
 In order to connect to Api Catalog please register the keys generated with the script found in **./scripts** folder or custom ones into Api Catalog and get the Client ID which you must enter into docker-compose under the `FC_APIC_CLIENTID` environment variable.
@@ -101,6 +98,10 @@ In order to connect to Api Catalog please register the keys generated with the s
 In order to use a custom MongoDB service you must first comment/remove the entries under the `fcmongo` service located in the docker-compose file.
 
 Furthermore you must edit the `flowcentral` service located in the same file. You must fill out the MongoDB environment variables with the appropriate values specific to your custom solution. Finally you must comment/remove the entry `depends_on` from the `flowcentral`.
+
+When using mongo with ssl the truststore must be generated and put in the apropriated path 
+*Note* At this moment we support only jks truststores
+
 
 #### Docker-compose parameters
 
@@ -247,6 +248,19 @@ Example:
 ./scripts/gen-certs.sh
 ```
 
+#### Using "quickstart.sh"
+
+This script will create all the directories mentioned above and will execute the 2 scripts that generate certificates/keys.
+
+Example:
+```console
+./scripts/quickstart.sh
+```
+
+
 ## Security notices
 
-`*Note*` The image axway/mongodb is using the official mongo:3.6 image on top of it we added some scripts specific to the application **we are not managing the mongo:3.6 image**.
+`*Note*` You may use an existing MongoDB instance or our bundled up MongoDB service which will be deployed by default when running with our docker-compose.
+
+ `*Note*` The image axway/mongodb is using the official mongo:3.6 image on top of it we added some scripts specific to the application **we are not managing the mongo:3.6 image**.
+
