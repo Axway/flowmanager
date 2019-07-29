@@ -101,7 +101,7 @@ Furthermore you must edit the `flowcentral` service located in the same file. Yo
 
 When using mongo with ssl the truststore must be generated and put in the apropriated path.
 
-*Note* At this moment we support only jks truststores
+**Note** At this moment we support only jks truststores
 
 
 #### Docker-compose parameters
