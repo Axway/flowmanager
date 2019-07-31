@@ -37,12 +37,12 @@ services:
         FC_APIC_PRIVATEKEY                           : "/opt/axway/configs/private_key.pem"
         
         #Mongo
-        FC_MONGODB_HOST                              : "fcmongo"
-        FC_MONGODB_PORT                              : "27018"
-        FC_MONGODB_USER_NAME                         : "storage"
-        FC_MONGODB_USER_PASSWORD                     : "storage"
-        FC_MONGODB_USE_SSL                           : "false"
-        FC_MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/truststore.jks"
+        FC_DATABASE_HOST                              : "fcmongo"
+        FC_DATABASE_PORT                              : "27018"
+        FC_DATABASE_USER_NAME                         : "storage"
+        FC_DATABASE_USER_PASSWORD                     : "storage"
+        FC_DATABASE_USE_SSL                           : "false"
+        FC_DATABASE_CERTIFICATES                      : "/opt/axway/configs/truststore.jks"
         FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
