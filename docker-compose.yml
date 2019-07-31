@@ -73,6 +73,7 @@ services:
         FC_SENTINEL_FRONT_END_HOST                    : "localhost"
         FC_SENTINEL_FRONT_END_PORT                    : "1305"
         FC_SENTINEL_FRONT_END_SSL_PORT                : "1303"
+        FC_SENTINEL_UI_HOST                           : "localhost"
         FC_SENTINEL_UI_PORT                           : "1309"
         FC_SENTINEL_USE_CG_CA                         : "true"
 
