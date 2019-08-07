@@ -77,6 +77,9 @@ services:
         FC_SENTINEL_UI_HOST                           : "localhost"
         FC_SENTINEL_UI_PORT                           : "1309"
         FC_SENTINEL_USE_CG_CA                         : "true"
+        
+        #Stateless (nu trebuie livrat ca env clientului ... default=true)
+        FC_STATELESS_EK_USAGE                         : "true"
 
         
     ports:
