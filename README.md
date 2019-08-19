@@ -78,7 +78,7 @@ The MongoDB data is placed in this volume so it can be reused when creating and 
 
 ## Importing docker image after download.
 
- *Note*  docker load < (File_Name.tgz)
+Example : docker load < (File_Name.tgz)
  
 Check that the image is succesfully imported with docker images command.
 
