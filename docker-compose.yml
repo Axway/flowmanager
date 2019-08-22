@@ -109,6 +109,6 @@ services:
       MONGODB_APPLICATION_USER        : storage
       MONGODB_APPLICATION_PASS        : storage
       MONGODB_PORT                    : "27018" # MUST MATCH THE ONE SPECIFIED IN THE FLOWCENTRAL ENVIRONMENT VARIABLE
-      MONGODB_USE_SSL                 : "true"
+      MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
