@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowcentral:
-    image: cgqajenkins.lab.buch.axway.int:8083/flowcentral-openjdk:latest
+    image: fc-docker.lab.buch.axway.int/mft/flowcentral_dev:latest
     stdin_open: true
     hostname: "flowcentral"
     tty: true
