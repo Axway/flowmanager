@@ -141,12 +141,12 @@ FC_APIC_CLIENTID                   |  \<string>   |  ApiCatalog's Client ID.
 FC_APIC_PUBLICKEY                  |  \<string>   |  ApiCatalog's Public Key.
 FC_APIC_PRIVATEKEY                 |  \<string>   |  ApiCatalog's Private Key.
 FC_APIC_TOKENURL                   |  \<string>   |  ApiCatalog's Token Url.
-FC_MONGODB_HOST                    |  \<string>   |  MongoDB host name.
-FC_MONGODB_PORT                    |  \<number>   |  MongoDB port.
-FC_MONGODB_USER_NAME               |  \<string>   |  Flow Central's user MongoDB user.
-FC_MONGODB_USER_PASSWORD           |  \<string>   |  Flow Central's user MongoDB user's password.
-FC_MONGODB_USE_SSL                 |  \<string>   |  MongoDB option for use of SSL. 
-FC_MONGODB_TRUSTSTORE_FILE         |  \<string>   |  MongoDB truststore. (At the moment we support only jks.)
+FC_DATABASE_HOST                   |  \<string>   |  MongoDB host name.
+FC_DATABASE_PORT                   |  \<number>   |  MongoDB port.
+FC_DATABASE_USER_NAME              |  \<string>   |  Flow Central's user MongoDB user.
+FC_DATABASE_USER_PASSWORD          |  \<string>   |  Flow Central's user MongoDB user's password.
+FC_DATABASE_USE_SSL                |  \<string>   |  MongoDB option for use of SSL. 
+FC_DATABASE_CERTIFICATES           |  \<string>   |  MongoDB truststore. (At the moment we support only jks.)
 FC_DISABLE_CHECK_REACHABLE_HOST    |  \<string>   |  FlowCentral will not check if the mongodb instance is available.
 FC_BUSINESS_CA_CERTIF_ALIAS        |  \<string>   |  Custom business certificate's internal alias.
 FC_BUSINESS_CA_FILE                |  \<string>   |  File name and path to the custom business certificate.
