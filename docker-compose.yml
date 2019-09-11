@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowcentral:
-    image: axway/flowcentral:1.0.20190712
+    image: axway/flowcentral:1.0.20190809
     hostname: "flowcentral"
     stdin_open: true
     tty: true
@@ -24,10 +24,12 @@ services:
         FC_HTTPS_KEYSTORE                            : "/opt/axway/configs/uicert.p12"
         FC_HTTPS_CERT_ALIAS                          : "ui"
         FC_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
-
+        FC_SESSION_IDLE                              : "900"
+        FC_SESSION_EXPIRATION                        : "28800"
 
         #CFT
         FC_CFT_SHARED_SECRET                         : "Secret01"
+        FC_CFT_SFTP_ENABLED                          : "false"
 
         #APIC
         FC_APIC_USE_CATALOG                          : "true"
@@ -35,15 +37,15 @@ services:
         FC_APIC_CLIENTID                             : "DOSA_XXXXXXXXXXXXXXXXXXXXXXXXXXX"
         FC_APIC_PUBLICKEY                            : "/opt/axway/configs/catalog-public-key.pem"
         FC_APIC_PRIVATEKEY                           : "/opt/axway/configs/catalog-private-key.pem"
-        FC_APIC_TOKENURL                             : "https://login.axway.com/auth/realms/Broker/protocol/openid-connect/token"
+        
 
         #Mongo
-        FC_MONGODB_HOST                              : "fcmongo"
-        FC_MONGODB_PORT                              : "27018"
-        FC_MONGODB_USER_NAME                         : "storage"
-        FC_MONGODB_USER_PASSWORD                     : "storage"
-        FC_MONGODB_USE_SSL                           : "false"
-        FC_MONGODB_TRUSTSTORE_FILE                   : "/opt/axway/configs/mongodb.jks"
+        FC_DATABASE_HOST                             : "fcmongo"
+        FC_DATABASE_PORT                             : "27018"
+        FC_DATABASE_USER_NAME                        : "storage"
+        FC_DATABASE_USER_PASSWORD                    : "storage"
+        FC_DATABASE_USE_SSL                          : "false"
+        FC_DATABASE_CERTIFICATES                     : "/opt/axway/configs/mongodb.jks"
         FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
@@ -84,7 +86,6 @@ services:
      - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
      - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
      - "./mounts/fc_logs:/opt/axway/fc_logs"
-     - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
      - "./mounts/configs:/opt/axway/configs"
      - "./mounts/configs:/opt/axway/FlowCentral/conf/license"
 
