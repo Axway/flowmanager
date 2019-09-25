@@ -95,6 +95,14 @@ Example:
 ```
 Make sure that the folders created at the previous step correspond with those specified in the docker-compose file.
 
+## Updating FlowCentral
+
+1. Download the new image
+2. Import it localy
+3. docker-compose down (this will stop the containers)
+4. Edit docker compose with new image name 
+5. docker-compose up (this will start the containers and the update will be done)
+
 ## Conecting to Api Catalog
 
 In order to connect to Api Catalog please register the keys generated with the script found in **./scripts** folder or custom ones into Api Catalog and get the Client ID which you must enter into docker-compose under the `FC_APIC_CLIENTID` environment variable.
