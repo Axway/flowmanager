@@ -28,8 +28,8 @@ services:
         FC_SESSION_EXPIRATION                        : "28800"
         
         #Redis
-        FC_REDIS_ENABLED                             : "false"
-        FC_REDIS_HOSTNAME                            : "redis-master"
+        FC_REDIS_ENABLED                             : "true"
+        FC_REDIS_HOSTNAME                            : "redis"
         FC_REDIS_PORT                                : "6379"
 
 
@@ -118,3 +118,9 @@ services:
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
+      
+  redis:
+    image: redis
+    container_name: redis
+    expose:
+      - 6379
