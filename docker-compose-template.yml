@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowcentral:
-    image: <FC_IMAGE>
+    image: <FC_DOCKER_IMAGE>
     stdin_open: true
     hostname: "<FC_GENERAL_HOSTNAME>"
     tty: true
@@ -24,7 +24,7 @@ services:
         FC_HTTPS_KEYSTORE                            : "<FC_HTTPS_KEYSTORE>"
         FC_HTTPS_CERT_ALIAS                          : "<FC_HTTPS_CERT_ALIAS>"
         FC_HTTPS_KEYSTORE_PASSWORD                   : "<FC_HTTPS_KEYSTORE_PASSWORD>"
-        FC_SESSION_IDLE                              : "FC_SESSION_IDLE>"
+        FC_SESSION_IDLE                              : "<FC_SESSION_IDLE>"
         FC_SESSION_EXPIRATION                        : "<FC_SESSION_EXPIRATION>"
         
         #Redis
@@ -70,11 +70,11 @@ services:
         FC_JVM_DEBUG_ENABLED                         : "<FC_JVM_DEBUG_ENABLED>"
         FC_JVM_DEBUG_PORT                            : "<FC_JVM_DEBUG_PORT>"
         FC_JVM_DEBUG_SUSPEND                         : "<FC_JVM_DEBUG_SUSPEND>"
-        #FC_JVM_CUSTOM_ARGS                          : "<fc_jvm_custom_args>"
+        #FC_JVM_CUSTOM_ARGS                          : "<FC_JVM_CUSTOM_ARGS>"
         
         #EXTERNAL
-        FC_EXTERNAL_FQDN                             : "<FC_EXTERNAL_FQDN>"            
-        FC_EXTERNAL_UI_PORT                          : "<FC_EXTERNAL_UI_PORT>"                              
+        #FC_EXTERNAL_FQDN                             : "<FC_EXTERNAL_FQDN>"            
+        #FC_EXTERNAL_UI_PORT                          : "<FC_EXTERNAL_UI_PORT>"                              
 
         #Sentinel 
         FC_SENTINEL_AUDIT_ENABLED                    : "<FC_SENTINEL_AUDIT_ENABLED>"
@@ -98,8 +98,8 @@ services:
      - "<MOUNTS_FC_CONFIGS>:/opt/axway/FlowCentral/conf/license/"
 
   <FC_DATABASE_HOST>:
-    image: <FC_DATABASE_IMAGE>
-    hostname: <FC_DATABASE_HOSTNAME>
+    image: <MONGO_IMAGE>
+    hostname: <MONGO_HOSTNAME>
     volumes:
        - "<MOUNTS_MONGO_DATA>:/data/db/"
        - "<MOUNTS_MONGO_CERTIFICATES>:/certificates"

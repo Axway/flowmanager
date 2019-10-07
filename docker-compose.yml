@@ -45,12 +45,12 @@ services:
         FC_APIC_PRIVATEKEY                           : "/opt/axway/configs/private_key.pem"
         
         #Mongo
-        FC_DATABASE_HOST                              : "fcmongo"
-        FC_DATABASE_PORT                              : "27018"
-        FC_DATABASE_USER_NAME                         : "storage"
-        FC_DATABASE_USER_PASSWORD                     : "storage"
-        FC_DATABASE_USE_SSL                           : "false"
-        FC_DATABASE_CERTIFICATES                      : "/opt/axway/configs/truststore.jks"
+        FC_DATABASE_HOST                             : "fcmongo"
+        FC_DATABASE_PORT                             : "27018"
+        FC_DATABASE_USER_NAME                        : "storage"
+        FC_DATABASE_USER_PASSWORD                    : "storage"
+        FC_DATABASE_USE_SSL                          : "false"
+        FC_DATABASE_CERTIFICATES                     : "/opt/axway/configs/truststore.jks"
         FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
@@ -97,7 +97,6 @@ services:
      - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
      - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
      - "./mounts/fc_logs:/opt/axway/fc_logs"
-     # - "./mounts/fc_keys:/opt/axway/FlowCentral/data/keys/com.axway.nodes.ume"
      - "./mounts/configs:/opt/axway/configs"
      - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
 
