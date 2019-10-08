@@ -91,19 +91,19 @@ services:
     depends_on:
       - <FC_DATABASE_HOST>
     volumes:
-     - "<MOUNTS_FC_RESOURCES>:/opt/axway/FlowCentral/resources"
-     - "<MOUNTS_FC_PLUGINS>:/opt/axway/FlowCentral/conf/schemas/storage/"
-     - "<MOUNTS_FC_LOGS>:/opt/axway/fc_logs"
-     - "<MOUNTS_FC_CONFIGS>:/opt/axway/configs"
-     - "<MOUNTS_FC_CONFIGS>:/opt/axway/FlowCentral/conf/license/"
+     - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
+     - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
+     - "./mounts/fc_logs:/opt/axway/fc_logs"
+     - "./mounts/configs:/opt/axway/configs"
+     - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
 
   <FC_DATABASE_HOST>:
     image: <MONGO_IMAGE>
     hostname: <MONGO_HOSTNAME>
     volumes:
-       - "<MOUNTS_MONGO_DATA>:/data/db/"
-       - "<MOUNTS_MONGO_CERTIFICATES>:/certificates"
-       - "<MOUNTS_MONGO_CONFIG>:/configs"
+       - "./mounts/mongo_data:/data/db/"
+       - "./mounts/mongo_certificates:/certificates"
+       - "./mounts/mongo_config:/configs"
     environment:
       MONGODB_ADMIN_USER              : "<MONGODB_ADMIN_USER>"
       MONGODB_ADMIN_PASS              : "<MONGODB_ADMIN_PASS>"
