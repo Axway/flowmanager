@@ -114,3 +114,9 @@ services:
       MONGODB_USE_SSL                 : "<MONGODB_USE_SSL>"
       MONGODB_ROOT_CA                 : "<MONGODB_ROOT_CA>"
       MONGODB_CERTIFICATE             : "<MONGODB_CERTIFICATE>"
+  
+  redis:
+    image: redis
+    container_name: redis
+    expose:
+      - 6379
