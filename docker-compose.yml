@@ -73,8 +73,8 @@ services:
         #FC_JVM_CUSTOM_ARGS                          : "IF NEEDED"
         
         #EXTERNAL
-        #FC_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"    #EXTERNAL_FQDN                  
-        #FC_EXTERNAL_UI_PORT                          : "31617"                                #EXTERNAL_PORT 
+        #FC_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"              
+        #FC_EXTERNAL_UI_PORT                          : "31617"                            
 
         #Sentinel 
         FC_SENTINEL_AUDIT_ENABLED                     : "false"
@@ -85,20 +85,16 @@ services:
         FC_SENTINEL_UI_PORT                           : "1309"
         FC_SENTINEL_USE_CG_CA                         : "true"
         
-        #Stateless (nu trebuie livrat ca env clientului ... default=true)
-        FC_STATELESS_EK_USAGE                         : "true"
-
-        
     ports:
       - 8081:8081
     depends_on:
       - fcmongo
-    volumes:
-     - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
-     - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
-     - "./mounts/fc_logs:/opt/axway/fc_logs"
-     - "./mounts/configs:/opt/axway/configs"
-     - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
+    # volumes:
+    #  - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
+    #  - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
+    #  - "./mounts/fc_logs:/opt/axway/fc_logs"
+    #  - "./mounts/configs:/opt/axway/configs"
+    #  - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
 
   fcmongo:
     #build: ./mongo_3.6/
@@ -114,7 +110,7 @@ services:
       MONGODB_APPLICATION_DATABASE    : umcft
       MONGODB_APPLICATION_USER        : storage
       MONGODB_APPLICATION_PASS        : storage
-      MONGODB_PORT                    : "27018" # MUST MATCH THE ONE SPECIFIED IN THE FLOWCENTRAL ENVIRONMENT VARIABLE
+      MONGODB_PORT                    : "27018"
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
