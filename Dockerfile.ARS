@@ -47,7 +47,7 @@ COPY ./scripts/start-ars.sh /opt/axway/scripts/start.sh
 
 WORKDIR /opt/axway/FlowCentral
 
-
+RUN cp /opt/axway/configs/license.xml /opt/axway/FlowCentral/conf/license/license.xml
 CMD ["/opt/axway/scripts/start.sh"]
 
 HEALTHCHECK --interval=1m \
