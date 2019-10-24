@@ -29,6 +29,10 @@ services:
         FC_SESSION_IDLE                              : "900"
         FC_SESSION_EXPIRATION                        : "28800"
         
+        #Platform
+        FC_PLATFORM_HOST                             : "platform.axwaytest.net"
+        FC_PLATFORM_PORT                             : "443"
+        
         #Redis
         FC_REDIS_ENABLED                             : "true"
         FC_REDIS_HOSTNAME                            : "redis"
