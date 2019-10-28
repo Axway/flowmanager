@@ -93,7 +93,7 @@ services:
     build: ./mongo_3.6/
     hostname: fcmongo
     volumes:
-       - "./mounts/mongo_data:/data/db/"
+       - "mongo_data:/data/db/"
        - "./mounts/mongo_certificates:/certificates"
        - "./mounts/mongo_config:/configs"
     environment:
@@ -106,3 +106,6 @@ services:
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
+
+volumes:
+  mongo_data:
