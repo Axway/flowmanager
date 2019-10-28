@@ -65,7 +65,6 @@ cd docker-flowcentral
 
 *Note* In order to persist data from the MongoDB container we create volumes where the Mongo data will be stored. **TAKE HEED**, you may use any MongoDB image you desire as Axway does not offer support and/or maintenance for the MongoDB image bundled alongside Flow Central.
 
- - mkdir -p ./mounts/mongo_data              # MongoDB data
  - mkdir -p ./mounts/mongo_certificates      # MongoDB Certificates for SSL use
  - mkdir -p ./mounts/mongo_config            # MongoDB configuration files
  
