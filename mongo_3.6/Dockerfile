@@ -5,6 +5,5 @@ ENV STORAGE_ENGINE wiredTiger
 ENV JOURNALING yes
 COPY scripts/run.sh /run.sh
 COPY scripts/set_mongodb_password.sh /set_mongodb_password.sh
-RUN usermod -u 1000 mongodb
 USER mongodb
 CMD ["/run.sh"]
