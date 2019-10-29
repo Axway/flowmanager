@@ -91,6 +91,9 @@ services:
         FC_SENTINEL_UI_PORT                           : "1309"
         FC_SENTINEL_USE_CG_CA                         : "true"
         
+        #Platform
+        FC_PLATFORM_HOST                              : "platform.axwaytest.net"
+        FC_PLATFORM_PORT                              : "443"
         
     ports:
       - 8081:8081
