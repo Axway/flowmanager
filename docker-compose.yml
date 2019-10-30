@@ -43,6 +43,10 @@ services:
         FC_CFT_SHARED_SECRET                         : "Secret01"
         FC_CFT_SFTP_ENABLED                          : "false"
         
+        #ST
+        FC_ST_WHITELISTING_ENABLED                   : "false"
+        FC_ST_WHITELISTING_WATCHDOG_DELAY            : "120"
+        
         #APIC
         FC_APIC_USE_CATALOG                          : "true"
         FC_APIC_HOST                                 : "https://apicentral.axway.com"
