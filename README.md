@@ -132,6 +132,7 @@ ACCEPT_EULA                      |  \<string>   |  Parameter which indicates you
 FC_GENERAL_FQDN                  |  \<string>   |  Host address of the Flow Central instance.
 FC_GENERAL_HOSTNAME              |  \<string>   |  Host name of the Flow Central instance.
 FC_GENERAL_UI_PORT               |  \<string>   |  FlowCentral UI Port.
+FC_GENERAL_HTTP_PORT             |  \<string>   |  FlowCentral http Port.
 FC_GENERAL_ENCRYPTION_KEY        |  \<string>   |  Flow Central's encryption key.
 FC_GENERAL_LOGGING_LEVEL         |  \<string>   |  Flow Central's Logging Level.
 FC_GENERAL_LICENSE               |  \<string>   |  Flow Central's license name.
@@ -142,17 +143,20 @@ FC_HTTPS_KEYSTORE                |  \<string>   |  Flow Central's certificate fi
 FC_HTTPS_CERT_ALIAS              |  \<string>   |  Flow Central's UI certificate alias.
 FC_HTTPS_KEYSTORE_PASSWORD       |  \<string>   |  Flow Central's UI certificate password.
 FC_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret.
+FC_SAAS_MODE                     |  \<string>   |  
+FC_ST_WHITELISTING_ENABLED       |  \<string>   | 
+FC_ST_WHITELISTING_WATCHDOG_DELAY|  \<string>   | 
 FC_APIC_USE_CATALOG              |  \<string>   |  Enable or disable connection to ApiCatalog.
 FC_APIC_HOST                     |  \<string>   |  ApiCatalog Host.
 FC_APIC_CLIENTID                 |  \<string>   |  ApiCatalog Client ID.
 FC_APIC_PUBLICKEY                |  \<string>   |  ApiCatalog Public Key.
 FC_APIC_PRIVATEKEY               |  \<string>   |  ApiCatalog Private Key.
-FC_MONGODB_HOST                  |  \<string>   |  MongoDB host name.
-FC_MONGODB_PORT                  |  \<number>   |  MongoDB port.
-FC_MONGODB_USER_NAME             |  \<string>   |  MongoDB user name.
-FC_MONGODB_USER_PASSWORD         |  \<string>   |  MongoDB password.
-FC_MONGODB_USE_SSL               |  \<string>   |  MongoDB use ssl.
-FC_MONGODB_TRUSTSTORE_FILE       |  \<string>   |  MongoDB certificate.
+FC_DATABASE_HOST                 |  \<string>   |  MongoDB host name.
+FC_DATABASE_PORT                 |  \<number>   |  MongoDB port.
+FC_DATABASE_USER_NAME            |  \<string>   |  MongoDB user name.
+FC_DATABASE_USER_PASSWORD        |  \<string>   |  MongoDB password.
+FC_DATABASE_USE_SSL              |  \<string>   |  MongoDB use ssl.
+FC_DATABASE_TRUSTSTORE_FILE      |  \<string>   |  MongoDB certificate.
 FC_DISABLE_CHECK_REACHABLE_HOST  |  \<string>   |  MongoDB disable host alive check.
 FC_BUSINESS_CA_CERTIF_ALIAS      |  \<string>   |  Alias custom business certificate.
 FC_BUSINESS_CA_FILE              |  \<string>   |  File name of the custom business certificate.
@@ -169,6 +173,8 @@ FC_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
 #FC_JVM_CUSTOM_ARGS              |  \<string>   |  JVM custom arguments.
 FC_EXTERNAL_FQDN                 |  \<string>   |  External FQDN.           
 FC_EXTERNAL_UI_PORT              |  \<string>   |  External Port.
+FC_PLATFORM_HOST                 |  \<string>   |  
+FC_PLATFORM_PORT                 |  \<string>   |  
 
 ## Flow Central service operations
 
