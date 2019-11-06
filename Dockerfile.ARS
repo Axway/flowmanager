@@ -22,9 +22,10 @@ RUN yum install --quiet -y wget unzip
 ARG FC_URL="http://swf-artifactory.lab1.lab.ptx.axway.int/artifactory/com.axway.cg-snapshot/com/axway/products/ume/fc/ume-product-opnode-flowcentral-distrib/"
 
 # SNAPSHOT VERSION OR RELEASE NUMBER
-ARG FC_RELEASE_TYPE="<fc_release_type>"
+ARG FC_RELEASE_TYPE="<RELEASE_TYPE>/"
+
 # FC ARTIFACT
-ARG FC_ARTIFACT="<fc_artifact>"
+ARG FC_ARTIFACT="<ARTIFACT>"
 
 RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE_TYPE$FC_ARTIFACT" -P /home/axway/FC_KIT && \
     unzip /home/axway/FC_KIT/$FC_ARTIFACT -d /opt/axway/FlowCentral/ 
