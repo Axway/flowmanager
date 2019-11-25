@@ -29,13 +29,14 @@ ARG FC_ARTIFACT="<fc_artifact>"
 RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE_TYPE$FC_ARTIFACT" -P /home/axway/FC_KIT && \
     unzip /home/axway/FC_KIT/$FC_ARTIFACT -d /opt/axway/FlowCentral/ 
     
-
-
-FROM openjdk:8u201-jdk-alpine
+FROM openjdk:8u212-jdk-alpine
 
 RUN apk add -q shadow && \
     groupadd axway && \
-    adduser -D -u 1000 -h /opt/axway -g '' -G axway axway
+    adduser -D -u 1000 -h /opt/axway -g '' -G axway axway && \
+    apk upgrade --no-cache && \
+    apk del shadow && \
+    rm -rf /var/cache/apk/*
  
 COPY --from=builder  --chown=axway:axway /opt/axway/ /opt/axway/
 
