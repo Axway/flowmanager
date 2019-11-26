@@ -36,7 +36,7 @@ RUN apk add -q shadow && \
     adduser -D -u 1000 -h /opt/axway -g '' -G axway axway && \
     apk upgrade --no-cache && \
     apk del shadow && \
-    rm -rf /var/cache/apk/* /usr/bin/nc /usr/bin/wget /bin/chmod /bin/chown
+    rm -rf /var/cache/apk/* /usr/bin/nc /usr/bin/wget /usr/bin/vi /sbin/ip* /sbin/if* /sbin/lsmod /sbin/modprobe /sbin/arp /bin/chmod /bin/chown /bin/ed
 
 COPY --from=builder  --chown=axway:axway /opt/axway/ /opt/axway/
 
