@@ -94,6 +94,9 @@ services:
         FC_SENTINEL_UI_HOST                           : "localhost"
         FC_SENTINEL_UI_PORT                           : "1309"
         FC_SENTINEL_USE_CG_CA                         : "true"
+        
+        #ARS
+        FC_ARS_HTTPONLY                               : "true"  # this will activate http only if saas_mode is active
 
         
     ports:
