@@ -97,6 +97,11 @@ services:
         
         #ARS
         FC_ARS_HTTPONLY                               : "true"  # this will activate http only if saas_mode is active
+        
+        # Proxy for SaaS Mode
+        FC_PROXY_ENABLED                              : "true"
+        FC_PROXY_HOST                                 : "flowcentral-bridge.axwaytest.net"
+        FC_PROXY_PORT                                 : "8444"
 
         
     ports:
