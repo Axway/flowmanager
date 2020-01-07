@@ -33,12 +33,8 @@ FROM openjdk:8u212-jdk-alpine
 
 RUN apk add -q shadow && \
     groupadd axway && \
-    adduser -D -u 1000 -h /opt/axway -g '' -G axway axway && \
-    apk upgrade --no-cache && \
-#    apk del shadow wget netcat && \
-    apk del shadow
-#    rm -rf /var/cache/apk/*
- 
+    adduser -D -u 1000 -h /opt/axway -g '' -G axway axway
+
 COPY --from=builder  --chown=axway:axway /opt/axway/ /opt/axway/
 
 USER axway 
