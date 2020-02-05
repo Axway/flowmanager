@@ -13,6 +13,8 @@ services:
         FC_GENERAL_FQDN                              : "flowcentral"
         FC_GENERAL_HOSTNAME                          : "flowcentral"
         FC_GENERAL_UI_PORT                           : "8081"
+        FC_GENERAL_SAAS_MODE                         : "false"
+        FC_GENERAL_HTTP_PORT                         : ""
         FC_GENERAL_ENCRYPTION_KEY                    : "Secret01"
         FC_GENERAL_LOGGING_LEVEL                     : "INFO"
         FC_GENERAL_LICENSE                           : "license.xml"
@@ -30,6 +32,15 @@ services:
         #CFT
         FC_CFT_SHARED_SECRET                         : "Secret01"
         FC_CFT_SFTP_ENABLED                          : "false"
+        
+        #ST
+        FC_ST_WHITELISTING_ENABLED                   : "false"
+        FC_ST_WHITELISTING_WATCHDOG_DELAY            : "120"
+        
+        #Redis
+        FC_REDIS_ENABLED                             : "false"
+        FC_REDIS_HOSTNAME                            : "redis"
+        FC_REDIS_PORT                                : "6379"
 
         #APIC
         FC_APIC_USE_CATALOG                          : "true"
@@ -106,6 +117,12 @@ services:
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
+      
+  redis:
+    image: redis
+    container_name: redis
+    expose:
+      - 6379
 
 volumes:
   mongo_data:
