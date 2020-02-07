@@ -24,7 +24,7 @@ services:
         #HTTPS
         FC_HTTPS_USE_CUSTOM_CERT                     : "true"
         FC_HTTPS_KEYSTORE                            : "/opt/axway/configs/uicert.jks"
-        FC_HTTPS_CERT_ALIAS                          : "apicertificate"
+        FC_HTTPS_CERT_ALIAS                          : "uicert"
         FC_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
         FC_SESSION_IDLE                              : "900"
         FC_SESSION_EXPIRATION                        : "28800"
@@ -69,7 +69,7 @@ services:
         FC_BUSINESS_CA_PASSWORD                      : "Secret01"
 
         #GOVERNANCE
-        FC_GOVERNANCE_CA_CERTIF_ALIAS                : "passportcaproduct"
+        FC_GOVERNANCE_CA_CERTIF_ALIAS                : "govinter_fc"
         FC_GOVERNANCE_CA_FILE                        : "/opt/axway/configs/governanceca.jks"
         FC_GOVERNANCE_CA_PASSWORD                    : "Secret01"
         
