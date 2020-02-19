@@ -64,7 +64,7 @@ services:
         FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
-        FC_BUSINESS_CA_CERTIF_ALIAS                  : "inter_bus"
+        FC_BUSINESS_CA_CERTIF_ALIAS                  : "ibusca1"
         FC_BUSINESS_CA_FILE                          : "/opt/axway/configs/businessca.jks"
         FC_BUSINESS_CA_PASSWORD                      : "Secret01"
 
