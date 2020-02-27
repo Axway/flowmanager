@@ -35,8 +35,7 @@ RUN apk add -q shadow && \
     groupadd axway && \
     adduser -D -u 1000 -h /opt/axway -g '' -G axway axway && \
     apk upgrade --no-cache && \
-    apk del shadow && \
-    ulimit -S -u 5000
+    apk del shadow 
 
 COPY --from=builder  --chown=axway:axway /opt/axway/ /opt/axway/
 
@@ -45,7 +44,8 @@ USER 1001
 RUN chmod -R u+x /opt/axway && \
     chgrp -R 0 /opt/axway && \
     chmod -R g=u /opt/axway /etc/passwd && \
-    rm -rf /var/cache/apk/* /usr/bin/nc /usr/bin/wget /usr/bin/vi /usr/bin/passwd /usr/bin/nslookup /usr/bin/hexdump /sbin/ip* /sbin/if* /sbin/lsmod /sbin/modprobe /sbin/arp /sbin/route /sbin/apk /sbin/insmod /bin/chmod /bin/chown /bin/ed
+    rm -rf /var/cache/apk/* /usr/bin/nc /usr/bin/wget /usr/bin/vi /usr/bin/passwd /usr/bin/nslookup /usr/bin/hexdump /sbin/ip* /sbin/if* /sbin/lsmod /sbin/modprobe /sbin/arp /sbin/route /sbin/apk /sbin/insmod /bin/chmod /bin/chown /bin/ed && \
+    ulimit -S -u 5000
 
 COPY ./resources/conf_to_import.txt /opt/axway/FlowCentral/conf.properties
 COPY ./scripts/start.sh /opt/axway/scripts/start.sh
