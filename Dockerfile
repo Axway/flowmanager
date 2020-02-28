@@ -50,7 +50,7 @@ USER 1001
 
 COPY ./resources/conf_to_import.txt /opt/axway/FlowCentral/conf.properties
 COPY ./scripts/start.sh /opt/axway/scripts/start.sh
-COPY ./bin/uid_entrypoint /opt/axway/bin
+COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 
 ENTRYPOINT [ "/opt/axway/bin/uid_entrypoint" ]
 
