@@ -33,9 +33,14 @@ COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 
 FROM openjdk:8u212-jdk-alpine
 
+ENV JAVA_ALPINE_VERSION=8.242.08-r0 \
+    JAVA_VERSION=8u242C 
+
 RUN apk add -q shadow && \
     groupadd axway && \
     adduser -D -u 1001 -h /opt/axway -g '' -G axway axway && \
+    apk del openjdk8 && \ 
+    apk --update --no-cache add openjdk8=8.242.08-r0 && \ 
     apk upgrade --no-cache && \
     apk del shadow 
 
