@@ -54,13 +54,10 @@ RUN chmod -R u+x /opt/axway && \
 USER 1001
 
 COPY ./resources/conf_to_import.txt /opt/axway/FlowCentral/conf.properties
-COPY ./scripts/start.sh /opt/axway/scripts/start.sh
 
 ENTRYPOINT [ "/opt/axway/bin/uid_entrypoint" ]
 
 WORKDIR /opt/axway/FlowCentral
-
-CMD ["/opt/axway/scripts/start.sh"]
 
 HEALTHCHECK --interval=1m \
             --timeout=5s \
