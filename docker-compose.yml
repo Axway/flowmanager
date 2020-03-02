@@ -134,8 +134,3 @@ services:
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
       
-  redis:
-    image: redis
-    container_name: redis
-    expose:
-      - 6379
