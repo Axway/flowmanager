@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><key xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://support.axway.com/schema/CGSchema.xsd">
   <keyVersion>1</keyVersion>
-  <keyFileGenerationTS>2019-03-19T12:46:31</keyFileGenerationTS>
+  <keyFileGenerationTS>2020-03-19T08:47:51</keyFileGenerationTS>
   <Customer>
     <SAC>0</SAC>
     <customerName>AXWAY SOFTWARE</customerName>
@@ -12,12 +12,12 @@
         <licenseNumber>SP00000001</licenseNumber>
         <domain>axway.int</domain>
         <component>Flow Central</component>
-        <productID>COMPAX014394</productID>
+        <productID>COMPAX014411</productID>
         <platform>linux-x86-64</platform>
         <version>1.0</version>
         <validityDates>
-          <from>2019-03-19</from>
-          <to>2020-03-19</to>
+          <from>2020-03-19</from>
+          <to>2021-03-19</to>
         </validityDates>
         <optionList>
           <option>
@@ -29,8 +29,8 @@
       </License>
     </OrderRows>
   </Customer>
-<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>DVxkXSdJR0tFePj42qS1j+j8sKc=</DigestValue></Reference></SignedInfo><SignatureValue>iNyvxoF7CeWs76F4K/OcyMCzgyTzsFIQDZrmKAEArxbWxbV+ucxoiuOirIShGyv0KT8CNSRCqb73
-IcMxTY3zJbGffp7up67HK2/2amXUZr7PouVIoGRrTCWx6ZrTTfEJtyX0UUfDcWEMHYQvMpK0eNKY
-RAWai13/UEDhVLVjyid44VJZGHmtyziVsLSej3uNhnNOU6k+oHyPqG6t4lsaH5fCcIOrzka9KJ7D
-q6MwHoDPcsJfpOSolDkkOnumoJbt79HUq6HJYsHzTupLkuoZSOYa44RzOP13pS7gnfL4ml1J6zV7
-O1Vu/dCvf9QF6eEbNG1FQCJtlJimEbu6PFOeOQ==</SignatureValue></Signature></key>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>v753mb/OshAUX1CuycL87VeDO28=</DigestValue></Reference></SignedInfo><SignatureValue>eSvSxzDX769Sc/IX9Z9WOMQBPjh0THXofpoKsEsFH/ZmtBi0H1wXCD6bvY0gZ1gLxol2ltJsxv72
+dBf+6QzswBrcf/zMxPDfPXPJT+zGAtnJmZl79WMEsmM5Ul8JojjNYVey3/FljHuj5E/MWBsnsPwh
+vjzd9cFOgSV1zoMkuWnXDog50QXjC9BongDC95uyQaVPaYuvhxU1/SXl5szNnosNJWXW1UlxVr2m
+KIixsa1yqQAHf9NujdV//fbhUmXLrH7MolegBNTo60+kq8gUdrauw3cYLUhbcuxPG2Eq6L4CFTeU
+jgYLAQ2LLLek8CC2LaNm2eYPH94LwyZlaFhNpg==</SignatureValue></Signature></key>
