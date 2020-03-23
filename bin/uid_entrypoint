@@ -1,12 +1,28 @@
 #!/bin/sh
 
 set -euo pipefail
+set -x
+
+pid=0
+
+# SIGTERM-handler
+term_handler() {
+  if [ $pid -ne 0 ]; then
+    echo "***Stopping"
+    java -jar opcmd.jar stop
+    exit 0
+  fi
+  exit 143; # 128 + 15 -- SIGTERM
+}
+
+trap 'term_handler' SIGTERM
 
 if ! whoami &> /dev/null; then
   if [ -w /etc/passwd ]; then
     echo "${USER_NAME:-default}:x:$(id -u):0:${USER_NAME:-default} user:${HOME}:/sbin/nologin" >> /etc/passwd
   fi
 fi
+
 exec "$@"
 
 ACCEPT_EULA="${ACCEPT_EULA:-no}"
@@ -38,24 +54,29 @@ ln -sf /dev/stdout /opt/axway/FlowCentral/logs/opcmd.log.0.1
 ln -sf /dev/stdout /opt/axway/FlowCentral/logs/stdout.txt
 
 
-  cd /opt/axway/FlowCentral
-  echo "Configuring Product Started"
-  time java -jar opcmd.jar configure -n -s /opt/axway/FlowCentral/conf.properties -env
-  echo "Configuring Product Ended"
+cd /opt/axway/FlowCentral
+echo "Configuring Product Started"
+time java -jar opcmd.jar configure -n -s /opt/axway/FlowCentral/conf.properties -env
+echo "Configuring Product Ended"
 
 
 if [ ! -f /opt/axway/FlowCentral/runtime/initialized ]; then 
-  touch ./runtime/initialized
-  echo "Flow Central Starting"
-  time java -jar opcmd.jar start 
-  echo "Flow Central Started"
+touch ./runtime/initialized
+echo "Flow Central Starting"
+java -jar opcmd.jar start &
+pid="$!"
+echo "Flow Central Started"
 else
-  echo "Flow Central Starting"
-  cd /opt/axway/FlowCentral
-  time java -jar opcmd.jar start
-  echo "Flow Central Started"
+echo "Flow Central Starting"
+cd /opt/axway/FlowCentral
+time java -jar opcmd.jar start &
+pid="$!"
+echo "Flow Central Started"
 fi
 
-while true ; do
-  sleep 600
+
+
+while true
+do
+  tail -f /dev/null & wait ${!}
 done
