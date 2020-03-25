@@ -31,11 +31,15 @@ RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE
 
 COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 
-FROM openjdk:8u212-jdk-alpine
+FROM alpine:3.9
+
+ENV JAVA_ALPINE_VERSION=8.242.08-r0 \
+    JAVA_VERSION=8u242C 
 
 RUN apk add -q shadow && \
     groupadd axway && \
     adduser -D -u 1001 -h /opt/axway -g '' -G axway axway && \
+    apk --update --no-cache add openjdk8=8.242.08-r0 && \ 
     apk upgrade --no-cache && \
     apk del shadow 
 
@@ -45,18 +49,15 @@ RUN chmod -R u+x /opt/axway && \
     chgrp -R 0 /opt/axway && \
     chmod -R g=u /opt/axway /etc/passwd && \
     rm -rf /var/cache/apk/* /usr/bin/nc /usr/bin/wget /usr/bin/vi /usr/bin/passwd /usr/bin/nslookup /usr/bin/hexdump /sbin/ip* /sbin/if* /sbin/lsmod /sbin/modprobe /sbin/arp /sbin/route /sbin/apk /sbin/insmod /bin/chmod /bin/chown /bin/ed && \
-    ulimit -S -u 5000
+    ulimit -S -p 5000
 
 USER 1001
 
 COPY ./resources/conf_to_import.txt /opt/axway/FlowCentral/conf.properties
-COPY ./scripts/start.sh /opt/axway/scripts/start.sh
 
 ENTRYPOINT [ "/opt/axway/bin/uid_entrypoint" ]
 
 WORKDIR /opt/axway/FlowCentral
-
-CMD ["/opt/axway/scripts/start.sh"]
 
 HEALTHCHECK --interval=1m \
             --timeout=5s \
