@@ -20,6 +20,7 @@ services:
         FC_GENERAL_LICENSE                           : "license.xml"
         FC_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/fc_logs"
         FC_LOGS_CONSOLE                              : "yes"
+        FC_METRICS_ENABLED                           : "true"     
 
         #HTTPS
         FC_HTTPS_USE_CUSTOM_CERT                     : "true"
