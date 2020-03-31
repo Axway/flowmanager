@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowcentral:
-    image: <image>
+    image: <IMAGE_NAME>:<IMAGE_TAG>
     stdin_open: true
     hostname: "<FM_GENERAL_HOSTNAME>"
     tty: true
@@ -113,7 +113,7 @@ services:
 
         
     ports:
-      - <EXPOSED_PORT>:<EXPOSED_PORT>
+      - <FM_EXTERNAL_UI_PORT>:<FM_EXTERNAL_UI_PORT>
       - <FM_JVM_DEBUG_PORT>:<FM_JVM_DEBUG_PORT>
     depends_on:
       - fcmongo

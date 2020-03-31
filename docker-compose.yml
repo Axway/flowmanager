@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowcentral:
-    image: fc-docker.lab.buch.axway.int/mft/flowcentral_dev:latest
+    image: fc-docker.lab.buch.axway.int/mft/flowcentral_dev:latest 
     stdin_open: true
     hostname: "flowcentral"
     tty: true
@@ -32,7 +32,6 @@ services:
         
         #Platform
         FM_PLATFORM_HOST                             : "platform.axwaytest.net"
-        FM_PLATFORM_PORT                             : "443"
         
         #Redis
         FM_REDIS_ENABLED                             : "true"
