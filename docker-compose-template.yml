@@ -1,0 +1,143 @@
+version: '3.4'
+services:
+  flowcentral:
+    image: <image>
+    stdin_open: true
+    hostname: "<FC_GENERAL_HOSTNAME>"
+    tty: true
+    environment:
+        ### EULA ###
+        ACCEPT_EULA: "<ACCEPT_EULA>"
+        
+        #General
+        FC_GENERAL_FQDN                              : "<FC_GENERAL_FQDN>"
+        FC_GENERAL_HOSTNAME                          : "<FC_GENERAL_HOSTNAME>"
+        FC_GENERAL_UI_PORT                           : "<FC_GENERAL_UI_PORT>"
+        FC_GENERAL_SAAS_MODE                         : "<FC_GENERAL_SAAS_MODE>"
+        FC_GENERAL_HTTP_PORT                         : "<FC_GENERAL_HTTP_PORT>"
+        FC_GENERAL_ENCRYPTION_KEY                    : "<FC_GENERAL_ENCRYPTION_KEY>"
+        FC_GENERAL_LOGGING_LEVEL                     : "<FC_GENERAL_LOGGING_LEVEL>"
+        FC_GENERAL_LICENSE                           : "<FC_GENERAL_LICENSE>"
+        FC_GENERAL_CUSTOM_LOCATION_PATH              : "<FC_GENERAL_CUSTOM_LOCATION_PATH>"
+        FC_LOGS_CONSOLE                              : "<FC_LOGS_CONSOLE>"
+        FC_METRICS_ENABLED                           : "<FC_METRICS_ENABLED>"     
+
+        #HTTPS
+        FC_HTTPS_USE_CUSTOM_CERT                     : "<FC_HTTPS_USE_CUSTOM_CERT>"
+        FC_HTTPS_KEYSTORE                            : "<FC_HTTPS_KEYSTORE>"
+        FC_HTTPS_CERT_ALIAS                          : "<FC_HTTPS_CERT_ALIAS>"
+        FC_HTTPS_KEYSTORE_PASSWORD                   : "<FC_HTTPS_KEYSTORE_PASSWORD>"
+        FC_SESSION_IDLE                              : "<FC_SESSION_IDLE>"
+        FC_SESSION_EXPIRATION                        : "<FC_SESSION_EXPIRATION>"
+        
+        #Platform
+        FC_PLATFORM_HOST                             : "<FC_PLATFORM_HOST>"
+        
+        #Redis
+        FC_REDIS_ENABLED                             : "<FC_REDIS_ENABLED>"
+        FC_REDIS_HOSTNAME                            : "<FC_REDIS_HOSTNAME>"
+        FC_REDIS_PORT                                : "<FC_REDIS_PORT>"
+
+
+        #CFT
+        FC_CFT_SHARED_SECRET                         : "<FC_CFT_SHARED_SECRET>"
+        FC_CFT_SFTP_ENABLED                          : "<FC_CFT_SFTP_ENABLED>"
+        
+        #ST
+        FC_ST_WHITELISTING_ENABLED                   : "<FC_ST_WHITELISTING_ENABLED>"
+        FC_ST_WHITELISTING_WATCHDOG_DELAY            : "<FC_ST_WHITELISTING_WATCHDOG_DELAY>"
+        
+        #APIC
+        FC_APIC_USE_CATALOG                          : "<FC_APIC_USE_CATALOG>"
+        FC_APIC_HOST                                 : "<FC_APIC_HOST>"
+        FC_APIC_CLIENTID                             : "<FC_APIC_CLIENTID>"
+        FC_APIC_PUBLICKEY                            : "<FC_APIC_PUBLICKEY>"
+        FC_APIC_PRIVATEKEY                           : "<FC_APIC_PRIVATEKEY>"
+        
+        #Mongo
+        FC_DATABASE_HOST                             : "<FC_DATABASE_HOST>"
+        FC_DATABASE_PORT                             : "<FC_DATABASE_PORT>"
+        FC_DATABASE_USER_NAME                        : "<FC_DATABASE_USER_NAME>"
+        FC_DATABASE_USER_PASSWORD                    : "<FC_DATABASE_USER_PASSWORD>"
+        FC_DATABASE_USE_SSL                          : "<FC_DATABASE_USE_SSL>"
+        FC_DATABASE_CERTIFICATES                     : "<FC_DATABASE_CERTIFICATES>"
+        FC_DISABLE_CHECK_REACHABLE_HOST              : "<FC_DISABLE_CHECK_REACHABLE_HOST>"
+
+        #Business
+        FC_BUSINESS_CA_CERTIF_ALIAS                  : "<FC_BUSINESS_CA_CERTIF_ALIAS>"
+        FC_BUSINESS_CA_FILE                          : "<FC_BUSINESS_CA_FILE>"
+        FC_BUSINESS_CA_PASSWORD                      : "<FC_BUSINESS_CA_PASSWORD>"
+
+        #GOVERNANCE
+        FC_GOVERNANCE_CA_CERTIF_ALIAS                : "<FC_GOVERNANCE_CA_CERTIF_ALIAS>"
+        FC_GOVERNANCE_CA_FILE                        : "<FC_GOVERNANCE_CA_FILE>"
+        FC_GOVERNANCE_CA_PASSWORD                    : "<FC_GOVERNANCE_CA_PASSWORD>"
+        
+        #JVM
+        FC_JVM_XMX                                   : "<FC_JVM_XMX>"
+        FC_JVM_XMS                                   : "<FC_JVM_XMS>"
+        FC_JVM_XMN                                   : "<FC_JVM_XMN>"
+        FC_JVM_DEBUG_ENABLED                         : "<FC_JVM_DEBUG_ENABLED>"
+        FC_JVM_DEBUG_PORT                            : "<FC_JVM_DEBUG_PORT>"
+        FC_JVM_DEBUG_SUSPEND                         : "<FC_JVM_DEBUG_SUSPEND>"
+        FC_JVM_CUSTOM_ARGS                           : "<FC_JVM_CUSTOM_ARGS>"
+        
+        #EXTERNAL
+        FC_EXTERNAL_FQDN                             : "<FC_EXTERNAL_FQDN>"              
+        FC_EXTERNAL_UI_PORT                          : "<FC_EXTERNAL_UI_PORT>"                            
+
+        #Sentinel 
+        FC_SENTINEL_AUDIT_ENABLED                     : "<FC_SENTINEL_AUDIT_ENABLED>"
+        FC_SENTINEL_FRONT_END_HOST                    : "<FC_SENTINEL_FRONT_END_HOST>"
+        FC_SENTINEL_FRONT_END_PORT                    : "<FC_SENTINEL_FRONT_END_PORT>"
+        FC_SENTINEL_FRONT_END_SSL_PORT                : "<FC_SENTINEL_FRONT_END_SSL_PORT>"
+        FC_SENTINEL_UI_HOST                           : "<FC_SENTINEL_UI_HOST>"
+        FC_SENTINEL_UI_PORT                           : "<FC_SENTINEL_UI_PORT>"
+        FC_SENTINEL_USE_CG_CA                         : "<FC_SENTINEL_USE_CG_CA>"
+        
+        #ARS
+        FC_ARS_HTTPONLY                               : "<FC_ARS_HTTPONLY>"
+        
+        # Proxy for SaaS Mode
+        FC_PROXY_ENABLED                              : "<FC_PROXY_ENABLED>"
+        FC_PROXY_HOST                                 : "<FC_PROXY_HOST>"
+        FC_PROXY_PORT                                 : "<FC_PROXY_PORT>"
+
+        #CONDOR
+        CONDOR_LUMBERJACK_HOST                        : "<CONDOR_LUMBERJACK_HOST>"
+        CONDOR_LUMBERJACK_PORT                        : "<CONDOR_LUMBERJACK_PORT>"
+        CONDOR_KEYSTORE                               : "<CONDOR_KEYSTORE>"
+        CONDOR_KEY_PASSWORD                           : "<CONDOR_KEY_PASSWORD>"
+
+        
+    ports:
+      - <EXPOSED_PORT>:<EXPOSED_PORT>
+      - <FC_JVM_DEBUG_PORT>:<FC_JVM_DEBUG_PORT>
+    depends_on:
+      - fcmongo
+    volumes:
+     - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
+     - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
+     - "./mounts/fc_logs:/opt/axway/fc_logs"
+     - "./mounts/configs:/opt/axway/configs"
+     - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
+
+  fcmongo:
+    #build: ./mongo_3.6/
+    image: fc-docker.lab.buch.axway.int/mft/mongo:3.6
+    hostname: fcmongo
+    volumes:
+       - "./mounts/mongo_data:/data/db/"
+       - "./mounts/mongo_certificates:/certificates"
+       - "./mounts/mongo_config:/configs"
+    environment:
+      MONGODB_ADMIN_USER              : root
+      MONGODB_ADMIN_PASS              : storage
+      MONGODB_APPLICATION_DATABASE    : umcft
+      MONGODB_APPLICATION_USER        : storage
+      MONGODB_APPLICATION_PASS        : storage
+      MONGODB_PORT                    : "27018"
+      MONGODB_USE_SSL                 : "false"
+      MONGODB_ROOT_CA                 : "rootCA.pem"
+      MONGODB_CERTIFICATE             : "mongodb.pem"
+      
