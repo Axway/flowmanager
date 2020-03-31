@@ -118,11 +118,11 @@ services:
     depends_on:
       - fcmongo
     volumes:
-     - "./mounts/resources:/opt/axway/FlowCentral/resources"
-     - "./mounts/plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
+     - "./mounts/resources:/opt/axway/FlowManager/resources"
+     - "./mounts/plugins:/opt/axway/FlowManager/conf/schemas/storage/"
      - "./mounts/logs:/opt/axway/logs"
      - "./mounts/configs:/opt/axway/configs"
-     - "./mounts/configs:/opt/axway/FlowCentral/conf/license/"
+     - "./mounts/configs:/opt/axway/FlowManager/conf/license/"
 
   fcmongo:
     #build: ./mongo_3.6/
