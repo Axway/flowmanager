@@ -20,6 +20,8 @@ services:
         FC_GENERAL_LICENSE                           : "<FC_GENERAL_LICENSE>"
         FC_GENERAL_CUSTOM_LOCATION_PATH              : "<FC_GENERAL_CUSTOM_LOCATION_PATH>"
         FC_LOGS_CONSOLE                              : "<FC_LOGS_CONSOLE>"
+
+        #METRICS
         FC_METRICS_ENABLED                           : "<FC_METRICS_ENABLED>"     
 
         #HTTPS
