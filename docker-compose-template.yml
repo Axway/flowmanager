@@ -106,10 +106,10 @@ services:
         FM_PROXY_PORT                                 : "<FM_PROXY_PORT>"
 
         #CONDOR
-        FM_CONDOR_LUMBERJACK_HOST                        : "<FM_CONDOR_LUMBERJACK_HOST>"
-        FM_CONDOR_LUMBERJACK_PORT                        : "<FM_CONDOR_LUMBERJACK_PORT>"
-        FM_CONDOR_KEYSTORE                               : "<FM_CONDOR_KEYSTORE>"
-        FM_CONDOR_KEY_PASSWORD                           : "<FM_CONDOR_KEY_PASSWORD>"
+        #FM_CONDOR_LUMBERJACK_HOST                        : "<FM_CONDOR_LUMBERJACK_HOST>"
+        #FM_CONDOR_LUMBERJACK_PORT                        : "<FM_CONDOR_LUMBERJACK_PORT>"
+        #FM_CONDOR_KEYSTORE                               : "<FM_CONDOR_KEYSTORE>"
+        #FM_CONDOR_KEY_PASSWORD                           : "<FM_CONDOR_KEY_PASSWORD>"
 
         
     ports:
