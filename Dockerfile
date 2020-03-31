@@ -3,13 +3,13 @@ FROM centos:7.6.1810 as builder
 RUN echo "Adding username [axway] to the system." && \
     groupadd -r axway && \
     useradd -r -g axway axway && \
-    mkdir -p /opt/axway/FlowCentral/runtime && \
-    mkdir -p /opt/axway/FlowCentral/logs && \
-    mkdir -p /opt/axway/FlowCentral/conf/license && \
+    mkdir -p /opt/axway/FlowManager/runtime && \
+    mkdir -p /opt/axway/FlowManager/logs && \
+    mkdir -p /opt/axway/FlowManager/conf/license && \
     mkdir -p /opt/axway/configs && \
-    mkdir -p /opt/axway/FlowCentral/resources && \
-    mkdir -p /opt/axway/FlowCentral/conf/schemas/storage/ && \
-    mkdir -p /opt/axway/FlowCentral/data/keys/com.axway.nodes.ume && \
+    mkdir -p /opt/axway/FlowManager/resources && \
+    mkdir -p /opt/axway/FlowManager/conf/schemas/storage/ && \
+    mkdir -p /opt/axway/FlowManager/data/keys/com.axway.nodes.ume && \
     mkdir -p /home/axway && \
     chown -R axway:axway /home/axway && \
     chmod -R 777 /home/axway && \
@@ -18,16 +18,16 @@ RUN echo "Adding username [axway] to the system." && \
 # install FC OS prerequisites
 RUN yum install --quiet -y wget unzip
 
-ARG FC_URL="<ARTIFACT_LOCATION>"
+ARG URL="<ARTIFACT_LOCATION>"
 
 # SNAPSHOT VERSION OR RELEASE NUMBER
-ARG FC_RELEASE_TYPE="<RELEASE_TYPE>/"
+ARG RELEASE_TYPE="<RELEASE_TYPE>/"
 
 # FC ARTIFACT
-ARG FC_ARTIFACT="<ARTIFACT>"
+ARG ARTIFACT="<ARTIFACT>"
 
-RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$FC_URL$FC_RELEASE_TYPE$FC_ARTIFACT" -P /home/axway/FC_KIT && \
-    unzip /home/axway/FC_KIT/$FC_ARTIFACT -d /opt/axway/FlowCentral/ 
+RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$URL$RELEASE_TYPE$ARTIFACT" -P /home/axway/KIT && \
+    unzip /home/axway/KIT/$ARTIFACT -d /opt/axway/FlowManager/ 
 
 COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 
@@ -53,11 +53,11 @@ RUN chmod -R u+x /opt/axway && \
 
 USER 1001
 
-COPY ./resources/conf_to_import.txt /opt/axway/FlowCentral/conf.properties
+COPY ./resources/conf_to_import.txt /opt/axway/FlowManager/conf.properties
 
 ENTRYPOINT [ "/opt/axway/bin/uid_entrypoint" ]
 
-WORKDIR /opt/axway/FlowCentral
+WORKDIR /opt/axway/FlowManager
 
 HEALTHCHECK --interval=1m \
             --timeout=5s \
