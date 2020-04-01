@@ -129,6 +129,9 @@ services:
     #build: ./mongo_3.6/
     image: fc-docker.lab.buch.axway.int/mft/mongo:3.6
     hostname: fcmongo
+    ports:
+      - 27017:27017
+      - 27018:27018
     volumes:
        - "./mounts/mongo_data:/data/db/"
        - "./mounts/mongo_certificates:/certificates"
