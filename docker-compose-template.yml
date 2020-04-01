@@ -55,7 +55,7 @@ services:
         FM_APIC_CLIENTID                             : "<FM_APIC_CLIENTID>"
         FM_APIC_PUBLICKEY                            : "<FM_APIC_PUBLICKEY>"
         FM_APIC_PRIVATEKEY                           : "<FM_APIC_PRIVATEKEY>"
-        FC_APIC_TOKENURL                             : "<FC_APIC_TOKENURL>"
+        FM_APIC_TOKENURL                             : "<FM_APIC_TOKENURL>"
         
         #Mongo
         FM_DATABASE_HOST                             : "<FM_DATABASE_HOST>"
