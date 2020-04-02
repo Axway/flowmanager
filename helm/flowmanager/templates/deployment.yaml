@@ -1,0 +1,134 @@
+apiVersion: {{ .Values.deployment.api }}
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name | quote }}
+  namespace: {{ .Release.Namespace }}
+{{- with .Values.persistence.annotations  }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  labels:
+    app: {{ .Values.labels.app | quote }}
+    version: {{ .Values.labels.version | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.labels.app | quote }}
+      app.kubernetes.io/instance: {{ .Release.Name | quote }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  {{- with .Values.deployment.strategy }}
+  strategy:
+    type: {{ .rollingUpdateType }}
+    rollingUpdate: 
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.labels.app | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    spec:
+      nodeSelector: {{- if .Values.nodeSelectorDisabled }} {}
+      {{- else }}
+      {{- range .Values.nodeSelector}}
+        {{ .key }}: {{ .value | quote }}
+      {{- end }}
+      {{- end }}
+
+      tolerations: {{- if .Values.tolerationsDisabled }} []
+      {{- else }}
+      {{- range .Values.tolerations}}
+        - key:      {{ .key | quote }}
+          operator: {{ .operator | quote }}
+          value:    {{ .value | quote }}
+          effect:   {{ .effect | quote }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.securityContextDisabled }}
+      {{- else }}
+      securityContext: 
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+        runAsNonRoot: {{ .Values.securityContext.runAsNonRoot }}
+        runAsUser: {{ .Values.securityContext.runAsUser }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name | quote }}
+        image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        {{- if .Values.containerCommandDisabled }}
+        {{- else }}
+        command: ["sh", "-c", {{ .Values.container.command | quote }}]
+        {{- end }}
+        ports:
+        {{- range .Values.service.ports }}
+        - name: {{ .name }}
+          containerPort: {{ .internalPort }}
+        {{- end }}
+        {{- if .Values.readinessProbeDisabled }}
+        {{- else }}
+        readinessProbe: 
+          httpGet:
+             path: {{ .Values.readinessProbe.httpGetPath }}
+             port: {{ .Values.readinessProbe.httpGetPort }}
+             scheme: {{ .Values.readinessProbe.httpGetScheme }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+        {{- end }} 
+        {{- if .Values.resourcesDisabled }}
+        {{- else }}
+        resources: 
+          requests:
+            cpu : {{ .Values.resources.requests.cpu | quote }}
+            memory:  {{ .Values.resources.requests.memory | quote }}
+            ephemeral-storage: {{ .Values.resources.requests.ephemeralStorage | quote }}
+          limits:
+            cpu : {{ .Values.resources.limits.cpu | quote }}
+            memory:  {{ .Values.resources.limits.memory | quote }}
+            ephemeral-storage: {{ .Values.resources.limits.ephemeralStorage | quote }}
+        {{- end }}
+        env: 
+        {{- if .Values.envFromConfigMapDisabled }} 
+        {{- else }}
+        {{- $dot := . }}
+        {{- range $key, $value := .Values.configMap.data }}
+        - name: {{ $key }}
+          valueFrom:
+            configMapKeyRef:
+              name: {{ $dot.Values.configMap.name | quote }}
+              key: {{ $key }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.envFromValueDisabled }}   
+        {{- else }}
+        {{- range $key, $value := .Values.configMap.data }}
+        - name: {{ $key }}
+          value: {{ $value }}
+        {{- end }}
+        {{- end }}
+        {{- if .Values.volumesMountsSecretDisabled }}
+        {{- else }}
+        volumeMounts:
+        {{- range .Values.volumes }}
+          - name: {{ .volumeName }}
+            mountPath: {{ .mountPath }}
+            subPath: {{ .subPath }}
+        {{- end }}
+        {{- end }}
+      {{- if .Values.volumesSecretDisabled }}
+      {{- else }} 
+      volumes:
+      {{- range .Values.volumes }}
+      - name: {{ .volumeName }}
+        secret:
+          secretName: {{ .secretName }}
+      {{- end }}
+      {{- end }}

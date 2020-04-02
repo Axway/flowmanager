@@ -1,0 +1,238 @@
+#..............................    L A B E L S            #
+
+labels: 
+  app:          flowcentral
+  version:      v1
+
+#..............................    S E R V I C E          #
+
+service:
+  name: flowcentral
+  api: v1
+  type: LoadBalancer
+  ports: 
+    - name: https
+      externalPort: 443
+      internalPort: 8081
+
+#..............................   Deployment            #
+image: 
+  repository: 608043799611.dkr.ecr.eu-west-1.amazonaws.com
+  name: flowcentral-dev
+  tag: latest
+  pullPolicy: Always
+
+deployment:
+  name: flowcentral
+  api:  apps/v1beta1
+  replicaCount: 1
+  strategy: 
+    rollingUpdateType: RollingUpdate
+    maxUnavailable: 1
+    maxSurge: 0
+
+volumesMountsSecretDisabled: false
+volumesSecretDisabled: false
+volumes:
+  - volumeName: rds-combined-ca-bundle
+    secretName: rds-combined-ca-bundle
+    mountPath: "/opt/axway/configs/rds-combined-ca-bundle.pem"
+    subPath: rds-combined-ca-bundle.pem
+  - volumeName: uicert
+    secretName: uicert
+    mountPath: "/opt/axway/configs/uicert.jks" 
+    subPath: uicert.jks
+  - volumeName: businessca
+    secretName: businessca
+    mountPath: "/opt/axway/configs/businessca.jks"
+    subPath: businessca.jks
+  - volumeName: governanceca
+    secretName: governanceca
+    mountPath: "/opt/axway/configs/governanceca.jks"
+    subPath: governanceca.jks
+  - volumeName: private
+    secretName: private
+    mountPath: "/opt/axway/configs/private_key.pem"
+    subPath: private_key.pem
+  - volumeName: public
+    secretName: public
+    mountPath: "/opt/axway/configs/public_key.pem"
+    subPath: public_key.pem
+  - volumeName: license
+    secretName: license
+    mountPath: "/opt/axway/license.xml"
+    subPath: license.xml
+
+containerCommandDisabled: false
+container:  
+   command: "cp -r /opt/axway/license.xml /opt/axway/FlowCentral/conf/license/license.xml && /opt/axway/scripts/start.sh"
+
+readinessProbeDisabled: false
+readinessProbe:
+  httpGetPath: /api/v2/internals/stability
+  httpGetPort: 8081
+  httpGetScheme: HTTPS
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  successThreshold: 1
+  timeoutSeconds: 1
+  failureThreshold: 30
+
+#didn't do a way to expose secrets as env because its a big security issue (and who is doing it this way should change to best practices)
+envFromConfigMapDisabled: false
+envFromValueDisabled: true
+
+nodeSelectorDisabled: true
+nodeSelector:
+  - key   : ars-tenant
+    value : "true"
+
+tolerationsDisabled: true
+tolerations: 
+  - effect:   "NoExecute"
+    key:      "ars-node-type"
+    operator: "Equal"
+    value:    "tenant"
+
+securityContextDisabled: true
+securityContext:
+  fsGroup: 2000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+resourcesDisabled: false
+resources:
+  requests: 
+    cpu: "1"
+    ephemeralStorage: "2Gi"
+    memory: "3Gi"
+  limits: 
+    cpu: "2"
+    ephemeralStorage: "4Gi"
+    memory: "4Gi"
+  
+#..............................   Persistent Volume Claim           #
+
+persistence:
+  enabled: false
+  # storageClass: "-"
+  accessMode: ReadWriteOnce
+  size: 8Gi
+  annotations: {}
+
+#..............................   Ingress          #
+ingress:
+  enabled: false
+  tls: true
+  tlsSecret: flowcentral-tls-prod
+  hostname: flowcentral.fc.axwaydev.net
+  path: /
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    kubernetes.io/ingress.allow-http: "false"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+
+#..............................   Config Map            #
+configMap:
+    name: flowcentral
+    data: 
+      GET_HOSTS_FROM: env
+
+      #  EULA  
+      ACCEPT_EULA: "yes"
+
+      #  GENERAL
+      FC_GENERAL_FQDN: "flowcentral"
+      FC_GENERAL_HOSTNAME: "flowcentral"
+      FC_GENERAL_UI_PORT: "8081"
+      FC_GENERAL_SAAS_MODE: "true"
+      FC_GENERAL_HTTP_PORT : "8080"
+      FC_GENERAL_ENCRYPTION_KEY: "Secret01"
+      FC_GENERAL_LOGGING_LEVEL: "INFO"
+      FC_GENERAL_SMTP_HOST: "localhost"
+      FC_GENERAL_SMTP_PORT: "25"
+      FC_GENERAL_LICENSE: "license.xml"
+      FC_GENERAL_CUSTOM_LOCATION_PATH: "/opt/axway/FlowCentral/logs"
+      FC_LOGS_CONSOLE: "yes"
+
+      #  HTTPS
+      FC_HTTPS_USE_CUSTOM_CERT: "true"
+      FC_HTTPS_KEYSTORE: "/opt/axway/configs/uicert.jks"
+      FC_HTTPS_CERT_ALIAS: "uicert"
+      FC_HTTPS_KEYSTORE_PASSWORD: "Secret01"
+      
+      #Platform
+      FC_PLATFORM_HOST                             : "platform.axwaytest.net"
+        
+      #Redis
+      FC_REDIS_ENABLED                             : "false"
+      FC_REDIS_HOSTNAME                            : "redis"
+      FC_REDIS_PORT                                : "6379"
+
+      #  CFT
+      FC_CFT_SHARED_SECRET: "Secret01"
+      FC_CFT_SFTP_ENABLED: "false"
+      
+      #ST
+      FC_ST_WHITELISTING_ENABLED: "false"
+      FC_ST_WHITELISTING_WATCHDOG_DELAY: "120"
+
+      #  APIC
+      FC_APIC_USE_CATALOG: "true"
+      FC_APIC_HOST: "https://apicentral.test.apicentral-k8s.axwaytest.net"
+      FC_APIC_CLIENTID: "FCSA_E2E_TESTID00000001"
+      FC_APIC_PUBLICKEY: "/opt/axway/configs/public_key.pem"
+      FC_APIC_PRIVATEKEY: "/opt/axway/configs/private_key.pem"
+
+      #  MONGO
+      FC_DATABASE_HOST: "docdb-flowcentral-https.cluster-cpeaw763edm8.eu-west-1.docdb.amazonaws.com" 
+      FC_DATABASE_PORT: "27017"
+      FC_DATABASE_USER_NAME: "flowcentral"
+      FC_DATABASE_USER_PASSWORD: "Secret01"
+      FC_DATABASE_USE_SSL: "true"
+      FC_DATABASE_CERTIFICATES: "/opt/axway/configs/rds-combined-ca-bundle.pem"
+
+      FC_DISABLE_CHECK_REACHABLE_HOST: "true"
+
+      #  BUSINESS
+      FC_BUSINESS_CA_CERTIF_ALIAS: "ibusca1"
+      FC_BUSINESS_CA_FILE: "/opt/axway/configs/businessca.jks"
+      FC_BUSINESS_CA_PASSWORD: "Secret01"
+
+      #  GOVERNANCE
+      FC_GOVERNANCE_CA_CERTIF_ALIAS: "govinter_fc"
+      FC_GOVERNANCE_CA_FILE: "/opt/axway/configs/governanceca.jks"
+      FC_GOVERNANCE_CA_PASSWORD: "Secret01"
+
+      #  JVM
+      FC_JVM_XMX                                   : "3G"
+      FC_JVM_XMS                                   : "1G"
+      FC_JVM_XMN                                   : "2G"
+      FC_JVM_DEBUG_ENABLED                         : "false"
+      FC_JVM_DEBUG_PORT                            : "8000"
+      FC_JVM_DEBUG_SUPSEND                         : "false"
+      #FC_JVM_CUSTOM_ARGS                          : "IF NEEDED"
+
+      #  EXTERNAL
+      FC_EXTERNAL_FQDN                             : "flowcentral.devfc.axwaytest.net"
+      FC_EXTERNAL_UI_PORT                          : "443"
+
+      # SENTINEL
+      FC_SENTINEL_AUDIT_ENABLED                    : "false"
+      FC_SENTINEL_FRONT_END_HOST                   : "localhost"
+      FC_SENTINEL_FRONT_END_PORT                   : "1305"
+      FC_SENTINEL_FRONT_END_SSL_PORT               : "1303"
+      FC_SENTINEL_UI_HOST                          : "localhost"
+      FC_SENTINEL_UI_PORT                          : "1309"
+      FC_SENTINEL_USE_CG_CA                        : "true"
+      
+      #ARS
+      FC_ARS_HTTPONLY                               : "false"  # this will activate http only if saas_mode is active
+        
+      # Proxy for SaaS Mode
+      FC_PROXY_ENABLED: "false"
+      FC_PROXY_HOST: "flowcentral-bridge.devfc.axwaytest.net"
+      FC_PROXY_PORT: "8444"
+

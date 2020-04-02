@@ -36,13 +36,13 @@ fi
 
 #redirect logs to stdout
 
-FC_LOGS_CONSOLE="${FC_LOGS_CONSOLE:-no}"
+FM_LOGS_CONSOLE="${FC_LOGS_CONSOLE:-yes}"
 
-if [[ $FC_LOGS_CONSOLE = "yes" ]]; then
-    mkdir -p $FC_GENERAL_CUSTOM_LOCATION_PATH/logs/
-    ln -sf /dev/stdout $FC_GENERAL_CUSTOM_LOCATION_PATH/logs/kernel.log
-    ln -sf /dev/stdout $FC_GENERAL_CUSTOM_LOCATION_PATH/logs/opnode.log
-    ln -sf /dev/stdout $FC_GENERAL_CUSTOM_LOCATION_PATH/logs/performance.log
+if [[ $FM_LOGS_CONSOLE = "yes" ]]; then
+    mkdir -p $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/
+    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/kernel.log
+    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/opnode.log
+    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/performance.log
 else
     echo "Logs are sent to files"
 fi
