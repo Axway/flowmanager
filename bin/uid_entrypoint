@@ -36,7 +36,7 @@ fi
 
 #redirect logs to stdout
 
-FM_LOGS_CONSOLE="${FC_LOGS_CONSOLE:-yes}"
+FM_LOGS_CONSOLE="${FM_LOGS_CONSOLE:-yes}"
 
 if [[ $FM_LOGS_CONSOLE = "yes" ]]; then
     mkdir -p $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/
