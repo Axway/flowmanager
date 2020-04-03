@@ -15,7 +15,7 @@ RUN echo "Adding username [axway] to the system." && \
     chmod -R 777 /home/axway && \
     chmod -R 777 /opt/axway
 
-# install FC OS prerequisites
+# install OS prerequisites
 RUN yum install --quiet -y wget unzip
 
 ARG URL="<ARTIFACT_LOCATION>"
@@ -23,7 +23,7 @@ ARG URL="<ARTIFACT_LOCATION>"
 # SNAPSHOT VERSION OR RELEASE NUMBER
 ARG RELEASE_TYPE="<RELEASE_TYPE>/"
 
-# FC ARTIFACT
+# ARTIFACT
 ARG ARTIFACT="<ARTIFACT>"
 
 RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$URL$RELEASE_TYPE$ARTIFACT" -P /home/axway/KIT && \
