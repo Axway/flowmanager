@@ -1,17 +1,17 @@
 version: '3.4'
 services:
-  flowcentral:
+  flowmanager:
     image: fc-docker.lab.buch.axway.int/mft/flowcentral_dev:latest 
     stdin_open: true
-    hostname: "flowcentral"
+    hostname: "flowmanager"
     tty: true
     environment:
         ### EULA ###
         ACCEPT_EULA: "yes"
         
         #General
-        FM_GENERAL_FQDN                              : "flowcentral"
-        FM_GENERAL_HOSTNAME                          : "flowcentral"
+        FM_GENERAL_FQDN                              : "flowmanager"
+        FM_GENERAL_HOSTNAME                          : "flowmanager"
         FM_GENERAL_UI_PORT                           : "8081"
         FM_GENERAL_SAAS_MODE                         : "false"
         FM_GENERAL_HTTP_PORT                         : ""
