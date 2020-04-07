@@ -51,7 +51,7 @@ services:
         
 
         #Mongo
-        FM_DATABASE_HOST                             : "fcmongo"
+        FM_DATABASE_HOST                             : "fmmongo"
         FM_DATABASE_PORT                             : "27018"
         FM_DATABASE_USER_NAME                        : "storage"
         FM_DATABASE_USER_PASSWORD                    : "storage"
@@ -92,7 +92,7 @@ services:
     ports:
       - 8081:8081
     depends_on:
-      - fcmongo
+      - fmmongo
     volumes:
      - "./mounts/resources:/opt/axway/FlowManager/resources"
      - "./mounts/plugins:/opt/axway/FlowManager/conf/schemas/storage/"
@@ -100,9 +100,9 @@ services:
      - "./mounts/configs:/opt/axway/configs"
      - "./mounts/configs:/opt/axway/FlowManager/conf/license"
 
-  fcmongo:
+  fmmongo:
     build: ./mongo_3.6/
-    hostname: fcmongo
+    hostname: fmmongo
     volumes:
        - "mongo_data:/data/db/"
        - "./mounts/mongo_certificates:/certificates"
