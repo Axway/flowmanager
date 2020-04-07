@@ -1,4 +1,4 @@
-version: '3.4'
+version: '2.2'
 services:
   flowmanager1:
     extends:
@@ -7,9 +7,10 @@ services:
     environment:
       FM_GENERAL_FQDN: "flowmanager1"
       FM_GENERAL_HOSTNAME: "flowmanager1"
-      FM_GENERAL_UI_PORT: "8081"
     ports:
       - "8081:8081"
+    depends_on:
+      - fcmongo
 
 
   flowmanager2:
@@ -19,9 +20,10 @@ services:
     environment:
       FM_GENERAL_FQDN: "flowmanager2"
       FM_GENERAL_HOSTNAME: "flowmanager2"
-      FM_GENERAL_UI_PORT: "8082"
     ports:
-      - "8082:8082"
+      - "8082:8081"
+    depends_on:
+      - fcmongo
 
   fcmongo:
     #build: ./mongo_3.6/
