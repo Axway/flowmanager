@@ -1,8 +1,8 @@
 version: '3.4'
 services:
-  flowcentral:
-    image: axway/flowcentral:1.0.20190809
-    hostname: "flowcentral"
+  flowmanager:
+    image: axway/flowmanager:1.0.20190809
+    hostname: "flowmanager"
     stdin_open: true
     tty: true
     environment:
@@ -10,95 +10,95 @@ services:
         ACCEPT_EULA: "no"
 
         #General
-        FC_GENERAL_FQDN                              : "flowcentral"
-        FC_GENERAL_HOSTNAME                          : "flowcentral"
-        FC_GENERAL_UI_PORT                           : "8081"
-        FC_GENERAL_SAAS_MODE                         : "false"
-        FC_GENERAL_HTTP_PORT                         : ""
-        FC_GENERAL_ENCRYPTION_KEY                    : "Secret01"
-        FC_GENERAL_LOGGING_LEVEL                     : "INFO"
-        FC_GENERAL_LICENSE                           : "license.xml"
-        FC_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/fc_logs"
-        FC_LOGS_CONSOLE                              : "yes"
+        FM_GENERAL_FQDN                              : "flowmanager"
+        FM_GENERAL_HOSTNAME                          : "flowmanager"
+        FM_GENERAL_UI_PORT                           : "8081"
+        FM_GENERAL_SAAS_MODE                         : "false"
+        FM_GENERAL_HTTP_PORT                         : ""
+        FM_GENERAL_ENCRYPTION_KEY                    : "Secret01"
+        FM_GENERAL_LOGGING_LEVEL                     : "INFO"
+        FM_GENERAL_LICENSE                           : "license.xml"
+        FM_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/logs"
+        FM_LOGS_CONSOLE                              : "yes"
 
         #HTTPS
-        FC_HTTPS_USE_CUSTOM_CERT                     : "true"
-        FC_HTTPS_KEYSTORE                            : "/opt/axway/configs/uicert.p12"
-        FC_HTTPS_CERT_ALIAS                          : "ui"
-        FC_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
-        FC_SESSION_IDLE                              : "900"
-        FC_SESSION_EXPIRATION                        : "28800"
+        FM_HTTPS_USE_CUSTOM_CERT                     : "true"
+        FM_HTTPS_KEYSTORE                            : "/opt/axway/configs/uicert.p12"
+        FM_HTTPS_CERT_ALIAS                          : "ui"
+        FM_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
+        FM_SESSION_IDLE                              : "900"
+        FM_SESSION_EXPIRATION                        : "28800"
 
         #CFT
-        FC_CFT_SHARED_SECRET                         : "Secret01"
-        FC_CFT_SFTP_ENABLED                          : "false"
+        FM_CFT_SHARED_SECRET                         : "Secret01"
+        FM_CFT_SFTP_ENABLED                          : "false"
         
         #ST
-        FC_ST_WHITELISTING_ENABLED                   : "false"
-        FC_ST_WHITELISTING_WATCHDOG_DELAY            : "120"
+        FM_ST_WHITELISTING_ENABLED                   : "false"
+        FM_ST_WHITELISTING_WATCHDOG_DELAY            : "120"
         
         #Redis
-        FC_REDIS_ENABLED                             : "false"
-        FC_REDIS_HOSTNAME                            : "redis"
-        FC_REDIS_PORT                                : "6379"
+        FM_REDIS_ENABLED                             : "false"
+        FM_REDIS_HOSTNAME                            : "redis"
+        FM_REDIS_PORT                                : "6379"
 
         #APIC
-        FC_APIC_USE_CATALOG                          : "true"
-        FC_APIC_HOST                                 : "https://apicentral.axway.com"
-        FC_APIC_CLIENTID                             : "DOSA_XXXXXXXXXXXXXXXXXXXXXXXXXXX"
-        FC_APIC_PUBLICKEY                            : "/opt/axway/configs/catalog-public-key.pem"
-        FC_APIC_PRIVATEKEY                           : "/opt/axway/configs/catalog-private-key.pem"
+        FM_APIC_USE_CATALOG                          : "true"
+        FM_APIC_HOST                                 : "https://apicentral.axway.com"
+        FM_APIC_CLIENTID                             : "DOSA_XXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        FM_APIC_PUBLICKEY                            : "/opt/axway/configs/catalog-public-key.pem"
+        FM_APIC_PRIVATEKEY                           : "/opt/axway/configs/catalog-private-key.pem"
         
 
         #Mongo
-        FC_DATABASE_HOST                             : "fcmongo"
-        FC_DATABASE_PORT                             : "27018"
-        FC_DATABASE_USER_NAME                        : "storage"
-        FC_DATABASE_USER_PASSWORD                    : "storage"
-        FC_DATABASE_USE_SSL                          : "false"
-        FC_DATABASE_CERTIFICATES                     : "/opt/axway/configs/mongodb.jks"
-        FC_DISABLE_CHECK_REACHABLE_HOST              : "false"
+        FM_DATABASE_HOST                             : "fcmongo"
+        FM_DATABASE_PORT                             : "27018"
+        FM_DATABASE_USER_NAME                        : "storage"
+        FM_DATABASE_USER_PASSWORD                    : "storage"
+        FM_DATABASE_USE_SSL                          : "false"
+        FM_DATABASE_CERTIFICATES                     : "/opt/axway/configs/mongodb.jks"
+        FM_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
-        FC_BUSINESS_CA_CERTIF_ALIAS                  : "business"
-        FC_BUSINESS_CA_FILE                          : "/opt/axway/configs/businessca.p12"
-        FC_BUSINESS_CA_PASSWORD                      : "Secret01"
+        FM_BUSINESS_CA_CERTIF_ALIAS                  : "business"
+        FM_BUSINESS_CA_FILE                          : "/opt/axway/configs/businessca.p12"
+        FM_BUSINESS_CA_PASSWORD                      : "Secret01"
 
         #GOVERNANCE
-        FC_GOVERNANCE_CA_CERTIF_ALIAS                : "governance"
-        FC_GOVERNANCE_CA_FILE                        : "/opt/axway/configs/governanceca.p12"
-        FC_GOVERNANCE_CA_PASSWORD                    : "Secret01"
+        FM_GOVERNANCE_CA_CERTIF_ALIAS                : "governance"
+        FM_GOVERNANCE_CA_FILE                        : "/opt/axway/configs/governanceca.p12"
+        FM_GOVERNANCE_CA_PASSWORD                    : "Secret01"
 
         #JVM
-        FC_JVM_XMX                                   : "2G"
-        FC_JVM_XMS                                   : "512M"
-        FC_JVM_XMN                                   : "768M"
-        FC_JVM_DEBUG_ENABLED                         : "false"
-        FC_JVM_DEBUG_PORT                            : "8000"
-        FC_JVM_DEBUG_SUSPEND                         : "false"
-        #FC_JVM_CUSTOM_ARGS                          : ""
+        FM_JVM_XMX                                   : "2G"
+        FM_JVM_XMS                                   : "512M"
+        FM_JVM_XMN                                   : "768M"
+        FM_JVM_DEBUG_ENABLED                         : "false"
+        FM_JVM_DEBUG_PORT                            : "8000"
+        FM_JVM_DEBUG_SUSPEND                         : "false"
+        #FFM_JVM_CUSTOM_ARGS                          : ""
 
         #EXTERNAL
-        #FC_EXTERNAL_FQDN                            : "flowcentral.example.com"
-        #FC_EXTERNAL_UI_PORT                         : "443"
+        #FM_EXTERNAL_FQDN                            : "flowmanager.example.com"
+        #FM_EXTERNAL_UI_PORT                         : "443"
 
         #Sentinel
-        FC_SENTINEL_AUDIT_ENABLED                    : "false"
-        FC_SENTINEL_FRONT_END_HOST                   : "localhost"
-        FC_SENTINEL_FRONT_END_PORT                   : "1305"
-        FC_SENTINEL_FRONT_END_SSL_PORT               : "1303"
-        FC_SENTINEL_UI_PORT                          : "1309"
-        FC_SENTINEL_USE_CG_CA                        : "true"
+        FM_SENTINEL_AUDIT_ENABLED                    : "false"
+        FM_SENTINEL_FRONT_END_HOST                   : "localhost"
+        FM_SENTINEL_FRONT_END_PORT                   : "1305"
+        FM_SENTINEL_FRONT_END_SSL_PORT               : "1303"
+        FM_SENTINEL_UI_PORT                          : "1309"
+        FM_SENTINEL_USE_CG_CA                        : "true"
     ports:
       - 8081:8081
     depends_on:
       - fcmongo
     volumes:
-     - "./mounts/fc_resources:/opt/axway/FlowCentral/resources"
-     - "./mounts/fc_plugins:/opt/axway/FlowCentral/conf/schemas/storage/"
-     - "./mounts/fc_logs:/opt/axway/fc_logs"
+     - "./mounts/resources:/opt/axway/FlowManager/resources"
+     - "./mounts/plugins:/opt/axway/FlowManager/conf/schemas/storage/"
+     - "./mounts/logs:/opt/axway/logs"
      - "./mounts/configs:/opt/axway/configs"
-     - "./mounts/configs:/opt/axway/FlowCentral/conf/license"
+     - "./mounts/configs:/opt/axway/FlowManager/conf/license"
 
   fcmongo:
     build: ./mongo_3.6/
@@ -113,7 +113,7 @@ services:
       MONGODB_APPLICATION_DATABASE    : umcft
       MONGODB_APPLICATION_USER        : storage
       MONGODB_APPLICATION_PASS        : storage
-      MONGODB_PORT                    : "27018" # MUST MATCH THE ONE SPECIFIED IN THE FLOWCENTRAL ENVIRONMENT VARIABLE
+      MONGODB_PORT                    : "27018" # MUST MATCH THE ONE SPECIFIED IN THE FLOWMANAGER ENVIRONMENT VARIABLE
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
