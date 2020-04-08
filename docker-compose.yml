@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowmanager:
-    image: axway/flowmanager:1.0.20190809
+    image: axway/flowmanager:2.0.20190809
     hostname: "flowmanager"
     stdin_open: true
     tty: true
