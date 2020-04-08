@@ -11,15 +11,13 @@ if [ -z "$1" ]; then
 fi
 
 mkdir -p ./mounts/configs
-mkdir -p ./mounts/fc_logs
-mkdir -p ./mounts/fc_keys
-mkdir -p ./mounts/fc_plugins
-mkdir -p ./mounts/fc_resources
+mkdir -p ./mounts/logs
+mkdir -p ./mounts/keys
+mkdir -p ./mounts/plugins
+mkdir -p ./mounts/resources
 mkdir -p ./mounts/mongo_data
 mkdir -p ./mounts/mongo_certificates
 mkdir -p ./mounts/mongo_config
-
-chmod 777 -R ./mounts
 
 if [[ -f "$1" ]]; then
 	cp $1 ./mounts/configs
@@ -29,3 +27,5 @@ fi
 
 ./scripts/gen-amplify-certs.sh
 ./scripts/gen-certs.sh
+
+chmod 777 -R ./mounts
