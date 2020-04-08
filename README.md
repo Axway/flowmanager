@@ -1,6 +1,6 @@
-# AMPLIFY Flow Central Docker
+# AMPLIFY Flow Manager Docker
 
-AMPLIFY Flow Central Docker
+AMPLIFY Flow Manager Docker
 
 ## Content
 
@@ -48,32 +48,32 @@ sudo yum install -y git
 
 ##### In order to obtain the necessary license files please contact your local Axway vendor
 
-## Clone the Flow Central repository from GitHub
+## Clone the Flow Manager repository from GitHub
 
 ```console
-git clone https://github.com/Axway/docker-flowcentral.git
-cd docker-flowcentral
+git clone https://github.com/Axway/docker-flowmanager.git
+cd docker-flowmanager
 ```
 
 #### Create volumes for persistent data
 
- - mkdir -p ./mounts/configs         # This folder will contain the private and public keys required to connect to API Central alongside with the Flow Central license (under the name **license.xml**) and the `.jks`/`.p12` certificates.
- - mkdir -p ./mounts/fc_logs         # All the application logs will be stored in here.
- - mkdir -p ./mounts/fc_plugins         # Plugins for ST,CFT
- - mkdir -p ./mounts/fc_resources       # Include Sentinel resources
+ - mkdir -p ./mounts/configs         # This folder will contain the private and public keys required to connect to API Manager alongside with the Flow Manager license (under the name **license.xml**) and the `.jks`/`.p12` certificates.
+ - mkdir -p ./mounts/logs            # All the application logs will be stored in here.
+ - mkdir -p ./mounts/plugins         # Plugins for ST,CFT
+ - mkdir -p ./mounts/resources       # Include Sentinel resources
   
 
-*Note* In order to persist data from the MongoDB container we create volumes where the Mongo data will be stored. **TAKE HEED**, you may use any MongoDB image you desire as Axway does not offer support and/or maintenance for the MongoDB image bundled alongside Flow Central.
+*Note* In order to persist data from the MongoDB container we create volumes where the Mongo data will be stored. **TAKE HEED**, you may use any MongoDB image you desire as Axway does not offer support and/or maintenance for the MongoDB image bundled alongside Flow Manager.
 
  - mkdir -p ./mounts/mongo_certificates      # MongoDB Certificates for SSL use
  - mkdir -p ./mounts/mongo_config            # MongoDB configuration files
  
-*Note* In order for the Flow Central and MongoDB services to be able to operate you have to give the appropriate permissions to folder where the volumes will be mounted.
+*Note* In order for the Flow Manager and MongoDB services to be able to operate you have to give the appropriate permissions to folder where the volumes will be mounted.
 
 Example : chmod -R 777 ./mounts
 
-*Note*  The Flow Central `docker-compose.yml` file defines a volume as a mechanism for persisting data both generated and used by the MongoDB service required by Flow Central.
-The MongoDB data is placed in this volume so it can be reused when creating and starting a new Flow Central container.
+*Note*  The Flow Manager `docker-compose.yml` file defines a volume as a mechanism for persisting data both generated and used by the MongoDB service required by Flow Manager.
+The MongoDB data is placed in this volume so it can be reused when creating and starting a new Flow Manager container.
 
 ## Importing docker image after download.
 
@@ -82,19 +82,19 @@ Example : docker load < (File_Name.tgz)
 Check that the image is succesfully imported with docker images command.
 
 
-## Customizing the Flow Central service
+## Customizing the Flow Manager service
 
-The docker-compose file describes the Flow Central service along with the MongoDB service it requires. Furthermore it allows the management and configuration of the aforementioned services parameters.
+The docker-compose file describes the Flow Manager service along with the MongoDB service it requires. Furthermore it allows the management and configuration of the aforementioned services parameters.
 
-Before you start, you must specify the Flow Central image you want to use. For that you must edit the **image** entry under the **flowcentral** service and specify the image name using the following naming convention "< repository > : < tag >".
+Before you start, you must specify the Flow Manager image you want to use. For that you must edit the **image** entry under the **flowmanager** service and specify the image name using the following naming convention "< repository > : < tag >".
 
 Example:
  ```console
-  image: axway/flowcentral:1.0.20190809
+  image: axway/flowmanager:2.0.20190809
 ```
 Make sure that the folders created at the previous step correspond with those specified in the docker-compose file.
 
-## Updating FlowCentral
+## Updating Flow Manager
 
 1. Download the new image
 2. Import it localy
@@ -104,14 +104,14 @@ Make sure that the folders created at the previous step correspond with those sp
 
 ## Conecting to Api Catalog
 
-In order to connect to Api Catalog please register the keys generated with the script found in **./scripts** folder or custom ones into Api Catalog and get the Client ID which you must enter into docker-compose under the `FC_APIC_CLIENTID` environment variable.
+In order to connect to Api Catalog please register the keys generated with the script found in **./scripts** folder or custom ones into Api Catalog and get the Client ID which you must enter into docker-compose under the `FM_APIC_CLIENTID` environment variable.
 
 
 #### Using a custom MongoDB
 
-In order to use a custom MongoDB service you must first comment/remove the entries under the `fcmongo` service located in the docker-compose file.
+In order to use a custom MongoDB service you must first comment/remove the entries under the `fmmongo` service located in the docker-compose file.
 
-Furthermore you must edit the `flowcentral` service located in the same file. You must fill out the MongoDB environment variables with the appropriate values specific to your custom solution. Finally you must comment/remove the entry `depends_on` from the `flowcentral`.
+Furthermore you must edit the `flowmanager` service located in the same file. You must fill out the MongoDB environment variables with the appropriate values specific to your custom solution. Finally you must comment/remove the entry `depends_on` from the `flowmanager`.
 
 When using mongo with ssl the truststore must be generated and put in the apropriated path.
 
@@ -120,67 +120,66 @@ When using mongo with ssl the truststore must be generated and put in the apropr
 
 #### Docker-compose parameters
 
-The following tables illustrate a list of available parameters from the docker-compose file. With these parameters you can fine tune Flow Central's configuration in order for it to better fit your use case.
+The following tables illustrate a list of available parameters from the docker-compose file. With these parameters you can fine tune Flow Manager's configuration in order for it to better fit your use case.
 
 ### Docker-compose parameters (these parameters come with a default value, but they can be customized for your use case)
 
-#### Flow Central
+#### Flow Manager
 
  **Parameter**                     |  **Values**  |  **Description**
  --------------------------------- | :----------: | ---------------
 ACCEPT_EULA                        |  \<string>   |  Parameter which indicates your acceptance of the End User License Agreement (i.e. EULA).
-FC_GENERAL_FQDN                    |  \<string>   |  Host address of the Flow Central instance.
-FC_GENERAL_HOSTNAME                |  \<string>   |  Host name of the Flow Central instance.
-FC_GENERAL_UI_PORT                 |  \<string>   |  Flow Central's UI port.
-FC_GENERAL_ENCRYPTION_KEY          |  \<string>   |  Flow Central's encryption key.
-FC_GENERAL_LOGGING_LEVEL           |  \<string>   |  Flow Central's logging levels.
-FC_GENERAL_LICENSE                 |  \<string>   |  Name of the Flow Central license file.
-FC_GENERAL_CUSTOM_LOCATION_PATH    |  \<string>   |  The location of logs inside of the docker image.
-FC_LOGS_CONSOLE                    |  \<string>   |  Logs in console or in files.
-FC_HTTPS_USE_CUSTOM_CERT           |  \<string>   |  Flag which informs Flow Central that you are using custom certificates.
-FC_HTTPS_KEYSTORE                  |  \<string>   |  Name of the HTTPS certificate.
-FC_HTTPS_CERT_ALIAS                |  \<string>   |  Alias of the HTTPS certificate.
-FC_HTTPS_KEYSTORE_PASSWORD         |  \<string>   |  HTTPS certificate password.
-FC_CFT_SHARED_SECRET               |  \<string>   |  Flow Central's shared secret.
-FC_APIC_USE_CATALOG                |  \<string>   |  Flag which indicates whether Flow Central should enable or disable the connection to ApiCatalog.
-FC_APIC_HOST                       |  \<string>   |  ApiCatalog Host.
-FC_APIC_CLIENTID                   |  \<string>   |  ApiCatalog's Client ID.
-FC_APIC_PUBLICKEY                  |  \<string>   |  ApiCatalog's Public Key.
-FC_APIC_PRIVATEKEY                 |  \<string>   |  ApiCatalog's Private Key.
-FC_APIC_TOKENURL                   |  \<string>   |  ApiCatalog's Token Url.
-FC_DATABASE_HOST                   |  \<string>   |  MongoDB host name.
-FC_DATABASE_PORT                   |  \<number>   |  MongoDB port.
-FC_DATABASE_USER_NAME              |  \<string>   |  Flow Central's user MongoDB user.
-FC_DATABASE_USER_PASSWORD          |  \<string>   |  Flow Central's user MongoDB user's password.
-FC_DATABASE_USE_SSL                |  \<string>   |  MongoDB option for use of SSL. 
-FC_DATABASE_CERTIFICATES           |  \<string>   |  MongoDB truststore. (At the moment we support only jks.)
-FC_DISABLE_CHECK_REACHABLE_HOST    |  \<string>   |  FlowCentral will not check if the mongodb instance is available.
-FC_BUSINESS_CA_CERTIF_ALIAS        |  \<string>   |  Custom business certificate's internal alias.
-FC_BUSINESS_CA_FILE                |  \<string>   |  File name and path to the custom business certificate.
-FC_BUSINESS_CA_PASSWORD            |  \<string>   |  Custom business certificate's password.
-FC_GOVERNANCE_CA_CERTIF_ALIAS      |  \<string>   |  Custom governance certificate internal alias.
-FC_GOVERNANCE_CA_FILE              |  \<string>   |  File name and path to custom governance certificate.
-FC_GOVERNANCE_CA_PASSWORD          |  \<string>   |  Custom governance certificate password.
-FC_JVM_XMX                         |  \<string>   |  JVM maximum memory allocation pool.
-FC_JVM_XMS                         |  \<string>   |  JVM maximum memory allocation pool.
-FC_JVM_XMN                         |  \<string>   |  JVM size of the heap for the young generation.       
-FC_JVM_DEBUG_ENABLED               |  \<string>   |  JVM Debug. 
-FC_JVM_DEBUG_PORT                  |  \<string>   |  JVM Debug Port.         
-FC_JVM_DEBUG_SUSPEND               |  \<string>   |  JVM Debug Suspend.  
-FC_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.
-FC_EXTERNAL_FQDN                   |  \<string>   |  FlowCentral external FQDN. (For when you are using the product from behind a loadbalancer)               
-FC_EXTERNAL_UI_PORT                |  \<string>   |  FlowCentral external port.           
-FC_SENTINEL_AUDIT_ENABLED          |  \<string>   |  Enable/Disable Sentinel audit.
-FC_SENTINEL_FRONT_END_HOST         |  \<string>   |  Sentinel FQDN.  
-FC_SENTINEL_FRONT_END_PORT         |  \<string>   |  Sentinel frontend port.   
-FC_SENTINEL_FRONT_END_SSL_PORT     |  \<string>   |  Sentinel frontend ssl port. 
-FC_SENTINEL_UI_PORT                |  \<string>   |  Sentinel ui port.    
-FC_SENTINEL_USE_CG_CA              |  \<string>   |  Use FlowCentral CA for Sentinel.         
+FM_GENERAL_FQDN                    |  \<string>   |  Host address of the Flow Manager instance.
+FM_GENERAL_HOSTNAME                |  \<string>   |  Host name of the Flow Manager instance.
+FM_GENERAL_UI_PORT                 |  \<string>   |  Flow Manager's UI port.
+FM_GENERAL_ENCRYPTION_KEY          |  \<string>   |  Flow Manager's encryption key.
+FM_GENERAL_LOGGING_LEVEL           |  \<string>   |  Flow Manager's logging levels.
+FM_GENERAL_LICENSE                 |  \<string>   |  Name of the Flow Manager license file.
+FM_GENERAL_CUSTOM_LOCATION_PATH    |  \<string>   |  The location of logs inside of the docker image.
+FM_LOGS_CONSOLE                    |  \<string>   |  Logs in console or in files.
+FM_HTTPS_USE_CUSTOM_CERT           |  \<string>   |  Flag which informs Flow Manager that you are using custom certificates.
+FM_HTTPS_KEYSTORE                  |  \<string>   |  Name of the HTTPS certificate.
+FM_HTTPS_CERT_ALIAS                |  \<string>   |  Alias of the HTTPS certificate.
+FM_HTTPS_KEYSTORE_PASSWORD         |  \<string>   |  HTTPS certificate password.
+FM_CFT_SHARED_SECRET               |  \<string>   |  Flow Manager's shared secret.
+FM_APIC_USE_CATALOG                |  \<string>   |  Flag which indicates whether Flow Manager should enable or disable the connection to ApiCatalog.
+FM_APIC_HOST                       |  \<string>   |  ApiCatalog Host.
+FM_APIC_CLIENTID                   |  \<string>   |  ApiCatalog's Client ID.
+FM_APIC_PUBLICKEY                  |  \<string>   |  ApiCatalog's Public Key.
+FM_APIC_PRIVATEKEY                 |  \<string>   |  ApiCatalog's Private Key.
+FM_APIC_TOKENURL                   |  \<string>   |  ApiCatalog's Token Url.
+FM_DATABASE_HOST                   |  \<string>   |  MongoDB host name.
+FM_DATABASE_PORT                   |  \<number>   |  MongoDB port.
+FM_DATABASE_USER_NAME              |  \<string>   |  Flow Manager's user MongoDB user.
+FM_DATABASE_USER_PASSWORD          |  \<string>   |  Flow Manager's user MongoDB user's password.
+FM_DATABASE_USE_SSL                |  \<string>   |  MongoDB option for use of SSL. 
+FM_DATABASE_CERTIFICATES           |  \<string>   |  MongoDB truststore. (At the moment we support only jks.)
+FM_DISABLE_CHECK_REACHABLE_HOST    |  \<string>   |  Flow Manager will not check if the mongodb instance is available.
+FM_BUSINESS_CA_CERTIF_ALIAS        |  \<string>   |  Custom business certificate's internal alias.
+FM_BUSINESS_CA_FILE                |  \<string>   |  File name and path to the custom business certificate.
+FM_BUSINESS_CA_PASSWORD            |  \<string>   |  Custom business certificate's password.
+FM_GOVERNANCE_CA_CERTIF_ALIAS      |  \<string>   |  Custom governance certificate internal alias.
+FM_GOVERNANCE_CA_FILE              |  \<string>   |  File name and path to custom governance certificate.
+FM_GOVERNANCE_CA_PASSWORD          |  \<string>   |  Custom governance certificate password.
+FM_JVM_XMX                         |  \<string>   |  JVM maximum memory allocation pool.
+FM_JVM_XMS                         |  \<string>   |  JVM maximum memory allocation pool.
+FM_JVM_XMN                         |  \<string>   |  JVM size of the heap for the young generation.       
+FM_JVM_DEBUG_ENABLED               |  \<string>   |  JVM Debug. 
+FM_JVM_DEBUG_PORT                  |  \<string>   |  JVM Debug Port.         
+FM_JVM_DEBUG_SUSPEND               |  \<string>   |  JVM Debug Suspend.  
+FM_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.
+FM_EXTERNAL_FQDN                   |  \<string>   |  Flow Manager external FQDN. (For when you are using the product from behind a loadbalancer)               
+FM_EXTERNAL_UI_PORT                |  \<string>   |  Flow Manager external port.           
+FM_SENTINEL_AUDIT_ENABLED          |  \<string>   |  Enable/Disable Sentinel audit.
+FM_SENTINEL_FRONT_END_HOST         |  \<string>   |  Sentinel FQDN.  
+FM_SENTINEL_FRONT_END_PORT         |  \<string>   |  Sentinel frontend port.   
+FM_SENTINEL_FRONT_END_SSL_PORT     |  \<string>   |  Sentinel frontend ssl port. 
+FM_SENTINEL_UI_PORT                |  \<string>   |  Sentinel ui port.    
+FM_SENTINEL_USE_CG_CA              |  \<string>   |  Use Flow Manager CA for Sentinel.  
 
+## Flow Manager service operations
 
-## Flow Central service operations
-
-#### 1. Create and start the Flow Central service
+#### 1. Create and start the Flow Manager service
 
 From the folder where the `docker-compose.yml` file is located, run the command:
 
@@ -188,7 +187,7 @@ From the folder where the `docker-compose.yml` file is located, run the command:
 docker-compose up
 ```
 
-The `up` command pulls the Flow Central image from DockerHub, recreates, starts, and attaches to a container for services.
+The `up` command pulls the Flow Manager image from DockerHub, recreates, starts, and attaches to a container for services.
 Unless they are already running, this command also starts any linked services.
 
 You can use the `-d` option to run containers in the background.
@@ -203,7 +202,7 @@ Run the docker `ps` command to see the running containers.
 docker ps
 ```
 
-#### 2. Stop and remove the Flow Central service
+#### 2. Stop and remove the Flow Manager service
 
 From the folder where the `docker-compose.yml` file is located, you can stop the containers using the command:
 
@@ -214,18 +213,18 @@ docker-compose down
 The `down` command stops containers, and removes containers, networks, anonymous volumes, and images created by `up`.
 You can use the `-v` option to remove named volumes declared in the `volumes` section of the Compose file, and anonymous volumes attached to containers.
 
-***BE CAREFULL*** When using the Flow Central Docker image in production, the following command `docker-compose down -v` will remove any persistent data associated with your Flow Central containers.
-***It will essentially result in a clean slate for your Flow Central services.***
+***BE CAREFUL*** When using the Flow Manager Docker image in production, the following command `docker-compose down -v` will remove any persistent data associated with your Flow Manager containers.
+***It will essentially result in a clean slate for your Flow Manager services.***
 
-#### 3. Start the Flow Central service
+#### 3. Start the Flow Manager service
 
-From the folder where the `docker-compose.yml` file is located, you can start the Flow Central service using `start` if it was stopped using `stop`.
+From the folder where the `docker-compose.yml` file is located, you can start the Flow Manager service using `start` if it was stopped using `stop`.
 
 ```console
 docker-compose start
 ```
 
-#### 4. Stop Flow Central service
+#### 4. Stop Flow Manager service
 
 From the folder where the `docker-compose.yml` file is located, you can stop the containers using the command:
 
@@ -235,7 +234,7 @@ docker-compose stop
 
 ## Helper scripts
 
-This sections details the usage of the helper scripts included alongside the Flow Central docker-compose. There are 2 helper scripts, namely: **gen-amplify-certs.sh** and **gen-certs.sh**.
+This sections details the usage of the helper scripts included alongside the Flow Manager docker-compose. There are 2 helper scripts, namely: **gen-amplify-certs.sh** and **gen-certs.sh**.
 
 Their usage will be detailed in the following sections.
 
@@ -243,7 +242,7 @@ Their usage will be detailed in the following sections.
 
 #### Using "gen-amplify-certs.sh"
 
-This script generates the public and private keys required by the Flow Central service in order to connect to the amplify products stack. The files will be located in the same directory as the script being used to generate them. By default they need to be placed in the `./configs` directory.
+This script generates the public and private keys required by the Flow Manager service in order to connect to the amplify products stack. The files will be located in the same directory as the script being used to generate them. By default they need to be placed in the `./configs` directory.
 
 *Note* The following example details the use of the aforementioned script.
 
