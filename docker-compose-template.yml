@@ -21,6 +21,9 @@ services:
         FM_GENERAL_CUSTOM_LOCATION_PATH              : "<FM_GENERAL_CUSTOM_LOCATION_PATH>"
         FM_LOGS_CONSOLE                              : "<FM_LOGS_CONSOLE>"
 
+        #Operations
+        FM_OPERATIONS_ADMIN_CLIENTID: "DOSA_3c4ebd8cc4254c69a63ba3c0930ffe5b"
+        
         #METRICS
         FM_METRICS_ENABLED                           : "<FM_METRICS_ENABLED>"     
 
