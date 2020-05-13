@@ -1,0 +1,16 @@
+version: "2"
+services:
+  flowmanager-agent:
+    image : registry.dctest.docker-cluster.axwaytest.net/internal/flowmanager-agent
+    tty: true
+    environment:
+      DOSA: <DOSA>
+      DOSA_KEY: <DOSA_KEY>
+      CACERT: <CACERT>
+      SERVER: <SERVER>
+      NAME: <NAME>
+      INSECURE: <INSECURE>
+    command: [ "flowmanager-agent" ]
+    volumes:
+    - ./conf:/conf
+

@@ -1,0 +1,22 @@
+version: "2"
+services:
+
+  flowmanager-bridge:
+    image: registry.dctest.docker-cluster.axwaytest.net/internal/flowmanager-bridge:0.9.0
+    tty: true
+    environment:
+      PROXY_AUTHN_CLAIMS: "<PROXY_AUTHN_CLAIMS>"
+      PROXY_AUTHN_HTPASSWD: "<PROXY_AUTHN_HTPASSWD>"
+      JWK_URL: "https://login-preprod.axway.com/auth/realms/Broker/protocol/openid-connect/certs"
+      PROXY_PORT: "8444"
+      BRIDGE_PORT: "8443"
+      BRIDGE_CERT: /certs/flowmanager-bridge.crt
+      BRIDGE_KEY: /certs/flowmanager-bridge.key
+      HEALTHCHECKPORT: "8444"
+    ports:
+    - "8443:8443"
+    - "8444:8444"
+    command: [ "flowmanager-bridge" ]
+    volumes:
+    - ./certs:/certs
+
