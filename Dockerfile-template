@@ -31,7 +31,7 @@ RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$URL$RELEASE_TYPE$
 
 COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 
-FROM alpine:3.9
+FROM alpine:3.11
 
 ENV JAVA_ALPINE_VERSION=8.242.08-r0 \
     JAVA_VERSION=8u242C 
