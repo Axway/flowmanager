@@ -1,16 +1,20 @@
-version: "2"
+version: "2.3"
 services:
   flowmanager-agent:
-    image : registry.dctest.docker-cluster.axwaytest.net/internal/flowmanager-agent
-    tty: true
+    image: "<AGENT_IMAGE_NAME>:<AGENT_IMAGE_TAG>"
+    restart: "always"
     environment:
-      DOSA: <DOSA>
-      DOSA_KEY: <DOSA_KEY>
-      CACERT: <CACERT>
-      SERVER: <SERVER>
-      NAME: <NAME>
-      INSECURE: <INSECURE>
-    command: [ "flowmanager-agent" ]
+      ACCEPT_EULA: "${ACCEPT_EULA:-false}"                  
+      NAME: ${NAME:-GLOBAL}                                 
+      DOSA: /conf/dosa.json                                 
+      DOSA_CERT: /conf/dosa-public.pem                      
+      DOSA_KEY: /conf/dosa-key.pem                          
+      DOSA_KEY_PASSWORD: "${DOSA_KEY_PASSWORD:-}"           
+      CACERT: "${CACERT:-}"                                 
+      INSECURE: "${INSECURE:-}"                             
+      SERVER: "${SERVER:-flowmanager-bridge.axway.com:443}" 
+      COUNT: "${COUNT:-2}"                                  
+      SENDLOGS: "${SENDLOGS:-true}"                         
     volumes:
-    - ./conf:/conf
+      - ../conf:/conf:ro
 

@@ -2,7 +2,7 @@ version: "2"
 services:
 
   flowmanager-bridge:
-    image: registry.dctest.docker-cluster.axwaytest.net/internal/flowmanager-bridge:0.9.0
+    image: <BRIDGE_IMAGE_NAME>:<BRIDGE_IMAGE_TAG>
     tty: true
     environment:
       PROXY_AUTHN_CLAIMS: "<PROXY_AUTHN_CLAIMS>"
