@@ -49,7 +49,7 @@ RUN chmod -R u+x /opt/axway && \
     chgrp -R 0 /opt/axway && \
     chmod -R g=u /opt/axway /etc/passwd && \
     rm -rf /var/cache/apk/* /usr/bin/nc /usr/bin/wget /usr/bin/vi /usr/bin/passwd /usr/bin/nslookup /usr/bin/hexdump /sbin/ip* /sbin/if* /sbin/lsmod /sbin/modprobe /sbin/arp /sbin/route /sbin/apk /sbin/insmod /bin/chmod /bin/chown /bin/ed && \
-    ulimit -S -p 5000
+    ulimit -S -u 5000
 
 USER 1001
 
