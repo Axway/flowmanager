@@ -4,17 +4,14 @@ services:
     image: "<AGENT_IMAGE_NAME>:<AGENT_IMAGE_TAG>"
     restart: "always"
     environment:
-      ACCEPT_EULA: "${ACCEPT_EULA:-false}"                  
-      NAME: ${NAME:-GLOBAL}                                 
+      ACCEPT_EULA: "true"                  
+      NAME: "<NAME>"                                 
       DOSA: /conf/dosa.json                                 
-      DOSA_CERT: /conf/dosa-public.pem                      
       DOSA_KEY: /conf/dosa-key.pem                          
-      DOSA_KEY_PASSWORD: "${DOSA_KEY_PASSWORD:-}"           
-      CACERT: "${CACERT:-}"                                 
-      INSECURE: "${INSECURE:-}"                             
-      SERVER: "${SERVER:-flowmanager-bridge.axway.com:443}" 
-      COUNT: "${COUNT:-2}"                                  
-      SENDLOGS: "${SENDLOGS:-true}"                         
+      DOSA_KEY_PASSWORD: "-"           
+      CACERT: "/conf/flowmanager-bridge.crt"                                 
+      INSECURE: "true"                             
+      SERVER: "flowmanager-bridge.devfc.axwaytest.net:443" 
     volumes:
-      - ../conf:/conf:ro
+      - ./conf:/conf:ro
 
