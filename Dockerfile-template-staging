@@ -54,7 +54,7 @@ RUN chmod -R u+x /opt/axway && \
 USER 1001
 
 COPY ./resources/conf_to_import.txt /opt/axway/FlowManager/conf.properties
-COPY ./licenses/preprod /opt/axway/configs
+COPY ./licenses/ /opt/axway/configs
 
 ENTRYPOINT [ "/opt/axway/bin/uid_entrypoint" ]
 
