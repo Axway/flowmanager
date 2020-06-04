@@ -75,10 +75,10 @@ cd docker-flowcentral
 
 #### Create volumes for persistence data
 
- - mkdir -p ./mounts/fc_logs         # All the application logs will be stored in here.
- - mkdir -p ./mounts/fc_configs      # This folder will contain the Flow Central license under the name **license.xml** and all the certificates..
- - mkdir -p ./mounts/fc_resources    # This folder will contain custom resources.
- - mkdir -p ./mounts/fc_plugins      # This folder will contain plugins.    
+ - mkdir -p ./mounts/logs         # All the application logs will be stored in here.
+ - mkdir -p ./mounts/configs      # This folder will contain the Flow Central license under the name **license.xml** and all the certificates..
+ - mkdir -p ./mounts/resources    # This folder will contain custom resources.
+ - mkdir -p ./mounts/plugins      # This folder will contain plugins.    
 
 *Note* In order to persist data from the MongoDB container we create volumes where the Mongo data and Mongo configuration files will be stored. **TAKE HEED**, you may use any MongoDB image you desire as Axway does not offer support and/or maintenance for the MongoDB image bundled alongside Flow Central.
 
