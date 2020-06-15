@@ -31,7 +31,7 @@ RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$URL$RELEASE_TYPE$
 
 COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 
-FROM alpine:3.11
+FROM alpine:3.12
 
 ENV JAVA_ALPINE_VERSION=8.242.08-r0 \
     JAVA_VERSION=8u242C 
@@ -41,10 +41,6 @@ RUN apk add -q shadow && \
     adduser -D -u 1001 -h /opt/axway -g '' -G axway axway && \
     apk --update --no-cache add openjdk8=8.242.08-r0 && \ 
     apk upgrade --no-cache && \
-    apk del libgcc && \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.31-r0/glibc-2.31-r0.apk && \
-    apk add glibc-2.31-r0.apk && \
     apk del shadow 
 
 COPY --from=builder  --chown=axway:axway /opt/axway/ /opt/axway/
