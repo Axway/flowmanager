@@ -31,9 +31,9 @@ RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$URL$RELEASE_TYPE$
 
 COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 
-FROM alpine:3.11
+FROM alpine:3.12
 
-ENV JAVA_ALPINE_VERSION=8.242.08-r0 \
+ENV JAVA_ALPINE_VERSION=8.242.08-r2 \
     JAVA_VERSION=8u242C 
 
 RUN apk add -q shadow && \
