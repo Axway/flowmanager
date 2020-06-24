@@ -34,6 +34,19 @@ else
     exit 1
 fi
 
+#redirect logs to stdout
+
+FM_LOGS_CONSOLE="${FM_LOGS_CONSOLE:-yes}"
+
+if [[ $FM_LOGS_CONSOLE = "yes" ]]; then
+    mkdir -p $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/
+    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/kernel.log
+    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/opnode.log
+    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/performance.log
+else
+    echo "Logs are sent to files"
+fi
+
 ln -sf /dev/stdout /opt/axway/FlowManager/logs/commonsso.log
 ln -sf /dev/stdout /opt/axway/FlowManager/logs/errout.txt
 ln -sf /dev/stdout /opt/axway/FlowManager/logs/opcmd.log.0
