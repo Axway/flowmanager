@@ -25,9 +25,6 @@ services:
         #EXTERNAL
         FM_EXTERNAL_FQDN                             : "<FQDN>"              
         FM_EXTERNAL_UI_PORT                          : "8081"
-        
-        #Operations - on Saas only
-        #FM_OPERATIONS_ADMIN_CLIENTID                 : "<FM_OPERATIONS_ADMIN_CLIENTID>"
 
         #HTTPS
         FM_HTTPS_USE_CUSTOM_CERT                     : "true"
@@ -93,14 +90,6 @@ services:
         FM_SENTINEL_FRONT_END_HOST                    : "localhost"
         FM_SENTINEL_FRONT_END_PORT                    : "1305"
         FM_SENTINEL_FRONT_END_SSL_PORT                : "1303"
-        
-        #ARS
-        FM_ARS_HTTPONLY                               : "false"  # this will activate http only if saas_mode is active
-        
-        # Proxy for SaaS Mode
-        FM_PROXY_ENABLED                              : "false"
-        FM_PROXY_HOST                                 : "flowcentral-bridge.axwaytest.net"
-        FM_PROXY_PORT                                 : "8444"
 
         
     ports:
