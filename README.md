@@ -130,7 +130,6 @@ The following tables illustrate a list of available parameters from the docker-c
  ------------------------------- | :----------: | ---------------
 ACCEPT_EULA                      |  \<string>   |  Parameter which indicates your acceptance of the End User License Agreement (i.e. EULA).
 FC_GENERAL_FQDN                  |  \<string>   |  Host address of the Flow Central instance.
-FC_GENERAL_HOSTNAME              |  \<string>   |  Host name of the Flow Central instance.
 FC_GENERAL_UI_PORT               |  \<string>   |  FlowCentral UI Port.
 FC_GENERAL_HTTP_PORT             |  \<string>   |  FlowCentral http Port.
 FC_GENERAL_ENCRYPTION_KEY        |  \<string>   |  Flow Central's encryption key.
@@ -144,8 +143,6 @@ FC_HTTPS_CERT_ALIAS              |  \<string>   |  Flow Central's UI certificate
 FC_HTTPS_KEYSTORE_PASSWORD       |  \<string>   |  Flow Central's UI certificate password.
 FC_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret.
 FC_SAAS_MODE                     |  \<string>   |  
-FC_ST_WHITELISTING_ENABLED       |  \<string>   | 
-FC_ST_WHITELISTING_WATCHDOG_DELAY|  \<string>   | 
 FC_APIC_USE_CATALOG              |  \<string>   |  Enable or disable connection to ApiCatalog.
 FC_APIC_HOST                     |  \<string>   |  ApiCatalog Host.
 FC_APIC_CLIENTID                 |  \<string>   |  ApiCatalog Client ID.
@@ -170,7 +167,6 @@ FC_JVM_XMN                       |  \<string>   |  JVM_XMN Custom Properties.
 FC_JVM_DEBUG_ENABLED             |  \<string>   |  JVM Disable/Enable Debug.
 FC_JVM_DEBUG_PORT                |  \<string>   |  JVM Debug Port.
 FC_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
-#FC_JVM_CUSTOM_ARGS              |  \<string>   |  JVM custom arguments.
 FC_EXTERNAL_FQDN                 |  \<string>   |  External FQDN.           
 FC_EXTERNAL_UI_PORT              |  \<string>   |  External Port.
 FC_PLATFORM_HOST                 |  \<string>   |  
