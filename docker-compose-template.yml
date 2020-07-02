@@ -11,7 +11,6 @@ services:
         
         #General
         FM_GENERAL_FQDN                              : "<FM_GENERAL_FQDN>"
-        FM_GENERAL_HOSTNAME                          : "<FM_GENERAL_HOSTNAME>"
         FM_GENERAL_UI_PORT                           : "<FM_GENERAL_UI_PORT>"
         FM_GENERAL_SAAS_MODE                         : "<FM_GENERAL_SAAS_MODE>"
         FM_GENERAL_HTTP_PORT                         : "<FM_GENERAL_HTTP_PORT>"
@@ -20,8 +19,12 @@ services:
         FM_GENERAL_LICENSE                           : "<FM_GENERAL_LICENSE>"
         FM_GENERAL_CUSTOM_LOCATION_PATH              : "<FM_GENERAL_CUSTOM_LOCATION_PATH>"
         FM_LOGS_CONSOLE                              : "<FM_LOGS_CONSOLE>"
-
-        #Operations
+        
+        #EXTERNAL
+        FM_EXTERNAL_FQDN                             : "<FM_EXTERNAL_FQDN>"              
+        FM_EXTERNAL_UI_PORT                          : "<FM_EXTERNAL_UI_PORT>" 
+        
+        #Operations - on Saas only
         FM_OPERATIONS_ADMIN_CLIENTID: "<FM_OPERATIONS_ADMIN_CLIENTID>"
         
         #METRICS
@@ -42,16 +45,17 @@ services:
         FM_REDIS_ENABLED                             : "<FM_REDIS_ENABLED>"
         FM_REDIS_HOSTNAME                            : "<FM_REDIS_HOSTNAME>"
         FM_REDIS_PORT                                : "<FM_REDIS_PORT>"
-
+        FM_REDIS_AUTH_ENABLED                        : "<FM_REDIS_AUTH_ENABLED>"
+        FM_REDIS_PASSWORD                            : "<FM_REDIS_PASSWORD>"
+        #optional,only for redis 6.x, it should be empty if not used
+        FM_REDIS_USER                                : "<FM_REDIS_USER>"
+        FM_REDIS_SSL_ENABLED                         : "<FM_REDIS_SSL_ENABLED>"
+        #optional, it should be empty if redis ca is not set 
+        FM_REDIS_SSL_CA                              : "<FM_REDIS_SSL_CA>"
 
         #CFT
         FM_CFT_SHARED_SECRET                         : "<FM_CFT_SHARED_SECRET>"
-        FM_CFT_SFTP_ENABLED                          : "<FM_CFT_SFTP_ENABLED>"
-        
-        #ST
-        FM_ST_WHITELISTING_ENABLED                   : "<FM_ST_WHITELISTING_ENABLED>"
-        FM_ST_WHITELISTING_WATCHDOG_DELAY            : "<FM_ST_WHITELISTING_WATCHDOG_DELAY>"
-        
+               
         #APIC
         FM_APIC_USE_CATALOG                          : "<FM_APIC_USE_CATALOG>"
         FM_APIC_HOST                                 : "<FM_APIC_HOST>"
@@ -67,7 +71,6 @@ services:
         FM_DATABASE_USER_PASSWORD                    : "<FM_DATABASE_USER_PASSWORD>"
         FM_DATABASE_USE_SSL                          : "<FM_DATABASE_USE_SSL>"
         FM_DATABASE_CERTIFICATES                     : "<FM_DATABASE_CERTIFICATES>"
-        FM_DISABLE_CHECK_REACHABLE_HOST              : "<FM_DISABLE_CHECK_REACHABLE_HOST>"
 
         #Business
         FM_BUSINESS_CA_CERTIF_ALIAS                  : "<FM_BUSINESS_CA_CERTIF_ALIAS>"
@@ -85,23 +88,15 @@ services:
         FM_JVM_XMN                                   : "<FM_JVM_XMN>"
         FM_JVM_DEBUG_ENABLED                         : "<FM_JVM_DEBUG_ENABLED>"
         FM_JVM_DEBUG_PORT                            : "<FM_JVM_DEBUG_PORT>"
-        FM_JVM_DEBUG_SUSPEND                         : "<FM_JVM_DEBUG_SUSPEND>"
-        FM_JVM_CUSTOM_ARGS                           : "<FM_JVM_CUSTOM_ARGS>"
-        
-        #EXTERNAL
-        FM_EXTERNAL_FQDN                             : "<FM_EXTERNAL_FQDN>"              
-        FM_EXTERNAL_UI_PORT                          : "<FM_EXTERNAL_UI_PORT>"                            
+        FM_JVM_DEBUG_SUSPEND                         : "<FM_JVM_DEBUG_SUSPEND>"                               
 
         #Sentinel 
         FM_SENTINEL_AUDIT_ENABLED                     : "<FM_SENTINEL_AUDIT_ENABLED>"
         FM_SENTINEL_FRONT_END_HOST                    : "<FM_SENTINEL_FRONT_END_HOST>"
         FM_SENTINEL_FRONT_END_PORT                    : "<FM_SENTINEL_FRONT_END_PORT>"
         FM_SENTINEL_FRONT_END_SSL_PORT                : "<FM_SENTINEL_FRONT_END_SSL_PORT>"
-        FM_SENTINEL_UI_HOST                           : "<FM_SENTINEL_UI_HOST>"
-        FM_SENTINEL_UI_PORT                           : "<FM_SENTINEL_UI_PORT>"
-        FM_SENTINEL_USE_CG_CA                         : "<FM_SENTINEL_USE_CG_CA>"
         
-        #ARS
+        #ARS - SAAS only
         FM_ARS_HTTPONLY                               : "<FM_ARS_HTTPONLY>"
         
         # Proxy for SaaS Mode
@@ -109,7 +104,7 @@ services:
         FM_PROXY_HOST                                 : "<FM_PROXY_HOST>"
         FM_PROXY_PORT                                 : "<FM_PROXY_PORT>"
 
-        #CONDOR
+        #CONDOR - Saas only
         #FM_CONDOR_LUMBERJACK_HOST                        : "<FM_CONDOR_LUMBERJACK_HOST>"
         #FM_CONDOR_LUMBERJACK_PORT                        : "<FM_CONDOR_LUMBERJACK_PORT>"
         #FM_CONDOR_KEYSTORE                               : "<FM_CONDOR_KEYSTORE>"
