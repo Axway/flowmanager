@@ -56,7 +56,7 @@ ln -sf /dev/stdout /opt/axway/FlowManager/logs/stdout.txt
 
 cd /opt/axway/FlowManager
 echo "Configuring Product Started"
-time java -jar opcmd.jar configure -n -s /opt/axway/FlowManager/conf.properties -env
+time java -jar opcmd.jar configure -n -s /opt/axway/FlowManager/conf.properties -env -debug
 echo "Configuring Product Ended"
 
 
