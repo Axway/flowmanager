@@ -20,7 +20,14 @@ services:
         FM_GENERAL_LICENSE                           : "license.xml"
         FM_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/FM_logs"
         FM_LOGS_CONSOLE                              : "yes"
-        FM_METRICS_ENABLED                           : "true"     
+        FM_METRICS_ENABLED                           : "true" 
+        
+        #EXTERNAL
+        FM_EXTERNAL_FQDN                             : "<FQDN>"              
+        FM_EXTERNAL_UI_PORT                          : "8081"
+        
+        #Operations - on Saas only
+        #FM_OPERATIONS_ADMIN_CLIENTID                 : "<FM_OPERATIONS_ADMIN_CLIENTID>"
 
         #HTTPS
         FM_HTTPS_USE_CUSTOM_CERT                     : "true"
@@ -34,18 +41,19 @@ services:
         FM_PLATFORM_HOST                             : "platform.axwaytest.net"
         
         #Redis
-        FM_REDIS_ENABLED                             : "true"
+        FM_REDIS_ENABLED                             : "false"
         FM_REDIS_HOSTNAME                            : "redis"
         FM_REDIS_PORT                                : "6379"
-
+        #FM_REDIS_AUTH_ENABLED                        : "false"
+        #FM_REDIS_PASSWORD                            : "<FM_REDIS_PASSWORD>"
+        #optional,only for redis 6.x, it should be empty if not used
+        #FM_REDIS_USER                                : "<FM_REDIS_USER>"
+        #FM_REDIS_SSL_ENABLED                         : "<FM_REDIS_SSL_ENABLED>"
+        #optional, it should be empty if redis ca is not set 
+        #FM_REDIS_SSL_CA                              : "<FM_REDIS_SSL_CA>"
 
         #CFT
         FM_CFT_SHARED_SECRET                         : "Secret01"
-        FM_CFT_SFTP_ENABLED                          : "false"
-        
-        #ST
-        FM_ST_WHITELISTING_ENABLED                   : "false"
-        FM_ST_WHITELISTING_WATCHDOG_DELAY            : "120"
         
         #APIC
         FM_APIC_USE_CATALOG                          : "true"
@@ -61,7 +69,6 @@ services:
         FM_DATABASE_USER_PASSWORD                    : "storage"
         FM_DATABASE_USE_SSL                          : "false"
         FM_DATABASE_CERTIFICATES                     : "/opt/axway/configs/truststore.jks"
-        FM_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #Business
         FM_BUSINESS_CA_CERTIF_ALIAS                  : "ibusca1"
@@ -80,26 +87,18 @@ services:
         FM_JVM_DEBUG_ENABLED                         : "false"
         FM_JVM_DEBUG_PORT                            : "8000"
         FM_JVM_DEBUG_SUSPEND                         : "false"
-        #FM_JVM_CUSTOM_ARGS                          : "IF NEEDED"
-        
-        #EXTERNAL
-        #FM_EXTERNAL_FQDN                             : "kube-cg-master.lab.buch.axway.int"              
-        #FM_EXTERNAL_UI_PORT                          : "31617"                            
 
         #Sentinel 
         FM_SENTINEL_AUDIT_ENABLED                     : "false"
         FM_SENTINEL_FRONT_END_HOST                    : "localhost"
         FM_SENTINEL_FRONT_END_PORT                    : "1305"
         FM_SENTINEL_FRONT_END_SSL_PORT                : "1303"
-        FM_SENTINEL_UI_HOST                           : "localhost"
-        FM_SENTINEL_UI_PORT                           : "1309"
-        FM_SENTINEL_USE_CG_CA                         : "true"
         
         #ARS
-        FM_ARS_HTTPONLY                               : "true"  # this will activate http only if saas_mode is active
+        FM_ARS_HTTPONLY                               : "false"  # this will activate http only if saas_mode is active
         
         # Proxy for SaaS Mode
-        FM_PROXY_ENABLED                              : "true"
+        FM_PROXY_ENABLED                              : "false"
         FM_PROXY_HOST                                 : "flowcentral-bridge.axwaytest.net"
         FM_PROXY_PORT                                 : "8444"
 
