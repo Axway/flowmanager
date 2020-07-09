@@ -43,7 +43,7 @@ services:
         FM_REDIS_PORT                                : "6379"
 
         #APIC
-        FM_APIC_USE_CATALOG                          : "true"
+        FM_APIC_USE_CATALOG                          : "false"
         FM_APIC_HOST                                 : "https://apicentral.axway.com"
         FM_APIC_CLIENTID                             : "DOSA_XXXXXXXXXXXXXXXXXXXXXXXXXXX"
         FM_APIC_PUBLICKEY                            : "/opt/axway/configs/catalog-public-key.pem"
