@@ -104,7 +104,7 @@ services:
     build: ./mongo_3.6/
     hostname: fmmongo
     volumes:
-       - "mongo_data:/data/db/"
+       - "./mounts/mongo_data:/data/db/"
        - "./mounts/mongo_certificates:/certificates"
        - "./mounts/mongo_config:/configs"
     environment:
