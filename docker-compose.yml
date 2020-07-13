@@ -13,7 +13,6 @@ services:
         FM_GENERAL_FQDN                              : "flowmanager"
         FM_GENERAL_HOSTNAME                          : "flowmanager"
         FM_GENERAL_UI_PORT                           : "8081"
-        #FM_GENERAL_SAAS_MODE                         : "false"
         FM_GENERAL_ENCRYPTION_KEY                    : "Secret01"
         FM_GENERAL_LOGGING_LEVEL                     : "INFO"
         FM_GENERAL_LICENSE                           : "license.xml"
@@ -32,9 +31,6 @@ services:
         FM_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
         FM_SESSION_IDLE                              : "900"
         FM_SESSION_EXPIRATION                        : "28800"
-        
-        #Platform
-        FM_PLATFORM_HOST                             : "platform.axwaytest.net"
         
         #Redis
         FM_REDIS_ENABLED                             : "false"
