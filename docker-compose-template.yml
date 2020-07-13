@@ -88,13 +88,12 @@ services:
         FM_APIC_PRIVATEKEY                           : "<FM_APIC_PRIVATEKEY>"
         FM_APIC_TOKENURL                             : "<FM_APIC_TOKENURL>"
         
-        #Platform 
-        FM_PLATFORM_HOST                             : "<FM_PLATFORM_HOST>"
-        
         #SAAS only environment variable
         FM_GENERAL_SAAS_MODE                         : "<FM_GENERAL_SAAS_MODE>"
         FM_GENERAL_HTTP_PORT                         : "<FM_GENERAL_HTTP_PORT>"
         FM_ARS_HTTPONLY                              : "<FM_ARS_HTTPONLY>"
+        #Platform 
+        FM_PLATFORM_HOST                             : "<FM_PLATFORM_HOST>"
         #Operations - on Saas only
         FM_OPERATIONS_ADMIN_CLIENTID: "<FM_OPERATIONS_ADMIN_CLIENTID>"
         # Proxy for SaaS Mode
@@ -109,7 +108,7 @@ services:
 
         
     ports:
-      - <FM_EXTERNAL_UI_PORT>:<FM_EXTERNAL_UI_PORT>
+      - <FM_GENERAL_UI_PORT>:<FM_EXTERNAL_UI_PORT>
       - <FM_JVM_DEBUG_PORT>:<FM_JVM_DEBUG_PORT>
     depends_on:
       - fcmongo
