@@ -57,6 +57,7 @@ services:
         #Mongo
         FM_DATABASE_HOST                             : "fcmongo"
         FM_DATABASE_PORT                             : "27018"
+        FM_DATABASE_NAME                             : "umcft"
         FM_DATABASE_USER_NAME                        : "storage"
         FM_DATABASE_USER_PASSWORD                    : "storage"
         FM_DATABASE_USE_SSL                          : "false"
