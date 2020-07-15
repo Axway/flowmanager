@@ -48,6 +48,7 @@ services:
         #Mongo
         FM_DATABASE_HOST                             : "<FM_DATABASE_HOST>"
         FM_DATABASE_PORT                             : "<FM_DATABASE_PORT>"
+        #FM_DATABASE_NAME                             : "<FM_DATABASE_NAME>" # default database name if not set is umcft
         FM_DATABASE_USER_NAME                        : "<FM_DATABASE_USER_NAME>"
         FM_DATABASE_USER_PASSWORD                    : "<FM_DATABASE_USER_PASSWORD>"
         FM_DATABASE_USE_SSL                          : "<FM_DATABASE_USE_SSL>"
