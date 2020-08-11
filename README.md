@@ -133,19 +133,19 @@ FM_GENERAL_FQDN                  |  \<string>   |  Host address of the Flow Cent
 FM_GENERAL_UI_PORT               |  \<string>   |  FlowCentral UI Port.
 FM_GENERAL_HTTP_PORT             |  \<string>   |  FlowCentral http Port.
 FM_GENERAL_ENCRYPTION_KEY        |  \<string>   |  Flow Central's encryption key.
-FM_GENERAL_LOGGING_LEVEL         |  \<string>   |  Flow Central's Logging Level.
+FM_GENERAL_LOGGING_LEVEL         |  \<string>   |  Flow Central's Logging Level. Possible values: INFO, DEBUG.
 FM_GENERAL_LICENSE               |  \<string>   |  Flow Central's license name.
-FM_GENERAL_CUSTOM_LOCATION_PATH  |  \<string>   |  Flow Central's logs location in docker container.
+FM_GENERAL_CUSTOM_LOCATION_PATH  |  \<string>   |  Flow Central's logs location in docker container. To ne set only if FM_LOGS_CONSOLE=no.
 FM_EXTERNAL_FQDN                 |  \<string>   |  External FQDN.           
 FM_EXTERNAL_UI_PORT              |  \<string>   |  External Port.
-FM_LOGS_CONSOLE                  |  \<string>   |  Flow Central's redirection of logs to console.
-FM_HTTPS_USE_CUSTOM_CERT         |  \<string>   |  Flow Central's custom https certificate.
+FM_LOGS_CONSOLE                  |  \<string>   |  Flow Central's redirection of logs to console. Values : yes/no. If set o no, the logs will be kept in files.
+FM_HTTPS_USE_CUSTOM_CERT         |  \<boolean>  |  Flow Central's custom https certificate. If set on false the https certificate will be generated from Governance CA (to be used only for test environment)
 FM_HTTPS_KEYSTORE                |  \<string>   |  Flow Central's certificate file location inside docker container.
 FM_HTTPS_CERT_ALIAS              |  \<string>   |  Flow Central's UI certificate alias.
 FM_HTTPS_KEYSTORE_PASSWORD       |  \<string>   |  Flow Central's UI certificate password.
-FM_HTTPS_DISABLED                |  \<string>   |  Default false. Set on true if the ssl requests are handled by a gateway (ssl termination) 
+FM_HTTPS_DISABLED                |  \<boolean>  |  Default false. Set on true if the ssl requests are handled by a gateway (ssl termination) 
 FM_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret. Backward compatibility with CG.
-FM_APIC_USE_CATALOG              |  \<string>   |  Enable or disable connection to ApiCatalog.
+FM_APIC_USE_CATALOG              |  \<boolean>  |  Enable or disable connection to ApiCatalog. Default value is false.
 FM_APIC_HOST                     |  \<string>   |  ApiCatalog Host.
 FM_APIC_CLIENTID                 |  \<string>   |  ApiCatalog Client ID.
 FM_APIC_PUBLICKEY                |  \<string>   |  ApiCatalog Public Key.
@@ -154,7 +154,7 @@ FM_DATABASE_HOST                 |  \<string>   |  MongoDB host name.
 FM_DATABASE_PORT                 |  \<number>   |  MongoDB port.
 FM_DATABASE_USER_NAME            |  \<string>   |  MongoDB user name.
 FM_DATABASE_USER_PASSWORD        |  \<string>   |  MongoDB password.
-FM_DATABASE_USE_SSL              |  \<string>   |  MongoDB use ssl.
+FM_DATABASE_USE_SSL              |  \<boolean>  |  MongoDB use ssl.
 FM_DATABASE_CERTIFICATES         |  \<string>   |  MongoDB certificate.
 FM_BUSINESS_CA_CERTIF_ALIAS      |  \<string>   |  Alias custom business certificate.
 FM_BUSINESS_CA_FILE              |  \<string>   |  File name of the custom business certificate.
