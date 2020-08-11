@@ -143,24 +143,16 @@ FM_HTTPS_KEYSTORE                |  \<string>   |  Flow Central's certificate fi
 FM_HTTPS_CERT_ALIAS              |  \<string>   |  Flow Central's UI certificate alias.
 FM_HTTPS_KEYSTORE_PASSWORD       |  \<string>   |  Flow Central's UI certificate password.
 FM_HTTPS_DISABLED                |  \<boolean>  |  Default false. Set on true if the ssl requests are handled by a gateway (ssl termination) 
-FM_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret. Backward compatibility with CG.
-FM_APIC_USE_CATALOG              |  \<boolean>  |  Enable or disable connection to ApiCatalog. Default value is false.
-FM_APIC_HOST                     |  \<string>   |  ApiCatalog Host.
-FM_APIC_CLIENTID                 |  \<string>   |  ApiCatalog Client ID.
-FM_APIC_PUBLICKEY                |  \<string>   |  ApiCatalog Public Key.
-FM_APIC_PRIVATEKEY               |  \<string>   |  ApiCatalog Private Key.
 FM_DATABASE_HOST                 |  \<string>   |  MongoDB host name.
 FM_DATABASE_PORT                 |  \<number>   |  MongoDB port.
 FM_DATABASE_USER_NAME            |  \<string>   |  MongoDB user name.
 FM_DATABASE_USER_PASSWORD        |  \<string>   |  MongoDB password.
 FM_DATABASE_USE_SSL              |  \<boolean>  |  MongoDB use ssl.
 FM_DATABASE_CERTIFICATES         |  \<string>   |  MongoDB certificate.
-FM_BUSINESS_CA_CERTIF_ALIAS      |  \<string>   |  Alias custom business certificate.
-FM_BUSINESS_CA_FILE              |  \<string>   |  File name of the custom business certificate.
-FM_BUSINESS_CA_PASSWORD          |  \<string>   |  Password of the custom business certificate.
 FM_GOVERNANCE_CA_CERTIF_ALIAS    |  \<string>   |  Alias of the custom governance certificate.
 FM_GOVERNANCE_CA_FILE            |  \<string>   |  File name of the custom governance certificate.
 FM_GOVERNANCE_CA_PASSWORD        |  \<string>   |  Password of the custom governance certificate.
+FM_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret. Backward compatibility with CG.
 FM_REDIS_ENABLED                 |  \<boolean>  |  Enables the Redis connectivity, needed for activ-activ installation.
 FM_REDIS_HOST                    |  \<string>   |  Redis host.
 FM_REDIS_PORT                    |  \<string>   |  Redis port.
@@ -174,7 +166,14 @@ FM_JVM_XMN                       |  \<string>   |  JVM_XMN Custom Properties.
 FM_JVM_DEBUG_ENABLED             |  \<string>   |  JVM Disable/Enable Debug.
 FM_JVM_DEBUG_PORT                |  \<string>   |  JVM Debug Port.
 FM_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
-
+FM_BUSINESS_CA_CERTIF_ALIAS      |  \<string>   |  Optional. Alias custom business certificate.
+FM_BUSINESS_CA_FILE              |  \<string>   |  Optional. File name of the custom business certificate.
+FM_BUSINESS_CA_PASSWORD          |  \<string>   |  Optional. Password of the custom business certificate.
+FM_APIC_USE_CATALOG              |  \<boolean>  |  Optional. Enable or disable connection to ApiCatalog. Default value is false.
+FM_APIC_HOST                     |  \<string>   |  Optional. ApiCatalog Host.
+FM_APIC_CLIENTID                 |  \<string>   |  Optional. ApiCatalog Client ID.
+FM_APIC_PUBLICKEY                |  \<string>   |  Optional. ApiCatalog Public Key.
+FM_APIC_PRIVATEKEY               |  \<string>   |  Optional. ApiCatalog Private Key.
 
 ## Flow Central service operations
 
