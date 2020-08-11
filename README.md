@@ -143,8 +143,8 @@ FM_HTTPS_USE_CUSTOM_CERT         |  \<string>   |  Flow Central's custom https c
 FM_HTTPS_KEYSTORE                |  \<string>   |  Flow Central's certificate file location inside docker container.
 FM_HTTPS_CERT_ALIAS              |  \<string>   |  Flow Central's UI certificate alias.
 FM_HTTPS_KEYSTORE_PASSWORD       |  \<string>   |  Flow Central's UI certificate password.
-FM_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret.
-FM_SAAS_MODE                     |  \<string>   |  
+FM_HTTPS_DISABLED                |  \<string>   |  Default false. Set on true if the ssl requests are handled by a gateway (ssl termination) 
+FM_CFT_SHARED_SECRET             |  \<string>   |  Flow Central's shared secret. Backward compatibility with CG.
 FM_APIC_USE_CATALOG              |  \<string>   |  Enable or disable connection to ApiCatalog.
 FM_APIC_HOST                     |  \<string>   |  ApiCatalog Host.
 FM_APIC_CLIENTID                 |  \<string>   |  ApiCatalog Client ID.
@@ -168,7 +168,7 @@ FM_JVM_XMN                       |  \<string>   |  JVM_XMN Custom Properties.
 FM_JVM_DEBUG_ENABLED             |  \<string>   |  JVM Disable/Enable Debug.
 FM_JVM_DEBUG_PORT                |  \<string>   |  JVM Debug Port.
 FM_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
-FM_PLATFORM_HOST                 |  \<string>   |  
+
 
 ## Flow Central service operations
 
