@@ -161,6 +161,13 @@ FM_BUSINESS_CA_PASSWORD          |  \<string>   |  Password of the custom busine
 FM_GOVERNANCE_CA_CERTIF_ALIAS    |  \<string>   |  Alias of the custom governance certificate.
 FM_GOVERNANCE_CA_FILE            |  \<string>   |  File name of the custom governance certificate.
 FM_GOVERNANCE_CA_PASSWORD        |  \<string>   |  Password of the custom governance certificate.
+FM_REDIS_ENABLED                 |  \<boolean>  |  Enables the Redis connectivity, needed for activ-activ installation.
+FM_REDIS_HOST                    |  \<string>   |  Redis host.
+FM_REDIS_PORT                    |  \<string>   |  Redis port.
+FM_REDIS_PASSWORD                |  \<string>   |  The Redis authentication password. For Redis 6.x if a user is set, it will the user's password. It should be empty if not used.
+FM_REDIS_USER                    |  \<string>   |  Optional,only for redis 6.x if a specific user is configured for FM. It should be empty if not used.
+FM_REDIS_SSL_ENABLED             |  \<boolean>  |  For Redis 6.x/ AWS Redis : If set on 'true' the SSL connection to the redis is enabled. 
+FM_REDIS_CA                      |  \<string>   |  Optional. File name of the for the Redis CA. It should be empty if not used.
 FM_JVM_XMX                       |  \<string>   |  JVM_XMX Custom Properties.
 FM_JVM_XMS                       |  \<string>   |  JVM_XMS Custom Properties.
 FM_JVM_XMN                       |  \<string>   |  JVM_XMN Custom Properties. 
