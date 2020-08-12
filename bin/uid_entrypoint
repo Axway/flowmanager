@@ -9,13 +9,14 @@ pid=0
 term_handler() {
   if [ $pid -ne 0 ]; then
     echo "***Stopping"
-    java -jar opcmd.jar stop
-    exit 0
+    kill $pid
+	wait $pid
+	exit 0
   fi
   exit 143; # 128 + 15 -- SIGTERM
 }
 
-trap 'term_handler' SIGTERM
+trap 'term_handler' SIGTERM SIGINT
 
 if ! whoami &> /dev/null; then
   if [ -w /etc/passwd ]; then
@@ -23,7 +24,6 @@ if ! whoami &> /dev/null; then
   fi
 fi
 
-exec "$@"
 
 ACCEPT_EULA="${ACCEPT_EULA:-no}"
 
@@ -38,43 +38,46 @@ fi
 
 FM_LOGS_CONSOLE="${FM_LOGS_CONSOLE:-yes}"
 
-# if [[ $FM_LOGS_CONSOLE = "yes" ]]; then
-#    mkdir -p $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/
-#    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/kernel.log
-#    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/opnode.log
-#    ln -sf /dev/stdout $FM_GENERAL_CUSTOM_LOCATION_PATH/logs/performance.log
-# else
-#    echo "Logs are sent to files"
-# fi
+if [[ $FM_LOGS_CONSOLE = "no" ]]; then
+	ln -sf /dev/stdout /opt/axway/FlowManager/logs/errout.txt
+	ln -sf /dev/stdout /opt/axway/FlowManager/logs/opcmd.log.0
+	ln -sf /dev/stdout /opt/axway/FlowManager/logs/stdout.txt
+fi
 
-ln -sf /dev/stdout /opt/axway/FlowManager/logs/commonsso.log
-ln -sf /dev/stdout /opt/axway/FlowManager/logs/errout.txt
-ln -sf /dev/stdout /opt/axway/FlowManager/logs/opcmd.log.0
-ln -sf /dev/stdout /opt/axway/FlowManager/logs/opcmd.log.0.1
-ln -sf /dev/stdout /opt/axway/FlowManager/logs/stdout.txt
-
-
+if ${JAVA_HOME+false}; then
+  THIS_JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
+else
+  THIS_JAVA_HOME=$JAVA_HOME
+fi
+  
 cd /opt/axway/FlowManager
 echo "Configuring Product Started"
 time java -jar opcmd.jar configure -n -s /opt/axway/FlowManager/conf.properties -env
 echo "Configuring Product Ended"
 
+JVM_DEBUG_PARAMS=""
+FM_JVM_DEBUG_ENABLED="${FM_JVM_DEBUG_ENABLED:-false}"
+if "$FM_JVM_DEBUG_ENABLED" = 'true'; then
+	FM_JVM_DEBUG_PORT="${FM_JVM_DEBUG_PORT:-8000}"
+	FM_JVM_DEBUG_SUSPEND="${FM_JVM_DEBUG_SUSPEND:-false}"
+	JVM_DEBUG_SUSPEND="n";
+	if "$FM_JVM_DEBUG_SUSPEND" = 'true'; then JVM_DEBUG_SUSPEND="y"; fi
+	JVM_DEBUG_PARAMS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=$JVM_DEBUG_SUSPEND,address=$FM_JVM_DEBUG_PORT"
+fi	
+echo "$JVM_DEBUG_PARAMS"
 
-if [ ! -f /opt/axway/FlowManager/runtime/initialized ]; then 
-touch ./runtime/initialized
-echo "Flow Manager Starting"
-java -jar opcmd.jar start &
+JVM_TUNING_PARAMS="-Xmx$FM_JVM_XMX -Xms$FM_JVM_XMS -Xmn$FM_JVM_XMN  -XX:+AggressiveHeap -XX:+HeapDumpOnOutOfMemoryError -server"
+echo $JVM_TUNING_PARAMS
+JVM_APP_PARAMS="-Djdk.http.auth.proxying.disabledSchemes=\"\" -Djdk.http.auth.tunneling.disabledSchemes=\"\"  -Dgosh.args=--noi"
+echo $JVM_APP_PARAMS
+APP_CLASSPATH="-Djava.ext.dirs=bin/ext:$THIS_JAVA_HOME/lib/ext -cp bin/opnode-kernel.jar:bin/lib/*"
+echo $APP_CLASSPATH
+# TODO add: JVM_DEBUG if configured 
+
+echo "Flow Manager Starting ..."
+java $JVM_TUNING_PARAMS $JVM_APP_PARAMS $JVM_DEBUG_PARAMS $APP_CLASSPATH com.axway.opnode.kernel.Main startup &
 pid="$!"
-echo "Flow Manager Started"
-else
-echo "Flow Manager Starting"
-cd /opt/axway/FlowManager
-time java -jar opcmd.jar start &
-pid="$!"
-echo "Flow Manager Started"
-fi
-
-
+# echo "Flow Manager Starting ... $pid"
 
 while true
 do

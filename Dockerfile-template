@@ -34,7 +34,7 @@ COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
 FROM alpine:3.12
 
 ENV JAVA_ALPINE_VERSION=8.252.09-r0 \
-    JAVA_VERSION=8u242C 
+    JAVA_VERSION=8u252C 
 
 RUN apk add -q shadow && \
     groupadd axway && \
@@ -63,4 +63,4 @@ HEALTHCHECK --interval=1m \
             --timeout=5s \
             --start-period=1m \
             --retries=3 \
-            CMD java -jar opcmd.jar status
+           CMD if ${FM_HTTPS_DISABLED+false}; then START_URL="https"; elif [ "$FM_HTTPS_DISABLED" = 'true' ]; then START_URL="http"; else START_URL="https"; fi; test $(busybox wget --no-check-certificate -nv -q -O-  $START_URL://localhost:$FM_GENERAL_UI_PORT/api/v2/internals/stability | grep \"stable\":true); echo $?
