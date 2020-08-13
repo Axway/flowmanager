@@ -14,14 +14,10 @@ services:
         FM_GENERAL_UI_PORT                           : "<FM_GENERAL_UI_PORT>"
         FM_GENERAL_ENCRYPTION_KEY                    : "<FM_GENERAL_ENCRYPTION_KEY>"
         FM_GENERAL_LOGGING_LEVEL                     : "<FM_GENERAL_LOGGING_LEVEL>"
-        FM_GENERAL_LICENSE                           : "<FM_GENERAL_LICENSE>"
-        FM_GENERAL_CUSTOM_LOCATION_PATH              : "<FM_GENERAL_CUSTOM_LOCATION_PATH>"
+        #FM_GENERAL_LICENSE                           : "<FM_GENERAL_LICENSE>"
         FM_LOGS_CONSOLE                              : "<FM_LOGS_CONSOLE>"
-        
-        #EXTERNAL
-        FM_EXTERNAL_FQDN                             : "<FM_EXTERNAL_FQDN>"              
-        FM_EXTERNAL_UI_PORT                          : "<FM_EXTERNAL_UI_PORT>" 
-        
+        FM_GENERAL_CUSTOM_LOCATION_PATH              : "<FM_GENERAL_CUSTOM_LOCATION_PATH>"
+                
         #METRICS
         FM_METRICS_ENABLED                           : "<FM_METRICS_ENABLED>"     
 
@@ -30,9 +26,7 @@ services:
         FM_HTTPS_KEYSTORE                            : "<FM_HTTPS_KEYSTORE>"
         FM_HTTPS_CERT_ALIAS                          : "<FM_HTTPS_CERT_ALIAS>"
         FM_HTTPS_KEYSTORE_PASSWORD                   : "<FM_HTTPS_KEYSTORE_PASSWORD>"
-        FM_SESSION_IDLE                              : "<FM_SESSION_IDLE>"
-        FM_SESSION_EXPIRATION                        : "<FM_SESSION_EXPIRATION>"
-
+        
         #Redis
         FM_REDIS_ENABLED                             : "<FM_REDIS_ENABLED>"
         FM_REDIS_HOSTNAME                            : "<FM_REDIS_HOSTNAME>"
@@ -90,26 +84,25 @@ services:
         FM_APIC_TOKENURL                             : "<FM_APIC_TOKENURL>"
         
         #SAAS only environment variable
-        FM_GENERAL_SAAS_MODE                         : "<FM_GENERAL_SAAS_MODE>"
-        FM_GENERAL_HTTP_PORT                         : "<FM_GENERAL_HTTP_PORT>"
-        FM_ARS_HTTPONLY                              : "<FM_ARS_HTTPONLY>"
+        #FM_GENERAL_SAAS_MODE                         : "<FM_GENERAL_SAAS_MODE>"
+        #FM_GENERAL_HTTP_PORT                         : "<FM_GENERAL_HTTP_PORT>"
+        #FM_ARS_HTTPONLY                              : "<FM_ARS_HTTPONLY>"
         #Platform 
-        FM_PLATFORM_HOST                             : "<FM_PLATFORM_HOST>"
+        #FM_PLATFORM_HOST                             : "<FM_PLATFORM_HOST>"
         #Operations - on Saas only
-        FM_OPERATIONS_ADMIN_CLIENTID: "<FM_OPERATIONS_ADMIN_CLIENTID>"
+        #FM_OPERATIONS_ADMIN_CLIENTID: "<FM_OPERATIONS_ADMIN_CLIENTID>"
         # Proxy for SaaS Mode
-        FM_PROXY_ENABLED                              : "<FM_PROXY_ENABLED>"
-        FM_PROXY_HOST                                 : "<FM_PROXY_HOST>"
-        FM_PROXY_PORT                                 : "<FM_PROXY_PORT>"
+        #FM_PROXY_ENABLED                              : "<FM_PROXY_ENABLED>"
+        #FM_PROXY_HOST                                 : "<FM_PROXY_HOST>"
+        #FM_PROXY_PORT                                 : "<FM_PROXY_PORT>"
         #CONDOR - Saas only
         #FM_CONDOR_LUMBERJACK_HOST                        : "<FM_CONDOR_LUMBERJACK_HOST>"
         #FM_CONDOR_LUMBERJACK_PORT                        : "<FM_CONDOR_LUMBERJACK_PORT>"
         #FM_CONDOR_KEYSTORE                               : "<FM_CONDOR_KEYSTORE>"
         #FM_CONDOR_KEY_PASSWORD                           : "<FM_CONDOR_KEY_PASSWORD>"
-
         
     ports:
-      - <FM_GENERAL_UI_PORT>:<FM_EXTERNAL_UI_PORT>
+      - 8081:<FM_GENERAL_UI_PORT>
       - <FM_JVM_DEBUG_PORT>:<FM_JVM_DEBUG_PORT>
     depends_on:
       - fcmongo

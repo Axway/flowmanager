@@ -63,4 +63,4 @@ HEALTHCHECK --interval=1m \
             --timeout=5s \
             --start-period=1m \
             --retries=3 \
-           CMD if ${FM_HTTPS_DISABLED+false}; then START_URL="https"; elif [ "$FM_HTTPS_DISABLED" = 'true' ]; then START_URL="http"; else START_URL="https"; fi; test $(busybox wget --no-check-certificate -nv -q -O-  $START_URL://localhost:$FM_GENERAL_UI_PORT/api/v2/internals/stability | grep \"stable\":true); echo $?
+           CMD if ${FM_HTTPS_DISABLED+false}; then START_URL="https"; elif [ "$FM_HTTPS_DISABLED" = 'true' ]; then START_URL="http"; else START_URL="https"; fi; test $(busybox wget --no-check-certificate -nv -q -O-  $START_URL://localhost:8081/api/v2/internals/stability | grep \"stable\":true); echo $?

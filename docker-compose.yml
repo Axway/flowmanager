@@ -10,28 +10,21 @@ services:
         ACCEPT_EULA: "yes"
         
         #General
-        FM_GENERAL_FQDN                              : "flowmanager"
-        FM_GENERAL_HOSTNAME                          : "flowmanager"
+        FM_GENERAL_FQDN                              : "<FQDN>"
         FM_GENERAL_UI_PORT                           : "8081"
         FM_GENERAL_ENCRYPTION_KEY                    : "Secret01"
         FM_GENERAL_LOGGING_LEVEL                     : "INFO"
-        FM_GENERAL_LICENSE                           : "license.xml"
-        FM_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/FM_logs"
+        #FM_GENERAL_LICENSE                           : "license.xml"
         FM_LOGS_CONSOLE                              : "yes"
+        #FM_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/FM_logs"
         FM_METRICS_ENABLED                           : "true" 
-        
-        #EXTERNAL
-        FM_EXTERNAL_FQDN                             : "<FQDN>"              
-        FM_EXTERNAL_UI_PORT                          : "8081"
-
+       
         #HTTPS
         FM_HTTPS_USE_CUSTOM_CERT                     : "true"
         FM_HTTPS_KEYSTORE                            : "/opt/axway/configs/uicert.jks"
         FM_HTTPS_CERT_ALIAS                          : "uicert"
         FM_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
-        FM_SESSION_IDLE                              : "900"
-        FM_SESSION_EXPIRATION                        : "28800"
-        
+       
         #Redis
         FM_REDIS_ENABLED                             : "false"
         FM_REDIS_HOSTNAME                            : "redis"
@@ -86,7 +79,6 @@ services:
         FM_SENTINEL_FRONT_END_HOST                    : "localhost"
         FM_SENTINEL_FRONT_END_PORT                    : "1305"
         FM_SENTINEL_FRONT_END_SSL_PORT                : "1303"
-
         
     ports:
       - 8081:8081
