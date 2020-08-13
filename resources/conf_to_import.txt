@@ -1,29 +1,6 @@
 #Tuning
 OPNODE_WEBSERVER_MAXTHREADS=1024
 
-#General
-GENERAL_LICENSE=license.xml
-GENERAL_CUSTOM_LOCATION_ENABLED=true
-# GENERAL_CUSTOM_LOCATION_PATH=/opt/axway/fc_logs
-# GENERAL_DERIVED_KEY_ROOT_FOLDER=/opt/axway/FlowCentral/data/keys
-GENERAL_SMTP_HOST=localhost
-GENERAL_SMTP_PORT=25
-
-#JVM
-JVM_XMX=2G
-JVM_XMS=512M
-JVM_XMN=768M
-
-#APIC
-# APIC_TOKENURL=https://login.axway.com/auth/realms/Broker/protocol/openid-connect/token
-
-#IDP
-IDP_CONFIGURATION=internal
-
 #HTTPS
 #This one needs to be overriden with the server external domain
 HTTPS_CORS=*
-
-#CFT
-CFT_USE_LEGACY_AM_WRAPPER=true
-
