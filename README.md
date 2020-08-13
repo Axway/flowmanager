@@ -129,13 +129,11 @@ The following tables illustrate a list of available parameters from the docker-c
  **Parameter**                   |  **Values**  |  **Description**
  ------------------------------- | :----------: | ---------------
 ACCEPT_EULA                      |  \<string>   |  Parameter which indicates your acceptance of the End User License Agreement (i.e. EULA).
-FM_GENERAL_FQDN                  |  \<string>   |  Host address of the Flow Central instance.
+FM_GENERAL_FQDN                  |  \<string>   |  Host address on which Flow Manager can be accessed using UI/Rest API client.
 FM_GENERAL_UI_PORT               |  \<string>   |  FlowCentral UI Port.
 FM_GENERAL_ENCRYPTION_KEY        |  \<string>   |  Flow Central's encryption key.
 FM_GENERAL_LOGGING_LEVEL         |  \<string>   |  Flow Central's Logging Level. Possible values: INFO, DEBUG.
 FM_GENERAL_LICENSE               |  \<string>   |  Flow Central's license name.
-FM_EXTERNAL_FQDN                 |  \<string>   |  External FQDN.           
-FM_EXTERNAL_UI_PORT              |  \<string>   |  External Port.
 FM_LOGS_CONSOLE                  |  \<string>   |  Flow Central's redirection of logs to console. Values : yes/no. If set o no, the logs will be kept in files.
 FM_GENERAL_CUSTOM_LOCATION_PATH  |  \<string>   |  Flow Central's logs location in docker container. To ne set only if FM_LOGS_CONSOLE=no.
 FM_HTTPS_USE_CUSTOM_CERT         |  \<boolean>  |  Flow Central's custom https certificate. If set on false the https certificate will be generated from Governance CA (to be used only for test environment)
