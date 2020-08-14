@@ -17,7 +17,6 @@ services:
         #FM_GENERAL_LICENSE                           : "license.xml"
         FM_LOGS_CONSOLE                              : "yes"
         #FM_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/FM_logs"
-        FM_METRICS_ENABLED                           : "true" 
        
         #HTTPS
         FM_HTTPS_USE_CUSTOM_CERT                     : "true"
@@ -37,16 +36,9 @@ services:
         #optional, it should be empty if redis ca is not set 
         #FM_REDIS_SSL_CA                              : "<FM_REDIS_SSL_CA>"
 
-        #CFT
+        #CFT backward compatibilty
         FM_CFT_SHARED_SECRET                         : "Secret01"
-        
-        #APIC
-        FM_APIC_USE_CATALOG                          : "true"
-        FM_APIC_HOST                                 : "https://apicentral.axway.com"
-        FM_APIC_CLIENTID                             : "DOSA_3c4ebd8cc4254c69a63ba3c0930ffe5b"
-        FM_APIC_PUBLICKEY                            : "/opt/axway/configs/public_key.pem"
-        FM_APIC_PRIVATEKEY                           : "/opt/axway/configs/private_key.pem"
-        
+    
         #Mongo
         FM_DATABASE_HOST                             : "fcmongo"
         FM_DATABASE_PORT                             : "27018"
@@ -65,15 +57,10 @@ services:
         FM_JVM_XMX                                   : "2G"
         FM_JVM_XMS                                   : "512M"
         FM_JVM_XMN                                   : "768M"
-        FM_JVM_DEBUG_ENABLED                         : "false"
-        FM_JVM_DEBUG_PORT                            : "8000"
-        FM_JVM_DEBUG_SUSPEND                         : "false"
+        #FM_JVM_DEBUG_ENABLED                         : "false"
+        #FM_JVM_DEBUG_PORT                            : "8000"
+        #FM_JVM_DEBUG_SUSPEND                         : "false"
 
-        #Sentinel 
-        FM_SENTINEL_AUDIT_ENABLED                     : "false"
-        FM_SENTINEL_FRONT_END_HOST                    : "localhost"
-        FM_SENTINEL_FRONT_END_PORT                    : "1305"
-        FM_SENTINEL_FRONT_END_SSL_PORT                : "1303"
         
     ports:
       - 8081:8081
