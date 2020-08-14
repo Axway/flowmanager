@@ -56,11 +56,6 @@ services:
         FM_DATABASE_USE_SSL                          : "false"
         FM_DATABASE_CERTIFICATES                     : "/opt/axway/configs/truststore.jks"
 
-        #Business
-        FM_BUSINESS_CA_CERTIF_ALIAS                  : "ibusca1"
-        FM_BUSINESS_CA_FILE                          : "/opt/axway/configs/businessca.jks"
-        FM_BUSINESS_CA_PASSWORD                      : "Secret01"
-
         #GOVERNANCE
         FM_GOVERNANCE_CA_CERTIF_ALIAS                : "govinter_fc"
         FM_GOVERNANCE_CA_FILE                        : "/opt/axway/configs/governanceca.jks"

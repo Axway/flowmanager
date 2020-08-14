@@ -135,7 +135,7 @@ FM_GENERAL_ENCRYPTION_KEY        |  \<string>   |  Flow Central's encryption key
 FM_GENERAL_LOGGING_LEVEL         |  \<string>   |  Flow Central's Logging Level. Possible values: INFO, DEBUG.
 FM_GENERAL_LICENSE               |  \<string>   |  Flow Central's license name.
 FM_LOGS_CONSOLE                  |  \<string>   |  Flow Central's redirection of logs to console. Values : yes/no. If set o no, the logs will be kept in files.
-FM_GENERAL_CUSTOM_LOCATION_PATH  |  \<string>   |  Flow Central's logs location in docker container. To ne set only if FM_LOGS_CONSOLE=no.
+FM_GENERAL_CUSTOM_LOCATION_PATH  |  \<string>   |  Flow Central's logs location in docker container. To be set only if FM_LOGS_CONSOLE=no.
 FM_HTTPS_USE_CUSTOM_CERT         |  \<boolean>  |  Flow Central's custom https certificate. If set on false the https certificate will be generated from Governance CA (to be used only for test environment)
 FM_HTTPS_KEYSTORE                |  \<string>   |  Flow Central's certificate file location inside docker container.
 FM_HTTPS_CERT_ALIAS              |  \<string>   |  Flow Central's UI certificate alias.
@@ -164,9 +164,6 @@ FM_JVM_XMN                       |  \<string>   |  JVM_XMN Custom Properties.
 FM_JVM_DEBUG_ENABLED             |  \<string>   |  JVM Disable/Enable Debug.
 FM_JVM_DEBUG_PORT                |  \<string>   |  JVM Debug Port.
 FM_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
-FM_BUSINESS_CA_CERTIF_ALIAS      |  \<string>   |  Optional. Alias custom business certificate.
-FM_BUSINESS_CA_FILE              |  \<string>   |  Optional. File name of the custom business certificate.
-FM_BUSINESS_CA_PASSWORD          |  \<string>   |  Optional. Password of the custom business certificate.
 FM_APIC_USE_CATALOG              |  \<boolean>  |  Optional. Enable or disable connection to ApiCatalog. Default value is false.
 FM_APIC_HOST                     |  \<string>   |  Optional. ApiCatalog Host.
 FM_APIC_CLIENTID                 |  \<string>   |  Optional. ApiCatalog Client ID.
