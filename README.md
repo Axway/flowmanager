@@ -147,6 +147,8 @@ FM_DATABASE_USER_NAME            |  \<string>   |  MongoDB user name.
 FM_DATABASE_USER_PASSWORD        |  \<string>   |  MongoDB password.
 FM_DATABASE_USE_SSL              |  \<boolean>  |  MongoDB use ssl.
 FM_DATABASE_CERTIFICATES         |  \<string>   |  MongoDB certificate.
+FM_DATABASE_ENDPOINTS            |  \<string>   |  MongoDB endpoints as a comma separated list of host:port. To be used for mongo db cluster connection instead of the host and port parameters
+FM_DATABASE_REPLICA_SET          |  \<string>   |  MongoDB replica set name. Only for mongo db cluster connection.
 FM_GOVERNANCE_CA_CERTIF_ALIAS    |  \<string>   |  Alias of the custom governance certificate.
 FM_GOVERNANCE_CA_FILE            |  \<string>   |  File name of the custom governance certificate.
 FM_GOVERNANCE_CA_PASSWORD        |  \<string>   |  Password of the custom governance certificate.
@@ -164,9 +166,9 @@ FM_JVM_XMN                       |  \<string>   |  JVM_XMN Custom Properties.
 FM_JVM_DEBUG_ENABLED             |  \<string>   |  JVM Disable/Enable Debug.
 FM_JVM_DEBUG_PORT                |  \<string>   |  JVM Debug Port.
 FM_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
- ------------------------------- | :----------: | ---------------
+    
 Internal R&D Parameters          |              |                
- ------------------------------- | :----------: | ---------------
+ ------------------------------- | :----------: |  ---------------
 FM_APIC_USE_CATALOG              |  \<boolean>  |  Optional. Enable or disable connection to ApiCatalog. Default value is false.
 FM_APIC_HOST                     |  \<string>   |  Optional. ApiCatalog Host.
 FM_APIC_CLIENTID                 |  \<string>   |  Optional. ApiCatalog Client ID.
