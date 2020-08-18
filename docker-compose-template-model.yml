@@ -23,6 +23,8 @@ services:
         FM_HTTPS_KEYSTORE                            : "<FM_HTTPS_KEYSTORE>"
         FM_HTTPS_CERT_ALIAS                          : "<FM_HTTPS_CERT_ALIAS>"
         FM_HTTPS_KEYSTORE_PASSWORD                   : "<FM_HTTPS_KEYSTORE_PASSWORD>"
+        #optional, only if FM is installed in K8s/openshift and ssl termination is activated
+        #FM_HTTPS_DISABLED                           : "<FM_HTTPS_DISABLED>"
         
         #Redis
         FM_REDIS_ENABLED                             : "<FM_REDIS_ENABLED>"
@@ -64,8 +66,7 @@ services:
         FM_JVM_XMN                                   : "<FM_JVM_XMN>"
         FM_JVM_DEBUG_ENABLED                         : "<FM_JVM_DEBUG_ENABLED>"
         FM_JVM_DEBUG_PORT                            : "<FM_JVM_DEBUG_PORT>"
-        FM_JVM_DEBUG_SUSPEND                         : "<FM_JVM_DEBUG_SUSPEND>"                               
-
+        FM_JVM_DEBUG_SUSPEND                         : "<FM_JVM_DEBUG_SUSPEND>"                          
        
         #SAAS only environment variable
         #FM_GENERAL_SAAS_MODE                         : "<FM_GENERAL_SAAS_MODE>"
