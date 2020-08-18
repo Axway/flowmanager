@@ -167,8 +167,9 @@ FM_JVM_DEBUG_ENABLED             |  \<string>   |  JVM Disable/Enable Debug.
 FM_JVM_DEBUG_PORT                |  \<string>   |  JVM Debug Port.
 FM_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
     
-Internal R&D Parameters          |              |                
- ------------------------------- | :----------: |  ---------------
+**Hidden R&D Parameters**                
+**Parameter**                    |  **Values**  |  **Description**
+ ------------------------------- | :----------: | ---------------
 FM_APIC_USE_CATALOG              |  \<boolean>  |  Optional. Enable or disable connection to ApiCatalog. Default value is false.
 FM_APIC_HOST                     |  \<string>   |  Optional. ApiCatalog Host.
 FM_APIC_CLIENTID                 |  \<string>   |  Optional. ApiCatalog Client ID.

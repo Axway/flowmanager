@@ -17,7 +17,7 @@ services:
         #FM_GENERAL_LICENSE                           : "<FM_GENERAL_LICENSE>"
         FM_LOGS_CONSOLE                              : "<FM_LOGS_CONSOLE>"
         FM_GENERAL_CUSTOM_LOCATION_PATH              : "<FM_GENERAL_CUSTOM_LOCATION_PATH>"
-      
+
         #HTTPS
         FM_HTTPS_USE_CUSTOM_CERT                     : "<FM_HTTPS_USE_CUSTOM_CERT>"
         FM_HTTPS_KEYSTORE                            : "<FM_HTTPS_KEYSTORE>"
@@ -50,33 +50,23 @@ services:
         FM_GOVERNANCE_CA_FILE                        : "<FM_GOVERNANCE_CA_FILE>"
         FM_GOVERNANCE_CA_PASSWORD                    : "<FM_GOVERNANCE_CA_PASSWORD>"
         
-        #CFT (optional, for cft backward compatibility, it could be set also using rest api)
-        FM_CFT_SHARED_SECRET                         : "<FM_CFT_SHARED_SECRET>"                               
-
-        #For upgrade: Business (optional, it can be ser using rest api)
-        FM_BUSINESS_CA_CERTIF_ALIAS                  : "<FM_BUSINESS_CA_CERTIF_ALIAS>"
-        FM_BUSINESS_CA_FILE                          : "<FM_BUSINESS_CA_FILE>"
-        FM_BUSINESS_CA_PASSWORD                      : "<FM_BUSINESS_CA_PASSWORD>"
-       
-        # Hidden configurations:
-        #METRICS
-        FM_METRICS_ENABLED                           : "<FM_METRICS_ENABLED>"  
-        #APIC (optional, use public rest api)
-        FM_APIC_USE_CATALOG                          : "<FM_APIC_USE_CATALOG>"
-        FM_APIC_HOST                                 : "<FM_APIC_HOST>"
-        FM_APIC_CLIENTID                             : "<FM_APIC_CLIENTID>"
-        FM_APIC_PUBLICKEY                            : "<FM_APIC_PUBLICKEY>"
-        FM_APIC_PRIVATEKEY                           : "<FM_APIC_PRIVATEKEY>"
-        FM_APIC_TOKENURL                             : "<FM_APIC_TOKENURL>"
+        #For Upgrade: Business (optional, it can be ser using rest api)
+        #FM_BUSINESS_CA_CERTIF_ALIAS                  : "<FM_BUSINESS_CA_CERTIF_ALIAS>"
+        #FM_BUSINESS_CA_FILE                          : "<FM_BUSINESS_CA_FILE>"
+        #FM_BUSINESS_CA_PASSWORD                      : "<FM_BUSINESS_CA_PASSWORD>"
         
+        #CFT (optional, for cft backward compatibility, it could be set also using rest api)
+        FM_CFT_SHARED_SECRET                         : "<FM_CFT_SHARED_SECRET>"
+
         #JVM
         FM_JVM_XMX                                   : "<FM_JVM_XMX>"
         FM_JVM_XMS                                   : "<FM_JVM_XMS>"
         FM_JVM_XMN                                   : "<FM_JVM_XMN>"
         FM_JVM_DEBUG_ENABLED                         : "<FM_JVM_DEBUG_ENABLED>"
         FM_JVM_DEBUG_PORT                            : "<FM_JVM_DEBUG_PORT>"
-        FM_JVM_DEBUG_SUSPEND                         : "<FM_JVM_DEBUG_SUSPEND>"
-        
+        FM_JVM_DEBUG_SUSPEND                         : "<FM_JVM_DEBUG_SUSPEND>"                               
+
+       
         #SAAS only environment variable
         #FM_GENERAL_SAAS_MODE                         : "<FM_GENERAL_SAAS_MODE>"
         #FM_GENERAL_HTTP_PORT                         : "<FM_GENERAL_HTTP_PORT>"
