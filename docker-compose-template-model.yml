@@ -67,27 +67,10 @@ services:
         FM_JVM_DEBUG_ENABLED                         : "<FM_JVM_DEBUG_ENABLED>"
         FM_JVM_DEBUG_PORT                            : "<FM_JVM_DEBUG_PORT>"
         FM_JVM_DEBUG_SUSPEND                         : "<FM_JVM_DEBUG_SUSPEND>"                          
-       
-        #SAAS only environment variable
-        #FM_GENERAL_SAAS_MODE                         : "<FM_GENERAL_SAAS_MODE>"
-        #FM_GENERAL_HTTP_PORT                         : "<FM_GENERAL_HTTP_PORT>"
-        #FM_ARS_HTTPONLY                              : "<FM_ARS_HTTPONLY>"
-        #Platform 
-        #FM_PLATFORM_HOST                             : "<FM_PLATFORM_HOST>"
-        #Operations - on Saas only
-        #FM_OPERATIONS_ADMIN_CLIENTID: "<FM_OPERATIONS_ADMIN_CLIENTID>"
-        # Proxy for SaaS Mode
-        #FM_PROXY_ENABLED                              : "<FM_PROXY_ENABLED>"
-        #FM_PROXY_HOST                                 : "<FM_PROXY_HOST>"
-        #FM_PROXY_PORT                                 : "<FM_PROXY_PORT>"
-        #CONDOR - Saas only
-        #FM_CONDOR_LUMBERJACK_HOST                        : "<FM_CONDOR_LUMBERJACK_HOST>"
-        #FM_CONDOR_LUMBERJACK_PORT                        : "<FM_CONDOR_LUMBERJACK_PORT>"
-        #FM_CONDOR_KEYSTORE                               : "<FM_CONDOR_KEYSTORE>"
-        #FM_CONDOR_KEY_PASSWORD                           : "<FM_CONDOR_KEY_PASSWORD>"
-        
+      
+
     ports:
-      - 8081:<FM_GENERAL_UI_PORT>
+      - <FM_GENERAL_UI_PORT>:8081
       - <FM_JVM_DEBUG_PORT>:<FM_JVM_DEBUG_PORT>
     depends_on:
       - fcmongo
@@ -103,20 +86,20 @@ services:
     image: fc-docker.lab.buch.axway.int/mft/mongo:3.6
     hostname: fcmongo
     ports:
-      - 27017:27017
-      - 27018:27018
+      - <FM_DATABASE_PORT>:<FM_DATABASE_PORT>
     volumes:
        - "./mounts/mongo_data:/data/db/"
        - "./mounts/mongo_certificates:/certificates"
        - "./mounts/mongo_config:/configs"
     environment:
-      MONGODB_ADMIN_USER              : root
-      MONGODB_ADMIN_PASS              : storage
-      MONGODB_APPLICATION_DATABASE    : umcft
-      MONGODB_APPLICATION_USER        : storage
-      MONGODB_APPLICATION_PASS        : storage
-      MONGODB_PORT                    : "27018"
-      MONGODB_USE_SSL                 : "false"
+      MONGODB_ADMIN_USER              : "<MONGODB_ADMIN_USER>"
+      MONGODB_ADMIN_PASS              : "<MONGODB_ADMIN_PASS>"
+      MONGODB_APPLICATION_DATABASE    : "umcft" 
+      #MONGODB_APPLICATION_DATABASE    : "<FM_DATABASE_NAME>"
+      MONGODB_APPLICATION_USER        : "<FM_DATABASE_USER_NAME>"
+      MONGODB_APPLICATION_PASS        : "<FM_DATABASE_USER_PASSWORD>"
+      MONGODB_PORT                    : "<FM_DATABASE_PORT>"
+      MONGODB_USE_SSL                 : "<FM_DATABASE_USE_SSL>"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
       

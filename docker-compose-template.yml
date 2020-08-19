@@ -98,7 +98,7 @@ services:
         #FM_CONDOR_KEY_PASSWORD                           : "<FM_CONDOR_KEY_PASSWORD>"
         
     ports:
-      - 8081:<FM_GENERAL_UI_PORT>
+      - <FM_GENERAL_UI_PORT>:8081
       - <FM_JVM_DEBUG_PORT>:<FM_JVM_DEBUG_PORT>
     depends_on:
       - fcmongo
