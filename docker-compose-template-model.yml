@@ -14,7 +14,7 @@ services:
         FM_GENERAL_UI_PORT                           : "<FM_GENERAL_UI_PORT>"
         FM_GENERAL_ENCRYPTION_KEY                    : "<FM_GENERAL_ENCRYPTION_KEY>"
         FM_GENERAL_LOGGING_LEVEL                     : "<FM_GENERAL_LOGGING_LEVEL>"
-        #FM_GENERAL_LICENSE                           : "<FM_GENERAL_LICENSE>"
+        FM_GENERAL_LICENSE                           : "<FM_GENERAL_LICENSE>"
         FM_LOGS_CONSOLE                              : "<FM_LOGS_CONSOLE>"
         FM_GENERAL_CUSTOM_LOCATION_PATH              : "<FM_GENERAL_CUSTOM_LOCATION_PATH>"
 
