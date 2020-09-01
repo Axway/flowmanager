@@ -1,2 +1,4 @@
 # Global
 .DS_Store
+# Docker compose
+.env
