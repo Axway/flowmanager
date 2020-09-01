@@ -1,3 +1,3 @@
 # Docs
 
-All extra documents regarding FlowManager deployment.
+Extra documents regarding FlowManager deployment.

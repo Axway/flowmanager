@@ -1,6 +1,6 @@
 # FlowManager Deploy
 
-Deploy Amplify FlowManager on multiple Container orchestration.
+Deploy Amplify FlowManager on multiple container orchestration.
 
 ## Content
 

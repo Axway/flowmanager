@@ -47,3 +47,6 @@ All active Environment variables/parameters for FlowManager, including all the s
 |MONGO_APP_DATABASE|Yes|`string`|Database name for the application||
 |MONGO_APP_USER|Yes|`string`|Database user for the application||
 |MONGO_APP_PASS|Yes|`string`|Database password for the application||
+
+***
+*Parameters for docker compose only.
