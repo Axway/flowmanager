@@ -14,5 +14,5 @@ Deploy Amplify FlowManager on multiple container orchestration.
 
 * Go to `docker-compose` path
 * Copy `env.template` in `.env` file
-* Change value of parameters as you want*
+* Change value of parameters as you want
 * Run docker `docker-compose up -d`
