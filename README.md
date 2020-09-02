@@ -43,7 +43,7 @@ Check [GitHub Flow](https://guides.github.com/introduction/flow/) for details.
 
 ## Authors
 
-* FlowManager - DevOps Team
+FlowManager - DevOps Team.
 
 ***
 All active parameters, including description and default values can be found [here](docs/parameters.md)
