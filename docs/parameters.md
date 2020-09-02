@@ -6,7 +6,7 @@ All active Environment variables/parameters for FlowManager, including all the s
 
 |**Parameter**|**Require**|**Type**|**Description**|**Default**|
 |-------------|:---------:|:------:|---------------|-----------|
-|FLOWMANAGER_IMAGE_URL*|Yes|`string`|URL from where you want to get the image||
+|FLOWMANAGER_IMAGE_URL*|Yes|`string`|URL from where you want to get the image|`axway/flowmanager`|
 |FLOWMANAGER_VERSION*|Yes|`number`|App version based on docker image||
 |ACCEPT_EULA|Yes|`string`|Indicates your acceptance of the End User License Agreement|`yes`|
 |FM_GENERAL_FQDN|Yes|`string`|URL address of the FlowManager instance||
@@ -30,6 +30,7 @@ All active Environment variables/parameters for FlowManager, including all the s
 |FM_GOVERNANCE_CA_CERTIF_ALIAS|No|`string`|Custom governance certificate internal alias||
 |FM_GOVERNANCE_CA_FILE|No|`string`|File name and path to custom governance certificate||
 |FM_GOVERNANCE_CA_PASSWORD|No|`string`| Custom governance certificate password||
+|FM_METRICS_ENABLED|No|`string`|Enable metrics for Prometheus|`false`|
 |FM_JVM_XMX|No|`string`|JVM maximum memory allocation pool|`2G`|
 |FM_JVM_XMS|No|`string`|JVM maximum memory allocation pool|`512M`|
 |FM_JVM_XMN|No|`string`|JVM size of the heap for the young generation|`768M`|
