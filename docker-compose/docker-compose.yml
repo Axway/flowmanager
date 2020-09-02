@@ -62,6 +62,7 @@ services:
     volumes:
       - ./files/flowmanager/config/:/opt/axway/flowmanager/configs
       - ./files/flowmanager/license/:/opt/axway/FlowManager/conf/license/:ro
+      - ./files/flowmanager/plugins/:/opt/axway/FlowManager/conf/schemas/storage/
     restart: unless-stopped
     depends_on:
       - mongodb
