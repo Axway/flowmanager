@@ -12,6 +12,7 @@ Deploy Amplify FlowManager on multiple container orchestration.
 
 ### Install
 
+* Clone the repo by typing `git clone https://git.ecd.axway.org/flowcentral/devops/flowmanager-deploy.git` command
 * Go to `docker-compose` path
 * Copy `env.template` in `.env` file
 * Change value of parameters as you want in `.env` file
@@ -28,7 +29,7 @@ Deploy Amplify FlowManager on multiple container orchestration.
 ### Remove
 
 * Be sure you are in the same `docker-compose` path
-* Type `docker-compose down -v`, this will remove all the contianers, volumes and other parts related to the containers.
+* Type `docker-compose down -v`, this will remove all the containers, volumes and other parts related to the containers.
 
 ## Contribute
 
