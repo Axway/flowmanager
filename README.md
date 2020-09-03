@@ -4,9 +4,9 @@ Deploy Amplify FlowManager on multiple container orchestration.
 
 ## Requirements
 
-* `Git`
-* `docker >= 19.03.12`
-* `docker-compose >= 1.26.2`
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+* [docker](https://docs.docker.com/engine/install/) >= 19.03.12
+* [docker-compose](https://docs.docker.com/compose/install/) >= 1.26.2
 
 ## docker-compose
 
@@ -46,4 +46,6 @@ Check [GitHub Flow](https://guides.github.com/introduction/flow/) for details.
 FlowManager - DevOps Team.
 
 ***
-All active parameters, including description and default values can be found [here](docs/parameters.md)
+
+* All active parameters, including description and default values can be found [here](docs/parameters.md)
+* Enable transport encryption (TLS/SSL) for MongoDB can be found [here](docs/mongo_tls_ssl.md)

@@ -10,12 +10,15 @@ services:
       - MONGO_APP_DATABASE=${MONGO_APP_DATABASE}
       - MONGO_APP_USER=${MONGO_APP_USER}
       - MONGO_APP_PASS=${MONGO_APP_PASS}
+      # - MONGO_BIND_IP=${MONGO_BIND_IP:-0.0.0.0}
+      # - MONGO_CA_FILE=${MONGO_CA_FILE}
+      # - MONGO_PEM_KEY_FILE=${MONGO_PEM_KEY_FILE}
     ports:
       - "${MONGO_EXTERNAL_PORT:-27017}:${MONGO_INTERNAL_PORT:-27017}"
     command: ["-f", "/opt/mongod.conf"]
     volumes:
+      - ./files/mongo/scripts/:/docker-entrypoint-initdb.d/
       - ./files/mongo/config/:/opt/:ro
-      - ./files/mongo/scripts/:/docker-entrypoint-initdb.d/:ro
       - mongodb_data_container:/data/db:rw
     restart: always
     healthcheck:
@@ -58,7 +61,7 @@ services:
       - FM_JVM_XMS=${FM_JVM_XMS:-512M}
       - FM_JVM_XMN=${FM_JVM_XMN:-768M}
     ports:
-      - "${FM_GENERAL_UI_PORT:-8081}:8081"
+      - "${FM_GENERAL_UI_PORT:-8081}:${FM_GENERAL_UI_PORT:-8081}"
     volumes:
       - ./files/flowmanager/config/:/opt/axway/flowmanager/configs
       - ./files/flowmanager/license/:/opt/axway/FlowManager/conf/license/:ro

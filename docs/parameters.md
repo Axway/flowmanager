@@ -48,6 +48,9 @@ All active Environment variables/parameters for FlowManager, including all the s
 |MONGO_APP_DATABASE|Yes|`string`|Database name for the application||
 |MONGO_APP_USER|Yes|`string`|Database user for the application||
 |MONGO_APP_PASS|Yes|`string`|Database password for the application||
+|MONGO_BIND_IP|No|`string`|Bind to all IPv4 and IPv6 addresses|`0.0.0.0`|
+|MONGO_CA_FILE|No|`string`|Contains the root certificate chain from the Certificate Authority||
+|MONGO_PEM_KEY_FILE|No|`string`|Contains both the TLS/SSL certificate and key||
 
 ***
 *Parameters for docker compose only.

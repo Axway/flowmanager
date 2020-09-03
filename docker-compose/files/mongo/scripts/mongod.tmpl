@@ -14,13 +14,7 @@ processManagement:
 
 # Network
 net:
-  bindIp: 0.0.0.0
-#   ssl:
-#     CAFile: /opt/rootCA.pem
-#     PEMKeyFile: /opt/mongodb.pem
-#     mode: requireSSL
-#     disabledProtocols: "TLS1_0,TLS1_1"
-#     allowConnectionsWithoutCertificates: true
+  bindIp: $BIND_IP
 
 # Security
 security:
