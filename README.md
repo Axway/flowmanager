@@ -102,10 +102,6 @@ Make sure that the folders created at the previous step correspond with those sp
 4. Edit docker compose with new image name 
 5. docker-compose up (this will start the containers and the update will be done)
 
-## Conecting to Api Catalog
-
-In order to connect to Api Catalog please register the keys generated with the script found in **./scripts** folder or custom ones into Api Catalog and get the Client ID which you must enter into docker-compose under the `FM_APIC_CLIENTID` environment variable.
-
 
 #### Using a custom MongoDB
 
@@ -130,7 +126,6 @@ The following tables illustrate a list of available parameters from the docker-c
  --------------------------------- | :----------: | ---------------
 ACCEPT_EULA                        |  \<string>   |  Parameter which indicates your acceptance of the End User License Agreement (i.e. EULA).
 FM_GENERAL_FQDN                    |  \<string>   |  Host address of the Flow Manager instance.
-FM_GENERAL_HOSTNAME                |  \<string>   |  Host name of the Flow Manager instance.
 FM_GENERAL_UI_PORT                 |  \<string>   |  Flow Manager's UI port.
 FM_GENERAL_ENCRYPTION_KEY          |  \<string>   |  Flow Manager's encryption key.
 FM_GENERAL_LOGGING_LEVEL           |  \<string>   |  Flow Manager's logging levels.
@@ -142,12 +137,6 @@ FM_HTTPS_KEYSTORE                  |  \<string>   |  Name of the HTTPS certifica
 FM_HTTPS_CERT_ALIAS                |  \<string>   |  Alias of the HTTPS certificate.
 FM_HTTPS_KEYSTORE_PASSWORD         |  \<string>   |  HTTPS certificate password.
 FM_CFT_SHARED_SECRET               |  \<string>   |  Flow Manager's shared secret.
-FM_APIC_USE_CATALOG                |  \<string>   |  Flag which indicates whether Flow Manager should enable or disable the connection to ApiCatalog.
-FM_APIC_HOST                       |  \<string>   |  ApiCatalog Host.
-FM_APIC_CLIENTID                   |  \<string>   |  ApiCatalog's Client ID.
-FM_APIC_PUBLICKEY                  |  \<string>   |  ApiCatalog's Public Key.
-FM_APIC_PRIVATEKEY                 |  \<string>   |  ApiCatalog's Private Key.
-FM_APIC_TOKENURL                   |  \<string>   |  ApiCatalog's Token Url.
 FM_DATABASE_HOST                   |  \<string>   |  MongoDB host name.
 FM_DATABASE_PORT                   |  \<number>   |  MongoDB port.
 FM_DATABASE_USER_NAME              |  \<string>   |  Flow Manager's user MongoDB user.
@@ -155,9 +144,6 @@ FM_DATABASE_USER_PASSWORD          |  \<string>   |  Flow Manager's user MongoDB
 FM_DATABASE_USE_SSL                |  \<string>   |  MongoDB option for use of SSL. 
 FM_DATABASE_CERTIFICATES           |  \<string>   |  MongoDB truststore. (At the moment we support only jks.)
 FM_DISABLE_CHECK_REACHABLE_HOST    |  \<string>   |  Flow Manager will not check if the mongodb instance is available.
-FM_BUSINESS_CA_CERTIF_ALIAS        |  \<string>   |  Custom business certificate's internal alias.
-FM_BUSINESS_CA_FILE                |  \<string>   |  File name and path to the custom business certificate.
-FM_BUSINESS_CA_PASSWORD            |  \<string>   |  Custom business certificate's password.
 FM_GOVERNANCE_CA_CERTIF_ALIAS      |  \<string>   |  Custom governance certificate internal alias.
 FM_GOVERNANCE_CA_FILE              |  \<string>   |  File name and path to custom governance certificate.
 FM_GOVERNANCE_CA_PASSWORD          |  \<string>   |  Custom governance certificate password.
@@ -167,15 +153,15 @@ FM_JVM_XMN                         |  \<string>   |  JVM size of the heap for th
 FM_JVM_DEBUG_ENABLED               |  \<string>   |  JVM Debug. 
 FM_JVM_DEBUG_PORT                  |  \<string>   |  JVM Debug Port.         
 FM_JVM_DEBUG_SUSPEND               |  \<string>   |  JVM Debug Suspend.  
-FM_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.
-FM_EXTERNAL_FQDN                   |  \<string>   |  Flow Manager external FQDN. (For when you are using the product from behind a loadbalancer)               
-FM_EXTERNAL_UI_PORT                |  \<string>   |  Flow Manager external port.           
-FM_SENTINEL_AUDIT_ENABLED          |  \<string>   |  Enable/Disable Sentinel audit.
-FM_SENTINEL_FRONT_END_HOST         |  \<string>   |  Sentinel FQDN.  
-FM_SENTINEL_FRONT_END_PORT         |  \<string>   |  Sentinel frontend port.   
-FM_SENTINEL_FRONT_END_SSL_PORT     |  \<string>   |  Sentinel frontend ssl port. 
-FM_SENTINEL_UI_PORT                |  \<string>   |  Sentinel ui port.    
-FM_SENTINEL_USE_CG_CA              |  \<string>   |  Use Flow Manager CA for Sentinel.  
+FM_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.     
+FM_REDIS_ENABLED                   |  \<string>   |  Enable or disable using Redis database for session management when Flow Manager is active/active.
+FM_REDIS_HOSTNAME                  |  \<string>   |  Redis's hostname.
+FM_REDIS_PORT                      |  \<string>   |  Redis's port.
+FM_REDIS_AUTH_ENABLED              |  \<string>   |  If the Redis instance is protected by a password, this must be set on true.
+FM_REDIS_PASSWORD                  |  \<string>   |  The password needed for authentication to the redis server.
+FM_REDIS_USER                      |  \<string>   |  This parameter is only for Redis 6.x if ACL is used on the redis server. Otherwise it should be not set (empty).
+FM_REDIS_SSL_ENABLED               |  \<string>   |  Specifies if the FlowManager connects to Redis using TLS.
+FM_REDIS_SSL_CA                    |  \<string>   |  The CA certificate used by redis server.
 
 ## Flow Manager service operations
 
