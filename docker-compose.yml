@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   flowmanager:
-    image: axway/flowmanager:2.0.200709
+    image: axway/flowmanager:2.0.200903
     hostname: "flowmanager"
     stdin_open: true
     tty: true
@@ -10,8 +10,7 @@ services:
         ACCEPT_EULA: "no"
 
         #General
-        FM_GENERAL_FQDN                              : "flowmanager"
-        FM_GENERAL_HOSTNAME                          : "flowmanager"
+        FM_GENERAL_FQDN                              : "flowmanager.example.com"
         FM_GENERAL_UI_PORT                           : "8081"
         FM_GENERAL_SAAS_MODE                         : "false"
         FM_GENERAL_HTTP_PORT                         : ""
@@ -26,8 +25,6 @@ services:
         FM_HTTPS_KEYSTORE                            : "/opt/axway/configs/uicert.p12"
         FM_HTTPS_CERT_ALIAS                          : "ui"
         FM_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
-        FM_SESSION_IDLE                              : "900"
-        FM_SESSION_EXPIRATION                        : "28800"
 
         #CFT
         FM_CFT_SHARED_SECRET                         : "Secret01"
@@ -37,19 +34,6 @@ services:
         FM_ST_WHITELISTING_ENABLED                   : "false"
         FM_ST_WHITELISTING_WATCHDOG_DELAY            : "120"
         
-        #Redis
-        FM_REDIS_ENABLED                             : "false"
-        FM_REDIS_HOSTNAME                            : "redis"
-        FM_REDIS_PORT                                : "6379"
-
-        #APIC
-        FM_APIC_USE_CATALOG                          : "false"
-        FM_APIC_HOST                                 : "https://apicentral.axway.com"
-        FM_APIC_CLIENTID                             : "DOSA_XXXXXXXXXXXXXXXXXXXXXXXXXXX"
-        FM_APIC_PUBLICKEY                            : "/opt/axway/configs/catalog-public-key.pem"
-        FM_APIC_PRIVATEKEY                           : "/opt/axway/configs/catalog-private-key.pem"
-        
-
         #Mongo
         FM_DATABASE_HOST                             : "fmmongo"
         FM_DATABASE_PORT                             : "27018"
@@ -58,11 +42,6 @@ services:
         FM_DATABASE_USE_SSL                          : "false"
         FM_DATABASE_CERTIFICATES                     : "/opt/axway/configs/mongodb.jks"
         FM_DISABLE_CHECK_REACHABLE_HOST              : "false"
-
-        #Business
-        FM_BUSINESS_CA_CERTIF_ALIAS                  : "business"
-        FM_BUSINESS_CA_FILE                          : "/opt/axway/configs/businessca.p12"
-        FM_BUSINESS_CA_PASSWORD                      : "Secret01"
 
         #GOVERNANCE
         FM_GOVERNANCE_CA_CERTIF_ALIAS                : "governance"
@@ -76,19 +55,9 @@ services:
         FM_JVM_DEBUG_ENABLED                         : "false"
         FM_JVM_DEBUG_PORT                            : "8000"
         FM_JVM_DEBUG_SUSPEND                         : "false"
-        #FFM_JVM_CUSTOM_ARGS                          : ""
+        #FFM_JVM_CUSTOM_ARGS                         : ""
 
-        #EXTERNAL
-        #FM_EXTERNAL_FQDN                            : "flowmanager.example.com"
-        #FM_EXTERNAL_UI_PORT                         : "443"
 
-        #Sentinel
-        FM_SENTINEL_AUDIT_ENABLED                    : "false"
-        FM_SENTINEL_FRONT_END_HOST                   : "localhost"
-        FM_SENTINEL_FRONT_END_PORT                   : "1305"
-        FM_SENTINEL_FRONT_END_SSL_PORT               : "1303"
-        FM_SENTINEL_UI_PORT                          : "1309"
-        FM_SENTINEL_USE_CG_CA                        : "true"
     ports:
       - 8081:8081
     depends_on:
