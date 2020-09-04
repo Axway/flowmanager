@@ -2,5 +2,6 @@
 
 ## v0.1.0
 
-* docker-compose - Make docker-compose files production ready.
+* docker-compose - Make docker-compose files production ready
+* Remove the custom MongoDB and use the official one
 * Update docs
