@@ -10,7 +10,7 @@ Deploy Amplify FlowManager on multiple container orchestration.
 
 ## docker-compose
 
-### Install
+### ***Install***
 
 * Clone the repo by typing `git clone https://git.ecd.axway.org/flowcentral/devops/flowmanager-deploy.git` command
 * Go to `docker-compose` path
@@ -19,14 +19,19 @@ Deploy Amplify FlowManager on multiple container orchestration.
 * Run docker `docker-compose up -d`
 * Check the health of the services by typing this `docker-compose ps` command.
 
-### Upgrade
+#### Extra documentation
+
+* [Active parameters](docs/parameters.md) - All active parameters, including description and default values
+* [Enable TLS/SSL](docs/mongo_tls_ssl.md) - Enable transport encryption (TLS/SSL) for MongoDB
+
+### ***Upgrade***
 
 * Be sure you are in the same `docker-compose` path
 * In `.env` file that you already have from install stage, change `FLOWMANAGER_VERSION` with the newer version
 * Type `docker-compose up -d` command, this will do the updating of your container with the new version
 * Check the health of the services by typing this `docker-compose ps` command.
 
-### Remove
+### ***Remove***
 
 * Be sure you are in the same `docker-compose` path
 * Type `docker-compose down -v`, this will remove all the containers, volumes and other parts related to the containers.
@@ -44,8 +49,3 @@ Check [GitHub Flow](https://guides.github.com/introduction/flow/) for details.
 ## Authors
 
 FlowManager - DevOps Team.
-
-***
-
-* All active parameters, including description and default values can be found [here](docs/parameters.md)
-* Enable transport encryption (TLS/SSL) for MongoDB can be found [here](docs/mongo_tls_ssl.md)
