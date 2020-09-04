@@ -143,7 +143,6 @@ FM_DATABASE_USER_NAME              |  \<string>   |  Flow Manager's user MongoDB
 FM_DATABASE_USER_PASSWORD          |  \<string>   |  Flow Manager's user MongoDB user's password.
 FM_DATABASE_USE_SSL                |  \<string>   |  MongoDB option for use of SSL. 
 FM_DATABASE_CERTIFICATES           |  \<string>   |  MongoDB truststore. (At the moment we support only jks.)
-FM_DISABLE_CHECK_REACHABLE_HOST    |  \<string>   |  Flow Manager will not check if the mongodb instance is available.
 FM_GOVERNANCE_CA_CERTIF_ALIAS      |  \<string>   |  Custom governance certificate internal alias.
 FM_GOVERNANCE_CA_FILE              |  \<string>   |  File name and path to custom governance certificate.
 FM_GOVERNANCE_CA_PASSWORD          |  \<string>   |  Custom governance certificate password.
@@ -154,14 +153,6 @@ FM_JVM_DEBUG_ENABLED               |  \<string>   |  JVM Debug.
 FM_JVM_DEBUG_PORT                  |  \<string>   |  JVM Debug Port.         
 FM_JVM_DEBUG_SUSPEND               |  \<string>   |  JVM Debug Suspend.  
 FM_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.     
-FM_REDIS_ENABLED                   |  \<string>   |  Enable or disable using Redis database for session management when Flow Manager is active/active.
-FM_REDIS_HOSTNAME                  |  \<string>   |  Redis's hostname.
-FM_REDIS_PORT                      |  \<string>   |  Redis's port.
-FM_REDIS_AUTH_ENABLED              |  \<string>   |  If the Redis instance is protected by a password, this must be set on true.
-FM_REDIS_PASSWORD                  |  \<string>   |  The password needed for authentication to the redis server.
-FM_REDIS_USER                      |  \<string>   |  This parameter is only for Redis 6.x if ACL is used on the redis server. Otherwise it should be not set (empty).
-FM_REDIS_SSL_ENABLED               |  \<string>   |  Specifies if the FlowManager connects to Redis using TLS.
-FM_REDIS_SSL_CA                    |  \<string>   |  The CA certificate used by redis server.
 
 ## Flow Manager service operations
 
