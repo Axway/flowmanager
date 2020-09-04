@@ -12,12 +12,9 @@ services:
         #General
         FM_GENERAL_FQDN                              : "flowmanager.example.com"
         FM_GENERAL_UI_PORT                           : "8081"
-        FM_GENERAL_SAAS_MODE                         : "false"
-        FM_GENERAL_HTTP_PORT                         : ""
         FM_GENERAL_ENCRYPTION_KEY                    : "Secret01"
         FM_GENERAL_LOGGING_LEVEL                     : "INFO"
         FM_GENERAL_LICENSE                           : "license.xml"
-        FM_GENERAL_CUSTOM_LOCATION_PATH              : "/opt/axway/logs"
         FM_LOGS_CONSOLE                              : "yes"
 
         #HTTPS
@@ -26,14 +23,6 @@ services:
         FM_HTTPS_CERT_ALIAS                          : "ui"
         FM_HTTPS_KEYSTORE_PASSWORD                   : "Secret01"
 
-        #CFT
-        FM_CFT_SHARED_SECRET                         : "Secret01"
-        FM_CFT_SFTP_ENABLED                          : "false"
-        
-        #ST
-        FM_ST_WHITELISTING_ENABLED                   : "false"
-        FM_ST_WHITELISTING_WATCHDOG_DELAY            : "120"
-        
         #Mongo
         FM_DATABASE_HOST                             : "fmmongo"
         FM_DATABASE_PORT                             : "27018"
@@ -41,7 +30,6 @@ services:
         FM_DATABASE_USER_PASSWORD                    : "storage"
         FM_DATABASE_USE_SSL                          : "false"
         FM_DATABASE_CERTIFICATES                     : "/opt/axway/configs/mongodb.jks"
-        FM_DISABLE_CHECK_REACHABLE_HOST              : "false"
 
         #GOVERNANCE
         FM_GOVERNANCE_CA_CERTIF_ALIAS                : "governance"
@@ -55,8 +43,7 @@ services:
         FM_JVM_DEBUG_ENABLED                         : "false"
         FM_JVM_DEBUG_PORT                            : "8000"
         FM_JVM_DEBUG_SUSPEND                         : "false"
-        #FFM_JVM_CUSTOM_ARGS                         : ""
-
+        #FM_JVM_CUSTOM_ARGS                         : ""
 
     ports:
       - 8081:8081
@@ -86,7 +73,3 @@ services:
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
-
-
-volumes:
-  mongo_data:
