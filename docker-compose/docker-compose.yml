@@ -70,5 +70,3 @@ services:
 volumes:
   mongodb_data_container:
     name: mongostorage
-  redis_data_container:
-    name: redisstorage
