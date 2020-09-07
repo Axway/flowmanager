@@ -8,5 +8,6 @@
 * docker-compose - All variables in `.env` file
 * docker-compose - Persistent volume for MongoDB
 * docker-compose - Start container in case of stop
-* docker-compose: Add default values for environment variables, so you do not have to specify them
+* docker-compose - Add default values for environment variables, so you do not have to specify them
+* docker-compose - Add health check for MongoDB
 * Update docs
