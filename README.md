@@ -19,11 +19,6 @@ Deploy Amplify FlowManager on multiple container orchestration.
 * Run docker `docker-compose up -d`
 * Check the health of the services by typing this `docker-compose ps` command.
 
-#### Extra documentation
-
-* [Active parameters](docs/parameters.md) - All active parameters, including description and default values
-* [Enable TLS/SSL](docs/mongo_tls_ssl.md) - Enable transport encryption (TLS/SSL) for MongoDB
-
 ### ***Upgrade***
 
 * Be sure you are in the same `docker-compose` path
@@ -35,6 +30,11 @@ Deploy Amplify FlowManager on multiple container orchestration.
 
 * Be sure you are in the same `docker-compose` path
 * Type `docker-compose down -v`, this will remove all the containers, volumes and other parts related to the containers.
+
+#### Extra documentation
+
+* [Active parameters](docs/parameters.md) - All active parameters, including description and default values
+* [Enable TLS/SSL](docs/mongo_tls_ssl.md) - Enable transport encryption (TLS/SSL) for MongoDB
 
 ## Contribute
 
