@@ -35,7 +35,7 @@ Deploy Amplify FlowManager on multiple container orchestration.
 
 * [Active parameters](docs/parameters.md) - All active parameters, including description and default values
 * [Enable TLS/SSL](docs/mongo_tls_ssl.md) - Enable transport encryption (TLS/SSL) for MongoDB
-* [CHANGELOG](CHANGELOG) - Change document regarding deployment (docker-compose for now)
+* [CHANGELOG](CHANGELOG.md) - Change document regarding deployment (docker-compose for now)
 
 ## Contribute
 
