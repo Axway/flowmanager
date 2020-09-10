@@ -129,7 +129,6 @@ FM_GENERAL_FQDN                    |  \<string>   |  Host address of the Flow Ma
 FM_GENERAL_UI_PORT                 |  \<string>   |  Flow Manager's UI port.
 FM_GENERAL_ENCRYPTION_KEY          |  \<string>   |  Flow Manager's encryption key.
 FM_GENERAL_LOGGING_LEVEL           |  \<string>   |  Flow Manager's logging levels.
-FM_GENERAL_LICENSE                 |  \<string>   |  Name of the Flow Manager license file.
 FM_GENERAL_CUSTOM_LOCATION_PATH    |  \<string>   |  The location of logs inside of the docker image.
 FM_LOGS_CONSOLE                    |  \<string>   |  Logs in console or in files.
 FM_HTTPS_USE_CUSTOM_CERT           |  \<string>   |  Flag which informs Flow Manager that you are using custom certificates.
