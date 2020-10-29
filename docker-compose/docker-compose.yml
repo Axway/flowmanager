@@ -30,12 +30,11 @@ services:
     stdin_open: true
     tty: true
     environment:
-      - ACCEPT_EULA=${ACCEPT_EULA:-yes}
+      - ACCEPT_EULA=${ACCEPT_EULA:-no}
       - FM_GENERAL_FQDN=${FM_GENERAL_FQDN}
       - FM_GENERAL_UI_PORT=${FM_GENERAL_UI_PORT:-8081}
       - FM_GENERAL_ENCRYPTION_KEY=${FM_GENERAL_ENCRYPTION_KEY}
       - FM_GENERAL_LOGGING_LEVEL=${FM_GENERAL_LOGGING_LEVEL:-INFO}
-      - FM_GENERAL_LICENSE=${FM_GENERAL_LICENSE:-license.xml}
       - FM_LOGS_CONSOLE=${FM_LOGS_CONSOLE:-yes}
       - FM_HTTPS_USE_CUSTOM_CERT=${FM_HTTPS_USE_CUSTOM_CERT:-true}
       - FM_HTTPS_KEYSTORE=${FM_HTTPS_KEYSTORE}
@@ -58,10 +57,9 @@ services:
       - FM_JVM_XMS=${FM_JVM_XMS:-512M}
       - FM_JVM_XMN=${FM_JVM_XMN:-768M}
     ports:
-      - "${FM_GENERAL_UI_PORT:-8081}:${FM_GENERAL_UI_PORT:-8081}"
+      - "${FM_GENERAL_UI_PORT:-8081}:8081"
     volumes:
       - ./files/flowmanager/config/:/opt/axway/flowmanager/configs
-      - ./files/flowmanager/license/:/opt/axway/flowmanager/conf/license/:ro
       - ./files/flowmanager/schema/:/opt/axway/flowmanager/conf/schemas/storage/
     restart: unless-stopped
     depends_on:
