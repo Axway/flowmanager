@@ -78,7 +78,7 @@ ls -l ./files/flowmanager/config/
 
 
 if [ ! -f ./files/flowmanager/license/license.xml ]; then
-    echo "WARNING: ./mounts/config/license.xml is missing"
+    echo "WARNING: ./files/flowmanager/license/license.xml is missing"
 else
    echo "Success"
 fi
