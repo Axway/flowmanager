@@ -60,6 +60,7 @@ services:
       - "${FM_GENERAL_UI_PORT:-8081}:8081"
     volumes:
       - ./files/flowmanager/config/:/opt/axway/flowmanager/configs
+      - ./files/flowmanager/license/:/opt/axway/FlowManager/conf/license/:ro
       - ./files/flowmanager/schema/:/opt/axway/flowmanager/conf/schemas/storage/
     restart: unless-stopped
     depends_on:
