@@ -1,8 +1,11 @@
 #!/bin/bash
 
 if [ ! -f ./docker-compose.yml ]; then
-    echo "You should launch this script from root dir as ./scripts/gen-certs.sh"
-    exit 1
+    cd ../docker-compose
+     if [ ! -f ./docker-compose.yml ]; then
+          echo "You should launch this script from docker-compose directory!"
+          exit 1
+     fi
 fi
 
 set -euo pipefail
@@ -61,50 +64,20 @@ function gen_cert() {
     openssl ca -config $caroot/ca.cnf -passin pass:$password -batch -notext -in $caroot/$name-csr.pem -out $caroot/$name.pem
 }
 
-function p12() {
-    local path=$1
-    local alias=$2
-    local password=$3
-    
-    echo "p12 $1 ...."
-
-    openssl pkcs12 -export  -out $path.p12 \
-                        -name $alias \
-                        -in $path.pem  \
-                        -inkey $path-key.pem \
-                        -passin pass:$password  \
-                        -passout pass:$password
-}
-
-function jks() {
-    local path=$1
-    local alias=$2
-    local password=$3
-    echo "jks $1 ...."
-    keytool -importkeystore \
-        -srckeystore $path.p12 -srcstoretype pkcs12 -srcstorepass $password -srcalias $alias \
-        -destkeystore $path.jks -deststoretype jks -deststorepass $password -destalias $alias 
-}
-
 gen_ca governance
 gen_cert governance uicert
 gen_ca business
 
-p12 ./custom-ca/governance/cacert governance $password
-p12 ./custom-ca/governance/uicert ui $password
-p12 ./custom-ca/business/cacert business $password
-
 echo "Creating configs..."
-mkdir -p ./mounts/configs
 
-openssl pkcs12 -in ./custom-ca/governance/cacert.p12 -out ./mounts/configs/governanceca.pem -nodes -passin pass:$password
-openssl pkcs12 -in ./custom-ca/business/cacert.p12 -out ./mounts/configs/businessca.pem -nodes -passin pass:$password
-openssl pkcs12 -in ./custom-ca/governance/uicert.p12 -out ./mounts/configs/uicert.pem -nodes -passin pass:$password
+cp ./custom-ca/governance/cacert.pem ./files/flowmanager/config/governanceca.pem
+cp ./custom-ca/business/cacert.pem ./files/flowmanager/config/businessca.pem
+cp ./custom-ca/governance/uicert.pem ./files/flowmanager/config/uicert.pem
 
-ls -l ./mounts/configs
+ls -l ./files/flowmanager/config/
 
 
-if [ ! -f ./mounts/configs/license.xml ]; then
+if [ ! -f ./files/flowmanager/license/license.xml ]; then
     echo "WARNING: ./mounts/config/license.xml is missing"
 else
    echo "Success"
