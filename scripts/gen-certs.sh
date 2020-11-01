@@ -64,15 +64,34 @@ function gen_cert() {
     openssl ca -config $caroot/ca.cnf -passin pass:$password -batch -notext -in $caroot/$name-csr.pem -out $caroot/$name.pem
 }
 
+function pem() {
+    local path=$1
+    local alias=$2
+    local password=$3
+    local newpath=$4
+    
+    
+    echo "pem $1 ...."
+
+    openssl pkcs12 -export  -out $newpath.pem \
+                        -name $alias \
+                        -in $path.pem  \
+                        -inkey $path-key.pem \
+                        -passin pass:$password  \
+                        -passout pass:$password
+}
+
 gen_ca governance
 gen_cert governance uicert
 gen_ca business
 
 echo "Creating configs..."
 
-cp ./custom-ca/governance/cacert.pem ./files/flowmanager/config/governanceca.pem
-cp ./custom-ca/business/cacert.pem ./files/flowmanager/config/businessca.pem
-cp ./custom-ca/governance/uicert.pem ./files/flowmanager/config/uicert.pem
+pem ./custom-ca/governance/cacert governance $password ./files/flowmanager/config/governanceca
+pem ./custom-ca/governance/uicert ui $password ./files/flowmanager/config/businessca
+pem ./custom-ca/business/cacert business $password ./files/flowmanager/config/uicert
+
+rm -rf ./custom-ca/
 
 ls -l ./files/flowmanager/config/
 
