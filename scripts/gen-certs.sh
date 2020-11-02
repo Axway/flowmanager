@@ -66,19 +66,11 @@ function gen_cert() {
 
 function pem() {
     local path=$1
-    local alias=$2
-    local password=$3
-    local newpath=$4
-    
-    
-    echo "pem $1 ...."
-
-    openssl pkcs12 -export  -out $newpath.pem \
-                        -name $alias \
-                        -in $path.pem  \
-                        -inkey $path-key.pem \
-                        -passin pass:$password  \
-                        -passout pass:$password
+	local pathKey=$2
+    local newpath=$3
+	
+    cat $2.pem > $3.pem
+	cat $1.pem >> $3.pem
 }
 
 gen_ca governance
@@ -87,9 +79,9 @@ gen_ca business
 
 echo "Creating configs..."
 
-pem ./custom-ca/governance/cacert governance $password ./files/flowmanager/config/governanceca
-pem ./custom-ca/governance/uicert ui $password ./files/flowmanager/config/businessca
-pem ./custom-ca/business/cacert business $password ./files/flowmanager/config/uicert
+pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key  ./files/flowmanager/config/governanceca
+pem ./custom-ca/governance/uicert ./custom-ca/governance/uicert-key  ./files/flowmanager/config/uicert
+pem ./custom-ca/business/cacert ./custom-ca/business/cacert-key  ./files/flowmanager/config/businessca
 
 rm -rf ./custom-ca/
 
