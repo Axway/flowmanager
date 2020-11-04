@@ -26,7 +26,7 @@ ARG RELEASE_TYPE="<RELEASE_TYPE>/"
 # ARTIFACT
 ARG ARTIFACT="<ARTIFACT>"
 
-RUN wget -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$URL$RELEASE_TYPE$ARTIFACT" -P /home/axway/KIT && \
+RUN wget --no-check-certificate -nc -r --accept "*zip" --level 1 -nH --cut-dirs=100 "$URL$RELEASE_TYPE$ARTIFACT" -P /home/axway/KIT && \
     unzip /home/axway/KIT/$ARTIFACT -d /opt/axway/FlowManager/ 
 
 COPY ./bin/uid_entrypoint /opt/axway/bin/uid_entrypoint
