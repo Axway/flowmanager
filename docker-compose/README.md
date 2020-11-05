@@ -40,7 +40,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 
 The file `env.template` contains basic fields that can be configured at Flow Manager start. The extended list can be consulted below. In order to add a new parameter, simply add it in your `.env` file and will be considered at Flow Manager.
 
-All active Environment variables/parameters for Flow Manager, including all the services required to run can be found [here](../docs/).
+All active Environment variables/parameters for Flow Manager, including all the services required to run can be found [here](../docs/parameters.md).
 </details>
 
 <details>
