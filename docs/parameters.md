@@ -27,6 +27,8 @@ All active Environment variables/parameters for FlowManager, including all the s
 |FM_DATABASE_USER_PASSWORD|Yes|`string`|MongoDB user's password used for FlowManager||
 |FM_DATABASE_USE_SSL|No|`string`| MongoDB option for use of SSL|`false`|
 |FM_DATABASE_CERTIFICATES|No|`string`|MongoDB truststore (At the moment we support only jks)||
+|FM_DATABASE_AUTHSOURCE|No|`string`|The database in which the MongoDB user (FM_DATABASE_USER_NAME) was created. If not set, it means that the user belongs to the FlowManager database (FM_DATABASE_NAME).||
+|FM_DATABASE_AUTH_MECHANISM|No|`string`|The client authentication mechanism. Possible values: LDAP, SCRAM_SHA1, SCRAM_SHA256. If not set, the default mongo client authentication mechanism will be used (SCRAM_SHA1). If LDAP is used, the FM_DATABASE_AUTHSOURCE should not be set because in this case its default value is $external.||
 |FM_GOVERNANCE_CA_CERTIF_ALIAS|No|`string`|Custom governance certificate internal alias||
 |FM_GOVERNANCE_CA_FILE|No|`string`|File name and path to custom governance certificate||
 |FM_GOVERNANCE_CA_PASSWORD|No|`string`| Custom governance certificate password||
