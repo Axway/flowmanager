@@ -20,6 +20,8 @@ This readme refers to managing single-node installations of Flow Manager using d
 * Run docker `docker-compose up -d`
 * Check the health of the services by typing this `docker-compose ps` command.
 
+***Note***: We support for the momment `jks` and `pem` certificates extensions.
+
 ## ***Upgrade***
 
 * Be sure you are in the same `docker-compose` path
@@ -32,7 +34,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 * Be sure you are in the same `docker-compose` path
 * Type `docker-compose down -v`, this will remove all the containers, volumes and other parts related to the containers.
 
-***WARNING!*** Running `docker-compose down -v`  will remove all the volumes, including MongoDB data.
+***WARNING***: Running `docker-compose down -v`  will remove all the volumes, including MongoDB data.
 
 ### Extra configuration
 
