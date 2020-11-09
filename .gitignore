@@ -1,0 +1,6 @@
+# Global
+.DS_Store
+.vscode
+# Docker compose
+.env
+

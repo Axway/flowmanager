@@ -1,6 +1,14 @@
 # AMPLIFY Flow Manager Docker
 
-AMPLIFY Flow Manager Docker
+AMPLIFY Flow Manager Docker.
+
+---
+
+**New deployment version is here**
+
+Soon we will update the main branch with the new version. New version can be found in [improve/deployment](https://github.com/Axway/docker-flowmanager/tree/improve/deployment) branch.
+
+---
 
 ## Content
 
@@ -61,13 +69,13 @@ cd docker-flowmanager
  - mkdir -p ./mounts/logs            # All the application logs will be stored in here.
  - mkdir -p ./mounts/plugins         # Plugins for ST,CFT
  - mkdir -p ./mounts/resources       # Include Sentinel resources
-  
+
 
 *Note* In order to persist data from the MongoDB container we create volumes where the Mongo data will be stored. **TAKE HEED**, you may use any MongoDB image you desire as Axway does not offer support and/or maintenance for the MongoDB image bundled alongside Flow Manager.
 
  - mkdir -p ./mounts/mongo_certificates      # MongoDB Certificates for SSL use
  - mkdir -p ./mounts/mongo_config            # MongoDB configuration files
- 
+
 *Note* In order for the Flow Manager and MongoDB services to be able to operate you have to give the appropriate permissions to folder where the volumes will be mounted.
 
 Example : chmod -R 777 ./mounts
@@ -78,7 +86,7 @@ The MongoDB data is placed in this volume so it can be reused when creating and 
 ## Importing docker image after download.
 
 Example : docker load < (File_Name.tgz)
- 
+
 Check that the image is succesfully imported with docker images command.
 
 
@@ -99,7 +107,7 @@ Make sure that the folders created at the previous step correspond with those sp
 1. Download the new image
 2. Import it localy
 3. docker-compose down (this will stop the containers)
-4. Edit docker compose with new image name 
+4. Edit docker compose with new image name
 5. docker-compose up (this will start the containers and the update will be done)
 
 
@@ -140,18 +148,18 @@ FM_DATABASE_HOST                   |  \<string>   |  MongoDB host name.
 FM_DATABASE_PORT                   |  \<number>   |  MongoDB port.
 FM_DATABASE_USER_NAME              |  \<string>   |  Flow Manager's user MongoDB user.
 FM_DATABASE_USER_PASSWORD          |  \<string>   |  Flow Manager's user MongoDB user's password.
-FM_DATABASE_USE_SSL                |  \<string>   |  MongoDB option for use of SSL. 
+FM_DATABASE_USE_SSL                |  \<string>   |  MongoDB option for use of SSL.
 FM_DATABASE_CERTIFICATES           |  \<string>   |  MongoDB truststore. (At the moment we support only jks.)
 FM_GOVERNANCE_CA_CERTIF_ALIAS      |  \<string>   |  Custom governance certificate internal alias.
 FM_GOVERNANCE_CA_FILE              |  \<string>   |  File name and path to custom governance certificate.
 FM_GOVERNANCE_CA_PASSWORD          |  \<string>   |  Custom governance certificate password.
 FM_JVM_XMX                         |  \<string>   |  JVM maximum memory allocation pool.
 FM_JVM_XMS                         |  \<string>   |  JVM maximum memory allocation pool.
-FM_JVM_XMN                         |  \<string>   |  JVM size of the heap for the young generation.       
-FM_JVM_DEBUG_ENABLED               |  \<string>   |  JVM Debug. 
-FM_JVM_DEBUG_PORT                  |  \<string>   |  JVM Debug Port.         
-FM_JVM_DEBUG_SUSPEND               |  \<string>   |  JVM Debug Suspend.  
-FM_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.     
+FM_JVM_XMN                         |  \<string>   |  JVM size of the heap for the young generation.
+FM_JVM_DEBUG_ENABLED               |  \<string>   |  JVM Debug.
+FM_JVM_DEBUG_PORT                  |  \<string>   |  JVM Debug Port.
+FM_JVM_DEBUG_SUSPEND               |  \<string>   |  JVM Debug Suspend.
+FM_JVM_CUSTOM_ARGS                 |  \<string>   |  JVM Custom arguments.
 
 ## Flow Manager service operations
 
