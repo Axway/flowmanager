@@ -14,7 +14,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 
 * Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
 * Go to `docker-compose` path
-* License and some certificate files (`governance` and `ui`) in `files/flowmanager/config` path
+* License in `files/flowmanager/license` path and some certificate files (`governance` and `ui`) in `files/flowmanager/config` path
 * Copy `env.template` in `.env` file
 * Change value of parameters as you want in `.env` file
 * Run docker `docker-compose up -d`
