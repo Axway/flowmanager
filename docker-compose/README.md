@@ -14,6 +14,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 
 * Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
 * Go to `docker-compose` path
+* License and some certificate files (`governance` and `ui`) in `files/flowmanager/config` path
 * Copy `env.template` in `.env` file
 * Change value of parameters as you want in `.env` file
 * Run docker `docker-compose up -d`
@@ -31,7 +32,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 * Be sure you are in the same `docker-compose` path
 * Type `docker-compose down -v`, this will remove all the containers, volumes and other parts related to the containers.
 
-***WARNING!*** Running `docker-compose down -v`  will remove all the volumes, including MongoDB data!
+***WARNING!*** Running `docker-compose down -v`  will remove all the volumes, including MongoDB data.
 
 ### Extra configuration
 
