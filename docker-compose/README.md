@@ -60,6 +60,6 @@ Encrypt all of MongoDB’s network traffic. TLS/SSL ensures that MongoDB network
 <details>
   <summary>Migrate data from one container to another</summary>
 
-  Steps to move your current data from an existing contianer (that uses a custom docker image) to new container (that uses an official docker image) can be found [here](docks/migrate_data_mongodb.md).
+  Steps to move your current data from an existing container (that uses a custom docker image) to new container (that uses an official docker image) can be found [here](../docks/migrate_data_mongodb.md).
 
 </details>
