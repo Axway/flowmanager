@@ -4,8 +4,8 @@ This readme refers to managing single-node installations of Flow Manager using d
 
 ## Requirements
 
-* [docker](https://docs.docker.com/engine/install/) version 19.03.12 or higher
-* [docker-compose](https://docs.docker.com/compose/install/) version 1.26.2 or higher
+* [docker](https://docs.docker.com/engine/install/) version 19.03.x or higher
+* [docker-compose](https://docs.docker.com/compose/install/) version 1.26.x or higher
 * Flow Manager Docker Image downloaded from Axway Sphere
 * Flow Manager license and certificates files
 * MongoDB 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
