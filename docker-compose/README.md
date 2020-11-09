@@ -12,7 +12,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 
 ## ***Install***
 
-* Clone the repo by typing `git clone https://git.ecd.axway.org/flowcentral/devops/flowmanager-deploy.git` command
+* Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
 * Go to `docker-compose` path
 * Copy `env.template` in `.env` file
 * Change value of parameters as you want in `.env` file

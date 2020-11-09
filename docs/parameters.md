@@ -1,6 +1,6 @@
 # Parameters
 
-All active Environment variables/parameters for FlowManager, including all the services required to run.
+All active Environment variables/parameters for Flow Manager, including all the services required to run.
 
 ## Application
 
