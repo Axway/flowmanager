@@ -7,7 +7,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 * [docker](https://docs.docker.com/engine/install/) version 19.03.12 or higher
 * [docker-compose](https://docs.docker.com/compose/install/) version 1.26.2 or higher
 * Flow Manager Docker Image downloaded from Axway Sphere
-* Flow Manager license file
+* Flow Manager license and certificates files
 * MongoDB 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
 
 ## ***Install***
@@ -54,5 +54,12 @@ Encrypt all of MongoDB’s network traffic. TLS/SSL ensures that MongoDB network
 * Change value of `CAFile` and `PEMKeyFile` parameters with yours (only name of certificate files)
 * Save it
 * Run `docker-compose up -d` command in case you run MongoDB for the first time  or `docker-compose restart mongodb` in case you already have MongoDB up.
+
+</details>
+
+<details>
+  <summary>Migrate data from one container to another</summary>
+
+  Steps to move your current data from an existing contianer (that uses a custom docker image) to new container (that uses an official docker image) can be found [here](docks/migrate_data_mongodb.md).
 
 </details>
