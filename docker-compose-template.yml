@@ -115,7 +115,7 @@ services:
     hostname: fcmongo
     ports:
       - 27017:27017
-      #- 27018:27018
+      - 27019:27018
     volumes:
        - "./mounts/mongo_data:/data/db/"
        - "./mounts/mongo_certificates:/certificates"
@@ -126,7 +126,7 @@ services:
       MONGODB_APPLICATION_DATABASE    : umcft
       MONGODB_APPLICATION_USER        : storage
       MONGODB_APPLICATION_PASS        : storage
-      MONGODB_PORT                    : "27017"
+      MONGODB_PORT                    : "27019"
       MONGODB_USE_SSL                 : "false"
       MONGODB_ROOT_CA                 : "rootCA.pem"
       MONGODB_CERTIFICATE             : "mongodb.pem"
