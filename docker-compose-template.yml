@@ -115,7 +115,7 @@ services:
     hostname: fcmongo
     ports:
       - 27017:27017
-      - 27019:27018
+      - 27018:27018
     volumes:
        - "./mounts/mongo_data:/data/db/"
        - "./mounts/mongo_certificates:/certificates"
