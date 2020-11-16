@@ -1,3 +1,0 @@
-# Schema
-
-Schema space.
