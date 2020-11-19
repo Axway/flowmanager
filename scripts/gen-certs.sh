@@ -74,11 +74,34 @@ function pem() {
 	cat $1.pem >> $3.pem
 }
 
+function p12() {
+    local path=$1
+    local alias=$2
+    local password=$3
+    
+    echo "p12 $1 ...."
+
+    openssl pkcs12 -export  -out $path.p12 \
+                        -name $alias \
+                        -in $path.pem  \
+                        -inkey $path-key.pem \
+                        -passin pass:$password  \
+                        -passout pass:$password
+}
+
 gen_ca governance
 gen_cert governance uicert
 gen_ca business
 
 echo "Creating configs..."
+
+p12 ./custom-ca/governance/cacert governance $password
+p12 ./custom-ca/governance/uicert ui $password
+p12 ./custom-ca/business/cacert business $password
+
+cp ./custom-ca/governance/cacert.p12 ./files/flowmanager/config/governanceca.p12
+cp ./custom-ca/business/cacert.p12 ./files/flowmanager/config/businessca.p12
+cp ./custom-ca/governance/uicert.p12 ./files/flowmanager/config/uicert.p12
 
 pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key  ./files/flowmanager/config/governanceca
 pem ./custom-ca/governance/uicert ./custom-ca/governance/uicert-key  ./files/flowmanager/config/uicert
