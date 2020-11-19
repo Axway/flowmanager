@@ -170,11 +170,7 @@ FM_JVM_DEBUG_SUSPEND             |  \<string>   |  JVM Debug suspend.
 **Hidden R&D Parameters**                
 **Parameter**                    |  **Values**  |  **Description**
  ------------------------------- | :----------: | ---------------
-FM_APIC_USE_CATALOG              |  \<boolean>  |  Optional. Enable or disable connection to ApiCatalog. Default value is false.
-FM_APIC_HOST                     |  \<string>   |  Optional. ApiCatalog Host.
-FM_APIC_CLIENTID                 |  \<string>   |  Optional. ApiCatalog Client ID.
-FM_APIC_PUBLICKEY                |  \<string>   |  Optional. ApiCatalog Public Key.
-FM_APIC_PRIVATEKEY               |  \<string>   |  Optional. ApiCatalog Private Key.
+FM_HTTPS_CORS               	 |  \<string>   |  Optional. If not set, the rest api calls have same origin as the UI pages. 
 FM_METRICS_ENABLED               |  \<boolean>  |  Optional. Set on true, enables metrics for Prometheus. Default false. 
 
 ## Flow Central service operations
