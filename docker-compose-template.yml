@@ -63,13 +63,9 @@ services:
         # Hidden configurations:
         #METRICS
         FM_METRICS_ENABLED                           : "<FM_METRICS_ENABLED>"  
-        #APIC (optional, use public rest api)
-        FM_APIC_USE_CATALOG                          : "<FM_APIC_USE_CATALOG>"
-        FM_APIC_HOST                                 : "<FM_APIC_HOST>"
-        FM_APIC_CLIENTID                             : "<FM_APIC_CLIENTID>"
-        FM_APIC_PUBLICKEY                            : "<FM_APIC_PUBLICKEY>"
-        FM_APIC_PRIVATEKEY                           : "<FM_APIC_PRIVATEKEY>"
-        FM_APIC_TOKENURL                             : "<FM_APIC_TOKENURL>"
+        #CORS
+        FM_HTTPS_CORS                                : "<FM_HTTPS_CORS>"
+
         
         #JVM
         FM_JVM_XMX                                   : "<FM_JVM_XMX>"
@@ -96,6 +92,12 @@ services:
         #FM_CONDOR_LUMBERJACK_PORT                        : "<FM_CONDOR_LUMBERJACK_PORT>"
         #FM_CONDOR_KEYSTORE                               : "<FM_CONDOR_KEYSTORE>"
         #FM_CONDOR_KEY_PASSWORD                           : "<FM_CONDOR_KEY_PASSWORD>"
+        #FM_APIC_USE_CATALOG                          : "<FM_APIC_USE_CATALOG>"
+        #FM_APIC_HOST                                 : "<FM_APIC_HOST>"
+        #FM_APIC_CLIENTID                             : "<FM_APIC_CLIENTID>"
+        #FM_APIC_PUBLICKEY                            : "<FM_APIC_PUBLICKEY>"
+        #FM_APIC_PRIVATEKEY                           : "<FM_APIC_PRIVATEKEY>"
+        #FM_APIC_TOKENURL                             : "<FM_APIC_TOKENURL>"
         
     ports:
       - <FM_GENERAL_UI_PORT>:8081
