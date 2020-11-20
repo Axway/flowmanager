@@ -1,11 +1,10 @@
 #! /bin/bash
 
-if [ ! -f ./docker-compose.yml ]; then
-    cd ../docker-compose
-     if [ ! -f ./docker-compose.yml ]; then
-          echo "You should launch this script from docker-compose directory!"
-          exit 1
-     fi
+if [ -f .env ]
+then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+else
+  echo "Please provide .env file."
 fi
 
 if [ -z "$1" ]; then
@@ -15,11 +14,11 @@ fi
 
 
 if [[ -f "$1" ]]; then
-        cp $1 ./files/license/
+        cp $1 $pathToLicense/
 else
         echo "The license file does not exist, please check the file permissions and run the script again with the correct path."
 fi
 
-./../scripts/gen-amplify-certs.sh
-./../scripts/gen-certs.sh
+./gen-amplify-certs.sh
+./gen-certs.sh
 
