@@ -6,8 +6,10 @@ There are three scripts:
 3. **gen-amplify-certs.sh** : It generates catalog certificates in pem format.
 
 
-All the configurable parameters are stored in a hidden file called ".env" . In order to see this file, run:
+All the configurable parameters are stored in a hidden file called ".env" .
+In order to see this file, run:
 `ls -a`
+
 In order to change the variables, run:
 `vi .env`
 
