@@ -3,3 +3,4 @@
 .vscode
 # Docker compose
 .env
+*.tar
