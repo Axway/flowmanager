@@ -7,6 +7,7 @@ There are three scripts:
 
 
 All the configurable parameters are stored in a hidden file called ".env" .
+
 In order to see this file, run:
 `ls -a`
 
