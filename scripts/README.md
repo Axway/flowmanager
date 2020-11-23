@@ -1,3 +1,4 @@
-# Generate pem certs
+# Generate pem and p12 certs
 
-Docker-compose should be also updated.
+- The scripts should be run from their location. (./scripts/).
+- In order to change the variables, please, modify .env file. 

@@ -1,12 +1,13 @@
 #!/bin/bash
 
-if [ ! -f ./docker-compose.yml ]; then
-    cd ../docker-compose
-     if [ ! -f ./docker-compose.yml ]; then
-          echo "You should launch this script from docker-compose directory!"
-          exit 1
-     fi
+if [ -f .env ]
+then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+else
+  echo "Please provide .env file."
 fi
+
+cd $pathToCerts
 
 set -euo pipefail
 err_report() {
@@ -15,10 +16,6 @@ err_report() {
 
 trap 'err_report $LINENO' ERR
 
-site=example.com
-email=anonymous@axway.com
-password=Secret01
-default_days=10
 
 function gen_ca() {
     local name=$1
@@ -99,21 +96,22 @@ p12 ./custom-ca/governance/cacert governance $password
 p12 ./custom-ca/governance/uicert ui $password
 p12 ./custom-ca/business/cacert business $password
 
-cp ./custom-ca/governance/cacert.p12 ./files/flowmanager/config/governanceca.p12
-cp ./custom-ca/business/cacert.p12 ./files/flowmanager/config/businessca.p12
-cp ./custom-ca/governance/uicert.p12 ./files/flowmanager/config/uicert.p12
 
-pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key  ./files/flowmanager/config/governanceca
-pem ./custom-ca/governance/uicert ./custom-ca/governance/uicert-key  ./files/flowmanager/config/uicert
-pem ./custom-ca/business/cacert ./custom-ca/business/cacert-key  ./files/flowmanager/config/businessca
+cp ./custom-ca/business/cacert.p12 businessca.p12
+cp ./custom-ca/governance/cacert.p12 governanceca.p12
+cp ./custom-ca/governance/uicert.p12 uicert.p12
+
+pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key  governanceca
+pem ./custom-ca/governance/uicert ./custom-ca/governance/uicert-key  uicert
+pem ./custom-ca/business/cacert ./custom-ca/business/cacert-key  businessca
 
 rm -rf ./custom-ca/
 
-ls -l ./files/flowmanager/config/
+ls -l ./
 
 
-if [ ! -f ./files/flowmanager/license/license.xml ]; then
-    echo "WARNING: ./files/flowmanager/license/license.xml is missing"
+if [ ! -f ../license/license.xml ]; then
+    echo "WARNING: $pathToLicense/license.xml is missing"
 else
    echo "Success"
 fi

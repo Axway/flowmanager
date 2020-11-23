@@ -1,24 +1,24 @@
 #!/bin/bash
 
 
-if [ ! -f ./docker-compose.yml ]; then
-    cd ../docker-compose
-     if [ ! -f ./docker-compose.yml ]; then
-          echo "You should launch this script from docker-compose directory!"
-          exit 1
-     fi 
+if [ -f .env ]
+then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+else
+  echo "Please provide .env file."
 fi
 
+cd $pathToCerts
 echo "Generating AMPLIFY catalog service acccount keys..."
 
-openssl genpkey -algorithm RSA -out ./files/flowmanager/config/catalog-private-key.pem -pkeyopt rsa_keygen_bits:2048
-openssl rsa -pubout -in ./files/flowmanager/config/catalog-private-key.pem -out ./files/flowmanager/config/catalog-public-key.pem
+openssl genpkey -algorithm RSA -out catalog-private-key.pem -pkeyopt rsa_keygen_bits:2048
+openssl rsa -pubout -in catalog-private-key.pem -out catalog-public-key.pem
 
-ls -l ./files/flowmanager/config/
+ls -l ./
 
-if [ ! -f ./mounts/configs/license.xml ]; then
-    echo "WARNING: ./mounts/config/license.xml is missing"
+if [ ! -f ../license/license.xml ]; then
+    echo "WARNING: $pathToLicense/license.xml is missing"
 else
-    echo "Success"
+   echo "Success"
 fi
 
