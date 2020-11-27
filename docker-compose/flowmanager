@@ -52,6 +52,11 @@ function stop_container() {
     docker-compose stop
 }
 
+function delete_container() {
+    # Delete the container(s)
+    docker-compose down -v
+}
+
 function usage() {
     echo "--------"
     echo " HELP"
@@ -62,6 +67,7 @@ function usage() {
     echo "    start  : Start the contianer(s)"
     echo "    stop   : Stop the container(s)"
     echo "    status : Show the status of the container(s)"
+    echo "    delete : Delete container(s) and other parts related to the container(s), like storage"
     echo "    help   : Show the usage of the script file"
     echo ""
     exit
@@ -87,6 +93,10 @@ if [[ $@ ]]; then
                 ;;
             status)
                 status_container
+                shift
+                ;;
+            delete)
+                delete_container
                 shift
                 ;;
             help)

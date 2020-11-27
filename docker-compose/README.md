@@ -26,15 +26,15 @@ This readme refers to managing single-node installations of Flow Manager using d
 
 * Be sure you are in the same `docker-compose` path
 * In `.env` file that you already have from install stage, change `FLOWMANAGER_VERSION` with the newer version
-* Type `docker-compose up -d` command, this will do the updating of your container with the new version
-* Check the health of the services by typing this `docker-compose ps` command.
+* Type `./flowmanager start` command, this will do the updating of your container with the new version
+* Check the health of the services by typing this `./flowmanager status` command.
 
 ## ***Remove***
 
 * Be sure you are in the same `docker-compose` path
-* Type `docker-compose down -v`, this will remove all the containers, volumes and other parts related to the containers.
+* Type `./flowmanager delete`, this will remove all the containers, volumes and other parts related to the containers.
 
-***WARNING***: Running `docker-compose down -v`  will remove all the volumes, including MongoDB data.
+***WARNING***: Running `./flowmanager delete`  will remove all the volumes, including MongoDB data.
 
 ### Extra configuration
 
