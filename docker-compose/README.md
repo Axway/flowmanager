@@ -10,11 +10,11 @@ This readme refers to managing single-node installations of Flow Manager using d
 * Flow Manager license and certificates files
 * MongoDB 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
 
-## ***Install***
+## ***Setup***
 
 * Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
 * Go to `docker-compose` path
-* Add license in `files/flowmanager/license` path and some certificate files (`governance` and `ui`) in `files/flowmanager/config` path
+* Add license in `files/flowmanager/license` path and some certificate files (`governanceca` and `uicert`) in `files/flowmanager/config` path
 * Copy `env.template` in `.env` file
 * Change value of parameters as you want in `.env` file
 * Run docker `docker-compose up -d`

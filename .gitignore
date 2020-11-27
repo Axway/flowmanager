@@ -4,3 +4,8 @@
 # Docker compose
 .env
 *.tar
+# Certs
+custom-ca
+*.p12
+*.pem
+*.jks

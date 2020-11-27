@@ -1,4 +1,10 @@
-# Generate pem and p12 certs
+# Scripts
 
-- The scripts should be run from their location. (./scripts/).
-- In order to change the variables, please, modify .env file. 
+Scripts that helps you to setup and run the app quickly.
+
+## Generate certificates
+
+Generate `PEM`, `P12` and keystore in `JKS` format.
+
+* Change values in `certs.conf` file as you want and save it (Optional)
+* Run `./generate_certs.sh` script file.

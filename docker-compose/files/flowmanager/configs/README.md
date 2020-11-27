@@ -1,3 +1,3 @@
-# FlowManager config
+# Flow Manager configs
 
-This is the config space for FlowManager.
+Configs space.

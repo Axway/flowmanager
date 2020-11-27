@@ -6,7 +6,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 
 |**Parameter**|**Require**|**Type**|**Description**|**Default**|
 |-------------|:---------:|:------:|---------------|-----------|
-|FLOWMANAGER_IMAGE_URL*|Yes|`string`|URL from where you want to get the image|`axway/flowmanager`|
+|FLOWMANAGER_IMAGE_URL*|No|`string`|URL from where you want to get the image|`axway/flowmanager`|
 |FLOWMANAGER_VERSION*|Yes|`number`|App version based on docker image||
 |ACCEPT_EULA|Yes|`string`|Indicates your acceptance of the End User License Agreement|`yes`|
 |FM_GENERAL_FQDN|Yes|`string`|URL address of the FlowManager instance||
@@ -21,6 +21,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_HTTPS_CERT_ALIAS|No|`string`|Alias of the HTTPS certificate|`ui`|
 |FM_HTTPS_KEYSTORE_PASSWORD|Yes|`string`|HTTPS certificate password||
 |FM_CFT_SHARED_SECRET|Yes|`string`|FlowManager's shared secret||
+|FM_HTTPS_DISABLED|No|`string`|Set on `true` if the ssl requests are handled by a gateway (SSL termination)|`false`|
 |FM_DATABASE_HOST|No|`string`|MongoDB host name|`mongodb`|
 |FM_DATABASE_PORT|No|`number`|MongoDB port|`27017`|
 |FM_DATABASE_USER_NAME|Yes|`string`|MongoDB user used for FlowManager||
