@@ -52,7 +52,7 @@ default_days = $EXPIRATION_DAYS
 
 EOF
 
-    openssl req -x509 -days $EXPIRATION_DAYS  -passin pass:$password -passout pass:$password -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
+    openssl req -x509 -days $EXPIRATION_DAYS  -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
 }
 
 # Genereate PEM certs
@@ -64,8 +64,8 @@ function gen_cert() {
     local site="$name.$caname.com"
 
     echo "gen_cert $caname $name $site ..."
-    openssl req -passin pass:$password -passout pass:$password -batch -newkey rsa:2048 -out $caroot/$name-csr.pem -keyout $caroot/$name-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
-    openssl ca -config $caroot/ca.cnf -passin pass:$password -batch -notext -in $caroot/$name-csr.pem -out $caroot/$name.pem
+    openssl req -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $caroot/$name-csr.pem -keyout $caroot/$name-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
+    openssl ca -config $caroot/ca.cnf -passin pass:$PASSWORD -batch -notext -in $caroot/$name-csr.pem -out $caroot/$name.pem
 }
 
 # Generate P12 certs
@@ -75,7 +75,7 @@ function p12() {
     local password=$3
 
     echo "p12 $1 ..."
-    openssl pkcs12 -export  -out $path.p12 -name $alias -in $path.pem  -inkey $path-key.pem -passin pass:$password -passout pass:$password
+    openssl pkcs12 -export  -out $path.p12 -name $alias -in $path.pem  -inkey $path-key.pem -passin pass:$PASSWORD -passout pass:$PASSWORD
 }
 
 # Create Keystore
@@ -84,7 +84,17 @@ function jks() {
     local alias=$2
     local password=$3
     echo "jks $1 ..."
-    keytool -importkeystore -srckeystore $path.p12 -srcstoretype pkcs12 -srcstorepass $password -srcalias $alias -destkeystore $path.jks -deststoretype jks -deststorepass $password -destalias $alias
+    keytool -importkeystore -srckeystore $path.p12 -srcstoretype pkcs12 -srcstorepass $PASSWORD -srcalias $alias -destkeystore $path.jks -deststoretype jks -deststorepass $PASSWORD -destalias $alias
+}
+
+# Create PEM certs
+function pem() {
+    local cert=$1
+    local key=$2
+    local pemCert=$3
+	
+    cat $key.pem > $pemCert.pem
+    cat $cert.pem >> $pemCert.pem
 }
 
 # Start to generate PEM certs
