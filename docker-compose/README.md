@@ -25,7 +25,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 ## ***Upgrade***
 
 * Be sure you are in the same `docker-compose` path
-* In `.env` file that you already have from install stage, change `FLOWMANAGER_VERSION` with the newer version
+* In `.env` file that you already have from `Run` section, change `FLOWMANAGER_VERSION` with the newer version
 * Type `./flowmanager start` command, this will do the updating of your container with the new version
 * Check the health of the services by typing this `./flowmanager status` command.
 
