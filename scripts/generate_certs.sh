@@ -23,7 +23,6 @@ function gen_ca() {
     local name=$1
     local root=./custom-ca/$name
     local site="$name.com"
-    local password=$2
     echo "gen_ca name $site ..."
 
     rm -rf $root
@@ -59,7 +58,6 @@ EOF
 function gen_cert() {
     local name=$2
     local caname=$1
-    local password=$3
     local caroot=./custom-ca/$caname
     local site="$name.$caname.com"
 
@@ -72,7 +70,6 @@ function gen_cert() {
 function p12() {
     local path=$1
     local alias=$2
-    local password=$3
 
     echo "p12 $1 ..."
     openssl pkcs12 -export  -out $path.p12 -name $alias -in $path.pem  -inkey $path-key.pem -passin pass:$PASSWORD -passout pass:$PASSWORD
@@ -82,7 +79,6 @@ function p12() {
 function jks() {
     local path=$1
     local alias=$2
-    local password=$3
     echo "jks $1 ..."
     keytool -importkeystore -srckeystore $path.p12 -srcstoretype pkcs12 -srcstorepass $PASSWORD -srcalias $alias -destkeystore $path.jks -deststoretype jks -deststorepass $PASSWORD -destalias $alias
 }
@@ -98,11 +94,11 @@ function pem() {
 }
 
 # Start to generate PEM certs
-gen_ca governance $PASSWORD
-gen_cert governance uicert $PASSWORD
-gen_ca business $PASSWORD
+gen_ca governance
+gen_cert governance uicert
+gen_ca business
 
 # Start to generate P12 certs
-p12 ./custom-ca/governance/cacert governance $PASSWORD
-p12 ./custom-ca/governance/uicert ui $PASSWORD
-p12 ./custom-ca/business/cacert business $PASSWORD
+p12 ./custom-ca/governance/cacert governance
+p12 ./custom-ca/governance/uicert ui
+p12 ./custom-ca/business/cacert business
