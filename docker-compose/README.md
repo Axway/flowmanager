@@ -15,7 +15,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 * Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
 * Go to `docker-compose` path
 * Add license file in `files/flowmanager/license`
-* Run `./flowmanager setup`command . This will generate, add certificates in Flow Manager configs space and create a `.env` file (you have option to add your certifications in `files/flowmanager/configs` dir too)
+* Run `./flowmanager setup`command . This will generate, add certificates in configs space and create a `.env` file (you have option to add your certifications files in `files/flowmanager/configs` dir as well)
 * In `.env` file you can change values or add other parameters based on your needs
 * After you done, run `./flowmanager start`. This will start both containers (Flow Manager and MongoDB)
 * Check the health of the services by typing this `./flowmanager status` command.
