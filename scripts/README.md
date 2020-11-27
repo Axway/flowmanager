@@ -1,7 +1,5 @@
 # Scripts
 
-Scripts that helps you to setup and run the app quickly.
-
 ## Generate certificates
 
 Generate `PEM`, `P12` and keystore in `JKS` format.
