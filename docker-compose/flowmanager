@@ -42,6 +42,11 @@ function start_container() {
     docker-compose up -d
 }
 
+function restart_container() {
+    # Restart the container(s)
+    docker-compose restart
+}
+
 function status_container() {
     # Check the container(s)
     docker-compose ps
@@ -61,10 +66,11 @@ function usage() {
     echo "--------"
     echo " HELP"
     echo "--------"
-    echo "Usage: ./flowmanager.sh [option]"
+    echo "Usage: ./flowmanager [option]"
     echo "  options:"
     echo "    setup  : Generate certs and create .env file"
     echo "    start  : Start the contianer(s)"
+    echo "    restart: Restart the container(s)"
     echo "    stop   : Stop the container(s)"
     echo "    status : Show the status of the container(s)"
     echo "    delete : Delete container(s) and other parts related to the container(s), like storage"
@@ -89,6 +95,10 @@ if [[ $@ ]]; then
                 ;;
             stop)
                 stop_container
+                shift
+                ;;
+            restart)
+                restart_container
                 shift
                 ;;
             status)
