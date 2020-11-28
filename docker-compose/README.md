@@ -15,16 +15,16 @@ This README refers to managing single-node installations of Flow Manager using `
 * Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
 * Go to `docker-compose` path
 * Add license file in `files/flowmanager/license`
-* Run `./flowmanager setup` command. This will generate, add certificates in configs space and create a `.env` file (to add your certificates check [here](#add-your-certificates-files) for more information)
+* Run `./flowmanager setup` command. This will generate, add certificates in configs space and create a `.env` file (to add your certificates check [here](#add-your-own-certificates-files) for more information)
 * In `.env` file you can change values, add other parameters based on your needs or leave them as default
-* After you done, run `./flowmanager start`. This will start the container(s) with Flow Manager and database
+* After you done, run `./flowmanager start`. This will start the containers with Flow Manager and database
 * Check the health of the services by typing this `./flowmanager status` command.
 
-### Add your certificates files
+### Add your own certificates files
 
 * Add your own certificates in `files/flowmanager/configs` dir
 * Replace the current certificates name with yours in `.env` file
-* Run `./flowmanager start` command to start the container(s)
+* Run `./flowmanager start` command to start the containers with Flow Manager and database
 * Check the health of the services by typing this `./flowmanager status` command.
 
 ***Note***: We support for the momment `jks` and `pem` certificates extensions.
