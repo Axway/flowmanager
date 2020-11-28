@@ -7,7 +7,7 @@ for i in ../scripts/common/*;
 done
 
 # Setup and run the app.
-# Example: ./flowmanager.sh [setup/start/stop/status/help]
+# Example: ./flowmanager.sh [setup/start/restart/stop/status/help]
 
 PROJECT_NAME="flowmanager"
 
@@ -18,7 +18,7 @@ function gen_config() {
     cd -
 
     # Copy generated certificates in FM configs space
-    info_message "INFO:: Copy certs in configs space..."
+    info_message "INFO: Copy certs in configs space..."
 
     cp ../scripts/custom-ca/governance/cacert.p12 ./files/$PROJECT_NAME/configs/governanceca.p12
     cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
@@ -30,9 +30,9 @@ function gen_config() {
     fi
     # List config files
     if [ $? -eq 0 ]; then
-        info_message "INFO:: Certificates generated and copied to the configs space"
+        info_message "INFO: Certificates generated and copied to the configs space"
     else
-        error_message "ERROR:: Some issues in generating and copy certs to the configs space"
+        error_message "ERROR: Some issues in generating and copy certs to the configs space"
         exit 1
     fi
 }
@@ -44,7 +44,13 @@ function start_container() {
 
 function restart_container() {
     # Restart the container(s)
-    docker-compose restart
+    name=$1
+    if [ -z "$name" ]; then
+        docker-compose restart
+    else
+        docker-compose restart $1
+        exit 0;
+    fi
 }
 
 function status_container() {
@@ -98,7 +104,7 @@ if [[ $@ ]]; then
                 shift
                 ;;
             restart)
-                restart_container
+                restart_container $2
                 shift
                 ;;
             status)
@@ -114,7 +120,7 @@ if [[ $@ ]]; then
                 exit 0
                 ;;
             *)
-                error_message "ERROR:: Command not supported. Type help option for more information"
+                error_message "ERROR: Invalid option $1. Type help option for more information"
                 exit 0
                 ;;
         esac

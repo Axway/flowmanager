@@ -1,6 +1,6 @@
 # docker-compose
 
-This readme refers to managing single-node installations of Flow Manager using docker-compose.
+This README refers to managing single-node installations of Flow Manager using `docker-compose`.
 
 ## Requirements
 
@@ -8,16 +8,23 @@ This readme refers to managing single-node installations of Flow Manager using d
 * [docker-compose](https://docs.docker.com/compose/install/) version 1.26.x or higher
 * Flow Manager Docker Image downloaded from Axway Sphere
 * Flow Manager license and certificates files
-* MongoDB 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
+* Mongodb 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
 
-## ***Run***
+## ***Setup & Run***
 
 * Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
 * Go to `docker-compose` path
 * Add license file in `files/flowmanager/license`
-* Run `./flowmanager setup`command . This will generate, add certificates in configs space and create a `.env` file (you have option to add your certifications files in `files/flowmanager/configs` dir as well)
+* Run `./flowmanager setup` command. This will generate, add certificates in configs space and create a `.env` file (to add your certificates check [here](#add-your-certificates) for more information)
 * In `.env` file you can change values or add other parameters based on your needs
-* After you done, run `./flowmanager start`. This will start both containers (Flow Manager and MongoDB)
+* After you done, run `./flowmanager start`. This will start the container(s) with Flow Manager and database
+* Check the health of the services by typing this `./flowmanager status` command.
+
+### Add your certificates file
+
+* Add your own certificates in `files/flowmanager/configs` dir
+* Replace the current certificates name with yours in `.env` file
+* Run `./flowmanager start` command to start the container(s)
 * Check the health of the services by typing this `./flowmanager status` command.
 
 ***Note***: We support for the momment `jks` and `pem` certificates extensions.
@@ -34,7 +41,7 @@ This readme refers to managing single-node installations of Flow Manager using d
 * Be sure you are in the same `docker-compose` path
 * Type `./flowmanager delete`, this will remove all the containers, volumes and other parts related to the containers.
 
-***WARNING***: Running `./flowmanager delete`  will remove all the volumes, including MongoDB data.
+***WARNING***: Running `./flowmanager delete`  will remove all the volumes, including Mongodb data.
 
 ### Extra configuration
 
@@ -47,16 +54,16 @@ All active Environment variables/parameters for Flow Manager, including all the 
 </details>
 
 <details>
-  <summary>Enable transport encryption (TLS/SSL) for MongoDB</summary>
+  <summary>Enable transport encryption (TLS/SSL) for Mongodb</summary>
 
-Encrypt all of MongoDB’s network traffic. TLS/SSL ensures that MongoDB network traffic is only readable by the intended client.
+Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network traffic is only readable by the intended client.
 
 * Go to `docker-compose/files/mongo/config` path
 * Uncomment `ssl` block from `mongod.conf` file
 * Bring or generate certificate files in path you already are
 * Change value of `CAFile` and `PEMKeyFile` parameters with yours (only name of certificate files)
 * Save it
-* Run `docker-compose up -d` command in case you run MongoDB for the first time  or `docker-compose restart mongodb` in case you already have MongoDB up.
+* Run `./flowmanager start` command in case you run Mongodb for the first time  or `./flowmanager restart mongodb` in case you already have Mongodb up.
 
 </details>
 
