@@ -37,6 +37,7 @@ services:
       - ./files/flowmanager/configs:/opt/axway/FlowManager/configs:rw
       - ./files/flowmanager/license:/opt/axway/FlowManager/conf/license:ro
       - ./files/flowmanager/plugins:/opt/axway/FlowManager/conf/schemas/storage
+      - ./files/flowmanager/updates:/opt/axway/FlowManager/updates:rw
     restart: unless-stopped
     depends_on:
       - mongodb
