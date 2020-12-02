@@ -2,4 +2,5 @@
 
 Kubernetes deployment manifests files.
 
-* [HELM](helm/) - Deploy using HELM charts.
+* [Deploy using Kubernetes standard files](classic)
+* [Deploy using Helm charts](helm/)

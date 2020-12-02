@@ -1,1 +1,1 @@
-# Deploy using HELM
+# Deploy using Helm charts
