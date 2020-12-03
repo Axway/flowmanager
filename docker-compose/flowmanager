@@ -1,5 +1,5 @@
 #!/bin/bash
-set -uoe pipefail
+set -euo pipefail
 
 # Import common things
 for i in ../scripts/common/*;
@@ -11,6 +11,7 @@ done
 
 PROJECT_NAME="flowmanager"
 
+# Generate and copy generated certificates in the right configs path
 function gen_config() {
     # Generate certifications
     cd ../scripts/
@@ -37,14 +38,14 @@ function gen_config() {
     fi
 }
 
+# Start the container(s)
 function start_container() {
-    # Start the container(s)
     docker-compose up -d
 }
 
+# Restart the container(s)
 function restart_container() {
-    # Restart the container(s)
-    name=$1
+    local name=${1-}
     if [ -z "$name" ]; then
         docker-compose restart
     else
@@ -53,33 +54,46 @@ function restart_container() {
     fi
 }
 
+# Check the container(s)
 function status_container() {
-    # Check the container(s)
     docker-compose ps
 }
 
+# Stop the container(s)
 function stop_container() {
-    # Stop the container(s)
     docker-compose stop
 }
 
+# Delete the container(s)
 function delete_container() {
-    # Delete the container(s)
     docker-compose down -v
 }
 
+# Restart the container(s)
+function log_container() {
+    local name=${1-}
+    if [ -z "$name" ]; then
+        docker-compose logs
+    else
+        docker-compose logs $1
+        exit 0;
+    fi
+}
+
+# How to use the script
 function usage() {
     echo "--------"
     echo " HELP"
     echo "--------"
-    echo "Usage: ./flowmanager [option]"
+    echo "Usage: ./$PROJECT_NAME [option]"
     echo "  options:"
     echo "    setup  : Generate certs and create .env file"
-    echo "    start  : Start the contianer(s)"
-    echo "    restart: Restart the container(s)"
-    echo "    stop   : Stop the container(s)"
-    echo "    status : Show the status of the container(s)"
-    echo "    delete : Delete container(s) and other parts related to the container(s), like storage"
+    echo "    start  : Start $PROJECT_NAME and database contianers"
+    echo "    restart: Restart $PROJECT_NAME and database containers"
+    echo "    stop   : Stop $PROJECT_NAME and database containers"
+    echo "    status : Show the status of $PROJECT_NAME and database containers"
+    echo "    delete : Delete $PROJECT_NAME and database containers and other parts related to the containers, like storage"
+    echo "    logs   : Get logs for $PROJECT_NAME and database"
     echo "    help   : Show the usage of the script file"
     echo ""
     exit
@@ -87,6 +101,7 @@ function usage() {
 
 [[ $# -eq 0 ]] && usage
 
+# Menu
 if [[ $@ ]]; then
     while (( $# ))
     do
@@ -104,7 +119,11 @@ if [[ $@ ]]; then
                 shift
                 ;;
             restart)
-                restart_container $2
+                if [ -z "${2-}" ]; then
+                    restart_container
+                else
+                    restart_container $2
+                fi
                 shift
                 ;;
             status)
@@ -113,6 +132,14 @@ if [[ $@ ]]; then
                 ;;
             delete)
                 delete_container
+                shift
+                ;;
+            logs)
+                if [ -z "${2-}" ]; then
+                    log_container
+                else
+                    log_container $2
+                fi
                 shift
                 ;;
             help)
