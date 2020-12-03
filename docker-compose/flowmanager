@@ -92,7 +92,7 @@ function usage() {
     echo "    restart: Restart $PROJECT_NAME and database containers"
     echo "    stop   : Stop $PROJECT_NAME and database containers"
     echo "    status : Show the status of $PROJECT_NAME and database containers"
-    echo "    delete : Delete $PROJECT_NAME and database containers and other parts related to the containers, like storage"
+    echo "    delete : Delete $PROJECT_NAME, database containers and other parts related to the containers, like storage"
     echo "    logs   : Get logs for $PROJECT_NAME and database"
     echo "    help   : Show the usage of the script file"
     echo ""
