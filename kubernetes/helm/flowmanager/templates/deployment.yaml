@@ -1,0 +1,298 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "flowmanager.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ include "flowmanager.name" . }}
+    chart: {{ include "flowmanager.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "flowmanager.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "flowmanager.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ tpl (toYaml .Values) . | sha256sum }}
+        {{ toYaml .Values.podAnnotations | indent 8 }}
+    spec:
+      serviceAccountName: {{ template "flowmanager.serviceAccountName" . }}
+      securityContext:
+{{ toYaml .Values.podSecurityContext | indent 8 }}
+      imagePullSecrets:
+        - name: {{ .Values.image.imagePullSecrets }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ template "flowmanager.fullname" . }}-env
+          env:
+            - name: ACCEPT_EULA
+              value: {{ .Values.flowmanager.acceptEula | default "no" |quote }}
+            ### GENERAL
+            - name: FM_GENERAL_LOGGING_LEVEL
+              value: {{ .Values.flowmanager.logLevel | default "INFO" | upper | quote }}
+            - name: FM_LOGS_CONSOLE
+              value: "yes"
+            - name: FM_GENERAL_CUSTOM_LOCATION_PATH
+              value: "/opt/axway/logs"
+            - name: FM_GENERAL_FQDN
+              value: "localhost" 
+            - name: FM_GENERAL_UI_PORT
+              value: "443" 
+            - name: FM_GENERAL_SAAS_MODE
+              value: "false" 
+            - name: FM_GENERAL_LICENSE
+              value: {{ .Values.flowmanager.license.fileName | default "license.xml" | quote }}   
+            ### MONGODB
+            - name: FM_DISABLE_CHECK_REACHABLE_HOST
+              value: "true"
+            - name: FM_DATABASE_HOST
+              value: {{ required "A valid FM_DATABASE_HOST is required!" .Values.flowmanager.db.endpoints | quote }} 
+            - name: FM_DATABASE_REPLICA_SET
+              value: ' '
+            - name: FM_DATABASE_USE_SSL
+              value: {{ .Values.flowmanager.db.useSSL | default "false" | quote }} 
+          {{ if .Values.flowmanager.db.useSSL  }}
+            - name: FM_DATABASE_CERTIFICATES
+              value: /opt/axway/configs/{{ .Values.flowmanager.db.fileName }}
+          {{ end }}
+            ### REDIS
+            - name: FM_REDIS_ENABLED
+              value: {{ .Values.flowmanager.redis.enable | default "false" | quote }}
+            - name: FM_REDIS_HOSTNAME
+              value: {{ .Values.flowmanager.redis.redisHost | default "redis" | quote }} 
+            - name: FM_REDIS_PORT
+              value: {{ .Values.flowmanager.redis.redisPort | default "6379" | quote }}
+            - name: FM_REDIS_SSL_ENABLED
+              value: {{ .Values.flowmanager.redis.useSSL | default "false" | quote }}
+          {{ if .Values.flowmanager.redis.fileName  }}
+            - name: FM_REDIS_SSL_CA
+              value: /opt/axway/configs/{{ .Values.flowmanager.redis.fileName }}
+          {{ end }}            
+            ### HTTPS
+            - name: FM_HTTPS_DISABLED
+              value: {{ .Values.flowmanager.https.disable | default "false" | quote }}
+            - name: FM_HTTPS_CERT_ALIAS
+              value: {{ .Values.flowmanager.https.certAlias | default "ui" | quote }}
+            - name: FM_HTTPS_USE_CUSTOM_CERT
+              value: {{ .Values.flowmanager.https.autoGenerateCert | default "false" | quote }} 
+            - name: FM_SESSION_IDLE
+              value: "900" 
+            - name: FM_SESSION_EXPIRATION
+              value: "28800"   
+          {{ if .Values.flowmanager.https.fileName }}
+            - name: FM_HTTPS_KEYSTORE
+              value: /opt/axway/configs/{{ .Values.flowmanager.https.fileName }}
+          {{ end }}             
+            ### BUSINESS
+            - name: FM_BUSINESS_CA_CERTIF_ALIAS
+              value: {{ .Values.flowmanager.business.certAlias | default "business" | quote }}
+          {{ if .Values.flowmanager.business.fileName  }}
+            - name: FM_BUSINESS_CA_FILE
+              value: /opt/axway/configs/{{ .Values.flowmanager.business.fileName }}
+          {{ end }}
+            ### GOVERNANCE
+            - name: FM_GOVERNANCE_CA_CERTIF_ALIAS
+              value: {{ .Values.flowmanager.governance.certAlias | default "governance" | quote }}
+          {{ if .Values.flowmanager.governance.fileName  }}
+            - name: FM_GOVERNANCE_CA_FILE
+              value: /opt/axway/configs/{{ .Values.flowmanager.governance.fileName }}
+          {{ end }}
+            ### SENTINEL
+            - name: FM_ST_WHITELISTING_ENABLED
+              value: {{ .Values.flowmanager.sentinel.whitelistingEnable | default "false" | quote }}             
+            - name: FM_ST_WHITELISTING_WATCHDOG_DELAY
+              value: {{ .Values.flowmanager.sentinel.whitelistingWatchdogDelay | default "120" | quote }}    
+            - name: FM_SENTINEL_AUDIT_ENABLED
+              value: {{ .Values.flowmanager.sentinel.auditEnable | default "false" | quote }}   
+            - name: FM_SENTINEL_FRONT_END_HOST
+              value: {{ .Values.flowmanager.sentinel.host | default "sentinel" | quote }}   
+            - name: FM_SENTINEL_FRONT_END_PORT
+              value: {{ .Values.flowmanager.sentinel.qltPort | default "1305" | quote }} 
+            - name: FM_SENTINEL_FRONT_END_SSL_PORT
+              value: {{ .Values.flowmanager.sentinel.qltSslPort | default "1303" | quote }}   
+            - name: FM_SENTINEL_UI_PORT
+              value: {{ .Values.flowmanager.sentinel.uiPort | default "1309" | quote }}  
+          {{ if .Values.flowmanager.sentinel.fileName  }}
+            - name: FM_SENTINEL_CERTIFICATE
+              value: /opt/axway/configs/{{ .Values.flowmanager.sentinel.fileName }}
+          {{ end }}
+            ### APIC CATALOG
+            - name: FM_APIC_USE_CATALOG
+              value: {{ .Values.flowmanager.apicCatalog.enable | default "false" | quote }} 
+          {{ if .Values.flowmanager.apicCatalog.publicKey.fileName  }}
+            - name: FM_APIC_PUBLICKEY
+              value: /opt/axway/configs/{{ .Values.flowmanager.apicPublicKey.fileName }}
+          {{ else }}
+            - name: FM_APIC_PUBLICKEY
+              value: "/opt/axway/configs/catalog-public-key.pem" 
+          {{ end }}
+          {{ if .Values.flowmanager.apicCatalog.privateKey.fileName  }}
+            - name: FM_APIC_PRIVATEKEY
+              value: /opt/axway/configs/{{ .Values.flowmanager.apicPrivateKey.fileName }}
+          {{ else }}
+            - name: FM_APIC_PRIVATEKEY
+              value: "/opt/axway/configs/catalog-private-key.pem"            
+          {{ end }}
+          {{ if .Values.extraEnv }}
+            {{ range $key, $value := .Values.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{ end }}
+          {{ end }}
+          volumeMounts:
+          {{ if .Values.flowmanager.license.fileName }}
+            - name: license
+              readOnly: true
+              mountPath: /opt/axway/FlowManager/conf/license/{{ .Values.flowmanager.license.fileName }}
+              subPath: {{ .Values.flowmanager.license.fileName }}
+          {{ end }}
+          {{ if .Values.flowmanager.db.useSSL }}
+            - name: db
+              readOnly: true
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.db.fileName }}
+              subPath: {{ .Values.flowmanager.db.fileName }}
+          {{ end }}
+          {{ if .Values.flowmanager.https.fileName }}
+            - name: uicert
+              readOnly: true
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.https.fileName }}
+              subPath: {{ .Values.flowmanager.https.fileName }}
+          {{ end }}
+            - name: apicpubkey
+              readOnly: true
+          {{ if .Values.flowmanager.apicCatalog.enable }}
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.apicCatalog.publicKey.fileName }}
+              subPath: {{ .Values.flowmanager.apicCatalog.publicKey.fileName }}
+          {{ else }}
+              mountPath: /opt/axway/configs/catalog-public-key.pem
+              subPath: catalog-public-key.pem
+          {{ end }}
+            - name: apicprivkey
+              readOnly: true
+          {{ if .Values.flowmanager.apicCatalog.enable }}
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.apicCatalog.privateKey.fileName }}
+              subPath: {{ .Values.flowmanager.apicCatalog.privateKey.fileName }}
+          {{ else }}
+              mountPath: /opt/axway/configs/catalog-private-key.pem
+              subPath: catalog-private-key.pem
+          {{ end }}
+          {{ if .Values.flowmanager.business.fileName }}
+            - name: business
+              readOnly: true
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.business.fileName }}
+              subPath: {{ .Values.flowmanager.business.fileName }}
+          {{ end }}
+          {{ if .Values.flowmanager.governance.fileName }}
+            - name: governance
+              readOnly: true
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.governance.fileName }}
+              subPath: {{ .Values.flowmanager.governance.fileName }}
+          {{ end }}
+          {{ if .Values.flowmanager.sentinel.fileName }}
+            - name: sentinel
+              readOnly: true
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.sentinel.fileName }}
+              subPath: {{ .Values.flowmanager.sentinel.fileName }}
+          {{ end }}
+          {{ if .Values.flowmanager.redis.fileName }}
+            - name: redis
+              readOnly: true
+              mountPath: /opt/axway/configs/{{ .Values.flowmanager.redis.fileName }}
+              subPath: {{ .Values.flowmanager.redis.fileName }}
+          {{ end }}
+          ports:
+            - name: fm-https
+              containerPort: {{ .Values.service.externalPort }}
+              protocol: TCP
+          {{ if .Values.livenessProbe }}
+          livenessProbe:
+{{ toYaml .Values.livenessProbe | indent 12 }}
+          {{ end }}
+          {{ if .Values.readinessProbe }}
+          readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 12 }}
+          {{ end }}
+          securityContext:
+{{ toYaml .Values.containerSecurityContext | indent 12 }}
+    {{ with .Values.nodeSelector }}                               
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{ end }}
+    {{ with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{ end }}
+    {{ with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{ end }}
+      volumes:
+      {{ if .Values.flowmanager.license.fileName }}
+      - name: license
+        secret:
+          secretName: {{ .Values.flowmanager.license.existingSecretFile }}
+          defaultMode: 0777 
+      {{ end }}
+      {{ if .Values.flowmanager.https.fileName }}
+      - name: uicert
+        secret:
+          secretName: {{ .Values.flowmanager.https.existingSecretFile }}
+          defaultMode: 0777
+      {{ end }}
+      - name: apicpubkey
+        secret:
+        {{ if .Values.flowmanager.apicCatalog.enable }}
+          secretName: {{ .Values.flowmanager.apicCatalog.publicKey.existingSecretFile }}
+        {{ else }}
+          secretName: {{ include "flowmanager.fullname" . }}-apicpubkey 
+        {{ end }}
+          defaultMode: 0777
+      - name: apicprivkey
+        secret:
+        {{ if .Values.flowmanager.apicCatalog.enable }}
+          secretName: {{ .Values.flowmanager.apicCatalog.privateKey.existingSecretFile }}
+        {{ else }}
+          secretName: {{ include "flowmanager.fullname" . }}-apicprivkey 
+        {{ end }}
+          defaultMode: 0777
+      {{ if .Values.flowmanager.db.useSSL }}
+      - name: db
+        secret:
+          secretName: {{ .Values.flowmanager.db.existingSecretFile }}
+          defaultMode: 0777
+      {{ end }}
+      {{ if .Values.flowmanager.business.fileName }}
+      - name: business
+        secret:
+          secretName: {{ .Values.flowmanager.business.existingSecretFile }}
+          defaultMode: 0777
+      {{ end }}
+      {{ if .Values.flowmanager.governance.fileName }}
+      - name: governance
+        secret:
+          secretName: {{ .Values.flowmanager.governance.existingSecretFile }}
+          defaultMode: 0777
+      {{ end }}
+      {{ if .Values.flowmanager.sentinel.fileName }}
+      - name: sentinel
+        secret:
+          secretName: {{ .Values.flowmanager.sentinel.existingSecretFile }}
+          defaultMode: 0777
+      {{ end }}
+      {{ if .Values.flowmanager.redis.fileName }}
+      - name: redis
+        secret:
+          secretName: {{ .Values.flowmanager.redis.existingSecretFile }}
+          defaultMode: 0777
+      {{ end }}

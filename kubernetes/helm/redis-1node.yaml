@@ -1,0 +1,42 @@
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+nameOverride: flowmanager-redis
+fullnameOverride: flowmanager-redis
+##
+replicas: 1
+rbac:
+  create: true
+
+## Redis specific configuration options
+redis:
+  port: 6379
+  masterGroupName: "flowmanager"       # must match ^[\\w-\\.]+$) and can be templated
+
+## Sentinel specific configuration options
+sentinel:
+  port: 26379
+  quorum: 1
+
+securityContext:
+  runAsUser: 1000
+  fsGroup: 1000
+  runAsNonRoot: true
+
+## Configures redis with AUTH (requirepass & masterauth conf params)
+auth: true
+redisPassword: '5dmInP5ssw0rd'
+
+## Use existing secret containing key `authKey` (ignores redisPassword)
+# existingSecret:
+
+## Defines the key holding the redis password in existing secret.
+authKey: auth
+
+persistentVolume:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  annotations: {}
+  # reclaimPolicy per https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaiming
+  reclaimPolicy: ""
