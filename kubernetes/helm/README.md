@@ -86,8 +86,6 @@ $ helm delete flowmanager-redis space=<your_namespace>
 
 ### Flowmanager
 
-> For choosing certificates created from local file, please create a new folder (e.g. flowmanager/config) under the root chart folder and put all certificates files and the license
-
 1. **Please choose between 1 or 3 nodes installation**
 
     - flowmanager-1node
