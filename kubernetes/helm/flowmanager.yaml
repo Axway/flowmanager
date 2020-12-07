@@ -1,0 +1,256 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+####################################
+# FLOWMANAGER Image/Replicas
+####################################
+# Number of replicas desired
+replicaCount: 1
+
+# docker image used for the customer
+image:
+  repository: axway/flowmanager
+  tag: 2.0.200709
+  pullPolicy: IfNotPresent
+  # please take care to put customer secret on this next field
+  imagePullSecrets: regcred
+
+nameOverride: flowmanager
+fullnameOverride: flowmanager
+
+####################################
+# security parameters - replace false per true to restrict deployment
+# Remove {} and uncomment the values
+####################################
+serviceAccount:
+  create: true
+  # name: ~
+
+rbac:
+  create: true
+
+pspEnable: true
+
+podAnnotations: {}
+
+podSecurityContext: 
+  runAsNonRoot: true
+  runAsUser: 1001
+  fsGroup: 1000
+
+containerSecurityContext: {}
+  # privileged: false
+  # allowPrivilegeEscalation: false
+  # readOnlyRootFilesystem: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+
+####################################
+# Take care to align resources anf JVM
+####################################
+resources:
+  requests:
+    cpu: "2000m"
+    memory: "2Gi"
+  limits:
+    cpu: "4000m"
+    memory: "4Gi"
+
+####################################
+# Check for webserver on FM and failing startup
+####################################
+readinessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /fm/login
+    port: 8081
+    scheme: HTTPS
+  initialDelaySeconds: 100
+  periodSeconds: 5
+  successThreshold: 3
+
+livenessProbe: 
+  httpGet:
+    path: /api/v2/internals/stability
+    port: 8081
+    scheme: HTTPS
+  initialDelaySeconds: 100
+  successThreshold: 1
+  failureThreshold: 2
+  periodSeconds: 10
+
+####################################
+# Pod location inside the cluster
+####################################
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+  # podAntiAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     - labelSelector:
+  #         matchExpressions:
+  #           - key: app
+  #             operator: In
+  #             values:
+  #               - flowmanager
+  #       topologyKey: kubernetes.io/hostname
+
+####################################
+# Service LoadBalancer or ClusterIP with ingress enable are available
+# Service LoadBalancer Please add svc annotations for DNS registration according the customer possibilities
+# Service ClusterIP Please enable ingress and add annotation for ssl forwarding to the backend
+####################################
+
+####################################
+# Use case ClusterIP
+####################################
+service:
+  type: ClusterIP  # or LoadBalancer
+  annotations: {}
+
+  externalPort: 8080
+####################################
+# Use case LoadBalancer
+####################################
+# service:
+#   type: LoadBalancer 
+#   annotations: {}
+#     # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
+#     # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:xx-xxxx-x:xxxxxxxxxxx:certificate/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+#     # external-dns.alpha.kubernetes.io/hostname: flowmanager.mydomain.com.
+#
+#   externalPort: 443
+#
+####################################
+# Ingress 
+# We are supporting ingress with nginx ingress controller the example show the config for this controller
+####################################
+ingress:
+  enabled: false
+  annotations: {}
+    #
+    # if ssl-passthrough
+    #
+    # kubernetes.io/ingress.class: "nginx"
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+    #
+    # if ssl-redirect
+    #
+    # kubernetes.io/ingress.class: "nginx"
+    # kubernetes.io/tls-acme: "true"
+    # ingress.kubernetes.io/ssl-redirect: "true"
+    # ingress.kubernetes.io/proxy-body-size: "0"
+    #
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #
+    # if automatic cert with let's encrypt
+    #
+    # cert-manager.io/cluster-issuer: "letsencrypt-production-dns"
+
+  hosts: []
+    # - host: flowmanager.mydomain.com
+    #   paths: [/]
+
+  tls: []
+  #  - secretName: flowmanager-ingress-tls
+  #    hosts:
+  #      - flowmanager.mydomain.com
+
+####################################
+# extraEnv for JVM align with resources field
+# You can put other variables for overwriting the initial value
+####################################
+extraEnv: 
+  FM_JVM_XMX: "4G"
+  FM_JVM_XMS: "1G"
+  FM_JVM_XMN: "768M"
+
+####################################
+# extraSecrets For more flexibility Key: Value
+####################################
+extraSecrets: {}
+
+####################################
+# FM Config
+####################################
+#
+# Replace Secret01 per your real value 
+#
+
+flowmanager:
+  logLevel: info # info or debug
+  acceptEula: "no" # set to yes
+  extFqdn: localhost # external dns for UI automatic cert generation / API responses
+  
+# For each block :
+# - createSecretFile ==>> create secret file or not
+# - fileName ==>> name of the file inside the secret
+# - localFile ==>> where is loacted the local file - use relative path under chart root folder  
+# - existingSecretFile ==>> used only if the secret already exist 
+
+  db:
+    endpoints: flowmanager-mongodb.your_namespace.svc.cluster.local:27017 # comma separated
+    user: restapiuser
+    password: r3sT4pIp4ssw0rd
+    useSSL: false
+    fileName: mongodb.pem
+    existingSecretFile: {} # secret name
+    
+  redis:
+    enable: false
+    redisHost: flowmanager-redis-haproxy.flowmanager.svc.cluster.local
+    redisPort: 6379
+    user: {}
+    password: 5dmInP5ssw0rd
+    useSSL: false
+    fileName: {} # redis.pem
+    existingSecretFile: {} # secret name
+
+  license:
+    fileName: license.xml
+    existingSecretFile: flowmanager-license
+ 
+  https:
+    disable: false
+    autoGenerateCert: false
+    keystorePassword: FMS3cr3t03
+    certAlias: {} # ui
+    fileName: uicert.p12
+    existingSecretFile: flowmanager-uicert
+
+  business:
+    caPassword: FMS3cr3t03
+    certAlias: {} # business
+    fileName: {} #businessca.p12
+    existingSecretFile: flowmanager-business
+
+  governance:
+    caPassword: FMS3cr3t03
+    certAlias: {} # governance 
+    fileName: governanceca.p12
+    existingSecretFile: flowmanager-governance
+
+  sentinel:
+    host: {} # mysentinel.mydomain.com
+    qltPort: 1305
+    qltSslPort: 1303
+    uiPort: 1309    
+    fileName: {} #sentinel.p12 
+    existingSecretFile: {}
+    auditEnable: false  
+  
+  apicCatalog:
+    enable: false
+    publicKey:
+      fileName: {} #catalog-public-key.pem
+      existingSecretFile: {}  
+    privateKey:
+      fileName: {} #catalog-private-key.pem
+      existingSecretFile: {}  

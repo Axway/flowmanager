@@ -1,0 +1,11 @@
+apiVersion: v1
+appVersion: 2.0.2
+version: 0.3.0
+name: flowmanager
+description: Flow Manager Server deployment on Kubernetes
+keywords:
+- flowmanager
+- server
+maintainers:
+  - name: Axway
+    url: https://www.axway.com/

@@ -1,0 +1,69 @@
+nameOverride: flowmanager-mongodb
+fullnameOverride: flowmanager-mongodb
+
+image:
+  registry: docker.io
+  repository: bitnami/mongodb
+  tag: 3.6.17-ol-7-r26
+  pullPolicy: IfNotPresent
+  debug: true
+
+volumePermissions:
+  enabled: true 
+
+usePassword: true
+mongodbRootPassword: r3sT4pIp4ssw0rd
+mongodbUsername: restapiuser
+mongodbPassword: r3sT4pIp4ssw0rd
+mongodbDatabase: umcft
+mongodbEnableIPv6: false
+
+securityContext:
+  enabled: true
+  fsGroup: 1001
+  runAsUser: 1001
+
+## Kubernetes Cluster Domain
+clusterDomain: cluster.local
+
+useStatefulSet: false
+
+replicaSet:
+  ## Whether to create a MongoDB replica set for high availability or not
+  enabled: false
+  
+persistence:
+  enabled: false
+  mountPath: /bitnami/mongodb
+
+  ## The subdirectory of the volume to mount to, useful in dev environments
+  ## and one PV for multiple services.
+  ##
+  subPath: ""
+
+  ## mongodb data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+  annotations: {}
+
+## Configure the ingress resource that allows you to access the
+## MongoDB installation. Set up the URL
+## ref: http://kubernetes.io/docs/user-guide/ingress/
+##
+ingress:
+  ## Set to true to enable ingress record generation
+  enabled: false
+
+livenessProbe:
+  enabled: true
+
+readinessProbe:
+  enabled: true
