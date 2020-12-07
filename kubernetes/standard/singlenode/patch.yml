@@ -10,7 +10,7 @@ spec:
       $setElementOrder/containers:
         - name: flowmanager
       containers:
-        - image: axway/flowmanager:1.0.308
+        - image: axway/flowmanager:[FLOWMANAGER_VERSION]
           name: flowmanager
           env:
             - name: ACCEPT_EULA
@@ -28,14 +28,6 @@ spec:
             - name: FM_DATABASE_NAME
               value: "umcft"
             - name: FM_DATABASE_USE_SSL
-              value: "false"
-            - name: FM_REDIS_ENABLED
-              value: "true"
-            - name: FM_REDIS_HOSTNAME
-              value: "redis.flowmanager.svc.cluster.local"
-            - name: FM_REDIS_PORT
-              value: "6379"
-            - name: FM_REDIS_SSL_ENABLED
               value: "false"
             - name: FM_HTTPS_CERT_ALIAS
               value: "ui"

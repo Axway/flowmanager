@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flowmanager
-  namespace: flowmanager-multinode
+  namespace: flowmanager
 spec:
   replicas: 3
   template:
@@ -11,7 +11,7 @@ spec:
       $setElementOrder/containers:
         - name: flowmanager
       containers:
-        - image: [FLOWMANAGER_IMAGE_URL:FLOWMANAGER_VERSION]
+        - image: axway/flowmanager:[FLOWMANAGER_VERSION]
           name: flowmanager
           env:
             - name: ACCEPT_EULA
