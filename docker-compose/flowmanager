@@ -40,7 +40,12 @@ function gen_config() {
 
 # Start the container(s)
 function start_container() {
-    docker-compose up -d
+    if [ ! -f .env ]; then
+        echo "There is not .env file. Please create it by running this command: ./flowmanager setup"
+        exit 1
+    else
+        docker-compose up -d
+    fi
 }
 
 # Restart the container(s)

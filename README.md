@@ -22,4 +22,4 @@ Check [GitHub Flow](https://guides.github.com/introduction/flow/) for details.
 
 ### Authors
 
-Flow Manager Team.
+Axway - Flow Manager Team.

@@ -10,3 +10,9 @@ Deploy using standard Kubernetes deployment manifest files.
 * Customer License (`license.xml`)
 * Mongodb URL (version == `3.6`)
 * `user` and `password` for Mongodb
+
+## ***Setup & Run***
+
+## ***Upgrade***
+
+## ***Remove***
