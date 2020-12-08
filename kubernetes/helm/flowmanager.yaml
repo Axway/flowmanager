@@ -10,7 +10,7 @@ replicaCount: 1
 # docker image used for the customer
 image:
   repository: axway/flowmanager
-  tag: 2.0.200709
+  tag: ""
   pullPolicy: IfNotPresent
   # please take care to put customer secret on this next field
   imagePullSecrets: regcred
@@ -196,26 +196,26 @@ flowmanager:
 # - existingSecretFile ==>> used only if the secret already exist 
 
   db:
-    endpoints: flowmanager-mongodb.your_namespace.svc.cluster.local:27017 # comma separated
+    endpoints: flowmanager-mongodb.YOUR_NAMESPACE.svc.cluster.local:27017 # comma separated
     user: restapiuser
     password: r3sT4pIp4ssw0rd
     useSSL: false
-    fileName: mongodb.pem
-    existingSecretFile: {} # secret name
+    fileName: mongodb.pem  #not necessary if useSSL:false
+    existingSecretFile: {} # secret name, not necessary if useSSL:false
     
   redis:
     enable: false
-    redisHost: flowmanager-redis-haproxy.flowmanager.svc.cluster.local
+    redisHost: flowmanager-redis-master.YOUR_NAMESPACE.svc.cluster.local
     redisPort: 6379
     user: {}
     password: 5dmInP5ssw0rd
     useSSL: false
-    fileName: {} # redis.pem
-    existingSecretFile: {} # secret name
+    fileName: {} # redis.pem, not necessary if useSSL:false
+    existingSecretFile: {} # secret name,not necessary if useSSL:false
 
   license:
-    fileName: license.xml
-    existingSecretFile: flowmanager-license
+    fileName: license.xml #mandatory
+    existingSecretFile: flowmanager-license #mandatory
  
   https:
     disable: false
@@ -229,13 +229,13 @@ flowmanager:
     caPassword: FMS3cr3t03
     certAlias: {} # business
     fileName: {} #businessca.p12
-    existingSecretFile: flowmanager-business
+    existingSecretFile: flowmanager-business 
 
   governance:
     caPassword: FMS3cr3t03
     certAlias: {} # governance 
-    fileName: governanceca.p12
-    existingSecretFile: flowmanager-governance
+    fileName: governanceca.p12 #mandatory
+    existingSecretFile: flowmanager-governance #mandatory
 
   sentinel:
     host: {} # mysentinel.mydomain.com
