@@ -26,9 +26,9 @@ while [[ "$#" -gt 0 ]]
 do
     case "$1" in
         -gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
-	    	-fm-s | -fm-singlenode) namespace_choice && flowmanager_deploy_standard_standalone ;;
-		    -fm-m | -fm-multinode)  namespace_choice && flowmanager_deploy_standard_multinode ;;
-		    -gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
+	    -fm-s | -fm-singlenode) namespace_choice && flowmanager_deploy_standard_standalone ;;
+		-fm-m | -fm-multinode)  namespace_choice && flowmanager_deploy_standard_multinode ;;
+		-gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
         -fm-h | -flowmanager-helm)  startup_script && flowmanager_deploy_standalone ;;
         -r | -redis) startup_script && redis_deploy_standalone ;;
         -m | -mongodb) startup_script && mongodb_deploy_standalone ;;
@@ -44,13 +44,13 @@ usage: $0 args
       [-fm-s | -fm-singlenode] FM SingleNode standard K8S
       [-fm-m | -fm-multinode]  FM MultiNode  standard K8S
       [-fm-h | -flowmanager]   FM            Helm
-      [-r | -redis]
-      [-m | -mongodb]
-      [-hi | -history]
-      [-da | -delete-all]
-      [-logs-fm]
-      [-logs-mongodb]
-      [-logs-redis]
+      [-r | -redis]            Redis         Helm
+      [-m | -mongodb]          MongoDb       Helm
+      [-hi | -history]         Delete helm history
+      [-da | -delete-all]      Delete all resources
+      [-logs-fm]               Logs FlowManager
+      [-logs-mongodb]          Logs Mongodb
+      [-logs-redis]            Logs Redis
 sample:
  ./helm-helper.sh -gc -fm
 or
