@@ -6,7 +6,7 @@ source $(dirname $0)/helm/helper_functions/helm_functions.sh
 source $(dirname $0)/helm/helper_functions/mongodb_functions.sh
 source $(dirname $0)/helm/helper_functions/redis_functions.sh
 source $(dirname $0)/helm/helper_functions/flowmanger_functions.sh
-source $(dirname $0)/helm/helper_functions/gen_certs.sh
+source $(dirname $0)/helm/helper_functions/gen_secrets.sh
 source $(dirname $0)/standard/helper_functions/flowmanager_multi.sh
 source $(dirname $0)/standard/helper_functions/flowmanager_single.sh
 
