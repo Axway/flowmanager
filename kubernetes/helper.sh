@@ -46,7 +46,6 @@ usage: $0 args
       [-fm-h | -flowmanager]   FM            Helm
       [-r | -redis]
       [-m | -mongodb]
-      [-full | -fullstack]
       [-hi | -history]
       [-da | -delete-all]
       [-logs-fm]
