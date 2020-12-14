@@ -24,7 +24,7 @@ sample:
 or
  ./helm-helper.sh -flowmanager
 ```
- 
+ _Options:_
 
  - **[-gc | -gen-certs]**       : Generate certificates and create kubernetes secrets.
  - **[-fm-s | -fm-singlenode]** : Install FlowManager SingleNode using standard K8S. [Change the values here](standard/singlenode/)
