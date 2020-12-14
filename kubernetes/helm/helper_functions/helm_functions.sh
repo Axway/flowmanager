@@ -6,8 +6,20 @@
 function namespace_choice(){
   echo "Please gives your namespace:" 
   read -r NAMESPACE 
-
   export NAMESPACE=${NAMESPACE}
+  if kubectl get namespace ${NAMESPACE} | grep -q 'Active'
+  then
+    msg_info "The namespace ${NAMESPACE} exists"
+  else
+    msg_info "The namespace ${NAMESPACE} does not exist. Do you want to create it?"
+    select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) kubectl create namespace ${NAMESPACE};msg_info "The namespace ${NAMESPACE} was created"; break;;
+        No ) exit;;
+    esac
+    done
+  fi
+
 }
 
 function startup_script(){
@@ -60,20 +72,6 @@ function helm_history() {
       msg_output "Helm chart ${i}"
       $HELM history $i -n ${NAMESPACE} 
     done
-}
-###########################################
-# function helm stack_create_1node
-###########################################
-function stack_create_1node() {
-  mongodb_deploy_standalone
-  redis_deploy_standalone
-  flowmanager_deploy_standalone
-}
-
-function stack_create_3nodes() {
-  mongodb_deploy_ha
-  redis_deploy_ha
-  flowmanager_deploy_ha
 }
 ###########################################
 # check stack deletion function
