@@ -20,28 +20,20 @@ Content of this folder :
 
 **Caution internal mongodb will be not encrypted with certificate**
 
-1. **Please choose between 1 or 3 nodes installation**
-
-    - mongodb-1node
-        - Changing the default values file in [mongodb-1node.yaml](mongodb-1node.yaml)
-    - mongodb-3nodes
-        - Changing the default values file in [mongodb-3nodes.yaml](mongodb-3nodes.yaml)
+1. 
+    - mongodb
+        - Changing the default values file in [mongodb.yaml](mongodb.yaml)
 
 2. **Helm deployment**
 
-* 1 Node
 ```console
-$ helm install  flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb-1node.yaml
-```
-* 3 Nodes
-```console
-$ helm install  flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb-3nodes.yaml
+$ helm install  flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb.yaml
 ```
 
 3. **Helm update**
 
 ```console
-$ helm upgrade --install flowmanager-mongodb ./mongodb space=<your_namespace> -f your_values_file.yaml
+$ helm upgrade --install flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb.yaml
 ```
 
 4. **Helm delete**
@@ -54,28 +46,18 @@ $ helm delete flowmanager-mongodb space=<your_namespace>
 
 **Caution internal redis will be not encrypted with certificate**
 
-1. **Please choose between 1 or 3 nodes installation**
-
-    - redis-1node
-        - Changing the default values file in [redis-1node.yaml](redis-1node.yaml)
-    - redis-3nodes
-        - Changing the default values file in [redis-3nodes.yaml](redis-3nodes.yaml)
+1. 
+        - Changing the default values file in [redis.yaml](redis.yaml)
 
 2. **Helm deployment**
-
-* 1 Node
 ```console
-$ helm install  flowmanager-redis ./redis-ha space=<your_namespace> -f redis-1node.yaml
-```
-* 3 Nodes
-```console
-$ helm install  flowmanager-redis ./redis-ha space=<your_namespace> -f redis-3nodes.yaml
+$ helm install  flowmanager-redis ./redis-ha space=<your_namespace> -f redis.yaml
 ```
 
 3. **Helm update**
 
 ```console
-$ helm upgrade --install flowmanager-redis ./redis-ha space=<your_namespace> -f your_values_file.yaml
+$ helm upgrade --install flowmanager-redis ./redis-ha space=<your_namespace> -f redis.yaml
 ```
 
 4. **Helm delete**
