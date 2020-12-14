@@ -9,9 +9,9 @@ Kubernetes deployment manifests files.
 ```
 usage: ./helper.sh args
       [-gc | -gen-certs]
-      [-fm-s | -fm-singlenode] FM SingleNode standard K8S
-      [-fm-m | -fm-multinode]  FM MultiNode  standard K8S
-      [-fm-h | -flowmanager]   FM            Helm
+      [-fm-s | -fm-singlenode]
+      [-fm-m | -fm-multinode]
+      [-fm-h | -flowmanager]
       [-r | -redis]
       [-m | -mongodb]
       [-hi | -history]
