@@ -2,10 +2,8 @@
 
 ## Prerequisites
 
-  - [yq 3.0+](https://github.com/mikefarah/yq)
   - Kubernetes 1.14+
-  - Helm 2.16+
-  - Helm 3+ 
+  - Helm 2.16+ / Helm 3+
 
 ## Introduction
 
@@ -20,23 +18,19 @@ Content of this folder :
 
 **Caution internal mongodb will be not encrypted with certificate**
 
-1. 
-    - mongodb
-        - Changing the default values file in [mongodb.yaml](mongodb.yaml)
-
-2. **Helm deployment**
+1. **Helm deployment**
 
 ```console
 $ helm install  flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb.yaml
 ```
 
-3. **Helm update**
+2. **Helm update**
 
 ```console
 $ helm upgrade --install flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb.yaml
 ```
 
-4. **Helm delete**
+3. **Helm delete**
 
 ```console
 $ helm delete flowmanager-mongodb space=<your_namespace> 
@@ -46,21 +40,18 @@ $ helm delete flowmanager-mongodb space=<your_namespace>
 
 **Caution internal redis will be not encrypted with certificate**
 
-1. 
-        - Changing the default values file in [redis.yaml](redis.yaml)
-
-2. **Helm deployment**
+1. **Helm deployment**
 ```console
 $ helm install  flowmanager-redis ./redis-ha space=<your_namespace> -f redis.yaml
 ```
 
-3. **Helm update**
+2. **Helm update**
 
 ```console
 $ helm upgrade --install flowmanager-redis ./redis-ha space=<your_namespace> -f redis.yaml
 ```
 
-4. **Helm delete**
+3. **Helm delete**
 
 ```console
 $ helm delete flowmanager-redis space=<your_namespace> 
