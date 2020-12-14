@@ -9,9 +9,32 @@ set -euo pipefail
 ##
 
 CURRENT_DIR=$PWD
+PASSWORD="abc"
+SECOND_PASSWORD="bcd"
 
-# Load config
-. $CURRENT_DIR/certs.conf
+# Input Variables
+while [ "$PASSWORD" != "$SECOND_PASSWORD" ]
+do
+   echo "Please, choose a password:"
+   read -s PASSWORD
+   echo "Type the password again:"
+   read -s SECOND_PASSWORD
+   
+   if [ "$PASSWORD" != "$SECOND_PASSWORD" ]
+   then
+	   echo
+	   echo "The passwords do not match!"
+	   echo
+   fi
+done
+
+echo
+echo "Please, choose EXPIRATION_DAYS for the certificates: "
+read EXPIRATION_DAYS
+
+echo $EXPIRATION_DAYS
+
+
 
 # Generate CA
 function gen_ca() {
