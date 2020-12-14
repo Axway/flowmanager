@@ -74,20 +74,6 @@ function helm_history() {
     done
 }
 ###########################################
-# function helm stack_create_1node
-###########################################
-function stack_create_1node() {
-  mongodb_deploy_standalone
-  redis_deploy_standalone
-  flowmanager_deploy_standalone
-}
-
-function stack_create_3nodes() {
-  mongodb_deploy_ha
-  redis_deploy_ha
-  flowmanager_deploy_ha
-}
-###########################################
 # check stack deletion function
 ###########################################
 function stack_confirm_deletion() {
