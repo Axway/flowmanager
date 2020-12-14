@@ -14,7 +14,6 @@ usage: ./helper.sh args
       [-fm-h | -flowmanager]   FM            Helm
       [-r | -redis]
       [-m | -mongodb]
-      [-full | -fullstack]
       [-hi | -history]
       [-da | -delete-all]
       [-logs-fm]
@@ -27,6 +26,17 @@ or
 ```
  
 
- - **[-gc | -gen-certs]** : Generate certificates and create kubernetes secrets.
- - **[-fm-s | -fm-singlenode]** : Install FlowManager 1Node using standard K8S. [Change the values here](standard/singlenode/)
+ - **[-gc | -gen-certs]**       : Generate certificates and create kubernetes secrets.
+ - **[-fm-s | -fm-singlenode]** : Install FlowManager SingleNode using standard K8S. [Change the values here](standard/singlenode/)
+ - **[-fm-m | -fm-multinode]**  : Install FlowManager MultiNode using standard K8S. [Change the values here](standard/multinode/)
+ - **[-fm-h | -fm-flowmanager]**: Install FlowManager MultiNode using Helm. [Change the values here](helm/flowmanager.yaml)
+ - **[-r | -redis]**            : Install Redis using helm.[Change the values here](helm/redis.yaml)
+ - **[-m | -mongodb]**          : Install MongoDb using helm.[Change the values here](helm/mongodb.yaml)
+ - **[-hi | -history]**         : Check Helm logs under namespace.
+ - **[-da | -delete-all]**      : Delete all the resources from namespace.
+ - **[-logs-fm]**               : Check FlowManager logs.
+ - **[-logs-mongodb]**          : Check MongoDb logs.
+ - **[-logs-redis]**            : Check Redis logs.
+ 
+
 
