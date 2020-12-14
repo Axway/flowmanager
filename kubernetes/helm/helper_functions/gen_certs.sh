@@ -13,11 +13,6 @@ cp ./custom-ca/business/cacert.p12  ./certs/businessca.p12
 
 rm -rf ./custom-ca/
 
-if kubectl get namespace ${NAMESPACE} | grep -q 'Active'
-  then
-    echo "The namespace ${NAMESPACE} exists"
-fi
-
 if [ -f ./certs/license.xml ]; then
     kubectl create secret generic flowmanager-license --from-file=./certs/license.xml -n ${NAMESPACE}
 else

@@ -1,23 +1,24 @@
 #!/bin/bash
 # set -x
 
-source $(dirname $0)/helper_functions/msg_functions.sh
-source $(dirname $0)/helper_functions/helm_functions.sh
-source $(dirname $0)/helper_functions/mongodb_functions.sh
-source $(dirname $0)/helper_functions/redis_functions.sh
-source $(dirname $0)/helper_functions/flowmanger_functions.sh
-source $(dirname $0)/helper_functions/gen_certs.sh
+source $(dirname $0)/helm/helper_functions/msg_functions.sh
+source $(dirname $0)/helm/helper_functions/helm_functions.sh
+source $(dirname $0)/helm/helper_functions/mongodb_functions.sh
+source $(dirname $0)/helm/helper_functions/redis_functions.sh
+source $(dirname $0)/helm/helper_functions/flowmanger_functions.sh
+source $(dirname $0)/helm/helper_functions/gen_certs.sh
+source $(dirname $0)/standard/helper_functions/flowmanager_multi.sh
+source $(dirname $0)/standard/helper_functions/flowmanager_single.sh
+
 
 export HELM="helm"
-export FILE_FM=$(dirname $0)/flowmanager.yaml
-export FILE_REDIS=$(dirname $0)/redis.yaml
-export FILE_MONGO=$(dirname $0)/mongodb.yaml
+export FILE_FM=$(dirname $0)/helm/flowmanager.yaml
+export FILE_REDIS=$(dirname $0)/helm/redis.yaml
+export FILE_MONGO=$(dirname $0)/helm/mongodb.yaml
 
 
-msg_info "You are using those Values files"
-echo ""
-printenv | grep 'FILE_'
-echo ""
+msg_info "Starting script"
+
 ###########################################
 # main
 ########################################### 
@@ -25,7 +26,10 @@ while [[ "$#" -gt 0 ]]
 do
     case "$1" in
         -gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
-        -fm | -flowmanager)  startup_script && flowmanager_deploy_standalone ;;
+	    	-fm-s | -fm-singlenode) namespace_choice && flowmanager_deploy_standard_standalone ;;
+		    -fm-m | -fm-multinode)  namespace_choice && flowmanager_deploy_standard_multinode ;;
+		    -gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
+        -fm-h | -flowmanager-helm)  startup_script && flowmanager_deploy_standalone ;;
         -r | -redis) startup_script && redis_deploy_standalone ;;
         -m | -mongodb) startup_script && mongodb_deploy_standalone ;;
         -hi | -history) namespace_choice && helm_history ;;
@@ -37,7 +41,9 @@ do
         -?)  cat <<USAGE
 usage: $0 args
       [-gc|-gen-certs] 
-      [-fm | -flowmanager]
+      [-fm-s | -fm-singlenode] FM SingleNode standard K8S
+      [-fm-m | -fm-multinode]  FM MultiNode  standard K8S
+      [-fm-h | -flowmanager]   FM            Helm
       [-r | -redis]
       [-m | -mongodb]
       [-full | -fullstack]

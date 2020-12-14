@@ -6,8 +6,20 @@
 function namespace_choice(){
   echo "Please gives your namespace:" 
   read -r NAMESPACE 
-
   export NAMESPACE=${NAMESPACE}
+  if kubectl get namespace ${NAMESPACE} | grep -q 'Active'
+  then
+    msg_info "The namespace ${NAMESPACE} exists"
+  else
+    msg_info "The namespace ${NAMESPACE} does not exist. Do you want to create it?"
+    select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) kubectl create namespace ${NAMESPACE};msg_info "The namespace ${NAMESPACE} was created"; break;;
+        No ) exit;;
+    esac
+    done
+  fi
+
 }
 
 function startup_script(){
