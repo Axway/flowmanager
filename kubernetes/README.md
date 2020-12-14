@@ -6,7 +6,7 @@ Kubernetes deployment manifests files.
 * [Deploy using Helm charts](helm/)
 * [Deploy using helper.sh](/)
 
-`
+```
 usage: ./helper.sh args
       [-gc | -gen-certs]
       [-fm-s | -fm-singlenode] FM SingleNode standard K8S
@@ -24,7 +24,7 @@ sample:
  ./helm-helper.sh -gc -fm
 or
  ./helm-helper.sh -flowmanager
-`
+```
  
 
  - **[-gc | -gen-certs]** : Generate certificates and create kubernetes secrets.
