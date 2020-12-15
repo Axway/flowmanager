@@ -239,12 +239,3 @@ flowmanager:
     certAlias: {} # governance 
     fileName: governanceca.p12 #mandatory
     existingSecretFile: flowmanager-governance #mandatory
-
-  sentinel:
-    host: {} # mysentinel.mydomain.com
-    qltPort: 1305
-    qltSslPort: 1303
-    uiPort: 1309    
-    fileName: {} #sentinel.p12 
-    existingSecretFile: {}
-    auditEnable: false

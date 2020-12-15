@@ -36,6 +36,8 @@ spec:
               value: /opt/axway/FlowManager/configs/uicert.p12
             - name: FM_GOVERNANCE_CA_FILE
               value: /opt/axway/FlowManager/configs/governanceca.p12
+            - name: FM_CFT_SHARED_SECRET
+              value: ""
             - name: FM_CFT_UPDATES_PATH
               value: "/opt/axway/FlowManager/updates/cft/"
             - name: FM_JVM_XMN
