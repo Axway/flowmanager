@@ -16,7 +16,7 @@ This README refers to managing single-node installations of Flow Manager using `
 * Go to `docker-compose` path
 * Add license file in `files/flowmanager/license`
 * Run `./flowmanager setup` command. This will generate, add certificates in configs space and create a `.env` file (to add your certificates check __[Add your own certificates files](#add-your-own-certificates-files)__ section for more information)
-* Change `.env` file values, add other parameters based on your needs or leave them as default
+* Change `.env` file values, following env.template, add other parameters based on your needs or leave them as default
 * After you done, run `./flowmanager start`. This will start the containers with Flow Manager and database
 * Check the health of the services by typing this `./flowmanager status` command.
 
