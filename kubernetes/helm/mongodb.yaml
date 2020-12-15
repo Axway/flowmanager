@@ -72,12 +72,12 @@ auth:
   ## MongoDB root password
   ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#setting-the-root-password-on-first-run
   ##
-  rootPassword: "r3sT4pIp4ssw0rd"
+  rootPassword: "" #mandatory
   ## MongoDB custom user and database
   ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#creating-a-user-and-database-on-first-run
   ##
   username: "restapiuser"
-  password: "r3sT4pIp4ssw0rd"
+  password: "" #mandatory
   database: "umcft"
   ## Key used for replica set authentication
   ## Ignored when mongodb.architecture=standalone
