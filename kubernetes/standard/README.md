@@ -34,7 +34,7 @@ _**Warning:** Each files used from this step we need to be update the [Deploymen
 
 ## How to create secrets for monogdb credentials or redis
 
-Inside the file [secret-env.yaml](standard/base/secret-env.yaml)
+Inside the file [secret-env.yml](standard/base/secret-env.yml)
 
 Updating each values for the keys related:
 ```
@@ -59,6 +59,25 @@ bW9uZ2RiX3Bhc3N3b3Jk
 # Changing the value for the key
 FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 
-## ***Upgrade***
+## How to configure Flowmanager before deployment
+
+Files to check and modify :
+* [Deployment file](base/deployment.yml)
+* [Secret Env file](base/secret-env.yml)
+
+# How to deploy Flowmanager
+
+> Hack, it is possible to get all fields on going to be changed, with a searching based on the word `MUST` inside the file
+
+**This stuff permit to deploy only Flowmanager 1 node**
+
+1. Creating manually all secrets for the licence and certificates
+2. Editing manually the yaml file for parameters needed or madatory for the customer
+3. Applying all the files
+```console
+$ kubectl apply -k ./flowmanager
+```
 
 ## ***Remove***
+
+kubectl delete -k ./flowmanager
