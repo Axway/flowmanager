@@ -52,7 +52,12 @@ spec:
             - name: FM_GENERAL_SAAS_MODE
               value: "false" 
             - name: FM_GENERAL_LICENSE
-              value: {{ .Values.flowmanager.license.fileName | default "license.xml" | quote }}   
+              value: {{ .Values.flowmanager.license.fileName | default "license.xml" | quote }} 
+            ### CFT
+            - name: FM_CFT_SHARED_SECRET
+              value: {{ .Values.flowmanager.FM_CFT_SHARED_SECRET | default "" | quote }} 
+            - name: FM_CFT_UPDATES_PATH
+              value: {{ .Values.flowmanager.FM_CFT_UPDATES_PATH | default "/opt/axway/FlowManager/updates/cft/" | quote }} 
             ### MONGODB
             - name: FM_DISABLE_CHECK_REACHABLE_HOST
               value: "true"
