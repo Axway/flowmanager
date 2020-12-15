@@ -15,7 +15,7 @@ rm -rf ./custom-ca/
 
 
 if [ -f ./license.xml ]; then
-    kubectl create secret generic flowmanager-license --from-file=./certs/license.xml -n ${NAMESPACE}
+    kubectl create secret generic flowmanager-license --from-file=./license.xml -n ${NAMESPACE}
 else
     msg_info 'License was not found near script.'
 	msg_info 'You can manually run: kubectl create secret generic flowmanager-license --from-file=license.xml -n namespace'
