@@ -34,7 +34,7 @@ _**Warning:** Each files used from this step we need to be update the [Deploymen
 
 ## How to create secrets for monogdb credentials or redis
 
-Inside the file [base/secrets-env.yaml](base/secrets-env.yaml)
+Inside the file secrets-env.yaml (base/secrets-env.yaml)
 
 Updating each values for the keys related
 
