@@ -4,7 +4,7 @@ This README refers to managing single-node installations of Flow Manager using `
 
 ## Requirements
 
-* [docker](https://docs.docker.com/engine/install/) version 19.03.x or higher
+* [docker](https://docs.docker.com/engine/install/) version 18.x.x or higher
 * [docker-compose](https://docs.docker.com/compose/install/) version 1.27.x or higher
 * Flow Manager Docker Image downloaded from Axway Sphere
 * Flow Manager license and certificates files
@@ -12,11 +12,11 @@ This README refers to managing single-node installations of Flow Manager using `
 
 ## ***Setup & Run***
 
-* Clone the repo by typing `git clone https://github.com/Axway/docker-flowmanager.git` command
+* Get the zip file from [here](https://github.com/Axway/docker-flowmanager/archive/master.zip) and unzip it
 * Go to `docker-compose` path
 * Add license file in `files/flowmanager/license`
 * Run `./flowmanager setup` command. This will generate, add certificates in configs space and create a `.env` file (to add your certificates check [here](#add-your-own-certificates-files) for more information)
-* In `.env` file you can change values, add other parameters based on your needs or leave them as default
+* Change `.env` file values, add other parameters based on your needs or leave them as default
 * After you done, run `./flowmanager start`. This will start the containers with Flow Manager and database
 * Check the health of the services by typing this `./flowmanager status` command.
 
@@ -45,16 +45,13 @@ This README refers to managing single-node installations of Flow Manager using `
 
 ### Extra configuration
 
-<details>
-  <summary>Flow Manager parameters</summary>
+#### Flow Manager parameters
 
-The file `env.template` contains basic fields that can be configured at Flow Manager start. The extended list can be consulted below. In order to add a new parameter, simply add it in your `.env` file and will be considered at Flow Manager.
+The file `env.template` contains basic parameters that can be configured at Flow Manager start. The extended list can be consulted below. In order to add a new parameter, simply add it in your `.env` file and will be considered at Flow Manager.
 
-All active Environment variables/parameters for Flow Manager, including all the services required to run can be found [here](../docs/parameters.md).
-</details>
+All active Environment variables/parameters for Flow Manager, including all the services required to run can be found [here](../docs/README.md).
 
-<details>
-  <summary>Enable transport encryption (TLS/SSL) for Mongodb</summary>
+#### Enable transport encryption (TLS/SSL) for Mongodb
 
 Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network traffic is only readable by the intended client.
 
@@ -64,12 +61,3 @@ Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network
 * Change value of `CAFile` and `PEMKeyFile` parameters with yours (only name of certificate files)
 * Save it
 * Run `./flowmanager start` command in case you run Mongodb for the first time  or `./flowmanager restart mongodb` in case you already have Mongodb up.
-
-</details>
-
-<details>
-  <summary>Migrate data from one container to another</summary>
-
-  Steps to move your current data from an existing container (that uses a custom docker image) to new container (that uses an official docker image) can be found [here](../docs/migrate_data_mongodb.md).
-
-</details>

@@ -7,7 +7,7 @@ for i in ../scripts/common/*;
 done
 
 # Setup and run the app.
-# Example: ./flowmanager.sh [setup/start/restart/stop/status/help]
+# Example: ./flowmanager.sh [setup/start/restart/stop/status/help...]
 
 PROJECT_NAME="flowmanager"
 
@@ -93,7 +93,7 @@ function usage() {
     echo "Usage: ./$PROJECT_NAME [option]"
     echo "  options:"
     echo "    setup  : Generate certs and create .env file"
-    echo "    start  : Start $PROJECT_NAME and database contianers"
+    echo "    start  : Start $PROJECT_NAME and database containers"
     echo "    restart: Restart $PROJECT_NAME and database containers"
     echo "    stop   : Stop $PROJECT_NAME and database containers"
     echo "    status : Show the status of $PROJECT_NAME and database containers"

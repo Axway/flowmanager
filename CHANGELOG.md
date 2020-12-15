@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.0.0
+## 2020-10-09
 
 * docker-compose - Make docker-compose files production ready
 * docker-compose - Remove the custom MongoDB and use the official one
