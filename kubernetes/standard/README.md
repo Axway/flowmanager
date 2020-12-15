@@ -83,4 +83,6 @@ $ kubectl apply -k ./singlenode
 
 ## ***Remove***
 
+```console
 kubectl delete -k ./singlenode
+```
