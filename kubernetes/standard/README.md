@@ -6,7 +6,6 @@ Deploy using standard Kubernetes deployment manifest files.
 
 * kubectl
 * Customer certificates and password
-* Secret for pulling docker image (Optional)
 * Customer License (`license.xml`)
 * Mongodb URL
 * `user` and `password` for Mongodb
