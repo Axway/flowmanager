@@ -68,7 +68,7 @@ $ helm install  flowmanager ./flowmanager space=<your_namespace> -f flowmanager.
 3. **Helm update**
 
 ```console
-$ helm upgrade --install flowmanager ./flowmanager space=<your_namespace> -f your_values_file.yaml
+$ helm upgrade --install flowmanager ./flowmanager space=<your_namespace> -f flowmanager.yaml
 ```
 
 4. **Helm delete**
