@@ -39,16 +39,4 @@ else
     echo "businessca.p12 was not found in ./certs/.(not mandatory)"
 fi
 
-if [ -f ./certs/catalog-public-key.pem ]; then
-    kubectl create secret generic apicpubkey --from-file=./certs/governanceca.p12 -n ${NAMESPACE}
-else
-    echo "catalog-public-key.pem was not found in ./certs/.(not mandatory)"
-fi
-
-if [ -f ./certs/catalog-private-key.pem ]; then
-    kubectl create secret generic apicprivkey  --from-file=./certs/catalog-private-key.pem -n ${NAMESPACE}
-else
-    echo "catalog-private-key.pem was not found in ./certs/.(not mandatory)"
-fi
-
 }

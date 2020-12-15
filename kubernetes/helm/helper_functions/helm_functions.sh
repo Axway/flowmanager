@@ -95,14 +95,18 @@ function stack_confirm_deletion() {
 
 function stack_deletion() {
   msg_error 'Starting Stack deletion'
+  
+  kubectl delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE}
+  kubectl delete pvc -l app=flowmanager-redis -n ${NAMESPACE}
+  helm delete flowmanager-redis -n ${NAMESPACE}
+  helm delete flowmanager-mongodb -n ${NAMESPACE}
+  
   LIST=$($HELM list --namespace ${NAMESPACE} | grep flowmanager | awk '{print $1}')
   for i in ${LIST}
   do
     $HELM delete $i -n ${NAMESPACE} 
   done
-
-  kubectl delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE}
-  kubectl delete pvc -l app=flowmanager-redis -n ${NAMESPACE}
+  
 }
 
 function yaml_parse_file() {
