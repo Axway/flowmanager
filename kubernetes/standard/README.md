@@ -34,10 +34,17 @@ _**Warning:** Each files used from this step we need to be update the [Deploymen
 
 ## How to create secrets for monogdb credentials or redis
 
-Inside the file [secrets-env.yaml](standard/base/secrets-env.yaml)
+Inside the file [secret-env.yaml](standard/base/secret-env.yaml)
 
-Updating each values for the keys related
-
+Updating each values for the keys related:
+```
+  FM_GENERAL_ENCRYPTION_KEY: ""
+  FM_HTTPS_KEYSTORE_PASSWORD: ""
+  FM_CFT_SHARED_SECRET: ""
+  FM_DATABASE_USER_NAME: ""
+  FM_DATABASE_USER_PASSWORD: ""
+  FM_GOVERNANCE_CA_PASSWORD: ""
+```
 Example with mongodb user/password:
 ```console
 # For mongodb user
