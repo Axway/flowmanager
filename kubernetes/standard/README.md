@@ -45,6 +45,7 @@ Updating each values for the keys related:
   FM_DATABASE_USER_PASSWORD: ""
   FM_GOVERNANCE_CA_PASSWORD: ""
 ```
+
 Example with mongodb user/password:
 ```console
 # For mongodb user
@@ -58,6 +59,7 @@ $ echo -n 'mongdb_password' | base64
 bW9uZ2RiX3Bhc3N3b3Jk
 # Changing the value for the key
 FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
+```
 
 ## How to configure Flowmanager before deployment
 
