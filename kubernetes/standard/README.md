@@ -64,7 +64,7 @@ FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 ## How to configure Flowmanager before deployment
 
 Files to check and modify :
-* Deployment file: SingleNode(singlenode/patch.yml) or MultiNode(multinode/patch.yml)
+* Deployment file: [SingleNode](singlenode/patch.yml) or [MultiNode](multinode/patch.yml)
 * [Secret Env file](base/secret-env.yml)
 
 # How to deploy Flowmanager
