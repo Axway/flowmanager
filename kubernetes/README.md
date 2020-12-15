@@ -6,6 +6,15 @@ Kubernetes deployment manifests files.
 * [Deploy using Helm charts](helm/)
 * [Deploy using helper.sh](/)
 
+# How to deploy FlowManager with Helm
+* Generate certificates and secrets by running `./helper.sh -gc`
+* Editing manually the yaml file for parameters needed or madatory for the customer ([flowmanager.yaml](helm/flowmanager.yaml) and [mongodb.yaml](helm/mongodb.yaml)) 
+* Install MongoDb using helm by running `./helper.sh -m`
+* Install MongoDb using helm by running `./helper.sh -fm-h`
+
+> For more information about MongoDb with Helm, please access [this link](https://bitnami.com/stack/mongodb/helm).
+
+
 ```
 usage: ./helper.sh args
       [-gc | -gen-certs]
