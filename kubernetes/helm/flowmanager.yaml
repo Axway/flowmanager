@@ -201,7 +201,7 @@ flowmanager:
   db:
     endpoints: flowmanager-mongodb.YOUR_NAMESPACE.svc.cluster.local:27017 # comma separated
     user: restapiuser
-    password: r3sT4pIp4ssw0rd
+    password: {} #mandatory
     useSSL: false
     fileName: mongodb.pem  #not necessary if useSSL:false
     existingSecretFile: {} # secret name, not necessary if useSSL:false
@@ -211,7 +211,7 @@ flowmanager:
     redisHost: flowmanager-redis-master.YOUR_NAMESPACE.svc.cluster.local
     redisPort: 6379
     user: {}
-    password: 5dmInP5ssw0rd
+    password: {} #mandatory if enabled
     useSSL: false
     fileName: {} # redis.pem, not necessary if useSSL:false
     existingSecretFile: {} # secret name,not necessary if useSSL:false
@@ -223,19 +223,19 @@ flowmanager:
   https:
     disable: false
     autoGenerateCert: false
-    keystorePassword: FMS3cr3t03
+    keystorePassword: {} #mandatory if enabled
     certAlias: {} # ui
     fileName: uicert.p12
     existingSecretFile: flowmanager-uicert
 
   business:
-    caPassword: FMS3cr3t03
+    caPassword: {}
     certAlias: {} # business
     fileName: {} #businessca.p12
     existingSecretFile: flowmanager-business 
 
   governance:
-    caPassword: FMS3cr3t03
+    caPassword: {} #mandatory
     certAlias: {} # governance 
     fileName: governanceca.p12 #mandatory
     existingSecretFile: flowmanager-governance #mandatory
