@@ -40,7 +40,7 @@ spec:
             - name: FM_HTTPS_CERT_ALIAS
               value: "ui"
             - name: FM_HTTPS_USE_CUSTOM_CERT
-              value: "false"
+              value: "no"
             - name: FM_HTTPS_KEYSTORE
               value: /opt/axway/FlowManager/configs/uicert.p12
             - name: FM_GOVERNANCE_CA_FILE
