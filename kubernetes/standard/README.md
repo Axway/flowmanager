@@ -28,9 +28,29 @@ $ kubectl create secret generic flowmanager-httpskeystore --from-file=uicert.p12
 * Governance
 ```console
 $ kubectl create secret generic flowmanager-governance --from-file=governanceca.p12
+```
 
-_**Warning:** Each files used from this step we need to be update the [Deployment file](base/deployment.yaml)_
+_**Warning:** Each files used from this step we need to be update the [Deployment file](flowmanager/deployment.yaml)_
 
+## How to create secrets for monogdb credentials or redis
+
+Inside the file [base/secrets-env.yaml](base/secrets-env.yaml)
+
+Updating each values for the keys related
+
+Example with mongodb user/password:
+```console
+# For mongodb user
+$ echo -n 'mongdb_user' | base64 
+bW9uZ2RiX3VzZXI=
+# Changing the value for the key
+FM_DATABASE_USER_NAME: "bW9uZ2RiX3VzZXI="
+
+# For mongodb password
+$ echo -n 'mongdb_password' | base64 
+bW9uZ2RiX3Bhc3N3b3Jk
+# Changing the value for the key
+FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 
 ## ***Upgrade***
 
