@@ -69,8 +69,6 @@ Files to check and modify :
 
 # How to deploy Flowmanager
 
-> Hack, it is possible to get all fields on going to be changed, with a searching based on the word `MUST` inside the file
-
 **This stuff permit to deploy only Flowmanager 1 node**
 
 1. Creating manually all secrets for the licence and certificates
