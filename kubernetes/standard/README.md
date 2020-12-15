@@ -64,7 +64,7 @@ FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 ## How to configure Flowmanager before deployment
 
 Files to check and modify :
-* [Deployment file](base/deployment.yml)
+* Deployment file: SingleNode(singlenode/patch.yml) or MultiNode(multinode/patch.yml)
 * [Secret Env file](base/secret-env.yml)
 
 # How to deploy Flowmanager
@@ -76,10 +76,11 @@ Files to check and modify :
 1. Creating manually all secrets for the licence and certificates
 2. Editing manually the yaml file for parameters needed or madatory for the customer
 3. Applying all the files
+ex:
 ```console
-$ kubectl apply -k ./flowmanager
+$ kubectl apply -k ./singlenode
 ```
 
 ## ***Remove***
 
-kubectl delete -k ./flowmanager
+kubectl delete -k ./singlenode
