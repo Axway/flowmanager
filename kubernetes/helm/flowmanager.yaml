@@ -187,7 +187,7 @@ extraSecrets: {}
 flowmanager:
   logLevel: info # info or debug
   acceptEula: "no" # set to yes
-  extFqdn: localhost # external dns for UI automatic cert generation / API responses
+  extFqdn: {} # external dns for UI automatic cert generation / API responses , mandatory
   FM_CFT_SHARED_SECRET: {}
   FM_CFT_UPDATES_PATH: /opt/axway/FlowManager/updates/cft/
 
