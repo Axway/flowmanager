@@ -27,7 +27,7 @@ This README refers to managing single-node installations of Flow Manager using `
 * Run `./flowmanager start` command to start the containers with Flow Manager and database
 * Check the health of the services by typing this `./flowmanager status` command.
 
-***Note***: We support for the momment `jks` and `pem` certificates extensions.
+***Note***: We support for the momment `jks`,`p12` and `pem` certificates extensions.
 
 ## ***Upgrade***
 
