@@ -3,7 +3,7 @@
 set -euo pipefail
 
 function gen_certs_selfsigned {
-./../../scripts/generate_certs.sh
+./../scripts/generate_certs.sh
 
 mkdir -p certs
 
@@ -13,10 +13,12 @@ cp ./custom-ca/business/cacert.p12  ./certs/businessca.p12
 
 rm -rf ./custom-ca/
 
-if [ -f ./certs/license.xml ]; then
+
+if [ -f ./license.xml ]; then
     kubectl create secret generic flowmanager-license --from-file=./certs/license.xml -n ${NAMESPACE}
 else
-    echo "License was not found in ./certs/."
+    msg_info 'License was not found near script.'
+	msg_info 'You can manually run: kubectl create secret generic flowmanager-license --from-file=license.xml -n namespace'
 fi
 
 if [ -f ./certs/uicert.p12 ]; then
