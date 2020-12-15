@@ -247,13 +247,4 @@ flowmanager:
     uiPort: 1309    
     fileName: {} #sentinel.p12 
     existingSecretFile: {}
-    auditEnable: false  
-  
-  apicCatalog:
-    enable: false
-    publicKey:
-      fileName: {} #catalog-public-key.pem
-      existingSecretFile: {}  
-    privateKey:
-      fileName: {} #catalog-private-key.pem
-      existingSecretFile: {}  
+    auditEnable: false
