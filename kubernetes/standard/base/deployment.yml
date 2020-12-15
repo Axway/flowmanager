@@ -29,29 +29,25 @@ spec:
                 name: flowmanager-env
           env:
             - name: ACCEPT_EULA
-              value: "yes"
+              value: ""
             - name: FM_GENERAL_LOGGING_LEVEL
               value: "INFO"
             - name: FM_LOGS_CONSOLE
               value: "yes"
-            - name: FM_GENERAL_CUSTOM_LOCATION_PATH
-              value: "/opt/axway/logs"
             - name: FM_GENERAL_FQDN
-              value: "dev.fm.axwaytest.net"
+              value: "YOUR_HOST"  #The host representing the public accessible FM address
             - name: FM_GENERAL_UI_PORT
               value: "443"
-            - name: FM_GENERAL_LICENSE
-              value: "license.xml"
             - name: FM_DATABASE_HOST
               value: "mongodb.flowmanager.svc.cluster.local"
             - name: FM_DATABASE_NAME
               value: "umcft"
-            - name: FM_DATABASE_REPLICA_SET
-              value: ""
             - name: FM_DATABASE_USE_SSL
               value: "false"
+            - name: FM_DATABASE_CERTIFICATES
+              value: ""
             - name: FM_REDIS_ENABLED
-              value: "true"
+              value: "false"
             - name: FM_REDIS_HOSTNAME
               value: "redis.db.svc.cluster.local"
             - name: FM_REDIS_PORT
@@ -61,77 +57,27 @@ spec:
             - name: FM_HTTPS_DISABLED
               value: "false"
             - name: FM_HTTPS_CERT_ALIAS
-              value: "uicert"
+              value: "ui"
             - name: FM_HTTPS_USE_CUSTOM_CERT
               value: "false"
-            - name: FM_SESSION_IDLE
-              value: "900"
-            - name: FM_SESSION_EXPIRATION
-              value: "28800"
             - name: FM_HTTPS_KEYSTORE
-              value: /opt/axway/configs/uicert.jks
-            - name: FM_GOVERNANCE_CA_CERTIF_ALIAS
-              value: "govinter_fc"
+              value: /opt/axway/FlowManager/configs/uicert.p12
+            - name: FM_HTTPS_KEYSTORE_PASSWORD
+              value: ""
             - name: FM_GOVERNANCE_CA_FILE
-              value: /opt/axway/configs/governance.jks
-            - name: FM_ST_WHITELISTING_ENABLED
-              value: "false"
-            - name: FM_ST_WHITELISTING_WATCHDOG_DELAY
-              value: "120"
-            - name: FM_SENTINEL_AUDIT_ENABLED
-              value: "false"
-            - name: FM_SENTINEL_FRONT_END_HOST
-              value: "localhost"
-            - name: FM_SENTINEL_FRONT_END_PORT
-              value: "1305"
-            - name: FM_SENTINEL_FRONT_END_SSL_PORT
-              value: "1303"
-            - name: FM_SENTINEL_UI_PORT
-              value: "1309"
-            - name: FM_SENTINEL_USE_CG_CA
-              value: "true"
-            - name: FM_SENTINEL_UI_HOST
-              value: "localhost"
-            - name: GET_HOSTS_FROM
-              value: env
-            - name: FM_APIC_USE_CATALOG
-              value: "true"
-            - name: FM_APIC_PUBLICKEY
-              value: "/opt/axway/configs/catalog-public-key.pem"
-            - name: FM_APIC_PRIVATEKEY
-              value: "/opt/axway/configs/catalog-private-key.pem"
-            - name: FM_APIC_CLIENTID
-              value: "FCSA_E2E_TESTID00000001"
-            - name: FM_APIC_HOST
-              value: "https://apicentral.preprod.k8s.axwayamplify.com"
-            - name: FM_APIC_TOKENURL
-              value: "https://login-preprod.axway.com/auth/realms/Broker/protocol/openid-connect/token"
-            - name: FM_ARS_HTTPONLY
-              value: "false"
-            - name: FM_CFT_SFTP_ENABLED
-              value: "false"
-            - name: FM_DISABLE_CHECK_REACHABLE_HOST
-              value: "true"
-            - name: FM_GENERAL_SAAS_MODE
-              value: "true"
-            - name: FM_METRICS_ENABLED
-              value: "true"
-            - name: FM_OPERATIONS_ADMIN_CLIENTID
-              value: "DOSA_734ed2b760ca4d56b74eb6c50b6f61fb"
-            - name: FM_PLATFORM_HOST
-              value: "platform.axwaytest.net"
-            - name: FM_PROXY_ENABLED
-              value: "true"
-            - name: FM_PROXY_HOST
-              value: "flowmanager-bridge.flowmanager"
-            - name: FM_PROXY_PORT
-              value: "8080"
+              value: /opt/axway/FlowManager/configs/governanceca.p12
+            - name: FM_GOVERNANCE_CA_PASSWORD
+              value: ""
+            - name: FM_CFT_SHARED_SECRET
+              value: ""
+            - name: FM_CFT_UPDATES_PATH
+              value: "/opt/axway/FlowManager/updates/cft/"
             - name: FM_JVM_XMN
               value: "768M"
             - name: FM_JVM_XMS
-              value: "2G"
+              value: "512M"
             - name: FM_JVM_XMX
-              value: "4G"
+              value: "2G"
           volumeMounts:
             - name: license
               readOnly: true
@@ -139,20 +85,12 @@ spec:
               subPath: license.xml
             - name: uicert
               readOnly: true
-              mountPath: /opt/axway/configs/uicert.jks
-              subPath: uicert.jks
+              mountPath: /opt/axway/configs/uicert.p12
+              subPath: uicert.p12
             - name: governance
               readOnly: true
-              mountPath: /opt/axway/configs/governance.jks
-              subPath: governance.jks
-            - name: apicpubkey
-              readOnly: true
-              mountPath: /opt/axway/configs/catalog-public-key.pem
-              subPath: catalog-public-key.pem
-            - name: apicprivkey
-              readOnly: true
-              mountPath: /opt/axway/configs/catalog-private-key.pem
-              subPath: catalog-private-key.pem
+              mountPath: /opt/axway/configs/governance.p12
+              subPath: governance.p12
           ports:
             - name: fm-https
               containerPort: 8081
@@ -187,12 +125,4 @@ spec:
         - name: governance
           secret:
             secretName: flowmanager-governance
-            defaultMode: 420
-        - name: apicpubkey
-          secret:
-            secretName: flowmanager-apicpubkey
-            defaultMode: 420
-        - name: apicprivkey
-          secret:
-            secretName: flowmanager-apicprivkey
             defaultMode: 420
