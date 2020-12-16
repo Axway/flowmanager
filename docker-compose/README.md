@@ -44,7 +44,7 @@ This README refers to managing single-node installations of Flow Manager using `
 ***WARNING***: Running `./flowmanager delete`  will remove all the volumes, including Mongodb data.
 
 ```text
-INFO: ./flowmanager is a helper script for run operations easily. If you are familiar with docker you can use docker-compose commands too.
+./flowmanager is a helper script for run operations easily. If you are familiar with docker you can use docker-compose commands too.
 ```
 
 ### Extra configuration
