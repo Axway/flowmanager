@@ -34,16 +34,6 @@ function startup_script(){
   type -P kubectl &>/dev/null && msg_info 'kubectl is installed.'|| msg_error 'Error: kubectl is not installed.'
   type -P ${HELM} &>/dev/null && msg_info 'helm is installed.'|| msg_error 'Error: Helm is not installed.'
 
-  msg_info "Check if namespace ${NAMESPACE} exist"
-  # verify that the namespace exists
-  kubectl get namespace ${NAMESPACE} --no-headers --output=go-template={{.metadata.name}} >/dev/null 2>&1
-  if [ "$?" -ne "0" ]; then
-    msg_error "Namespace ${NAMESPACE} not found"
-    kubectl create namespace ${NAMESPACE}
-  else
-    msg_output "Namespace ${NAMESPACE} found"
-  fi
-
   msg_output 'Current context set on the namespace flowmanager'
   kubectl config set-context --current --namespace=${NAMESPACE}
 
