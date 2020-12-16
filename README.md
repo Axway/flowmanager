@@ -6,7 +6,7 @@ Deploy Amplify Flow Manager on multiple container orchestration systems.
 
 The files needed to run Flow Manager 2.0 orchestrated with docker-compose in a single-node environment can be found in [docker-compose](docker-compose/) folder.
 
-### Contribute
+## Contribute
 
 Contributions are always welcome.
 
@@ -18,4 +18,4 @@ Check [GitHub Flow](https://guides.github.com/introduction/flow/) for details.
 
 ### Authors
 
-FlowManager - DevOps Team.
+Axway - Flow Manager Team.

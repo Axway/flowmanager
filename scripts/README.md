@@ -1,3 +1,7 @@
-# Generate pem certs
+# Scripts
 
-Docker-compose should be also updated.
+## Generate certificates
+
+Generate `PEM`, `P12` and keystore in `JKS` format.
+
+* Run `./generate_certs.sh` script file.

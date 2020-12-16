@@ -3,3 +3,5 @@
 .vscode
 # Docker compose
 .env
+# App
+*.xml
