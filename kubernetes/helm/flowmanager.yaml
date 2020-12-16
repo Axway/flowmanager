@@ -224,18 +224,18 @@ flowmanager:
     disable: false
     autoGenerateCert: false
     keystorePassword: {} #mandatory if enabled
-    certAlias: {} # ui
+    certAlias: {} # ui ,not mandatory
     fileName: uicert.p12
     existingSecretFile: flowmanager-uicert
 
   business:
     caPassword: {}
-    certAlias: {} # business
+    certAlias: {} # business, ,not mandatory
     fileName: {} #businessca.p12
     existingSecretFile: flowmanager-business 
 
   governance:
     caPassword: {} #mandatory
-    certAlias: {} # governance 
+    certAlias: {} # governance, ,not mandatory 
     fileName: governanceca.p12 #mandatory
     existingSecretFile: flowmanager-governance #mandatory
