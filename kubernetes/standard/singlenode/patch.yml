@@ -28,8 +28,6 @@ spec:
               value: "umcft"
             - name: FM_DATABASE_USE_SSL
               value: "false"
-            - name: FM_HTTPS_CERT_ALIAS
-              value: "ui"
             - name: FM_HTTPS_USE_CUSTOM_CERT
               value: "no"
             - name: FM_HTTPS_KEYSTORE
