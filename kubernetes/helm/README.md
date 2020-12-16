@@ -32,7 +32,7 @@ helm upgrade --install flowmanager-mongodb -f mongodb.yaml bitnami/mongodb --nam
 3. **Helm delete**
 
 ```shell
-helm delete flowmanager-mongodb space=<your_namespace>
+helm delete flowmanager-mongodb --namespace=<your_namespace>
 ```
 
 ### Internal Redis on Kubernetes
@@ -54,7 +54,7 @@ helm upgrade --install flowmanager-redis -f redis.yaml bitnami/redis --namespace
 3. **Helm delete**
 
 ```shell
-helm delete flowmanager-redis space=<your_namespace>
+helm delete flowmanager-redis --namespace=<your_namespace>
 ```
 
 ### Flowmanager
@@ -62,17 +62,17 @@ helm delete flowmanager-redis space=<your_namespace>
 1. **Helm deployment**
 
 ```shell
-helm install  flowmanager ./flowmanager space=<your_namespace> -f flowmanager.yaml
+helm install  flowmanager ./flowmanager --namespace=<your_namespace> -f flowmanager.yaml
 ```
 
 3. **Helm update**
 
 ```shell
-helm upgrade --install flowmanager ./flowmanager space=<your_namespace> -f flowmanager.yaml
+helm upgrade --install flowmanager ./flowmanager --namespace=<your_namespace> -f flowmanager.yaml
 ```
 
 4. **Helm delete**
 
 ```shell
-helm delete flowmanager space=<your_namespace>
+helm delete flowmanager --namespace=<your_namespace>
 ```
