@@ -37,8 +37,6 @@ spec:
               value: "6379"
             - name: FM_REDIS_SSL_ENABLED
               value: "false"
-            - name: FM_HTTPS_CERT_ALIAS
-              value: "ui"
             - name: FM_HTTPS_USE_CUSTOM_CERT
               value: "no"
             - name: FM_HTTPS_KEYSTORE
