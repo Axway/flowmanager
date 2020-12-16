@@ -20,13 +20,13 @@
 1. **Helm deployment**
 
 ```shell
-helm install  flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb.yaml
+helm install flowmanager-mongodb -f mongodb.yaml bitnami/mongodb --namespace=<your_namespace>
 ```
 
 2. **Helm update**
 
 ```shell
-helm upgrade --install flowmanager-mongodb ./mongodb space=<your_namespace> -f mongodb.yaml
+helm upgrade --install flowmanager-mongodb -f mongodb.yaml bitnami/mongodb --namespace=<your_namespace>
 ```
 
 3. **Helm delete**
@@ -42,13 +42,13 @@ helm delete flowmanager-mongodb space=<your_namespace>
 1. **Helm deployment**
 
 ```shell
-helm install  flowmanager-redis ./redis-ha space=<your_namespace> -f redis.yaml
+helm install flowmanager-redis -f redis.yaml bitnami/redis --namespace=<your_namespace>
 ```
 
 2. **Helm update**
 
 ```shell
-helm upgrade --install flowmanager-redis ./redis-ha space=<your_namespace> -f redis.yaml
+helm upgrade --install flowmanager-redis -f redis.yaml bitnami/redis --namespace=<your_namespace>
 ```
 
 3. **Helm delete**
