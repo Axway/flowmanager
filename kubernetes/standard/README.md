@@ -4,9 +4,9 @@ Deploy using standard Kubernetes deployment manifest files.
 
 ## Requirements
 
-* kubectl
+* kubectl 1.17+
 * Customer certificates and password
-* Customer License (`license.xml`)
+* Customer license
 * Mongodb URL
 * `user` and `password` for Mongodb
 
@@ -15,18 +15,21 @@ Deploy using standard Kubernetes deployment manifest files.
 ## How to create secrets for certificates
 
 * License
-```console
-$ kubectl create secret generic flowmanager-license --from-file=license.xml
+
+```shell
+kubectl create secret generic flowmanager-license --from-file=license.xml
 ```
 
 * UI
-```console
-$ kubectl create secret generic flowmanager-httpskeystore --from-file=uicert.p12
+
+```shell
+kubectl create secret generic flowmanager-httpskeystore --from-file=uicert.p12
 ```
 
 * Governance
-```console
-$ kubectl create secret generic flowmanager-governance --from-file=governanceca.p12
+
+```shell
+kubectl create secret generic flowmanager-governance --from-file=governanceca.p12
 ```
 
 _**Warning:** Each files used from this step we need to be update the [Deployment file](flowmanager/deployment.yaml)_
@@ -36,7 +39,8 @@ _**Warning:** Each files used from this step we need to be update the [Deploymen
 Inside the file [secret-env.yml](standard/base/secret-env.yml)
 
 Updating each values for the keys related:
-```
+
+```shell
   FM_GENERAL_ENCRYPTION_KEY: ""
   FM_HTTPS_KEYSTORE_PASSWORD: ""
   FM_CFT_SHARED_SECRET: ""
@@ -46,15 +50,16 @@ Updating each values for the keys related:
 ```
 
 Example with mongodb user/password:
-```console
+
+```shell
 # For mongodb user
-$ echo -n 'mongdb_user' | base64 
+$ echo -n 'mongdb_user' | base64
 bW9uZ2RiX3VzZXI=
 # Changing the value for the key
 FM_DATABASE_USER_NAME: "bW9uZ2RiX3VzZXI="
 
 # For mongodb password
-$ echo -n 'mongdb_password' | base64 
+$ echo -n 'mongdb_password' | base64
 bW9uZ2RiX3Bhc3N3b3Jk
 # Changing the value for the key
 FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
@@ -62,11 +67,12 @@ FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 
 ## How to configure Flowmanager before deployment
 
-Files to check and modify :
+Files to check and modify:
+
 * Deployment file: [SingleNode](singlenode/patch.yml) or [MultiNode](multinode/patch.yml)
 * [Secret Env file](base/secret-env.yml)
 
-# How to deploy Flowmanager
+## How to deploy Flowmanager
 
 **This stuff permit to deploy only Flowmanager 1 node**
 
@@ -74,12 +80,13 @@ Files to check and modify :
 2. Editing manually the yaml file for parameters needed or madatory for the customer
 3. Applying all the files
 ex:
-```console
-$ kubectl apply -k ./singlenode
+
+```shell
+kubectl apply -k ./singlenode
 ```
 
 ## ***Remove***
 
-```console
+```shell
 kubectl delete -k ./singlenode
 ```
