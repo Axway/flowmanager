@@ -4,7 +4,10 @@
 # Docker compose
 .env
 *.tar
+# App
 *.xml
+logs
+.log
 # Certs
 custom-ca
 *.p12
