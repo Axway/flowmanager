@@ -19,7 +19,7 @@ do
    read -s PASSWORD
    echo "Type the password again:"
    read -s SECOND_PASSWORD
-   
+
    if [ "$PASSWORD" != "$SECOND_PASSWORD" ]
    then
 	   echo
@@ -31,10 +31,7 @@ done
 echo
 echo "Please, choose EXPIRATION_DAYS for the certificates: "
 read EXPIRATION_DAYS
-
 echo $EXPIRATION_DAYS
-
-
 
 # Generate CA
 function gen_ca() {
