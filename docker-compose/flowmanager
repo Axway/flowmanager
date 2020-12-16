@@ -40,11 +40,17 @@ function gen_config() {
 
 # Start the container(s)
 function start_container() {
+    local name=${1-}
     if [ ! -f .env ]; then
         echo "There is not .env file. Please create it by running this command: ./flowmanager setup"
         exit 1
     else
-        docker-compose up -d
+        if [ -z "$name" ]; then
+            docker-compose up -d
+        else
+            docker-compose up -d $name
+            exit 0
+        fi
     fi
 }
 
@@ -54,7 +60,7 @@ function restart_container() {
     if [ -z "$name" ]; then
         docker-compose restart
     else
-        docker-compose restart $1
+        docker-compose restart $name
         exit 0;
     fi
 }
@@ -80,7 +86,7 @@ function log_container() {
     if [ -z "$name" ]; then
         docker-compose logs
     else
-        docker-compose logs $1
+        docker-compose logs $name
         exit 0;
     fi
 }
@@ -116,7 +122,11 @@ if [[ $@ ]]; then
                 shift
                 ;;
             start)
-                start_container
+                if [ -z "${2-}" ]; then
+                    start_container
+                else
+                    start_container $2
+                fi
                 shift
                 ;;
             stop)
