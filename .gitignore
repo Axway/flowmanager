@@ -3,5 +3,11 @@
 .vscode
 # Docker compose
 .env
+*.tar
 # App
 *.xml
+# Certs
+custom-ca
+*.p12
+*.pem
+*.jks
