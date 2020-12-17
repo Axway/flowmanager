@@ -177,8 +177,8 @@ flowmanager:
   logLevel: info # info or debug
   acceptEula: "no" # set to yes
   extFqdn: flowmanager.mydomain.com # external dns for UI automatic cert generation / API responses
-  generalEncryptionKey: Secret01 # Permit to create k8s secret with your password
-  cftSharedSecret: Secret01 # Change this value only for CFT <= 3.5 and  Permit to create k8s secret with your password
+  generalEncryptionKey: {} # Permit to create k8s secret with your password
+  cftSharedSecret: {} # Change this value only for CFT <= 3.5 and  Permit to create k8s secret with your password
 
 # For each block :
 # - createSecretFile ==>> create secret file or not
@@ -189,7 +189,7 @@ flowmanager:
   db:
     endpoints: mongodb.flowmanager.svc.cluster.local:27017,mongodb.flowmanager.svc.cluster.local:27017 # comma separated
     user: mymongodbuser
-    password: Secret01
+    password: {}
     useSSL: false
     fileName: {} # mongodb.pem
     existingSecretFile: {} # secret name
@@ -211,19 +211,19 @@ flowmanager:
   https:
     disable: false
     autoGenerateCert: false
-    keystorePassword: Secret01
+    keystorePassword: {}
     certAlias: {} # ui
     fileName: {} #uicert.p12
     existingSecretFile: {}   
 
   business:
-    caPassword: Secret01
+    caPassword: {}
     certAlias: {} # business
     fileName: {} #businessca.p12
     existingSecretFile: {}   
 
   governance:
-    caPassword: Secret01
+    caPassword: {}
     certAlias: {} # governance   
     fileName: {} #governanceca.p12
     existingSecretFile: {}
