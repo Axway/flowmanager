@@ -170,7 +170,7 @@ extraSecrets: {}
 # FM Config
 ####################################
 #
-# Replace Secret01 per your real value 
+# Replace {} per your real value 
 #
 
 flowmanager:
