@@ -64,9 +64,28 @@ policy = policy_match
 serial = $root/serial
 default_days = $EXPIRATION_DAYS
 
+[ req ] 
+distinguished_name = req_distinguished_name
+x509_extensions = v3_ca # The extensions to add to the self signed cert
+prompt = no
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer
+basicConstraints = critical,CA:true
+keyUsage = cRLSign, keyCertSign
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 =$site
+
+[ req_distinguished_name ]
+emailAddress = example@example.com
+
 EOF
 
-    openssl req -x509 -days $EXPIRATION_DAYS -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
+    openssl req -x509 -days $EXPIRATION_DAYS -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU" -config $root/ca.cnf
 }
 
 # Genereate PEM certs
