@@ -33,7 +33,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_DATABASE_AUTH_MECHANISM|No|`string`|The client authentication mechanism. Possible values: `LDAP`, `SCRAM_SHA1`, `SCRAM_SHA256`. If not set, the default mongo client authentication mechanism will be used (`SCRAM_SHA1`). If LDAP is used, the `FM_DATABASE_AUTHSOURCE` should not be set because in this case its default value is `$external`.||
 |FM_GOVERNANCE_CA_CERTIF_ALIAS|No|`string`|Custom governance certificate internal alias||
 |FM_GOVERNANCE_CA_FILE|No|`string`|File name and path to custom governance certificate||
-|FM_GOVERNANCE_CA_PASSWORD|No|`string`| Custom governance certificate password||
+|FM_GOVERNANCE_CA_PASSWORD|No|`string`| Custom governance certificate password provided in the generation script.||
 |FM_METRICS_ENABLED|No|`string`|Enable metrics for Prometheus|`false`|
 |FM_JVM_XMX|No|`string`|JVM maximum memory allocation pool|`2G`|
 |FM_JVM_XMS|No|`string`|JVM maximum memory allocation pool|`512M`|
