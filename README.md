@@ -12,7 +12,7 @@ All deployment manifest files (standard and helm) can be found in [kubernetes](k
 
 ## Podman
 
-Depployment manifest files can be found [here](podman/).
+Deployment manifest files can be found [here](podman/).
 
 ## Contribute
 
