@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flowmanager
+spec:
+  replicas: 3
+  template:
+    spec:
+      $setElementOrder/containers:
+        - name: flowmanager
+      containers:
+        - image: axway/flowmanager:[FLOWMANAGER_VERSION]
+          name: flowmanager
+          env:
+            - name: ACCEPT_EULA
+              value: ""
+            - name: FM_GENERAL_LOGGING_LEVEL
+              value: "INFO"
+            - name: FM_LOGS_CONSOLE
+              value: "true"
+            - name: FM_GENERAL_FQDN
+              value: ""
+            - name: FM_GENERAL_UI_PORT
+              value: "443"
+            - name: FM_DATABASE_HOST
+              value: "mongodb.flowmanager.svc.cluster.local"
+            - name: FM_DATABASE_NAME
+              value: "umcft"
+            - name: FM_DATABASE_USE_SSL
+              value: "false"
+            - name: FM_REDIS_ENABLED
+              value: "true"
+            - name: FM_REDIS_HOSTNAME
+              value: "redis.flowmanager.svc.cluster.local"
+            - name: FM_REDIS_PORT
+              value: "6379"
+            - name: FM_REDIS_SSL_ENABLED
+              value: "false"
+            - name: FM_HTTPS_USE_CUSTOM_CERT
+              value: "no"
+            - name: FM_HTTPS_KEYSTORE
+              value: /opt/axway/FlowManager/configs/uicert.p12
+            - name: FM_GOVERNANCE_CA_FILE
+              value: /opt/axway/FlowManager/configs/governanceca.p12
+            - name: FM_CFT_SHARED_SECRET
+              value: ""
+            - name: FM_CFT_UPDATES_PATH
+              value: "/opt/axway/FlowManager/updates/cft/"
+            - name: FM_JVM_XMN
+              value: "768M"
+            - name: FM_JVM_XMS
+              value: "2G"
+            - name: FM_JVM_XMX
+              value: "4G"

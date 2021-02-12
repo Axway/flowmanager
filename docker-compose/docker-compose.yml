@@ -1,0 +1,48 @@
+version: "3.6"
+services:
+  # Create MongoDB container
+  mongodb:
+    image: "${MONGO_IMAGE_URL:-mongo}:${MONGO_IMAGE_VERSION:-3.6}"
+    environment:
+      - MONGO_INTERNAL_PORT=${MONGO_INTERNAL_PORT:-27017}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_APP_DATABASE=${MONGO_APP_DATABASE}
+      - MONGO_APP_USER=${MONGO_APP_USER}
+      - MONGO_APP_PASS=${MONGO_APP_PASS}
+    ports:
+      - "${MONGO_EXTERNAL_PORT:-27017}:${MONGO_INTERNAL_PORT:-27017}"
+    command: ["-f", "/opt/mongod.conf"]
+    volumes:
+      - ./files/mongo/scripts:/docker-entrypoint-initdb.d
+      - ./files/mongo/config:/opt:ro
+      - mongodb_data_container:/data/db:rw
+    restart: always
+    healthcheck:
+      test:
+        - CMD
+        - mongo
+        - --eval
+        - "db.adminCommand('ping')"
+  # Create FlowManager container
+  flowmanager:
+    image: "${FLOWMANAGER_IMAGE_URL:-axway/flowmanager}:${FLOWMANAGER_VERSION}"
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+    ports:
+      - "${FM_GENERAL_UI_PORT:-8081}:8081"
+    volumes:
+      - ./files/flowmanager/configs:/opt/axway/FlowManager/configs:rw
+      - ./files/flowmanager/license:/opt/axway/FlowManager/conf/license:ro
+      - ./files/flowmanager/plugins:/opt/axway/FlowManager/conf/schemas/storage
+      - ./files/flowmanager/updates:/opt/axway/FlowManager/updates:rw
+      - ./files/flowmanager/logs:/opt/axway/logs:rw
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data_container:
+    name: mongostorage

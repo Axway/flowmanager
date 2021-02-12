@@ -1,29 +1,26 @@
-# AMPLIFY Flow Central Docker
+# Amplify Flow Manager (2.0) Deploy
 
-AMPLIFY Flow Central Docker
+Deploy Amplify Flow Manager on multiple container orchestration systems.
 
-## Content
+## docker-compose
 
-- Docker-Compose: Orchestration infrastructure.
+The files needed to run Flow Manager 2.0 orchestrated with docker-compose in a single-node environment can be found in [docker-compose](docker-compose/) folder.
 
-## Before you begin
+## Kubernetes
 
-This document assumes a basic understanding of core Docker concepts such as containers, container images, and basic Docker commands.
-If needed, see [Get started with Docker](https://docs.docker.com/get-started/) for a primer on container basics.
+All deployment manifest files (standard and helm) can be found in [kubernetes](kubernetes/) folder.
 
-## Prerequisites
+## Contribute
 
-- Git
-- Docker version 17.09 or higher
-- Docker-Compose version 1.17.0 or higher
-- Create the directories where you wish to bind your volumes
-- License and certificates
-- Optional: MongoDB instance
+Contributions are always welcome.
 
-*Note* You may use an existing MongoDB instance or our bundled up MongoDB service which will be deployed by default when running with our docker-compose.
+* Fork the repo
+* Create a pull request against master
+* Be sure tests pass (if exists)
 
-#### Installing the necessary prerequisites  (Git, Docker Engine and Docker Compose)
+Check [GitHub Flow](https://guides.github.com/introduction/flow/) for details.
 
+<<<<<<< HEAD
 Add local registry to docker installation daemon.conf file:
 
 For unix /etc/docker/daemon.json
@@ -261,4 +258,8 @@ Example:
 ## Security notices
 
 `*Note*` The image axway/mongodb is using the official mongo:3.6 image on top of it we added some scripts specific to the application **we are not managing the mongo:3.6 image**.
+=======
+### Authors
+>>>>>>> improve/deployment
 
+Axway - Flow Manager Team.
