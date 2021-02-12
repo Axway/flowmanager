@@ -5,7 +5,6 @@ This README refers to managing single-node installations of Flow Manager using `
 ## Requirements
 
 * [podman](https://podman.io/getting-started/installation) version 1.6.x or higher
-* [Go](https://golang.org/doc/install) version 1.12.x or higher
 * Flow Manager Docker Image downloaded from Axway Sphere
 * Flow Manager license and certificates files
 * Mongodb 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
@@ -26,7 +25,6 @@ This README refers to managing single-node installations of Flow Manager using `
 * Run `./flowmanager start` command to start the containers with Flow Manager and database
 
 ***Note***: We support for the momment `jks`,`p12` and `pem` certificates extensions.
-
 
 ## ***Remove***
 
