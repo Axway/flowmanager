@@ -34,6 +34,7 @@ function gen_config() {
 function start_container() {
 
 podman play kube ./flowmanager.yml
+echo "FlowManager was installed."
 
 }
 
@@ -71,6 +72,7 @@ podman pod inspect flowmanager_pod
 # Install the container(s) for agent
 function agent() {
 podman play kube ./agent.yml
+echo "FlowManager Agent was installed."
 }
 
 # Stop the container(s) for agent
