@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: flowmanager
+  name: agent_pod
+spec:
+  containers:
+  - image: flowmanager-agent:stable
+    name: agent
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    env:
+    - name: ACCEPT_EULA
+      value: ""
+    - name: NAME                                # name of the agent
+      value: GLOBAL
+    - name: DOSA
+      value: /conf/dosa.json
+    - name: DOSA_KEY
+      value: /conf/dosa-key.pem
+    - name: DOSA_KEY_PASSWORD                   # to be set if the KEY is secured
+      value: ""
+    - name: CACERT
+      value:  "/conf/flowmanager-bridge.crt"    # bridge crt
+    - name: INSECURE
+      value:  "true"                          
+    - name: SERVER
+      value:  ""                                # bridge server
+    - name: SENDLOGS
+      value:  "true"                            # send agent logs to bridge for better support
+    volumeMounts:
+    - mountPath: /conf
+      name: certs
+  volumes:
+  - hostPath:
+      path: ./files/agent
+      type: Directory
+    name: certs    
+status: {}
+

@@ -13,18 +13,19 @@ function gen_config() {
     ./generate_certs.sh
     cd -
 
-    # Copy generated certificates in FM configs space
-    info_message "INFO: Copy certs in configs space..."
-
     cp ../scripts/custom-ca/governance/cacert.p12 ./files/$PROJECT_NAME/configs/governanceca.p12
     cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
     cp ../scripts/custom-ca/governance/uicert.p12 ./files/$PROJECT_NAME/configs/uicert.p12
+	
+	chmod 744 ./files/$PROJECT_NAME/configs/governanceca.p12
+	chmod 744 ./files/$PROJECT_NAME/configs/businessca.p12
+	chmod 744 ./files/$PROJECT_NAME/configs/uicert.p12
 
     # List config files
     if [ $? -eq 0 ]; then
-        info_message "INFO: Certificates generated and copied to the configs space"
+        echo "INFO: Certificates generated and copied to the configs space"
     else
-        error_message "ERROR: Some issues in generating and copy certs to the configs space"
+        echo "ERROR: Some issues in generating and copy certs to the configs space"
         exit 1
     fi
 }
@@ -32,7 +33,7 @@ function gen_config() {
 # Start the container(s)
 function start_container() {
 
-podman play kube ./deployment.yml
+podman play kube ./flowmanager.yml
 
 }
 
@@ -58,12 +59,30 @@ echo "Pod 'flowmanager_pod' was stopped"
 # Delete the container(s)
 function delete_container() {
 podman pod rm -f flowmanager_pod
+rm -rf ./mongodb_data_container/*
 echo "Pod 'flowmanager_pod' was deleted"
 }
 
 # Restart the container(s)
 function inspect() {
 podman pod inspect flowmanager_pod
+}
+
+# Install the container(s) for agent
+function agent() {
+podman play kube ./agent.yml
+}
+
+# Stop the container(s) for agent
+function stopag() {
+podman pod stop agent_pod
+echo "Pod 'flowmanager_pod' was stopped"
+}
+
+# Delete the container(s) for agent
+function deleteag() {
+podman pod rm -f agent_pod
+echo "Pod 'agent_pod' was deleted"
 }
 
 # How to use the script
@@ -73,14 +92,17 @@ function usage() {
     echo "--------"
     echo "Usage: ./$PROJECT_NAME [option]"
     echo "  options:"
-    echo "    setup  : Generate certs and create .env file"
-    echo "    start  : Start $PROJECT_NAME and database containers"
-    echo "    restart: Restart $PROJECT_NAME and database containers"
-    echo "    stop   : Stop $PROJECT_NAME and database containers"
-    echo "    stats  : Show the status of $PROJECT_NAME and database containers"
-    echo "    delete : Delete $PROJECT_NAME, database containers and other parts related to the containers, like storage"
-    echo "    inspect: Get the details about your pod"
-    echo "    help   : Show the usage of the script file"
+    echo "    setup    : Generate certs and create .env file"
+    echo "    start    : Start $PROJECT_NAME and database containers"
+    echo "    restart  : Restart $PROJECT_NAME and database containers"
+    echo "    stop     : Stop $PROJECT_NAME and database containers"
+    echo "    stats    : Show the status of $PROJECT_NAME and database containers"
+    echo "    delete   : Delete $PROJECT_NAME, database containers and other parts related to the containers, like storage"
+    echo "    inspect  : Get the details about your flowmanager pod"
+	echo "    agent    : Start agent"
+	echo "    stopag   : Stop agent"
+	echo "    deleteag : Delete agent"
+    echo "    help     : Show the usage of the script file"
     echo ""
     exit
 }
@@ -130,6 +152,18 @@ if [[ $@ ]]; then
                 else
                     inspect $2
                 fi
+                shift
+                ;;
+		     agent)
+                agent
+                shift
+                ;;
+		     stopag)
+                stopag
+                shift
+                ;;
+		     deleteag)
+                deleteag
                 shift
                 ;;
             help)

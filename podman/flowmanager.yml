@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: flowmanager
+  name: flowmanager_pod
+spec:
+  containers:
+    - image: mongo:3.6
+      name: mongodb
+      args:
+        - '-f'
+        - '/opt/mongod.conf'
+      ports:
+        - name: mongoport
+          hostPort: 27017
+          containerPort: 27017
+          protocol: tcp
+      env:
+        - name: MONGO_INTERNAL_PORT
+          value: "27017"
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: ""
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: ""
+        - name: MONGO_APP_DATABASE
+          value: ""
+        - name: MONGO_APP_USER
+          value: ""
+        - name: MONGO_APP_PASS
+          value: ""
+      volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d
+          name: scripts
+        - mountPath: /opt
+          name: config
+        - mountPath: /data/db
+          name: data
+
+    - image: axway/flowmanager
+      name: flowmanager
+      ports:
+        - name: fmport
+          hostPort: 8081
+          containerPort: 8081
+          protocol: tcp
+      env:
+        - name: ACCEPT_EULA
+          value: ""
+        - name: FM_GENERAL_FQDN
+          value: ""                 #Change with your host
+        - name: FM_GENERAL_UI_PORT
+          value: "8081"
+        - name: FM_GENERAL_ENCRYPTION_KEY
+          value: ""
+        - name: FM_HTTPS_USE_CUSTOM_CERT
+          value: "no"
+        - name: FM_HTTPS_KEYSTORE
+          value: "/opt/axway/FlowManager/configs/uicert.p12"
+        - name: FM_HTTPS_KEYSTORE_PASSWORD
+          value: ""
+        - name: FM_LOGS_CONSOLE
+          value: "yes"
+        - name: FM_GENERAL_LOGGING_LEVEL
+          value: "INFO"
+        - name: FM_GOVERNANCE_CA_FILE
+          value: "/opt/axway/FlowManager/configs/governanceca.p12"
+        - name: FM_GOVERNANCE_CA_PASSWORD
+          value: ""
+        - name: FM_DATABASE_HOST
+          value: "localhost"
+        - name: FM_DATABASE_USER_NAME
+          value: ""
+        - name: FM_DATABASE_USER_PASSWORD
+          value: ""
+        - name: FM_DATABASE_NAME
+          value: "umcft"
+        - name: FM_DATABASE_USE_SSL
+          value: "false"
+        - name: FM_DATABASE_CERTIFICATES
+          value: ""
+        - name: FM_CFT_SHARED_SECRET
+          value: ""
+        - name: FM_CFT_UPDATES_PATH
+          value: "/opt/axway/FlowManager/updates/cft/"
+        - name: FM_JVM_XMX
+          value: "2G"
+        - name: FM_JVM_XMS
+          value: "512M"
+        - name: FM_JVM_XMN
+          value: "768M"
+      volumeMounts:
+        - mountPath: /opt/axway/FlowManager/configs
+          name: configs
+        - mountPath: /opt/axway/FlowManager/conf/license
+          name: license
+        - mountPath: /opt/axway/FlowManager/conf/schemas/storage
+          name: plugins
+        - mountPath: /opt/axway/FlowManager/updates
+          name: updates
+        - mountPath: /opt/axway/logs
+          name: logs
+  volumes:
+    - hostPath:
+        path: ./files/mongo/scripts
+        type: Directory
+      name: scripts
+    - hostPath:
+        path: ./files/mongo/config
+        type: Directory
+      name: config
+    - hostPath:
+        path: ./mongodb_data_container
+        type: Directory
+      name: data
+    - hostPath:
+        path: ./files/flowmanager/configs
+        type: Directory
+      name: configs
+    - hostPath:
+        path: ./files/flowmanager/license
+        type: Directory
+      name: license
+    - hostPath:
+        path: ./files/flowmanager/plugins
+        type: Directory
+      name: plugins
+    - hostPath:
+        path: ./files/flowmanager/updates
+        type: Directory
+      name: updates
+    - hostPath:
+        path: ./files/flowmanager/logs
+        type: Directory
+      name: logs

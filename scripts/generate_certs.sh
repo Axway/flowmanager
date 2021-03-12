@@ -136,3 +136,7 @@ gen_ca business
 p12 ./custom-ca/governance/cacert governance
 p12 ./custom-ca/governance/uicert ui
 p12 ./custom-ca/business/cacert business
+
+chmod 755 ./custom-ca/governance/cacert.p12
+chmod 755 ./custom-ca/governance/uicert.p12
+chmod 755 ./custom-ca/business/cacert.p12
