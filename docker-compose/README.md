@@ -71,4 +71,4 @@ Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network
 * Connect to the running Mongo 3.6 container (docker exec -it <container_id> /bin/bash)
 * Establish the connection with mongo using root inside the container (mongo -u root)
 * Run the following command: `db.adminCommand( { setFeatureCompatibilityVersion: "4.0" } )`
-* Change the mongo image with the version 4.2
+* Change the Mongo image with the version 4.2
