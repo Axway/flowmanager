@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Setup and run the app.
-# Example: ./flowmanager.sh [setup/start/restart/stop/help...]
+# Example: ./flowmanager_helper.sh [setup/start/restart/stop/help...]
 
 PROJECT_NAME="flowmanager"
 
