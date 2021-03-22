@@ -69,24 +69,6 @@ function inspect() {
 podman pod inspect flowmanager_pod
 }
 
-# Install the container(s) for agent
-function agent() {
-podman play kube ./agent.yml
-echo "FlowManager Agent was installed."
-}
-
-# Stop the container(s) for agent
-function stopag() {
-podman pod stop agent_pod
-echo "Pod 'flowmanager_pod' was stopped"
-}
-
-# Delete the container(s) for agent
-function deleteag() {
-podman pod rm -f agent_pod
-echo "Pod 'agent_pod' was deleted"
-}
-
 # How to use the script
 function usage() {
     echo "--------"
@@ -101,9 +83,6 @@ function usage() {
     echo "    stats    : Show the status of $PROJECT_NAME and database containers"
     echo "    delete   : Delete $PROJECT_NAME, database containers and other parts related to the containers, like storage"
     echo "    inspect  : Get the details about your flowmanager pod"
-	echo "    agent    : Start agent"
-	echo "    stopag   : Stop agent"
-	echo "    deleteag : Delete agent"
     echo "    help     : Show the usage of the script file"
     echo ""
     exit
@@ -154,18 +133,6 @@ if [[ $@ ]]; then
                 else
                     inspect $2
                 fi
-                shift
-                ;;
-		     agent)
-                agent
-                shift
-                ;;
-		     stopag)
-                stopag
-                shift
-                ;;
-		     deleteag)
-                deleteag
                 shift
                 ;;
             help)
