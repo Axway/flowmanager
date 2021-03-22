@@ -7,7 +7,7 @@ for i in ../scripts/common/*;
 done
 
 # Setup and run the app.
-# Example: ./flowmanager.sh [setup/start/restart/stop/status/help...]
+# Example: ./flowmanager_helper.sh [setup/start/restart/stop/status/help...]
 
 PROJECT_NAME="flowmanager"
 
@@ -42,7 +42,7 @@ function gen_config() {
 function start_container() {
     local name=${1-}
     if [ ! -f .env ]; then
-        echo "There is not .env file. Please create it by running this command: ./flowmanager setup"
+        echo "There is not .env file. Please create it by running this command: ./flowmanager_helper.sh setup"
         exit 1
     else
         if [ -z "$name" ]; then
