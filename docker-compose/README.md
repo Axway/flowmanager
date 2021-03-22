@@ -8,7 +8,7 @@ This README refers to managing single-node installations of Flow Manager using `
 * [docker-compose](https://docs.docker.com/compose/install/) version 1.27.x or higher
 * Flow Manager Docker Image downloaded from Axway Sphere
 * Flow Manager license and certificates files
-* Mongodb 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
+* Mongodb 4.2 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
 
 ## ***Setup & Run***
 
@@ -65,3 +65,9 @@ Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network
 * Change value of `CAFile` and `PEMKeyFile` parameters with yours (only name of certificate files)
 * Save it
 * Run `./flowmanager start` command in case you run Mongodb for the first time  or `./flowmanager restart mongodb` in case you already have Mongodb up.
+
+## ***Upgrade Mongo 3.6 to 4.2***
+
+* Connect to the running mongo 3.6 container (docker exec -it <container_id> /bin/bash)
+* Establish the connection with mongo using root inside the container (mongo -u root)
+* Run the following command: `db.adminCommand( { setFeatureCompatibilityVersion: "4.0" } )`
