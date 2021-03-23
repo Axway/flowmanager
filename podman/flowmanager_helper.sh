@@ -1,0 +1,151 @@
+#!/bin/bash
+set -euo pipefail
+
+# Setup and run the app.
+# Example: ./flowmanager_helper.sh [setup/start/restart/stop/help...]
+
+PROJECT_NAME="flowmanager"
+
+# Generate and copy generated certificates in the right configs path
+function gen_config() {
+    # Generate certifications
+    cd ../scripts/
+    ./generate_certs.sh
+    cd -
+
+    cp ../scripts/custom-ca/governance/cacert.p12 ./files/$PROJECT_NAME/configs/governanceca.p12
+    cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
+    cp ../scripts/custom-ca/governance/uicert.p12 ./files/$PROJECT_NAME/configs/uicert.p12
+	
+	chmod 744 ./files/$PROJECT_NAME/configs/governanceca.p12
+	chmod 744 ./files/$PROJECT_NAME/configs/businessca.p12
+	chmod 744 ./files/$PROJECT_NAME/configs/uicert.p12
+
+    # List config files
+    if [ $? -eq 0 ]; then
+        echo "INFO: Certificates generated and copied to the configs space"
+    else
+        echo "ERROR: Some issues in generating and copy certs to the configs space"
+        exit 1
+    fi
+}
+
+# Start the container(s)
+function start_container() {
+
+podman play kube ./flowmanager.yml
+echo "FlowManager was installed."
+
+}
+
+# Restart the container(s)
+function restart_container() {
+
+podman pod restart flowmanager_pod
+echo "Pod 'flowmanager_pod' was restarted"
+
+}
+
+# Check the container(s)
+function status_container() {
+podman pod stats flowmanager_pod
+}
+
+# Stop the container(s)
+function stop_container() {
+podman pod stop flowmanager_pod
+echo "Pod 'flowmanager_pod' was stopped"
+}
+
+# Delete the container(s)
+function delete_container() {
+podman pod rm -f flowmanager_pod
+rm -rf ./mongodb_data_container/*
+echo "Pod 'flowmanager_pod' was deleted"
+}
+
+# Restart the container(s)
+function inspect() {
+podman pod inspect flowmanager_pod
+}
+
+# How to use the script
+function usage() {
+    echo "--------"
+    echo " HELP"
+    echo "--------"
+    echo "Usage: ./$PROJECT_NAME [option]"
+    echo "  options:"
+    echo "    setup    : Generate certs and create .env file"
+    echo "    start    : Start $PROJECT_NAME and database containers"
+    echo "    restart  : Restart $PROJECT_NAME and database containers"
+    echo "    stop     : Stop $PROJECT_NAME and database containers"
+    echo "    stats    : Show the status of $PROJECT_NAME and database containers"
+    echo "    delete   : Delete $PROJECT_NAME, database containers and other parts related to the containers, like storage"
+    echo "    inspect  : Get the details about your flowmanager pod"
+    echo "    help     : Show the usage of the script file"
+    echo ""
+    exit
+}
+
+[[ $# -eq 0 ]] && usage
+
+# Menu
+if [[ $@ ]]; then
+    while (( $# ))
+    do
+        case "$1" in
+            setup)
+                gen_config
+                shift
+                ;;
+            start)
+                if [ -z "${2-}" ]; then
+                    start_container
+                else
+                    start_container $2
+                fi
+                shift
+                ;;
+            stop)
+                stop_container
+                shift
+                ;;
+            restart)
+                if [ -z "${2-}" ]; then
+                    restart_container
+                else
+                    restart_container $2
+                fi
+                shift
+                ;;
+            stats)
+                status_container
+                shift
+                ;;
+            delete)
+                delete_container
+                shift
+                ;;
+            inspect)
+                if [ -z "${2-}" ]; then
+                    inspect
+                else
+                    inspect $2
+                fi
+                shift
+                ;;
+            help)
+                usage
+                exit 0
+                ;;
+            *)
+                error_message "ERROR: Invalid option $1. Type help option for more information"
+                exit 0
+                ;;
+        esac
+    done
+else
+    usage
+    exit 0
+fi
