@@ -7,7 +7,7 @@ This README refers to managing single-node installations of Flow Manager using `
 * [podman](https://podman.io/getting-started/installation) version 3.0.1
 * Flow Manager Docker Image downloaded from Axway Sphere
 * Flow Manager license and certificates files
-* Mongodb 3.6 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
+* Mongodb 4.2 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
 
 ## ***Setup & Run***
 
