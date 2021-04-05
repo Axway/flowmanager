@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 if [ ! -f ../docker-compose/docker-compose.yml ]; then
     echo "docker-compose.yml not found!"
