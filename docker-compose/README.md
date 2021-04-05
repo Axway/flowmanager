@@ -68,4 +68,4 @@ Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network
 
 ## ***Upgrade Mongo 3.6 to 4.2***
 
-* Run [upgradeMongo42.sh](../script/upgradeMongo42.sh).
+* Run [upgradeMongo42.sh](../scripts/upgradeMongo42.sh).
