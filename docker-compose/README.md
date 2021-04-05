@@ -68,7 +68,4 @@ Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network
 
 ## ***Upgrade Mongo 3.6 to 4.2***
 
-* Connect to the running Mongo 3.6 container (docker exec -it <container_id> /bin/bash)
-* Establish the connection with mongo using root inside the container (mongo -u root)
-* Run the following command: `db.adminCommand( { setFeatureCompatibilityVersion: "4.0" } )`
-* Change the Mongo image with version 4.2
+* Run [upgradeMongo42.sh](../script/upgradeMongo42.sh).
