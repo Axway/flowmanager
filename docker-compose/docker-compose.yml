@@ -2,7 +2,7 @@ version: "3.6"
 services:
   # Create MongoDB container
   mongodb:
-    image: "${MONGO_IMAGE_URL:-mongo}:${MONGO_IMAGE_VERSION:-4.0}"
+    image: "${MONGO_IMAGE_URL:-mongo}:${MONGO_IMAGE_VERSION:-4.2}"
     environment:
       - MONGO_INTERNAL_PORT=${MONGO_INTERNAL_PORT:-27017}
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
