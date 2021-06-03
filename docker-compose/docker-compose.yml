@@ -26,7 +26,7 @@ services:
         - "db.adminCommand('ping')"
   # Create FlowManager container
   flowmanager:
-    image: "${FLOWMANAGER_IMAGE_URL:-axway/flowmanager}:${FLOWMANAGER_VERSION}"
+    image: "${FLOWMANAGER_IMAGE_URL:-axway/flowmanager-beta}:${FLOWMANAGER_VERSION}"
     stdin_open: true
     tty: true
     env_file:
@@ -44,7 +44,7 @@ services:
       - mongodb
     # Create ST-Plugin container  
   st-fm-plugin:
-    image: "${ST_IMAGE_URL:-axway/st-fm-plugin}:${ST_IMAGE_VERSION}"
+    image: "${ST_IMAGE_URL:-axway/st-fm-plugin-beta}:${ST_IMAGE_VERSION}"
     environment:
       - DEPLOYMENT=${DEPLOYMENT:-premise}
       - SKIP_HOSTNAME_VERIFICATION=${SKIP_HOSTNAME_VERIFICATION:-false}
