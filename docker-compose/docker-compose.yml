@@ -42,6 +42,23 @@ services:
     restart: unless-stopped
     depends_on:
       - mongodb
+    # Create ST-Plugin container  
+  st-fm-plugin:
+    image: "${ST_IMAGE_URL:-axway/st-fm-plugin}:${ST_IMAGE_VERSION}"
+    environment:
+      - DEPLOYMENT=${DEPLOYMENT:-premise}
+      - SKIP_HOSTNAME_VERIFICATION=${SKIP_HOSTNAME_VERIFICATION:-false}
+      - FM_HOST=${FM_HOST:-flowmanager}
+      - FM_PORT=${FM_FORT:-8081}
+      - FM_USER=${FM_USER}
+      - FM_PASS=${FM_PASS}
+      - ST_FM_PLUGIN_PROTOCOL=${ST_FM_PLUGIN_PROTOCOL:-https}
+      - ST_FM_PLUGIN_HOST=${ST_FM_PLUGIN_HOST:-st-fm-plugin}
+      - ST_FM_PLUGIN_PORT=${ST_FM_PLUGIN_PORT:-8899}
+    ports:
+      - "${ST_FM_PLUGIN_PORT:-8899}:8899"
+    depends_on:
+      - flowmanager
 
 volumes:
   mongodb_data_container:
