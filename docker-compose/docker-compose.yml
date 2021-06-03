@@ -49,7 +49,8 @@ services:
       - DEPLOYMENT=${DEPLOYMENT:-premise}
       - SKIP_HOSTNAME_VERIFICATION=${SKIP_HOSTNAME_VERIFICATION:-false}
       - FM_HOST=${FM_HOST:-flowmanager}
-      - FM_PORT=${FM_FORT:-8081}
+      - FM_PORT=${FM_PORT:-8081}
+      - FM_ORG=${FM_ORG:-Org}
       - FM_USER=${FM_USER}
       - FM_PASS=${FM_PASS}
       - ST_FM_PLUGIN_PROTOCOL=${ST_FM_PLUGIN_PROTOCOL:-https}
