@@ -4,7 +4,7 @@
 # startup function
 ###########################################
 function namespace_choice(){
-  echo "Please gives your namespace:" 
+  echo "Please type your namespace:" 
   read -r NAMESPACE 
   export NAMESPACE=${NAMESPACE}
   if kubectl get namespace ${NAMESPACE} | grep -q 'Active'

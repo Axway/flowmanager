@@ -39,10 +39,11 @@ echo "FlowManager was installed."
 }
 
 # Restart the container(s)
-function restart_container() {
+function update_container() {
 
-podman pod restart flowmanager_pod
-echo "Pod 'flowmanager_pod' was restarted"
+podman pod rm -f flowmanager_pod
+podman play kube ./flowmanager.yml
+echo "Pod 'flowmanager_pod' was updated"
 
 }
 
@@ -76,9 +77,9 @@ function usage() {
     echo "--------"
     echo "Usage: ./$PROJECT_NAME [option]"
     echo "  options:"
-    echo "    setup    : Generate certs and create .env file"
+    echo "    setup    : Generate certificates"
     echo "    start    : Start $PROJECT_NAME and database containers"
-    echo "    restart  : Restart $PROJECT_NAME and database containers"
+    echo "    update   : Update $PROJECT_NAME and database containers with new configuration"
     echo "    stop     : Stop $PROJECT_NAME and database containers"
     echo "    stats    : Show the status of $PROJECT_NAME and database containers"
     echo "    delete   : Delete $PROJECT_NAME, database containers and other parts related to the containers, like storage"
@@ -111,11 +112,11 @@ if [[ $@ ]]; then
                 stop_container
                 shift
                 ;;
-            restart)
+            update)
                 if [ -z "${2-}" ]; then
-                    restart_container
+                    update_container
                 else
-                    restart_container $2
+                    update_container $2
                 fi
                 shift
                 ;;

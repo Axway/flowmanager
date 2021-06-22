@@ -18,13 +18,13 @@ spec:
             - name: FM_GENERAL_LOGGING_LEVEL
               value: "INFO"
             - name: FM_LOGS_CONSOLE
-              value: "true"
+              value: "yes"
             - name: FM_GENERAL_FQDN
-              value: ""
+              value: "localhost"
             - name: FM_GENERAL_UI_PORT
               value: "443"
             - name: FM_DATABASE_HOST
-              value: "mongodb.flowmanager.svc.cluster.local"
+              value: "flowmanager-mongodb.<NAMESPACE>.svc.cluster.local:27017"
             - name: FM_DATABASE_NAME
               value: "umcft"
             - name: FM_DATABASE_USE_SSL
@@ -32,7 +32,7 @@ spec:
             - name: FM_REDIS_ENABLED
               value: "true"
             - name: FM_REDIS_HOSTNAME
-              value: "redis.flowmanager.svc.cluster.local"
+              value: "flowmanager-redis-master.<NAMESPACE>.svc.cluster.local"
             - name: FM_REDIS_PORT
               value: "6379"
             - name: FM_REDIS_SSL_ENABLED
@@ -53,3 +53,18 @@ spec:
               value: "2G"
             - name: FM_JVM_XMX
               value: "4G"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: flowmanager-env
+  labels:
+    app: flowmanager
+type: Opaque
+data:
+  FM_GENERAL_ENCRYPTION_KEY: ""
+  FM_HTTPS_KEYSTORE_PASSWORD: ""
+  FM_CFT_SHARED_SECRET: ""
+  FM_DATABASE_USER_NAME: ""
+  FM_DATABASE_USER_PASSWORD: ""
+  FM_GOVERNANCE_CA_PASSWORD: ""
