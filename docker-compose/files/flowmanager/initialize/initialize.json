@@ -1,0 +1,17 @@
+{
+	"objectsToCreate": [
+		{
+			"type": "ProductPlugin",
+			"object": {
+				"name": "SecureTransport New",
+				"description": "New desc",
+				"shortName": "STNew",
+				"pluginConnection": {
+					"url": "https://<FQDN>:8899/api/v1", 
+					"pluginCertificate": "<rootCA>"
+				},
+				"pluginSSHKey": "<public_key>"
+			}
+		}
+	]
+}

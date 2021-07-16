@@ -39,6 +39,7 @@ services:
       - ./files/flowmanager/plugins:/opt/axway/FlowManager/conf/schemas/storage
       - ./files/flowmanager/updates:/opt/axway/FlowManager/updates:rw
       - ./files/flowmanager/logs:/opt/axway/logs:rw
+      - ./files/flowmanager/initialize:/opt/axway/FlowManager/initialize:rw
     restart: unless-stopped
     depends_on:
       - mongodb
@@ -48,16 +49,22 @@ services:
     environment:
       - DEPLOYMENT=${DEPLOYMENT:-premise}
       - SKIP_HOSTNAME_VERIFICATION=${SKIP_HOSTNAME_VERIFICATION:-false}
+      - FM_FQDN=${FM_GENERAL_FQDN}
       - FM_HOST=${FM_HOST:-flowmanager}
       - FM_PORT=${FM_PORT:-8081}
       - FM_ORG=${FM_ORG:-Org}
-      - FM_USER=${FM_USER}
-      - FM_PASS=${FM_PASS}
-      - ST_FM_PLUGIN_PROTOCOL=${ST_FM_PLUGIN_PROTOCOL:-https}
+      - FM_GOV_CA=${FM_GOV_CA:-/usr/src/app/src/governanceca.pem}
       - ST_FM_PLUGIN_HOST=${ST_FM_PLUGIN_HOST:-st-fm-plugin}
       - ST_FM_PLUGIN_PORT=${ST_FM_PLUGIN_PORT:-8899}
+      - ST_FM_PLUGIN_KEY_PEM=${ST_FM_PLUGIN_KEY_PEM:-/usr/src/app/src/client.key}
+      - ST_FM_PLUGIN_CERT_PEM=${ST_FM_PLUGIN_CERT_PEM:-/usr/src/app/src/client.pem}
+      - ST_FM_PLUGIN_CA_CHAIN=${ST_FM_PLUGIN_CA_CHAIN:-/usr/src/app/src/rootCA.pem}
+      - ST_FM_PLUGIN_JWT_KEY=${ST_FM_PLUGIN_JWT_KEY:-/usr/src/app/src/private_key}
+      - ST_FM_PLUGIN_SHORT_NAME=${ST_FM_PUGIN_SHORT_NAME:-ST}
     ports:
       - "${ST_FM_PLUGIN_PORT:-8899}:8899"
+    volumes:
+      - ./files/st-fm-plugin:/usr/src/app/src
     depends_on:
       - flowmanager
 
