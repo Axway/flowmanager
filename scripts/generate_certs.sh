@@ -73,19 +73,21 @@ prompt = no
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
 basicConstraints = critical,CA:true
-keyUsage = cRLSign, keyCertSign
-extendedKeyUsage = serverAuth
-subjectAltName = @alt_names
+keyUsage = cRLSign, keyCertSign, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
+# subjectAltName = @alt_names
 
 [alt_names]
 DNS.1 =$site
 
 [ req_distinguished_name ]
 emailAddress = example@example.com
+commonName = $name
+countryName = FR
+organizationName = ACME
 
 EOF
 
-    openssl req -x509 -days $EXPIRATION_DAYS -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU" -config $root/ca.cnf
+    openssl req -x509 -days $EXPIRATION_DAYS -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -config $root/ca.cnf
 }
 
 # Genereate PEM certs
@@ -140,3 +142,19 @@ p12 ./custom-ca/business/cacert business
 chmod 755 ./custom-ca/governance/cacert.p12
 chmod 755 ./custom-ca/governance/uicert.p12
 chmod 755 ./custom-ca/business/cacert.p12
+
+#gen_ca st-fm-plugin
+#gen_cert st-fm-plugin st-fm-plugin-cert
+
+pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key ./custom-ca/governance/governanceca
+
+mkdir ./custom-ca/st-fm-plugin
+openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem 2048
+openssl req -x509 -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -days $EXPIRATION_DAYS -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=rootCA/emailAddress=aa@aa.com'
+openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem 2048
+openssl req -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert.csr -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=client/emailAddress=bb@bb.com'
+openssl x509 -req -days $EXPIRATION_DAYS -CA ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -CAkey ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -CAcreateserial -CAserial ./custom-ca/st-fm-plugin/serial -in ./custom-ca/st-fm-plugin/st-fm-plugin-cert.csr -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem
+
+ssh-keygen -b 2048 -t rsa -f ./custom-ca/st-fm-plugin/key -q -N ""
+mv ./custom-ca/st-fm-plugin/key ./custom-ca/st-fm-plugin/private_key
+mv ./custom-ca/st-fm-plugin/key.pub ./custom-ca/st-fm-plugin/public_key
