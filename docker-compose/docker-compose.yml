@@ -51,7 +51,7 @@ services:
       - DEPLOYMENT=${DEPLOYMENT:-premise}
       - SKIP_HOSTNAME_VERIFICATION=${SKIP_HOSTNAME_VERIFICATION:-false}
       - FM_FQDN=${FM_GENERAL_FQDN}
-      - FM_HOST=flowmanager
+      - FM_HOST=${FM_HOST:-flowmanager}
       - FM_PORT=${FM_PORT:-8081}
       - FM_ORG=${FM_ORG:-Org}
       - FM_GOV_CA=${FM_GOV_CA:-/usr/src/app/src/governanceca.pem}
