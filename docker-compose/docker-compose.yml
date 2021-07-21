@@ -48,20 +48,19 @@ services:
   st-fm-plugin:
     image: "${ST_IMAGE_URL:-axway/st-fm-plugin-beta}:${ST_IMAGE_VERSION}"
     environment:
-      - DEPLOYMENT=${DEPLOYMENT:-premise}
-      - SKIP_HOSTNAME_VERIFICATION=${SKIP_HOSTNAME_VERIFICATION:-false}
-      - FM_FQDN=${FM_GENERAL_FQDN}
-      - FM_HOST=${FM_HOST:-flowmanager}
-      - FM_PORT=${FM_PORT:-8081}
-      - FM_ORG=${FM_ORG:-Org}
-      - FM_GOV_CA=${FM_GOV_CA:-/usr/src/app/src/governanceca.pem}
-      - ST_FM_PLUGIN_HOST=${ST_FM_PLUGIN_HOST:-st-fm-plugin}
-      - ST_FM_PLUGIN_PORT=${ST_FM_PLUGIN_PORT:-8899}
-      - ST_FM_PLUGIN_KEY_PEM=${ST_FM_PLUGIN_KEY_PEM:-/usr/src/app/src/st-fm-plugin-cert-key.pem}
-      - ST_FM_PLUGIN_CERT_PEM=${ST_FM_PLUGIN_CERT_PEM:-/usr/src/app/src/st-fm-plugin-cert.pem}
-      - ST_FM_PLUGIN_CA_CHAIN=${ST_FM_PLUGIN_CA_CHAIN:-/usr/src/app/src/st-fm-plugin-ca.pem}
-      - ST_FM_PLUGIN_JWT_KEY=${ST_FM_PLUGIN_JWT_KEY:-//usr/src/app/src/private_key}
+      - ST_FM_PLUGIN_HOST=st-fm-plugin
+      - ST_FM_PLUGIN_PORT=8899
       - ST_FM_PLUGIN_SHORT_NAME=ST
+      - ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION="true"
+      - ST_FM_PLUGIN_FM_FQDN=${FM_GENERAL_FQDN}
+      - ST_FM_PLUGIN_FM_HOST=flowmanager
+      - ST_FM_PLUGIN_FM_PORT=${FM_GENERAL_UI_PORT}
+      - ST_FM_PLUGIN_FM_DEPLOYMENT_MODE=premise
+      - ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN=/usr/src/app/src/governanceca.pem
+      - ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM=/usr/src/app/src/st-fm-plugin-cert-key.pem
+      - ST_FM_PLUGIN_SERVER_PUBLIC_KEY_PEM=/usr/src/app/src/st-fm-plugin-cert.pem
+      - ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN=/usr/src/app/src/st-fm-plugin-ca.pem
+      - ST_FM_PLUGIN_JWT_KEY=/usr/src/app/src/private_key
       - ST_FM_PLUGIN_DATABASE_HOST=mongodb
       - ST_FM_PLUGIN_DATABASE_PORT=27017
       - ST_FM_PLUGIN_DATABASE_NAME=umcft
@@ -70,7 +69,7 @@ services:
       - ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES=15
       - ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL=60
     ports:
-      - "${ST_FM_PLUGIN_PORT:-8899}:8899"
+      - "8899:8899"
     volumes:
       - ./files/st-fm-plugin:/usr/src/app/src
     depends_on:
