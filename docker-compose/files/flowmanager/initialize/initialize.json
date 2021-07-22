@@ -7,7 +7,7 @@
         "description": "New desc",
         "shortName": "STNew",
         "pluginConnection": {
-          "url": "https://<FQDN>:8899/api/v1", 
+          "url": "https://st-fm-plugin:8899/api/v1", 
           "pluginCertificate": "<plugin_ca>"
         },
         "pluginSSHKey": "<public_key>"
