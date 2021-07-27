@@ -15,7 +15,7 @@ SECOND_PASSWORD="bcd"
 # Input Variables
 while [ "$PASSWORD" != "$SECOND_PASSWORD" ]
 do
-   echo "Please, choose a password:"
+   echo "Please, choose a password for the certificates:"
    read -s PASSWORD
    echo "Type the password again:"
    read -s SECOND_PASSWORD
