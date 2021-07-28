@@ -3,9 +3,9 @@
     {
       "type": "ProductPlugin",
       "object": {
-        "name": "SecureTransport New",
-        "description": "New desc",
-        "shortName": "STNew",
+        "name": "SecureTransport",
+        "description": "Manage flows definition for SecureTransport product.",
+        "shortName": "ST",
         "pluginConnection": {
           "url": "https://st-fm-plugin:8899/api/v1", 
           "pluginCertificate": "<plugin_ca>"
