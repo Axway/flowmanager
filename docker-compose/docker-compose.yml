@@ -10,8 +10,6 @@ services:
       - MONGO_APP_DATABASE=${MONGO_APP_DATABASE}
       - MONGO_APP_USER=${MONGO_APP_USER}
       - MONGO_APP_PASS=${MONGO_APP_PASS}
-    ports:
-      - "${MONGO_EXTERNAL_PORT:-27017}:${MONGO_INTERNAL_PORT:-27017}"
     command: ["-f", "/opt/mongod.conf"]
     volumes:
       - ./files/mongo/scripts:/docker-entrypoint-initdb.d
