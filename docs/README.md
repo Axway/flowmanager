@@ -4,7 +4,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 
 ## Application
 
-|**Parameter**|**Require**|**Type**|**Description**|**Default**|
+|**Parameter**|**Required**|**Type**|**Description**|**Default value**|
 |-------------|:---------:|:------:|---------------|-----------|
 |FLOWMANAGER_IMAGE_URL*|No|`string`|URL from where you want to get the image|`axway/flowmanager`|
 |FLOWMANAGER_VERSION*|Yes|`number`|App version based on docker image||
@@ -41,7 +41,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 
 ## MongoDB
 
-|**Parameter**|**Require**|**Type**|**Description**|**Default**|
+|**Parameter**|**Required**|**Type**|**Description**|**Default value**|
 |-------------|:---------:|:------:|---------------|-----------|
 |MONGO_IMAGE_URL*|No|`string`|URL from where you want to get the image|`mongo`|
 |MONGO_IMAGE_VERSION*|No|`number`|DB version based on docker image|`4.2`|
@@ -58,7 +58,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 
 ## SecureTransport Plugin
 
-|**Parameter**|**Require**|**Type**|**Description**|**Default**|
+|**Parameter**|**Required**|**Type**|**Description**|**Default value**|
 |-------------|:---------:|:------:|---------------|-----------|
 |ST_FM_PLUGIN_IMAGE_URL|No|`string`|URL from where you get the image|`axway/st-fm-plugin`|
 |ST_FM_PLUGIN_IMAGE_VERSION|Yes|`number`|ST plugin Docker image version||
