@@ -4,7 +4,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 
 ## Application
 
-|**Parameter**|**Required**|**Description**|**Default value**|
+|**Parameter**|**Mandatory**|**Description**|**Default value**|
 |-------------|------------|---------------|-----------------|
 |FLOWMANAGER_IMAGE_URL*|No|URL from where you want to get the image|`axway/flowmanager`|
 |FLOWMANAGER_VERSION*|Yes|App version based on docker image||
@@ -22,7 +22,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_HTTPS_CERT_ALIAS|No|Alias of the HTTPS certificate|`ui`|
 |FM_HTTPS_KEYSTORE_PASSWORD|Yes|HTTPS certificate password||
 |FM_HTTPS_DISABLED|No|Set on `true` if the ssl requests are handled by a gateway (SSL termination)|`false`|
-|FM_CFT_SHARED_SECRET|Yes|FlowManager's shared secret||
+|FM_CFT_SHARED_SECRET|No|FlowManager's shared secret||
 |FM_CFT_UPDATES_PATH|Yes|The path needed to update CFT plugin||
 |FM_DATABASE_HOST|No|MongoDB host name|`mongodb`|
 |FM_DATABASE_PORT|No|MongoDB port|`27017`|
@@ -41,7 +41,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 
 ## MongoDB
 
-|**Parameter**|**Required**|**Description**|**Default value**|
+|**Parameter**|**Mandatory**|**Description**|**Default value**|
 |-------------|------------|---------------|-----------------|
 |MONGO_IMAGE_URL*|No|URL from where you want to get the image|`mongo`|
 |MONGO_IMAGE_VERSION*|No|DB version based on docker image|`4.2`|
@@ -58,7 +58,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 
 ## SecureTransport Plugin
 
-|**Parameter**|**Required**|**Description**|**Default value**|
+|**Parameter**|**Mandatory**|**Description**|**Default value**|
 |-------------|------------|---------------|-----------------|
 |ST_FM_PLUGIN_IMAGE_URL*|No|URL from where you get the image|`axway/st-fm-plugin`|
 |ST_FM_PLUGIN_IMAGE_VERSION*|Yes|ST plugin Docker image version||
