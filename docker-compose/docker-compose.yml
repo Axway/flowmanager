@@ -10,8 +10,6 @@ services:
       - MONGO_APP_DATABASE=${MONGO_APP_DATABASE}
       - MONGO_APP_USER=${MONGO_APP_USER}
       - MONGO_APP_PASS=${MONGO_APP_PASS}
-    ports:
-      - "${MONGO_EXTERNAL_PORT:-27017}:${MONGO_INTERNAL_PORT:-27017}"
     command: ["-f", "/opt/mongod.conf"]
     volumes:
       - ./files/mongo/scripts:/docker-entrypoint-initdb.d
@@ -26,7 +24,7 @@ services:
         - "db.adminCommand('ping')"
   # Create FlowManager container
   flowmanager:
-    image: "${FLOWMANAGER_IMAGE_URL:-axway/flowmanager}:${FLOWMANAGER_VERSION}"
+    image: "${FLOWMANAGER_IMAGE_URL:-axway/flowmanager-beta}:${FLOWMANAGER_VERSION}"
     stdin_open: true
     tty: true
     env_file:
@@ -39,9 +37,43 @@ services:
       - ./files/flowmanager/plugins:/opt/axway/FlowManager/conf/schemas/storage
       - ./files/flowmanager/updates:/opt/axway/FlowManager/updates:rw
       - ./files/flowmanager/logs:/opt/axway/logs:rw
+      - ./files/flowmanager/initialize:/opt/axway/FlowManager/init:ro
+      - ./files/st-fm-plugin:/opt/axway/FlowManager/st-fm-plugin
     restart: unless-stopped
     depends_on:
       - mongodb
+    # Create ST-Plugin container  
+  st-fm-plugin:
+    image: "${ST_FM_PLUGIN_IMAGE_URL:-axway/st-fm-plugin-beta}:${ST_FM_PLUGIN_IMAGE_VERSION}"
+    environment:
+      - ST_FM_PLUGIN_HOST=${ST_FM_PLUGIN_HOST:-st-fm-plugin}
+      - ST_FM_PLUGIN_PORT=${ST_FM_PLUGIN_PORT:-8899}
+      - ST_FM_PLUGIN_SHORT_NAME=${ST_FM_PLUGIN_SHORT_NAME:-ST}
+      - ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION=${ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION}
+      - ST_FM_PLUGIN_FM_FQDN=${ST_FM_PLUGIN_FM_FQDN}
+      - ST_FM_PLUGIN_FM_HOST=${ST_FM_PLUGIN_FM_HOST:-flowmanager}
+      - ST_FM_PLUGIN_FM_PORT=${ST_FM_PLUGIN_FM_PORT:-8081}
+      - ST_FM_PLUGIN_FM_DEPLOYMENT_MODE=${ST_FM_PLUGIN_FM_DEPLOYMENT_MODE}
+      - ST_FM_PLUGIN_SHARED_SECRET=${ST_FM_PLUGIN_SHARED_SECRET}
+      - ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN=${ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN}
+      - ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM=${ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM}
+      - ST_FM_PLUGIN_CERT_PEM=${ST_FM_PLUGIN_CERT_PEM}
+      - ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN=${ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN}
+      - ST_FM_PLUGIN_JWT_KEY=${ST_FM_PLUGIN_JWT_KEY}
+      - ST_FM_PLUGIN_REJECT_UNAUTHORIZED_CONNECTION=${ST_FM_PLUGIN_REJECT_UNAUTHORIZED_CONNECTION}
+      - ST_FM_PLUGIN_DATABASE_HOST=${ST_FM_PLUGIN_DATABASE_HOST:-mongodb}
+      - ST_FM_PLUGIN_DATABASE_PORT=${ST_FM_PLUGIN_DATABASE_PORT:-27017}
+      - ST_FM_PLUGIN_DATABASE_NAME=${ST_FM_PLUGIN_DATABASE_NAME}
+      - ST_FM_PLUGIN_DATABASE_USER_NAME=${ST_FM_PLUGIN_DATABASE_USER_NAME}
+      - ST_FM_PLUGIN_DATABASE_USER_PASSWORD=${ST_FM_PLUGIN_DATABASE_USER_PASSWORD}
+      - ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES=${ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES:-15}
+      - ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL=${ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL:-60}
+      - ST_FM_PLUGIN_DATABASE_USE_SSL=${ST_FM_PLUGIN_DATABASE_USE_SSL:-false}
+      - ST_FM_PLUGIN_DATABASE_CERTIFICATES=${ST_FM_PLUGIN_DATABASE_CERTIFICATES}
+    volumes:
+      - ./files/st-fm-plugin:/usr/src/app/src:ro
+    depends_on:
+      - flowmanager
 
 volumes:
   mongodb_data_container:

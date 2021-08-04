@@ -8,7 +8,7 @@ The files needed to run Flow Manager 2.0 orchestrated with docker-compose in a s
 
 ## Kubernetes
 
-All deployment manifest files (standard and Helm) can be found in [kubernetes](kubernetes/) folder. 
+All deployment manifest files (standard and Helm) can be found in [kubernetes](kubernetes/) folder.
 
 ## Podman
 
