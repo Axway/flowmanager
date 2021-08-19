@@ -1,0 +1,13 @@
+dependencies:
+  - name: core
+    version: 0.1.0
+    repository: file://custom-charts/core
+    tags:
+      - flowmanager
+      - core
+  - name: st-plugin
+    version: 0.4.0
+    repository: file://custom-charts/st-plugin
+    tags:
+      - flowmanager
+      - st

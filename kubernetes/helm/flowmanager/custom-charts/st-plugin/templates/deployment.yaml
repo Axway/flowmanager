@@ -1,0 +1,130 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    app.kubernetes.io/instance: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: {{ .Release.Name  | quote }}
+    heritage: {{ .Release.Service  | quote }}
+    version: {{ .Values.image.tag | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+      app.kubernetes.io/instance: {{ template "fullname" . }}
+  {{- with .Values.deployment.strategy }}
+  strategy:
+    type: {{ .rollingUpdateType }}
+    rollingUpdate:
+      maxUnavailable: {{ .maxUnavailable }}
+      maxSurge: {{ .maxSurge }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        app.kubernetes.io/instance: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        release: {{ .Release.Name  | quote }}
+        heritage: {{ .Release.Service  | quote }}
+        version: {{ .Values.image.tag | quote }}
+      annotations:
+        sidecar.istio.io/inject: "false"                                                          
+    spec:
+      nodeSelector: {{- if .Values.nodeSelectorDisabled }} {}
+      {{- else }}
+      {{- range .Values.nodeSelector }}
+        {{ .key }}: {{ .value | quote }}
+      {{- end }}
+      {{- end }}
+      tolerations: {{- if .Values.tolerationsDisabled }} []
+      {{- else }}
+      {{- range .Values.tolerations }}
+        - key: {{ .key | quote }}
+          operator: {{ .operator | quote }}
+          value: {{ .value | quote }}
+          effect: {{ .effect | quote }}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ template "fullname" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.pullPolicy | default "IfNotPresent" }}
+          {{- if .Values.containerCommandDisabled }}
+          {{- else }}
+          command: ["sh", "-c", {{ .Values.container.command | quote }}]
+          {{- end }}
+          env:
+          {{- if .Values.envFromConfigMapDisabled }}
+          {{- else }}
+          {{- $dot := . }}
+          {{- range $key, $value := .Values.configMap.data }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dot.Values.configMap.name | quote }}
+                  key: {{ $key }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.envFromValueDisabled }}
+          {{- else }}
+          {{- range $key, $value := .Values.env.variables }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          ports:
+          {{- range .Values.container.ports }}
+            - name: {{ .name }}
+              containerPort: {{ .internalPort }}
+              protocol: {{ .protocol | default "TCP" | quote }}
+          {{- end }}
+          {{- if .Values.readinessProbeDisabled }}
+          {{- else }}
+          readinessProbe:
+            httpGet:
+               path: {{ .Values.readinessProbe.httpGetPath }}
+               port: {{ .Values.readinessProbe.httpGetPort }}
+               scheme: {{ .Values.readinessProbe.httpGetScheme }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          {{- end }}
+          {{- if .Values.resourcesDisabled }}
+          {{- else }}
+          resources:
+            requests:
+              cpu : {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+              ephemeral-storage: {{ .Values.resources.requests.ephemeralStorage }}
+            limits:
+              cpu : {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+              ephemeral-storage: {{ .Values.resources.limits.ephemeralStorage }}
+          {{- end }}
+          {{- if .Values.volumesMountsSecretDisabled }}
+          {{- else }}
+          volumeMounts:
+          {{- range .Values.volumes }}
+            - name: {{ .volumeName }}
+              readOnly: {{ .readOnly | default "true" }}
+              mountPath: {{ .mountPath }}
+              subPath: {{ .subPath }}
+          {{- end }}
+          {{- end }}
+      {{- if .Values.volumesSecretDisabled }}
+      {{- else }}
+      volumes:
+      {{- range .Values.volumes }}
+      - name: {{ .volumeName }}
+        secret:
+          secretName: {{ .secretName }}
+          defaultMode: {{ .mode | default 420 }}
+      {{- end }}
+      {{- end }}                                                     

@@ -1,18 +1,45 @@
-# Deploy using standard files
+
+## Installation steps for Kubernetes with Standard Manifest Files using flowmanager_helper.sh
+
+### Prerequisites  
+
+* Kubernetes 1.4+
+* kubectl 1.4+
+* Helm 3+ (only for Mongo/Redis)
+* Nginx(latest stable version) installed and configured for Ingress usage 
+
+### Steps  
+1. Customize [mongodb.yaml](kubernetes/base/mongodb.yaml) and [redis.yaml](kubernetes/base/redis.yaml) according to your needs. 
+2. Install Redis and/or MongoDB using
+   >```./flowmanager_helper.sh -m ``` for MongoDB  
+   >```./flowmanager_helper.sh -r ``` for Redis
+3. Create the TLS secret for your domain using:
+   >``` kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>```
+4. Copy your license to the [root folder](./) or run the following command in order to create the secret:
+   >```kubectl create secret generic flowmanager-license --from-file=license.xml -n <NAMESPACE>```
+5. Generate the certificates and secrets using:
+   >```./flowmanager_helper.sh -gc```
+6. Customize [patch.yml](standard/multinode/patch.yml) and [ingress.yml](standard/multinode/ingress.yml) for FM MultiNode and/or [patch.yml](standard/singlenode/patch.yml) and [ingress.yml](standard/singlenode/ingress.yml) for FM SingleNode and [Secret Env file](base/secret-env.yml)
+7. Install Flow Manager:
+   >```./flowmanager_helper.sh -fm-s ``` for FM SingleNode  
+   >```./flowmanager_helper.sh -fm-m ``` for FM MultiNode 
+
+
+## Deploy using standard files
 
 Deploy using standard Kubernetes deployment manifest files.
 
-## Requirements
+### Prerequisites
 
-* kubectl 1.17+
+* Kubernetes 1.4+
+* kubectl 1.4+
 * Customer certificates and password
 * Customer license
 * Mongodb URL
 * `user` and `password` for Mongodb
+* Nginx(latest stable version) installed and configured for Ingress usage
 
-## ***Setup & Run***
-
-## How to create secrets for certificates
+### How to create secrets for certificates
 
 * License
 
@@ -34,7 +61,7 @@ kubectl create secret generic flowmanager-governance --from-file=governanceca.p1
 
 _**Warning:** Each files used from this step we need to be update the [Deployment file](flowmanager/deployment.yaml)_
 
-## How to create secrets for monogdb credentials or redis
+### How to create secrets for monogdb credentials or redis
 
 Inside the file [secret-env.yml](standard/base/secret-env.yml)
 
@@ -65,14 +92,14 @@ bW9uZ2RiX3Bhc3N3b3Jk
 FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 ```
 
-## How to configure Flowmanager before deployment
+### How to configure Flowmanager before deployment
 
 Files to check and modify:
 
 * Deployment file: [SingleNode](singlenode/patch.yml) or [MultiNode](multinode/patch.yml)
 * [Secret Env file](base/secret-env.yml)
 
-## How to deploy Flowmanager
+### How to deploy Flowmanager
 
 **This stuff permit to deploy only Flowmanager 1 node**
 
@@ -85,7 +112,7 @@ ex:
 kubectl apply -k ./singlenode
 ```
 
-## ***Remove***
+### ***Remove***
 
 ```shell
 kubectl delete -k ./singlenode

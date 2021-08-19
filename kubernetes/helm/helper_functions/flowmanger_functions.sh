@@ -8,6 +8,7 @@ function flowmanager_deploy_standalone() {
     
     msg_info 'Starting flowmanager deployment standalone'
     msg_output 'Starting flowmanager helm chart installation'
+	helm dep update ./helm/flowmanager
     $HELM upgrade --install flowmanager ./helm/flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
 
     if [ "$?" -ne "0" ]; then

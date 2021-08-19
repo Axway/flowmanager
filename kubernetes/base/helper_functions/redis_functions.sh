@@ -10,7 +10,7 @@ function redis_deploy_standalone() {
 
     msg_info 'Starting redis deployment standalone'
     msg_output 'Starting redis helm chart installation'
-    $HELM upgrade --install flowmanager-redis -f ${FILE_REDIS} bitnami/redis --namespace=${NAMESPACE} --wait
+    $HELM upgrade --install flowmanager-redis -f ${FILE_REDIS} bitnami/redis --version 14.8.8 --namespace=${NAMESPACE} --wait
 
     if [ "$?" -ne "0" ]; then
         msg_error 'Helm chart deployment failed'

@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "config.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ include "config.name" . }}
+    chart: {{ include "config.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "config.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "config.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ tpl (toYaml .Values) . | sha256sum }}
+        {{ toYaml .Values.podAnnotations | indent 8 }}
+    spec:
+      serviceAccountName: {{ template "config.serviceAccountName" . }}
+      securityContext:
+{{ toYaml .Values.podSecurityContext | indent 8 }}
+    {{ if .Values.image.imagePullSecretsEnabled }}
+      imagePullSecrets:
+        - name: {{ .Values.image.imagePullSecretsName }}
+    {{ end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          {{- if .Values.envFromConfigMapDisabled }}
+          {{- else }}
+          {{- $dot := . }}
+          {{- range $key, $value := .Values.configMap.data }}
+            - name: {{ $key }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dot.Values.configMap.name | quote }}
+                  key: {{ $key }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.envFromValueDisabled }}
+          {{- else }}
+          {{- range $key, $value := .Values.env.variables }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.volumesMountsSecretDisabled }}
+          {{- else }}
+          volumeMounts:
+            - name: init-template
+              readOnly: true
+              mountPath: /opt/axway/FlowManager/init/initialize_template.json
+              subPath: initialize_template.json
+          {{- range .Values.volumes }}
+            - name: {{ .volumeName }}
+              readOnly: {{ .readOnly | default "true" }}
+              mountPath: {{ .mountPath }}
+              subPath: {{ .subPath }}
+          {{- end }}
+          {{- end }}
+          ports:
+            - name: fm-https
+              containerPort: {{ .Values.service.externalPort }}
+              protocol: TCP
+          {{ if .Values.livenessProbe }}
+          livenessProbe:
+{{ toYaml .Values.livenessProbe | indent 12 }}
+          {{ end }}
+          {{ if .Values.readinessProbe }}
+          readinessProbe:
+{{ toYaml .Values.readinessProbe | indent 12 }}
+          {{ end }}
+          {{- if .Values.resourcesDisabled }}
+          {{- else }}
+          resources:
+            requests:
+              cpu : {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu : {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          {{- end }}
+          securityContext:
+{{ toYaml .Values.containerSecurityContext | indent 12 }}
+    {{ with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{ end }}
+    {{ with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{ end }}
+    {{ with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{ end }}
+      volumes:
+      - name: init-template
+        projected:
+          sources:
+          - configMap:
+              name: {{ include "config.fullname" . }}-init-template
+      {{- range .Values.volumes }}
+      - name: {{ .volumeName }}
+        secret:
+          secretName: {{ .secretName }}
+          defaultMode: {{ .mode | default 420 }}
+      {{- end }}

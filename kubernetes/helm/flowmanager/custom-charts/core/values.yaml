@@ -15,7 +15,8 @@ core:
   env:
     variables:
       ACCEPT_EULA: "no"
-   
+      
+    
   ## Volumes
   volumesSecretDisabled: false
   volumesMountsSecretDisabled: false
@@ -99,75 +100,4 @@ core:
     #    secretName: tls
     #hosts:
     #  - host: flowmanager.mydomain.com
-    #    paths: [/]          
-##
-## ST Plugin deployment
-##
-st-plugin:
-  ##
-  ## Default values for ST FM PLUGIN deployment
-  ##
-  ## Image and version of ST FM PLUGIN
-  image:
-    repository: axway/st-fm-plugin
-    tag: "2.0.20210730"
-
-  ## Replica/Number of containers
-  replicaCount: 1
-
-  ## Deployment type
-  deployment:
-    strategy:
-      rollingUpdateType: RollingUpdate
-      maxUnavailable: 1
-      maxSurge: 0
-
-  ## Container command
-  containerCommandDisabled: true
-  container:
-    ports:
-      - name: st-plugin-http
-        internalPort: 8899
-
-  ## Node selector
-  nodeSelectorDisabled: true
-  tolerationsDisabled: true
-
-  ## Environment variables
-  envFromConfigMapDisabled: true
-  envFromValueDisabled: false
-  env:
-    variables:
-      ST_FM_PLUGIN_PORT: 8899
-      ST_FM_PLUGIN_SHORT_NAME: "ST"
-
-  ## Readiness
-  readinessProbeDisabled: true
-  ## Resources
-  resourcesDisabled: true
-  resources:
-    requests:
-      cpu: 256m
-      memory: 1Gi
-      ephemeralStorage: 2Gi
-    limits:
-      cpu: 512m
-      memory: 2Gi
-      ephemeralStorage: 2Gi
-
-  ## Volumes
-  volumesSecretDisabled: false
-  volumesMountsSecretDisabled: false
-    
-  ## Service
-  service:
-    type: ClusterIP
-    ports:
-      - name: st-plugin-http
-        internalPort: 8899
-       #externalPort: 8899
-       
-  ## Ingress
-  tls: false
-  ingress:
-    enabled: false   
+    #    paths: [/]                 

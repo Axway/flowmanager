@@ -29,7 +29,7 @@ do
 done
 
 echo
-echo "Please, choose EXPIRATION_DAYS for the certificates: "
+echo "Set EXPIRATION_DAYS for the certificates: "
 read EXPIRATION_DAYS
 echo $EXPIRATION_DAYS
 
@@ -148,13 +148,17 @@ chmod 755 ./custom-ca/business/cacert.p12
 
 pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key ./custom-ca/governance/governanceca
 
-mkdir ./custom-ca/st-fm-plugin
+
+if [ ! -d ./custom-ca/st-fm-plugin ]; then
+  mkdir ./custom-ca/st-fm-plugin
+fi
 openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem 2048
 openssl req -x509 -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -days $EXPIRATION_DAYS -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=rootCA/emailAddress=aa@aa.com'
 openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem 2048
 openssl req -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert.csr -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=client/emailAddress=bb@bb.com'
 openssl x509 -req -days $EXPIRATION_DAYS -CA ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -CAkey ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -CAcreateserial -CAserial ./custom-ca/st-fm-plugin/serial -in ./custom-ca/st-fm-plugin/st-fm-plugin-cert.csr -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem
 
-ssh-keygen -b 2048 -t rsa -f ./custom-ca/st-fm-plugin/key -q -N ""
+
+ssh-keygen -b 2048 -t rsa -f ./custom-ca/st-fm-plugin/key -q -N "" 
 mv ./custom-ca/st-fm-plugin/key ./custom-ca/st-fm-plugin/private-key
 mv ./custom-ca/st-fm-plugin/key.pub ./custom-ca/st-fm-plugin/public-key
