@@ -12,6 +12,7 @@ core:
   envFromValueDisabled: false
   env:
     variables:
+      #In this section you can add / remove parameters according to your needs.
       ACCEPT_EULA: "no" #set to yes
       FM_GENERAL_FQDN: "localhost"
       FM_GENERAL_HTTP_PORT: 8081
@@ -193,6 +194,7 @@ st-plugin:
   envFromValueDisabled: false
   env:
     variables:
+      #In this section you can add / remove parameters according to your needs.
       ST_FM_PLUGIN_HOST: "localhost"
       ST_FM_PLUGIN_PORT: 8899
       ST_FM_PLUGIN_SHORT_NAME: "ST"
