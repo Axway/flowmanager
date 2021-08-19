@@ -26,9 +26,9 @@ while [[ "$#" -gt 0 ]]
 do
     case "$1" in
         -gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
-	-fm-s | -fm-singlenode) namespace_choice && flowmanager_deploy_standard_standalone ;;
-	-fm-m | -fm-multinode)  namespace_choice && flowmanager_deploy_standard_multinode ;;
-	-gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
+	    -fm-s | -fm-singlenode) namespace_choice && flowmanager_deploy_standard_standalone ;;
+	    -fm-m | -fm-multinode)  namespace_choice && flowmanager_deploy_standard_multinode ;;
+	    -gc | -gen-certs) namespace_choice && gen_certs_selfsigned ;;
         -fm-h | -flowmanager-helm)  startup_script && flowmanager_deploy_standalone ;;
         -r | -redis) startup_script && redis_deploy_standalone ;;
         -m | -mongodb) startup_script && mongodb_deploy_standalone ;;

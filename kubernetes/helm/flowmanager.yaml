@@ -1,241 +1,264 @@
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+##
+## Flow Manager Core deployment
+##
+core:
+  replicaCount: 2
+  ## Docker image used for the customer
+  image:
+    repository: axway/flowmanager
+    tag: ""
+  ## Environment variables
+  envFromConfigMapDisabled: true
+  envFromValueDisabled: false
+  env:
+    variables:
+      ACCEPT_EULA: "no" #set to yes
+      FM_GENERAL_FQDN: "localhost"
+      FM_GENERAL_HTTP_PORT: 8081
+      FM_GENERAL_UI_PORT: 443
+      FM_GENERAL_ENCRYPTION_KEY: "<YOUR_SECRET>"
+      FM_LOGS_CONSOLE: "yes"
+      FM_GENERAL_LOGGING_LEVEL: "INFO"
+      FM_GOVERNANCE_CA_FILE: "/opt/axway/FlowManager/configs/governanceca.p12"
+      FM_GOVERNANCE_CA_PASSWORD: "<YOUR_SECRET>"
+      FM_CFT_UPDATES_PATH: "/opt/axway/FlowManager/updates/cft/"
+      FM_HTTPS_DISABLED: "true"
+      FM_HTTPS_USE_CUSTOM_CERT: "false"
 
-####################################
-# FLOWMANAGER Image/Replicas
-####################################
-# Number of replicas desired
-replicaCount: 1
+      ## MongoDb
+      FM_DATABASE_HOST: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local:27017"
+      FM_DATABASE_NAME: "umcft"
+      FM_DATABASE_USER_NAME: ""
+      FM_DATABASE_USER_PASSWORD: ""
+      FM_DATABASE_USE_SSL: "false"
+      FM_DATABASE_CERTIFICATES: ""
+      
+      ## Redis
+      FM_REDIS_ENABLED: "true"
+      FM_REDIS_HOSTNAME: "flowmanager-redis-master.<YOUR_NAMESPACE>.svc.cluster.local"
+      FM_REDIS_PORT: 6379
+      FM_REDIS_USER: "default"
+      FM_REDIS_PASSWORD: ""
+      FM_REDIS_SSL_ENABLED: "false"
+      FM_REDIS_SSL_CA: ""
+      
+      ## ST PLUGIN
+      FM_ST_PLUGIN_CA_FILE: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
+      FM_ST_PLUGIN_PUBLIC_KEY: "/opt/axway/FlowManager/st-fm-plugin/public-key"
+      FM_ST_PLUGIN_FQDN: "flowmanager-st-plugin.<YOUR_NAMESPACE>.svc.cluster.local:8899"
 
-# docker image used for the customer
-image:
-  repository: axway/flowmanager
-  tag: ""
-  pullPolicy: IfNotPresent
-  # please take care to put customer secret on this next field
-  imagePullSecrets: regcred
+      FM_JVM_XMX: "2G"
+      FM_JVM_XMS: "512M"
+      FM_JVM_XMN: "768M"
+      FM_JVM_DEBUG_ENABLED: "false"
+      FM_JVM_DEBUG_PORT: "8000"
+      FM_JVM_DEBUG_SUSPEND: "false"
+      FM_JVM_EXTRA_ARGS: ""
 
-nameOverride: flowmanager
-fullnameOverride: flowmanager
-
-####################################
-# security parameters - replace false per true to restrict deployment
-# Remove {} and uncomment the values
-####################################
-serviceAccount:
-  create: true
-  # name: ~
-
-rbac:
-  create: true
-
-pspEnable: true
-
-podAnnotations: {}
-
-podSecurityContext: 
-  runAsNonRoot: true
-  runAsUser: 1001
-  fsGroup: 1000
-
-containerSecurityContext: {}
-  # privileged: false
-  # allowPrivilegeEscalation: false
-  # readOnlyRootFilesystem: false
-  # capabilities:
-  #   drop:
-  #     - ALL
-
-####################################
-# Take care to align resources anf JVM
-####################################
-resources:
-  requests:
-    cpu: "2000m"
-    memory: "2Gi"
-  limits:
-    cpu: "4000m"
-    memory: "4Gi"
-
-####################################
-# Check for webserver on FM and failing startup
-####################################
-readinessProbe:
-  failureThreshold: 3
-  httpGet:
-    path: /fm/login
-    port: 8081
-    scheme: HTTPS
-  initialDelaySeconds: 100
-  periodSeconds: 5
-  successThreshold: 3
-
-livenessProbe: 
-  httpGet:
-    path: /api/v2/internals/stability
-    port: 8081
-    scheme: HTTPS
-  initialDelaySeconds: 100
-  successThreshold: 1
-  failureThreshold: 2
-  periodSeconds: 10
-
-####################################
-# Pod location inside the cluster
-####################################
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-  # podAntiAffinity:
-  #   requiredDuringSchedulingIgnoredDuringExecution:
-  #     - labelSelector:
-  #         matchExpressions:
-  #           - key: app
-  #             operator: In
-  #             values:
-  #               - flowmanager
-  #       topologyKey: kubernetes.io/hostname
-
-####################################
-# Service LoadBalancer or ClusterIP with ingress enable are available
-# Service LoadBalancer Please add svc annotations for DNS registration according the customer possibilities
-# Service ClusterIP Please enable ingress and add annotation for ssl forwarding to the backend
-####################################
-
-####################################
-# Use case ClusterIP
-####################################
-service:
-  type: ClusterIP  # or LoadBalancer
-  annotations: {}
-
-  externalPort: 8080
-####################################
-# Use case LoadBalancer
-####################################
-# service:
-#   type: LoadBalancer 
-#   annotations: {}
-#     # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: https
-#     # service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:xx-xxxx-x:xxxxxxxxxxx:certificate/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
-#     # external-dns.alpha.kubernetes.io/hostname: flowmanager.mydomain.com.
-#
-#   externalPort: 443
-#
-####################################
-# Ingress 
-# We are supporting ingress with nginx ingress controller the example show the config for this controller
-####################################
-ingress:
-  enabled: false
-  annotations: {}
-    #
-    # if ssl-passthrough
-    #
-    # kubernetes.io/ingress.class: "nginx"
-    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-
-    #
-    # if ssl-redirect
-    #
-    # kubernetes.io/ingress.class: "nginx"
-    # kubernetes.io/tls-acme: "true"
-    # ingress.kubernetes.io/ssl-redirect: "true"
-    # ingress.kubernetes.io/proxy-body-size: "0"
-    #
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    #
-    # if automatic cert with let's encrypt
-    #
-    # cert-manager.io/cluster-issuer: "letsencrypt-production-dns"
-
-  hosts: []
-    # - host: flowmanager.mydomain.com
-    #   paths: [/]
-
-  tls: []
-  #  - secretName: flowmanager-ingress-tls
-  #    hosts:
-  #      - flowmanager.mydomain.com
-
-####################################
-# extraEnv for JVM align with resources field
-# You can put other variables for overwriting the initial value
-####################################
-extraEnv: 
-  FM_JVM_XMX: "4G"
-  FM_JVM_XMS: "1G"
-  FM_JVM_XMN: "768M"
-
-####################################
-# extraSecrets For more flexibility Key: Value
-####################################
-extraSecrets: {}
-
-####################################
-# FM Config
-####################################
-#
-# Replace Secret01 per your real value 
-#
-
-flowmanager:
-  logLevel: info # info or debug
-  acceptEula: "no" # set to yes
-  extFqdn: {} # external dns for UI automatic cert generation / API responses , mandatory
-  FM_CFT_SHARED_SECRET: {}
-  FM_CFT_UPDATES_PATH: /opt/axway/FlowManager/updates/cft/
-
-  
-# For each block :
-# - createSecretFile ==>> create secret file or not
-# - fileName ==>> name of the file inside the secret
-# - localFile ==>> where is loacted the local file - use relative path under chart root folder  
-# - existingSecretFile ==>> used only if the secret already exist 
-
-  db:
-    endpoints: flowmanager-mongodb.YOUR_NAMESPACE.svc.cluster.local:27017 # comma separated
-    user: restapiuser
-    password: {} #mandatory
-    useSSL: false
-    fileName: mongodb.pem  #not necessary if useSSL:false
-    existingSecretFile: {} # secret name, not necessary if useSSL:false
     
-  redis:
-    enable: false
-    redisHost: flowmanager-redis-master.YOUR_NAMESPACE.svc.cluster.local
-    redisPort: 6379
-    user: {}
-    password: {} #mandatory if enabled
-    useSSL: false
-    fileName: {} # redis.pem, not necessary if useSSL:false
-    existingSecretFile: {} # secret name,not necessary if useSSL:false
+  ## Volumes
+  volumesSecretDisabled: false
+  volumesMountsSecretDisabled: false
+  volumes:
+    ## FM License 
+    - volumeName: license
+      secretName: license
+      mountPath: /opt/axway/FlowManager/conf/license/license.xml
+      subPath: license.xml
+    ## FM Governance  
+    - volumeName: governanceca
+      secretName: governanceca
+      mountPath: /opt/axway/FlowManager/configs/governanceca.p12
+      subPath: governanceca.p12
+    ## ST Plugin CA  
+    - volumeName: st-fm-plugin-ca
+      secretName: st-fm-plugin-ca
+      mountPath: /opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem
+      subPath: st-fm-plugin-ca.pem
+    ## ST Plugin Public Key    
+    - volumeName: public-key-st
+      secretName: public-key-st
+      mountPath: /opt/axway/FlowManager/st-fm-plugin/public-key
+      subPath: public-key
+  
+  ## Resources specification       
+  resources:
+    requests:
+      cpu: "2000m"
+      memory: "2Gi"
+    limits:
+      cpu: "4000m"
+      memory: "4Gi"
+  ## Service
+  service:
+    type: ClusterIP # or LoadBalancer
+    annotations: {}
+    externalPort: 8081
+  ##
+  ## Security parameters
+  ##
+  serviceAccount:
+    create: false
+    # name: ~
 
-  license:
-    fileName: license.xml #mandatory
-    existingSecretFile: flowmanager-license #mandatory
- 
-  https:
-    disable: false
-    autoGenerateCert: false
-    keystorePassword: {} #mandatory if enabled
-    certAlias: {} # ui ,not mandatory
-    fileName: uicert.p12
-    existingSecretFile: flowmanager-uicert
+  rbac:
+    create: false
 
-  business:
-    caPassword: {}
-    certAlias: {} # business, ,not mandatory
-    fileName: {} #businessca.p12
-    existingSecretFile: flowmanager-business 
+  pspEnable: false
 
-  governance:
-    caPassword: {} #mandatory
-    certAlias: {} # governance, ,not mandatory 
-    fileName: governanceca.p12 #mandatory
-    existingSecretFile: flowmanager-governance #mandatory
+  podAnnotations: {}
+
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    fsGroup: 1000
+
+  containerSecurityContext:
+    {}
+    # privileged: false
+    # allowPrivilegeEscalation: false
+    # readOnlyRootFilesystem: false
+    # capabilities:
+    #   drop:
+    #     - ALL
+
+
+  ## Configure readiness and liveness for health check
+  readinessProbe:
+    failureThreshold: 3
+    httpGet:
+      path: /fm/login
+      port: 8081
+      scheme: HTTP
+    initialDelaySeconds: 100
+    periodSeconds: 5
+    successThreshold: 3
+
+  livenessProbe:
+    httpGet:
+      path: /api/v2/internals/stability
+      port: 8081
+      scheme: HTTP
+    initialDelaySeconds: 100
+    successThreshold: 1
+    failureThreshold: 2
+    periodSeconds: 10
+  ## Setup ingress for Flow Manager Core
+  ingress:
+    enabled: false
+    #annotations:
+    #  nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    #  nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    #  ingress.kubernetes.io/secure-upstream: "true"
+    #  kubernetes.io/ingress.class: "nginx"
+    #  kubernetes.io/tls-acme: "true"
+    #secretName: tls
+    #tls:
+    #  - hosts:
+    #      - flowmanager.mydomain.com
+    #    secretName: tls
+    #hosts:
+    #  - host: flowmanager.mydomain.com
+    #    paths: [/]
+##
+## ST Plugin deployment
+##
+st-plugin:
+  ##
+  ## Default values for ST FM PLUGIN deployment
+  ##
+  ## Image and version of ST FM PLUGIN
+  image:
+    repository: axway/st-fm-plugin
+    tag: ""
+  ## Replica/Number of containers
+  replicaCount: 1
+  ## Deployment type
+  deployment:
+    strategy:
+      rollingUpdateType: RollingUpdate
+      maxUnavailable: 1
+      maxSurge: 0
+  ## Container command
+  containerCommandDisabled: true
+  container:
+    ports:
+      - name: st-plugin-http
+        internalPort: 8899
+  ## Node selector
+  nodeSelectorDisabled: true
+  tolerationsDisabled: true
+  ## Environment variables
+  envFromConfigMapDisabled: true
+  envFromValueDisabled: false
+  env:
+    variables:
+      ST_FM_PLUGIN_HOST: "localhost"
+      ST_FM_PLUGIN_PORT: 8899
+      ST_FM_PLUGIN_SHORT_NAME: "ST"
+      ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION: "true"
+      ST_FM_PLUGIN_FM_FQDN: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
+      ST_FM_PLUGIN_FM_HOST: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
+      ST_FM_PLUGIN_FM_PORT: 8081
+      ST_FM_PLUGIN_FM_DEPLOYMENT_MODE: "premise"
+      ST_FM_PLUGIN_SHARED_SECRET: "/usr/src/app/src/st-fm-plugin-shared-secret"
+      ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN: "/usr/src/app/src/governanceca.pem"
+      ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
+      ST_FM_PLUGIN_CERT_PEM: "/usr/src/app/src/st-fm-plugin-cert.pem"
+      ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN: "/usr/src/app/src/st-fm-plugin-ca.pem"
+      ST_FM_PLUGIN_JWT_KEY: "/usr/src/app/src/private-key"
+      ST_FM_PLUGIN_REJECT_UNAUTHORIZED_CONNECTION: "false"
+      
+      ST_FM_PLUGIN_DATABASE_HOST: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local"
+      ST_FM_PLUGIN_DATABASE_PORT: 27017
+      ST_FM_PLUGIN_DATABASE_NAME: umcft
+      ST_FM_PLUGIN_DATABASE_USER_NAME: ""
+      ST_FM_PLUGIN_DATABASE_USER_PASSWORD: ""
+      ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES: 15
+      ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL: 60
+      ST_FM_PLUGIN_DATABASE_USE_SSL: "false"
+
+  ## Readiness
+  readinessProbeDisabled: true
+  ## Resources
+  resourcesDisabled: true
+  resources:
+    requests:
+      cpu: 256m
+      memory: 1Gi
+      ephemeralStorage: 2Gi
+    limits:
+      cpu: 512m
+      memory: 2Gi
+      ephemeralStorage: 2Gi
+  ## Service
+  service:
+    type: ClusterIP
+    ports:
+      - name: st-plugin-http
+        internalPort: 8899
+        externalPort: 8899
+  ## Volumes
+  volumesSecretDisabled: false
+  volumesMountsSecretDisabled: false
+  volumes:
+    - volumeName: governanceca-st
+      secretName: governanceca-st
+      mountPath: /usr/src/app/src/governanceca.pem
+      subPath: governanceca.pem
+    - volumeName: st-fm-plugin-cert-key
+      secretName: st-fm-plugin-cert-key
+      mountPath: /usr/src/app/src/st-fm-plugin-cert-key.pem
+      subPath: st-fm-plugin-cert-key.pem 
+    - volumeName: st-fm-plugin-cert
+      secretName: st-fm-plugin-cert
+      mountPath: /usr/src/app/src/st-fm-plugin-cert.pem
+      subPath: st-fm-plugin-cert.pem  
+    - volumeName: st-fm-plugin-ca
+      secretName: st-fm-plugin-ca
+      mountPath: /usr/src/app/src/st-fm-plugin-ca.pem
+      subPath: st-fm-plugin-ca.pem
+    - volumeName: private-key-st
+      secretName: private-key-st
+      mountPath: /usr/src/app/src/private-key
+      subPath: private-key

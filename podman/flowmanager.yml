@@ -79,10 +79,12 @@ spec:
           value: "false"
         - name: FM_DATABASE_CERTIFICATES
           value: ""
-        - name: FM_CFT_SHARED_SECRET
-          value: ""
         - name: FM_CFT_UPDATES_PATH
           value: "/opt/axway/FlowManager/updates/cft/"
+        - name: FM_ST_PLUGIN_CA_FILE
+          value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
+        - name: FM_ST_PLUGIN_PUBLIC_KEY
+          value: "/opt/axway/FlowManager/st-fm-plugin/public-key"
         - name: FM_JVM_XMX
           value: "2G"
         - name: FM_JVM_XMS
@@ -100,6 +102,70 @@ spec:
           name: updates
         - mountPath: /opt/axway/logs
           name: logs
+        - mountPath: /opt/axway/FlowManager/init
+          name: initialize
+        - mountPath:/opt/axway/FlowManager/st-fm-plugin
+          name: st-fm-plugin
+
+    - image: axway/st-fm-plugin
+      name: st-fm-plugin
+      ports:
+        - name: stport
+          hostPort: 8899
+          containerPort: 8899
+          protocol: tcp
+      env:
+        - name: ST_FM_PLUGIN_HOST
+          value: "st-fm-plugin"
+        - name: ST_FM_PLUGIN_PORT
+          value: "8899"
+        - name: ST_FM_PLUGIN_SHORT_NAME
+          value: "ST"
+        - name: ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION
+          value: "true"
+        - name: ST_FM_PLUGIN_FM_FQDN
+          value: "flowmanager"
+        - name: ST_FM_PLUGIN_FM_HOST
+          value: "flowmanager"
+        - name: ST_FM_PLUGIN_FM_PORT
+          value: "8081"
+        - name: ST_FM_PLUGIN_FM_DEPLOYMENT_MODE
+          value: "premise"
+        - name: ST_FM_PLUGIN_SHARED_SECRET
+          value: "/usr/src/app/src/st-fm-plugin-shared-secret"
+        - name: ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN
+          value: "/usr/src/app/src/governanceca.pem"
+        - name: ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM
+          value: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
+        - name: ST_FM_PLUGIN_CERT_PEM
+          value: "/usr/src/app/src/st-fm-plugin-cert.pem"  
+        - name: ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN
+          value: "/usr/src/app/src/st-fm-plugin-ca.pem"
+        - name: ST_FM_PLUGIN_JWT_KEY
+          value: "/usr/src/app/src/private-key"
+        - name: ST_FM_PLUGIN_REJECT_UNAUTHORIZED_CONNECTION
+          value: "true"
+        - name: ST_FM_PLUGIN_DATABASE_HOST
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_PORT
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_NAME
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_USER_NAME
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_USER_PASSWORD
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_USE_SSL
+          value: ""
+        - name: ST_FM_PLUGIN_DATABASE_CERTIFICATES
+          value: ""  
+      volumeMounts:
+        - mountPath:/usr/src/app/src
+          name: st-fm-plugin          
   volumes:
     - hostPath:
         path: ./files/mongo/scripts
@@ -133,3 +199,11 @@ spec:
         path: ./files/flowmanager/logs
         type: Directory
       name: logs
+    - hostPath:
+        path: ./files/flowmanager/initialize
+        type: Directory
+      name: initialize
+    - hostPath:
+        path: ./files/st-fm-plugin
+        type: Directory
+      name: st-fm-plugin      

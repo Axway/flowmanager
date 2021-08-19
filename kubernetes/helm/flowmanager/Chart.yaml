@@ -1,11 +1,13 @@
 apiVersion: v1
-appVersion: 2.0.2
-version: 0.3.0
+description: Flow Manager applications
 name: flowmanager
-description: Flow Manager Server deployment on Kubernetes
 keywords:
-- flowmanager
-- server
+  - kubernetes
+  - flowmanager-core
+  - st
+version: 0.1.0
+sources:
+  - https://github.com/Axway/docker-flowmanager/tree/master/kubernetes/helm
 maintainers:
-  - name: Axway
-    url: https://www.axway.com/
+  - name: Flow Manager Team
+    email: flowmanagerrd@axway.com

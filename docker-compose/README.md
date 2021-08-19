@@ -68,4 +68,26 @@ Encrypt all of Mongodb’s network traffic. TLS/SSL ensures that Mongodb network
 
 ## ***Upgrade Mongo 3.6 to 4.2***
 
-* Run [upgradeMongo42.sh](../scripts/upgradeMongo42.sh). 
+* Run [upgradeMongo42.sh](../scripts/upgradeMongo42.sh).
+
+## ***Migrate old Docker Compose model to .env file model***
+### Prerequisites:
+- Install [yq](https://github.com/mikefarah/yq) on your machine
+- Clone the latest version of [docker-flowmanager](https://github.com/Axway/docker-flowmanager)
+- Have the old Mongo database up and running in the container
+
+### Usage
+The migration script will perform the following actions:
+- Generate a _.env_ file based on the old Docker Compose environment variables
+- Export data from the old database using [mongodump](https://docs.mongodb.com/database-tools/mongodump/) and store it in the current directory in a binary file named _db.dump_.
+- Start the new Mongo database in a Docker container and import data from _db.dump_ file using [mongorestore](https://docs.mongodb.com/database-tools/mongorestore/)
+- Stop the Docker container
+```
+./flowmanager_helper.sh migrate
+```
+The user will be asked to insert the absolute or relative path to the directory where the old Docker Compose file is located.
+
+### Start Flow Manager Docker container
+To be able to start Flow Manager with the new setup you have to:
+- Copy all the certificates from the old installation to the new location according to the documentation
+- Edit the variables in the _.env_ file that suit your needs. The values that contain paths should be modified as seen in the _env.template_ file.

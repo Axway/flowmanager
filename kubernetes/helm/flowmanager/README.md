@@ -1,21 +1,9 @@
-# Flowmanager
+# Flow Manager stack
 
-Helm deployment
+Deploy all Flow Manager app components into Kubernetes using helm.
 
-1. Helm install
+## Requirements
 
-```shell
-helm install  flowmanager ./flowmanager space=<your_namespace> -f flowmanager.yaml
-```
+* All certificates (uicert, governance) generated and added to `custom-charts/core/`
 
-2. **Helm update**
-
-```shell
-helm upgrade --install flowmanager ./flowmanager space=<your_namespace> -f your_values_file.yaml
-```
-
-3. **Helm delete**
-
-```shell
-helm delete flowmanager space=<your_namespace>
-```
+## Install

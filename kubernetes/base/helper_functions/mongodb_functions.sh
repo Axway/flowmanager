@@ -10,7 +10,7 @@ function mongodb_deploy_standalone() {
 
     msg_info 'Starting mongodb deployment standalone'
     msg_output 'Starting mongodb helm chart installation'
-	$HELM upgrade --install flowmanager-mongodb -f ${FILE_MONGO} bitnami/mongodb --namespace=${NAMESPACE} --wait
+	$HELM upgrade --install flowmanager-mongodb -f ${FILE_MONGO} bitnami/mongodb --version 10.23.10 --namespace=${NAMESPACE} --wait
 
     if [ "$?" -ne "0" ]; then
         msg_error 'Helm chart deployment failed'

@@ -12,14 +12,18 @@ function gen_config() {
     cd ../scripts/
     ./generate_certs.sh
     cd -
-
-    cp ../scripts/custom-ca/governance/cacert.p12 ./files/$PROJECT_NAME/configs/governanceca.p12
-    cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
+	
+	cp ../scripts/custom-ca/governance/cacert.p12 ./files/$PROJECT_NAME/configs/governanceca.p12
     cp ../scripts/custom-ca/governance/uicert.p12 ./files/$PROJECT_NAME/configs/uicert.p12
+    cp ../scripts/custom-ca/governance/governanceca.pem ./files/st-fm-plugin/
+    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-ca.pem ./files/st-fm-plugin/
+    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./files/st-fm-plugin/
+    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./files/st-fm-plugin/
+    cp ../scripts/custom-ca/st-fm-plugin/*key ./files/st-fm-plugin/
 	
 	chmod 744 ./files/$PROJECT_NAME/configs/governanceca.p12
-	chmod 744 ./files/$PROJECT_NAME/configs/businessca.p12
 	chmod 744 ./files/$PROJECT_NAME/configs/uicert.p12
+	chmod 744 -R ./files/st-fm-plugin/
 
     # List config files
     if [ $? -eq 0 ]; then
