@@ -22,14 +22,17 @@ function redis_deploy_standalone() {
 
     msg_output 'Waiting redis ready'
     REDIS_ST="flowmanager-redis-master-0"
-    kubectl wait pod/${REDIS_ST} --namespace=${NAMESPACE} --for=condition=Ready --timeout=-50s
+    kubectl wait pod/${REDIS_ST} --namespace=${NAMESPACE} --for=condition=Ready --timeout=-50s || oc wait pod/${REDIS_ST} --namespace=${NAMESPACE} --for=condition=Ready --timeout=-50s
 }
 
 function redis_check_logs() {
         msg_output "Logs for container redis"
-        kubectl --tail=100 logs  -l app=flowmanager-redis  -c redis -n ${NAMESPACE}
-        msg_output "Logs for container sentinel"
-        kubectl --tail=100 logs  -l app=flowmanager-redis -c sentinel -n ${NAMESPACE}
+        kubectl --tail=100 logs  -l app=flowmanager-redis  -c redis -n ${NAMESPACE} || oc --tail=100 logs  -l app=flowmanager-redis  -c redis -n ${NAMESPACE}
+}
+
+function redis_check_logs_oc() {
+        msg_output "Logs for container redis"
+        oc --tail=100 logs  -l app=flowmanager-redis  -c redis -n ${NAMESPACE} || oc --tail=100 logs  -l app=flowmanager-redis  -c redis -n ${NAMESPACE}
 }
 
 function redis_get_config() {

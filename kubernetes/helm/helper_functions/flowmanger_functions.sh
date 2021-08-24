@@ -27,6 +27,29 @@ function flowmanager_deploy_standalone() {
     fm_end_script ${FILE_FM}
 }
 
+function flowmanager_deploy_standalone_oc() {
+    
+    msg_info 'Starting flowmanager deployment standalone'
+    msg_output 'Starting flowmanager helm chart installation'
+	helm dep update ./helm/flowmanager
+    $HELM upgrade --install flowmanager ./helm/flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
+
+    if [ "$?" -ne "0" ]; then
+        msg_error 'Helm chart deployment failed'
+        $HELM delete flowmanager --namespace=${NAMESPACE}
+        exit
+    else
+      msg_output "Helm chart deployment done"
+    fi
+
+    msg_output 'Waiting flowmanager ready'
+    FM_POD=$(oc get pods -n ${NAMESPACE} | grep flowmanager | sed -n 1p | awk '{print $1}')
+    oc wait pod/${FM_POD} --namespace=${NAMESPACE} --for=condition=Ready --timeout=-20s
+
+    rm -rf ./flowmanager/config
+    fm_end_script ${FILE_FM}
+}
+
 
 function fm_end_script() {
     local VALUES_FILE=$1
@@ -67,14 +90,14 @@ function fm_end_script() {
     kubectl get ingress
 }
 
-function flowmanager_get_certs() {    
-    mkdir -p ./flowmanager/config
-    cp -R ./config/ ./flowmanager/config/    
-}
-
 function fm_check_logs() {
     msg_output "Logs for Flowmanager"
-    kubectl --tail=100 logs  -l app=flowmanager -n ${NAMESPACE}
+    kubectl --tail=100 logs  -l app=flowmanager -n ${NAMESPACE} || oc --tail=200 logs  -l app=flowmanager -n ${NAMESPACE}
+}
+
+function fm_check_logs_oc() {
+    msg_output "Logs for Flowmanager"
+    oc --tail=100 logs  -l app=flowmanager -n ${NAMESPACE} || oc --tail=200 logs  -l app=flowmanager -n ${NAMESPACE}
 }
 
 function flowmanager_get_config() {

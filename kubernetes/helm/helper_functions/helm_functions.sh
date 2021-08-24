@@ -19,7 +19,24 @@ function namespace_choice(){
     esac
     done
   fi
+}
 
+function namespace_choice_oc(){
+  echo "Please type your namespace:" 
+  read -r NAMESPACE 
+  export NAMESPACE=${NAMESPACE}
+  if oc get namespace ${NAMESPACE} | grep -q 'Active'
+  then
+    msg_info "The namespace ${NAMESPACE} exists"
+  else
+    msg_info "The namespace ${NAMESPACE} does not exist. Do you want to create it?"
+    select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) oc create namespace ${NAMESPACE};msg_info "The namespace ${NAMESPACE} was created"; break;;
+        No ) exit;;
+    esac
+    done
+  fi
 }
 
 function startup_script(){
@@ -38,6 +55,24 @@ function startup_script(){
   kubectl config set-context --current --namespace=${NAMESPACE}
 
 }
+
+function startup_script_oc(){
+  purgelog
+  
+  mkdir -p logs
+  
+  exec > >(tee -i ./logs/helm_flowmanager_$(date +"%Y-%m-%d_%H-%M").log)
+
+  namespace_choice_oc
+
+  type -P oc &>/dev/null && msg_info 'oc is installed.'|| msg_error 'Error: oc is not installed.'
+  type -P ${HELM} &>/dev/null && msg_info 'helm is installed.'|| msg_error 'Error: Helm is not installed.'
+
+  msg_output 'Current context set on the namespace flowmanager'
+  oc config set-context --current --namespace=${NAMESPACE}
+
+}
+
 ###########################################
 # Purge logs function
 ###########################################
@@ -49,20 +84,6 @@ function purgelog() {
     done
 }
 
-###########################################
-# function helm history
-###########################################
-function helm_history() {
-
-    msg_info "Helm Charts History"
-
-    LIST=$($HELM list --namespace ${NAMESPACE} | grep flowmanager | awk '{print $1}')
-    for i in ${LIST}
-    do
-      msg_output "Helm chart ${i}"
-      $HELM history $i -n ${NAMESPACE} 
-    done
-}
 ###########################################
 # check stack deletion function
 ###########################################
@@ -83,11 +104,44 @@ function stack_confirm_deletion() {
     esac
 }
 
+function stack_confirm_deletion_oc() {
+    msg_info 'Stack deletion step'
+    read -p "Continue (y/n)?" choice
+    case "$choice" in
+    y | Y)
+        exec > >(tee -i ./logs/helm_flowmanager_$(date +"%Y-%m-%d_%H-%M").log)
+        stack_deletion_oc
+        ;;
+    n | N)
+        exit 1
+        ;;
+    *)
+        echo "invalid choice"
+        ;;
+    esac
+}
+
 function stack_deletion() {
   msg_error 'Starting Stack deletion'
   
-  kubectl delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE}
-  kubectl delete pvc -l app=flowmanager-redis -n ${NAMESPACE}
+  kubectl delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found"
+  kubectl delete pvc -l app=flowmanager-redis -n ${NAMESPACE} || echo "Redis PVC not found"
+  helm delete flowmanager-redis -n ${NAMESPACE}
+  helm delete flowmanager-mongodb -n ${NAMESPACE}
+  
+  LIST=$($HELM list --namespace ${NAMESPACE} | grep flowmanager | awk '{print $1}')
+  for i in ${LIST}
+  do
+    $HELM delete $i -n ${NAMESPACE} 
+  done
+  
+}
+
+function stack_deletion_oc() {
+  msg_error 'Starting Stack deletion'
+  
+  oc delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found"
+  oc delete pvc -l app=flowmanager-redis -n ${NAMESPACE} || echo "Redis PVC not found"
   helm delete flowmanager-redis -n ${NAMESPACE}
   helm delete flowmanager-mongodb -n ${NAMESPACE}
   
