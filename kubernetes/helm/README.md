@@ -36,7 +36,7 @@
 
 **[Flowmanager.yaml](kubernetes/helm/flowmanager.yaml) has to be configured.**
 
-1. **Helm deployment**
+1. **Helm deployment/upgrade**
 
 ```shell
 helm dep update ./flowmanager
