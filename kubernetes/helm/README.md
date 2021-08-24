@@ -39,16 +39,11 @@
 1. **Helm deployment**
 
 ```shell
-helm install  flowmanager ./flowmanager --namespace=<your_namespace> -f flowmanager.yaml
+helm dep update ./flowmanager
+helm upgrade --install flowmanager ./flowmanager -f flowmanager.yaml --namespace=<your_namespace>
 ```
 
-3. **Helm update**
-
-```shell
-helm upgrade --install flowmanager ./flowmanager --namespace=<your_namespace> -f flowmanager.yaml
-```
-
-4. **Helm delete**
+2. **Helm delete**
 
 ```shell
 helm delete flowmanager --namespace=<your_namespace>
@@ -59,19 +54,13 @@ helm delete flowmanager --namespace=<your_namespace>
 **Caution internal mongodb will be not encrypted with certificate. [MongoDB.yaml](kubernetes/base/mongodb.yaml) has to be configured.**
 
 
-1. **Helm deployment**
+1. **Helm deployment/upgrade**
 
 ```shell
-helm install flowmanager-mongodb -f mongodb.yaml bitnami/mongodb --namespace=<your_namespace>
+helm upgrade --install flowmanager-mongodb -f mongodb.yaml bitnami/mongodb --version 10.23.10 --namespace=<your_namespace>
 ```
 
-2. **Helm update**
-
-```shell
-helm upgrade --install flowmanager-mongodb -f mongodb.yaml bitnami/mongodb --namespace=<your_namespace>
-```
-
-3. **Helm delete**
+2. **Helm delete**
 
 ```shell
 helm delete flowmanager-mongodb --namespace=<your_namespace>
@@ -81,19 +70,13 @@ helm delete flowmanager-mongodb --namespace=<your_namespace>
 
 **Caution internal redis will be not encrypted with certificate. [Redis.yaml](kubernetes/base/redis.yaml) has to be configured.**
 
-1. **Helm deployment**
+1. **Helm deployment/upgrade**
 
 ```shell
-helm install flowmanager-redis -f redis.yaml bitnami/redis --namespace=<your_namespace>
+helm upgrade --install flowmanager-redis -f redis.yaml bitnami/redis --version 14.8.8 --namespace=<your_namespace>
 ```
 
-2. **Helm update**
-
-```shell
-helm upgrade --install flowmanager-redis -f redis.yaml bitnami/redis --namespace=<your_namespace>
-```
-
-3. **Helm delete**
+2. **Helm delete**
 
 ```shell
 helm delete flowmanager-redis --namespace=<your_namespace>
