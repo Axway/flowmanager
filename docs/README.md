@@ -18,7 +18,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_GOVERNANCE_CA_FILE|Yes|File name and path to governance certificate||
 |FM_GOVERNANCE_CA_PASSWORD|Yes| Governance certificate password||
 |FM_HTTPS_USE_CUSTOM_CERT|No|Flag which informs FlowManager that you are using custom certificates|`true`|
-|FM_HTTPS_KEYSTORE|Yes|Name of the HTTPS certificate||
+|FM_HTTPS_KEYSTORE|Yes|File name and path to HTTPS certificate||
 |FM_HTTPS_CERT_ALIAS|No|Alias of the HTTPS certificate|`ui`|
 |FM_HTTPS_KEYSTORE_PASSWORD|Yes|HTTPS certificate password||
 |FM_HTTPS_DISABLED|No|Set on `true` if the ssl requests are handled by a gateway (SSL termination)|`false`|
