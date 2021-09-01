@@ -29,6 +29,7 @@ function gen_config() {
     cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./files/st-fm-plugin/
     cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./files/st-fm-plugin/
     cp ../scripts/custom-ca/st-fm-plugin/*key ./files/st-fm-plugin/
+    echo "Secret01" > ./files/st-fm-plugin/st-fm-plugin-shared-secret
     chmod -R 755 ./files/st-fm-plugin
 
     # Create .env file
@@ -37,9 +38,9 @@ function gen_config() {
     fi
     # List config files
     if [ $? -eq 0 ]; then
-        info_message "INFO: Certificates were generated and copied sucessfuly to configs folder."
+        info_message "INFO: Certificates were generated and copied successfully to configs folder."
     else
-        error_message "ERROR: There was an errror generating or copying the certificates."
+        error_message "ERROR: There was an error generating or copying the certificates."
         exit 1
     fi
 }

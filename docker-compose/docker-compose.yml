@@ -29,7 +29,7 @@ services:
     tty: true
     environment:
       - ACCEPT_EULA=${ACCEPT_EULA}
-      - FM_GENERAL_FQDN=${FM_GENERAL_FQDN:-localhost}
+      - FM_GENERAL_FQDN=${FM_GENERAL_FQDN:-flowmanager}
       - FM_GENERAL_UI_PORT=${FM_GENERAL_UI_PORT:-8081}
       - FM_GENERAL_ENCRYPTION_KEY=${FM_GENERAL_ENCRYPTION_KEY}
       - FM_LOGS_CONSOLE=${FM_LOGS_CONSOLE:-yes}
