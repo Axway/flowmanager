@@ -78,7 +78,7 @@ else
 fi
 
 if [ -f ./certs/st-fm-plugin-shared-secret ]; then
-    kubectl create secret generic -st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n ${NAMESPACE}
+    kubectl create secret generic st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n ${NAMESPACE}
 else
     msg_info "st-fm-plugin-shared-secret was not found in ./certs/."
 fi
@@ -161,7 +161,7 @@ else
 fi
 
 if [ -f ./certs/st-fm-plugin-shared-secret ]; then
-    oc create secret generic -st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n ${NAMESPACE}
+    oc create secret generic st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n ${NAMESPACE}
 else
     msg_info "st-fm-plugin-shared-secret was not found in ./certs/."
 fi
