@@ -29,7 +29,7 @@ function gen_config() {
     cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./files/st-fm-plugin/
     cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./files/st-fm-plugin/
     cp ../scripts/custom-ca/st-fm-plugin/*key ./files/st-fm-plugin/
-    echo "Secret01" > ./files/st-fm-plugin/st-fm-plugin-shared-secret
+    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-shared-secret ./files/st-fm-plugin/
     chmod -R 755 ./files/st-fm-plugin
 
     # Create .env file

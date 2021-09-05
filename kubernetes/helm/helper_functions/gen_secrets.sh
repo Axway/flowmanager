@@ -17,6 +17,7 @@ cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./certs/st-fm-plugin-cert-
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./certs/st-fm-plugin-cert.pem
 cp ./custom-ca/st-fm-plugin/private-key ./certs/private-key
 cp ./custom-ca/st-fm-plugin/public-key ./certs/public-key
+cp ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret ./certs/st-fm-plugin-shared-secret
 chmod 755 -R ./certs/
 rm -rf ./custom-ca/
 
@@ -76,6 +77,12 @@ else
     msg_info "public-key was not found in ./certs/."
 fi
 
+if [ -f ./certs/st-fm-plugin-shared-secret ]; then
+    kubectl create secret generic -st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n ${NAMESPACE}
+else
+    msg_info "st-fm-plugin-shared-secret was not found in ./certs/."
+fi
+
 }
 
 function gen_certs_selfsigned_oc {
@@ -93,6 +100,7 @@ cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./certs/st-fm-plugin-cert-
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./certs/st-fm-plugin-cert.pem
 cp ./custom-ca/st-fm-plugin/private-key ./certs/private-key
 cp ./custom-ca/st-fm-plugin/public-key ./certs/public-key
+cp ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret ./certs/st-fm-plugin-shared-secret
 chmod 755 -R ./certs/
 rm -rf ./custom-ca/
 
@@ -150,6 +158,12 @@ if [ -f ./certs/governanceca.pem ]; then
     oc create secret generic governanceca-st --from-file=./certs/governanceca.pem -n ${NAMESPACE}
 else
     msg_info "public-key was not found in ./certs/."
+fi
+
+if [ -f ./certs/st-fm-plugin-shared-secret ]; then
+    oc create secret generic -st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n ${NAMESPACE}
+else
+    msg_info "st-fm-plugin-shared-secret was not found in ./certs/."
 fi
 
 }

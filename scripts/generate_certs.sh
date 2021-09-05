@@ -162,3 +162,5 @@ openssl x509 -req -days $EXPIRATION_DAYS -CA ./custom-ca/st-fm-plugin/st-fm-plug
 ssh-keygen -b 2048 -t rsa -f ./custom-ca/st-fm-plugin/key -q -N "" 
 mv ./custom-ca/st-fm-plugin/key ./custom-ca/st-fm-plugin/private-key
 mv ./custom-ca/st-fm-plugin/key.pub ./custom-ca/st-fm-plugin/public-key
+
+echo $PASSWORD > ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret

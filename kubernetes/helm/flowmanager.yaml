@@ -250,6 +250,10 @@ st-plugin:
   volumesSecretDisabled: false
   volumesMountsSecretDisabled: false
   volumes:
+    - volumeName: st-fm-plugin-shared-secret
+      secretName: st-fm-plugin-shared-secret
+      mountPath: /usr/src/app/src/st-fm-plugin-shared-secret
+      subPath: st-fm-plugin-shared-secret                                   
     - volumeName: governanceca-st
       secretName: governanceca-st
       mountPath: /usr/src/app/src/governanceca.pem
