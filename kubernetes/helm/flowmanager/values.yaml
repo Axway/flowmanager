@@ -9,6 +9,9 @@ core:
     repository: axway/flowmanager
     tag: 2.0.200709
 
+  podAnnotations: {}
+    #sidecar.istio.io/inject: "false"
+
   ## Environment variables
   envFromConfigMapDisabled: true
   envFromValueDisabled: false
@@ -121,6 +124,9 @@ st-plugin:
       rollingUpdateType: RollingUpdate
       maxUnavailable: 1
       maxSurge: 0
+  
+  podAnnotations: {}
+    #sidecar.istio.io/inject: "false"
 
   ## Container command
   containerCommandDisabled: true

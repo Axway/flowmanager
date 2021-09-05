@@ -33,7 +33,9 @@ spec:
         heritage: {{ .Release.Service  | quote }}
         version: {{ .Values.image.tag | quote }}
       annotations:
-        sidecar.istio.io/inject: "false"                                                          
+        {{- range $key, $value := .Values.podAnnotations }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
     spec:
       nodeSelector: {{- if .Values.nodeSelectorDisabled }} {}
       {{- else }}
