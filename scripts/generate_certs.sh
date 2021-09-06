@@ -148,4 +148,4 @@ ssh-keygen -b 2048 -t rsa -f ./custom-ca/st-fm-plugin/key -q -N ""
 mv ./custom-ca/st-fm-plugin/key ./custom-ca/st-fm-plugin/private-key
 mv ./custom-ca/st-fm-plugin/key.pub ./custom-ca/st-fm-plugin/public-key
 
-echo $PASSWORD > ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret
+openssl rand -base64 500 | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1 > ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret
