@@ -1,0 +1,9 @@
+* text=auto
+
+*.sh            eol=lf
+*.yml           eol=lf
+*.yaml          eol=lf
+*.conf          eol=lf
+*.template      eol=lf
+
+*.p12           binary
