@@ -41,10 +41,10 @@ function gen_config() {
     # Copy generated certificates in FM configs space
     info_message "INFO: Copying certificates in configs folder..."
 
-    cp ../scripts/custom-ca/governance/cacert.p12 ./files/$PROJECT_NAME/configs/governanceca.p12
+    cp ../scripts/custom-ca/governance/governanceca.pem ./files/$PROJECT_NAME/configs/
     cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
-    cp ../scripts/custom-ca/governance/uicert.p12 ./files/$PROJECT_NAME/configs/uicert.p12
-    cp ../scripts/custom-ca/governance/governanceca.pem ./files/st-fm-plugin/
+    cp ../scripts/custom-ca/governance/uicert.pem ./files/$PROJECT_NAME/configs/
+    cp ../scripts/custom-ca/governance/cacaert.pem ./files/st-fm-plugin/governanceca.pem
     cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-ca.pem ./files/st-fm-plugin/
     cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./files/st-fm-plugin/
     cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./files/st-fm-plugin/

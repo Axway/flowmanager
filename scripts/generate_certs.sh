@@ -116,27 +116,25 @@ function pem() {
 
 # Start to generate PEM certs
 gen_ca governance
-gen_cert governance uicert
+gen_cert governance ui
 gen_ca business
 
-# Start to generate P12 certs
-p12 ./custom-ca/governance/cacert governance
-p12 ./custom-ca/governance/uicert ui
+# generate governance CA and ui cert
+pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key ./custom-ca/governance/governanceca
+pem ./custom-ca/governance/ui ./custom-ca/governance/ui-key ./custom-ca/governance/uicert
+
+# generate business CA
 p12 ./custom-ca/business/cacert business
 
-chmod 755 ./custom-ca/governance/cacert.p12
-chmod 755 ./custom-ca/governance/uicert.p12
+chmod 755 ./custom-ca/governance/governanceca.pem
+chmod 755 ./custom-ca/governance/uicert.pem
 chmod 755 ./custom-ca/business/cacert.p12
 
-#gen_ca st-fm-plugin
-#gen_cert st-fm-plugin st-fm-plugin-cert
-
-pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key ./custom-ca/governance/governanceca
-
-
+# generate ST plugin certs
 if [ ! -d ./custom-ca/st-fm-plugin ]; then
   mkdir ./custom-ca/st-fm-plugin
 fi
+
 openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem 2048
 openssl req -x509 -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -days $EXPIRATION_DAYS -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=rootCA/emailAddress=aa@aa.com'
 openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem 2048
