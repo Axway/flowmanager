@@ -104,7 +104,7 @@ spec:
           name: logs
         - mountPath: /opt/axway/FlowManager/init
           name: initialize
-        - mountPath:/opt/axway/FlowManager/st-fm-plugin
+        - mountPath: /opt/axway/FlowManager/st-fm-plugin
           name: st-fm-plugin
 
     - image: axway/st-fm-plugin
@@ -164,7 +164,7 @@ spec:
         - name: ST_FM_PLUGIN_DATABASE_CERTIFICATES
           value: ""  
       volumeMounts:
-        - mountPath:/usr/src/app/src
+        - mountPath: /usr/src/app/src
           name: st-fm-plugin          
   volumes:
     - hostPath:
