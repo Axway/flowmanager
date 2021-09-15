@@ -14,28 +14,9 @@ PROJECT_NAME="flowmanager"
 # Generate and copy generated certificates in the right configs path
 function gen_config() {
 
-    PASSWORD="abc"
-    SECOND_PASSWORD="bcd"
-
-
-    while [ "$PASSWORD" != "$SECOND_PASSWORD" ]
-    do
-        echo "Please, choose a password for the certificates:"
-        read -s PASSWORD
-        echo "Type the password again:"
-        read -s SECOND_PASSWORD
-
-        if [ "$PASSWORD" != "$SECOND_PASSWORD" ]
-        then
-            echo
-            echo "The passwords do not match!"
-            echo
-        fi
-    done
-
     # Generate certificates
     cd ../scripts/
-    ./generate_certs.sh $PASSWORD
+    source ./generate_certs.sh
     cd -
 
     # Copy generated certificates in FM configs space
