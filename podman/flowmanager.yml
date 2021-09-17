@@ -24,7 +24,7 @@ spec:
         - name: MONGO_INITDB_ROOT_PASSWORD
           value: ""
         - name: MONGO_APP_DATABASE
-          value: ""
+          value: "umcft"
         - name: MONGO_APP_USER
           value: ""
         - name: MONGO_APP_PASS
@@ -116,7 +116,7 @@ spec:
           protocol: tcp
       env:
         - name: ST_FM_PLUGIN_HOST
-          value: "st-fm-plugin"
+          value: "localhost"
         - name: ST_FM_PLUGIN_PORT
           value: "8899"
         - name: ST_FM_PLUGIN_SHORT_NAME
@@ -124,9 +124,9 @@ spec:
         - name: ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION
           value: "true"
         - name: ST_FM_PLUGIN_FM_FQDN
-          value: "flowmanager"
+          value: "localhost"
         - name: ST_FM_PLUGIN_FM_HOST
-          value: "flowmanager"
+          value: "localhost"
         - name: ST_FM_PLUGIN_FM_PORT
           value: "8081"
         - name: ST_FM_PLUGIN_FM_DEPLOYMENT_MODE
@@ -146,21 +146,21 @@ spec:
         - name: ST_FM_PLUGIN_REJECT_UNAUTHORIZED_CONNECTION
           value: "true"
         - name: ST_FM_PLUGIN_DATABASE_HOST
-          value: ""
+          value: "localhost"
         - name: ST_FM_PLUGIN_DATABASE_PORT
-          value: ""
+          value: "27017"
         - name: ST_FM_PLUGIN_DATABASE_NAME
-          value: ""
+          value: "umcft"
         - name: ST_FM_PLUGIN_DATABASE_USER_NAME
           value: ""
         - name: ST_FM_PLUGIN_DATABASE_USER_PASSWORD
           value: ""
         - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES
-          value: ""
+          value: "15"
         - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL
-          value: ""
+          value: "60"
         - name: ST_FM_PLUGIN_DATABASE_USE_SSL
-          value: ""
+          value: "false"
         - name: ST_FM_PLUGIN_DATABASE_CERTIFICATES
           value: ""  
       volumeMounts:
