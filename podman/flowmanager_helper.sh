@@ -35,17 +35,16 @@ function gen_config() {
 
 # Start the container(s)
 function start_container() {
-
-podman play kube ./flowmanager.yml
+podman network create flowmanager_pod-network
+podman play kube ./flowmanager.yml --network=flowmanager_pod-network
 echo "FlowManager was installed."
 
 }
 
 # Restart the container(s)
 function update_container() {
-
 podman pod rm -f flowmanager_pod
-podman play kube ./flowmanager.yml
+podman play kube ./flowmanager.yml --network=flowmanager_pod-network
 echo "Pod 'flowmanager_pod' was updated"
 
 }
@@ -65,10 +64,11 @@ echo "Pod 'flowmanager_pod' was stopped"
 function delete_container() {
 podman pod rm -f flowmanager_pod
 rm -rf ./mongodb_data_container/*
+podman network rm flowmanager_pod-network
 echo "Pod 'flowmanager_pod' was deleted"
 }
 
-# Restart the container(s)
+# Inspect the container(s)
 function inspect() {
 podman pod inspect flowmanager_pod
 }
