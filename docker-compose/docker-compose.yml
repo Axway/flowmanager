@@ -64,7 +64,7 @@ services:
     restart: unless-stopped
     depends_on:
       - mongodb
-    # Create ST-Plugin container  
+    # Create SecureTransport plugin container 
   st-fm-plugin:
     image: "${ST_FM_PLUGIN_IMAGE_URL:-axway/st-fm-plugin}:${ST_FM_PLUGIN_IMAGE_VERSION}"
     environment:
