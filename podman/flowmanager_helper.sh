@@ -13,7 +13,7 @@ function gen_config() {
     ./generate_certs.sh
     cd -
 	
-	cp ../scripts/custom-ca/governance/governanceca.pem ./files/$PROJECT_NAME/configs/
+    cp ../scripts/custom-ca/governance/governanceca.pem ./files/$PROJECT_NAME/configs/
     cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
     cp ../scripts/custom-ca/governance/uicert.pem ./files/$PROJECT_NAME/configs/
     cp ../scripts/custom-ca/governance/cacert.pem ./files/st-fm-plugin/governanceca.pem
@@ -35,42 +35,40 @@ function gen_config() {
 
 # Start the container(s)
 function start_container() {
-podman network create flowmanager_pod-network
-podman play kube ./flowmanager.yml --network=flowmanager_pod-network
-echo "FlowManager was installed."
-
+    podman network create flowmanager_pod-network
+    podman play kube ./flowmanager.yml --network=flowmanager_pod-network
+    echo "FlowManager was installed."
 }
 
 # Restart the container(s)
 function update_container() {
-podman pod rm -f flowmanager_pod
-podman play kube ./flowmanager.yml --network=flowmanager_pod-network
-echo "Pod 'flowmanager_pod' was updated"
-
+    podman pod rm -f flowmanager_pod
+    podman play kube ./flowmanager.yml --network=flowmanager_pod-network
+    echo "Pod 'flowmanager_pod' was updated"
 }
 
 # Check the container(s)
 function status_container() {
-podman pod stats flowmanager_pod
+    podman pod stats flowmanager_pod
 }
 
 # Stop the container(s)
 function stop_container() {
-podman pod stop flowmanager_pod
-echo "Pod 'flowmanager_pod' was stopped"
+    podman pod stop flowmanager_pod
+    echo "Pod 'flowmanager_pod' was stopped"
 }
 
 # Delete the container(s)
 function delete_container() {
-podman pod rm -f flowmanager_pod
-rm -rf ./mongodb_data_container/*
-podman network rm flowmanager_pod-network
-echo "Pod 'flowmanager_pod' was deleted"
+    podman pod rm -f flowmanager_pod
+    rm -rf ./mongodb_data_container/*
+    podman network rm flowmanager_pod-network
+    echo "Pod 'flowmanager_pod' was deleted"
 }
 
 # Inspect the container(s)
 function inspect() {
-podman pod inspect flowmanager_pod
+    podman pod inspect flowmanager_pod
 }
 
 # How to use the script
@@ -78,14 +76,14 @@ function usage() {
     echo "--------"
     echo " HELP"
     echo "--------"
-    echo "Usage: ./$PROJECT_NAME [option]"
+    echo "Usage: ./${PROJECT_NAME}_helper.sh [option]"
     echo "  options:"
     echo "    setup    : Generate certificates"
-    echo "    start    : Start $PROJECT_NAME and database containers"
-    echo "    update   : Update $PROJECT_NAME and database containers with new configuration"
-    echo "    stop     : Stop $PROJECT_NAME and database containers"
-    echo "    stats    : Show the status of $PROJECT_NAME and database containers"
-    echo "    delete   : Delete $PROJECT_NAME, database containers and other parts related to the containers, like storage"
+    echo "    start    : Create the pod network, $PROJECT_NAME, mongodb and securetransport plugin containers and start them"
+    echo "    update   : Update $PROJECT_NAME, mongodb and securetransport plugin containers with new configuration; can also be used to restart the containers"
+    echo "    stop     : Stop $PROJECT_NAME, mongodb and securetransport plugin containers"
+    echo "    stats    : Show the status of $PROJECT_NAME, mongodb and securetransport plugin containers"
+    echo "    delete   : Delete $PROJECT_NAME, mongodb and securetransport containers and other parts related to the containers, like storage and pod network"
     echo "    inspect  : Get the details about your flowmanager pod"
     echo "    help     : Show the usage of the script file"
     echo ""
