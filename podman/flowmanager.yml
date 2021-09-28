@@ -121,14 +121,10 @@ spec:
           value: "8899"
         - name: ST_FM_PLUGIN_SHORT_NAME
           value: "ST"
-        - name: ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION
-          value: "true"
         - name: ST_FM_PLUGIN_FM_FQDN
           value: "flowmanager_pod-flowmanager"
         - name: ST_FM_PLUGIN_FM_PORT
           value: "8081"
-        - name: ST_FM_PLUGIN_FM_DEPLOYMENT_MODE
-          value: "premise"
         - name: ST_FM_PLUGIN_SHARED_SECRET
           value: "/usr/src/app/src/st-fm-plugin-shared-secret"
         - name: ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN
@@ -141,8 +137,6 @@ spec:
           value: "/usr/src/app/src/st-fm-plugin-ca.pem"
         - name: ST_FM_PLUGIN_JWT_KEY
           value: "/usr/src/app/src/private-key"
-        - name: ST_FM_PLUGIN_REJECT_UNAUTHORIZED_CONNECTION
-          value: "true"
         - name: ST_FM_PLUGIN_DATABASE_HOST
           value: "flowmanager_pod-mongodb"
         - name: ST_FM_PLUGIN_DATABASE_PORT
