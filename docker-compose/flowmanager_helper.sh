@@ -120,7 +120,7 @@ function usage() {
     echo "--------"
     echo " HELP"
     echo "--------"
-    echo "Usage: ./$PROJECT_NAME [option]"
+    echo "Usage: ./${PROJECT_NAME}_helper.sh [option]"
     echo "  options:"
     echo "    setup  : Generates certificates and creates the .env file."
     echo "    start  : Starts all containers."
