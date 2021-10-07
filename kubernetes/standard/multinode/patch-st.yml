@@ -1,0 +1,92 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: st-plugin
+  labels:
+    app: flowmanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flowmanager
+  template:
+    metadata:
+      labels:
+        app: flowmanager
+    spec:
+      serviceAccountName: flowmanager
+      securityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1001
+      containers:
+        - name: st-plugin
+          image: ""
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ST_FM_PLUGIN_PORT
+              value: "8899"    
+            - name: ST_FM_PLUGIN_SHORT_NAME
+              value: "ST"
+            - name: ST_FM_PLUGIN_FM_FQDN
+              value: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
+            - name: ST_FM_PLUGIN_FM_HOST
+              value: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
+            - name: ST_FM_PLUGIN_FM_PORT
+              value: "8081"
+            - name: ST_FM_PLUGIN_SHARED_SECRET
+              value: "/usr/src/app/src/st-fm-plugin-shared-secret"
+            - name: ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN
+              value: "/usr/src/app/src/governanceca.pem"
+            - name: ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM
+              value: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
+            - name: ST_FM_PLUGIN_CERT_PEM
+              value: "/usr/src/app/src/st-fm-plugin-cert.pem"
+            - name: ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN
+              value: "/usr/src/app/src/st-fm-plugin-ca.pem"
+            - name: ST_FM_PLUGIN_JWT_KEY
+              value: "/usr/src/app/src/private-key"
+            - name: ST_FM_PLUGIN_DATABASE_HOST
+              value: "flowmanager-mongodb.<NAMESPACE>.svc.cluster.local"
+            - name: ST_FM_PLUGIN_DATABASE_PORT
+              value: 27017
+            - name: ST_FM_PLUGIN_DATABASE_NAME
+              value: "umcft"
+            - name: ST_FM_PLUGIN_DATABASE_USER_NAME
+              value: ""
+            - name: ST_FM_PLUGIN_DATABASE_USER_PASSWORD
+              value: ""
+            - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES
+              value: 15
+            - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL
+              value: 60
+            - name: ST_FM_PLUGIN_DATABASE_USE_SSL
+              value: "false"
+ 
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: st-init-template
+  labels:
+    app: flowmanager   
+data:
+  initialize_template.json: |-
+    {
+      "objectsToCreate": [
+        {
+          "type": "ProductPlugin",
+          "object": {
+            "name": "SecureTransport",
+            "description": "Manage flows definition for SecureTransport product.",
+            "shortName": "ST",
+            "pluginConnection": {
+              "url": "https://{{ .Values.env.variables.FM_ST_PLUGIN_FQDN }}/api/v1",
+              "pluginCertificate": "<plugin_ca>"
+            },
+            "pluginSSHKey": "<public_key>"
+          }
+        }
+      ]
+    }  
