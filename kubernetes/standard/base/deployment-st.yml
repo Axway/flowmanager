@@ -32,7 +32,7 @@ spec:
               readOnly: true
               mountPath: /usr/src/app/src/st-fm-plugin-shared-secret
               subPath: st-fm-plugin-shared-secret
-            - name: governanceca-st
+            - name: governance
               readOnly: true
               mountPath: /usr/src/app/src/governanceca.pem
               subPath: governanceca.pem
@@ -61,9 +61,9 @@ spec:
           secret:
             secretName: st-fm-plugin-shared-secret
             defaultMode: 420
-        - name: governanceca-st
+        - name: governance
           secret:
-            secretName: governanceca-st
+            secretName: governanceca
             defaultMode: 420
         - name: st-fm-plugin-cert-key
           secret:

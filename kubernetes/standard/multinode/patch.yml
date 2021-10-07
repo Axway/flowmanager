@@ -40,9 +40,9 @@ spec:
             - name: FM_HTTPS_USE_CUSTOM_CERT
               value: "no"
             - name: FM_HTTPS_KEYSTORE
-              value: /opt/axway/FlowManager/configs/uicert.p12
+              value: /opt/axway/FlowManager/configs/uicert.pem
             - name: FM_GOVERNANCE_CA_FILE
-              value: /opt/axway/FlowManager/configs/governanceca.p12
+              value: /opt/axway/FlowManager/configs/governanceca.pem
             - name: FM_CFT_SHARED_SECRET
               value: ""
             - name: FM_CFT_UPDATES_PATH

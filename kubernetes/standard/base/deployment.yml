@@ -34,12 +34,12 @@ spec:
               subPath: license.xml
             - name: uicert
               readOnly: true
-              mountPath: /opt/axway/FlowManager/configs/uicert.p12
-              subPath: uicert.p12
+              mountPath: /opt/axway/FlowManager/configs/uicert.pem
+              subPath: uicert.pem
             - name: governance
               readOnly: true
-              mountPath: /opt/axway/FlowManager/configs/governanceca.p12
-              subPath: governanceca.p12
+              mountPath: /opt/axway/FlowManager/configs/governanceca.pem
+              subPath: governanceca.pem
           ports:
             - name: fm-https
               containerPort: 8081
@@ -65,13 +65,13 @@ spec:
       volumes:
         - name: license
           secret:
-            secretName: flowmanager-license
+            secretName: license
             defaultMode: 420
         - name: uicert
           secret:
-            secretName: flowmanager-uicert
+            secretName: uicert
             defaultMode: 420
         - name: governance
           secret:
-            secretName: flowmanager-governance
+            secretName: governanceca
             defaultMode: 420

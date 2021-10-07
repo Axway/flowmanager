@@ -74,7 +74,7 @@ core:
     - volumeName: governanceca
       secretName: governanceca
       mountPath: /opt/axway/FlowManager/configs/governanceca.pem
-      subPath: governanceca.p12
+      subPath: governanceca.pem
     ## ST Plugin CA  
     - volumeName: st-fm-plugin-ca
       secretName: st-fm-plugin-ca
@@ -251,8 +251,8 @@ st-plugin:
       secretName: st-fm-plugin-shared-secret
       mountPath: /usr/src/app/src/st-fm-plugin-shared-secret
       subPath: st-fm-plugin-shared-secret                                   
-    - volumeName: governanceca-st
-      secretName: governanceca-st
+    - volumeName: governanceca
+      secretName: governanceca
       mountPath: /usr/src/app/src/governanceca.pem
       subPath: governanceca.pem
     - volumeName: st-fm-plugin-cert-key
