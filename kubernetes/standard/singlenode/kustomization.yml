@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - ingress.yml
 bases:
-  - ../base/flowmanager/
+  - ../base/
 patchesStrategicMerge:
   - patch.yml
