@@ -8,7 +8,7 @@ metadata:
 spec:
   ports:
     - name: st-plugin-http
-      targetPort: 8899
+      port: 8899
       protocol: TCP
   type: "NodePort"
   selector:
