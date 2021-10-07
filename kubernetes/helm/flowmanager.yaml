@@ -24,7 +24,7 @@ core:
       FM_GENERAL_ENCRYPTION_KEY: "<YOUR_SECRET>"
       FM_LOGS_CONSOLE: "yes"
       FM_GENERAL_LOGGING_LEVEL: "INFO"
-      FM_GOVERNANCE_CA_FILE: "/opt/axway/FlowManager/configs/governanceca.p12"
+      FM_GOVERNANCE_CA_FILE: "/opt/axway/FlowManager/configs/governanceca.pem"
       FM_GOVERNANCE_CA_PASSWORD: "<YOUR_SECRET>"
       FM_CFT_UPDATES_PATH: "/opt/axway/FlowManager/updates/cft/"
       FM_HTTPS_DISABLED: "true"
@@ -73,7 +73,7 @@ core:
     ## FM Governance  
     - volumeName: governanceca
       secretName: governanceca
-      mountPath: /opt/axway/FlowManager/configs/governanceca.p12
+      mountPath: /opt/axway/FlowManager/configs/governanceca.pem
       subPath: governanceca.p12
     ## ST Plugin CA  
     - volumeName: st-fm-plugin-ca
@@ -204,18 +204,15 @@ st-plugin:
       ST_FM_PLUGIN_HOST: "localhost"
       ST_FM_PLUGIN_PORT: 8899
       ST_FM_PLUGIN_SHORT_NAME: "ST"
-      ST_FM_PLUGIN_ST_SKIP_HOSTNAME_VERIFICATION: "true"
       ST_FM_PLUGIN_FM_FQDN: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
       ST_FM_PLUGIN_FM_HOST: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
       ST_FM_PLUGIN_FM_PORT: 8081
-      ST_FM_PLUGIN_FM_DEPLOYMENT_MODE: "premise"
       ST_FM_PLUGIN_SHARED_SECRET: "/usr/src/app/src/st-fm-plugin-shared-secret"
       ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN: "/usr/src/app/src/governanceca.pem"
       ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
       ST_FM_PLUGIN_CERT_PEM: "/usr/src/app/src/st-fm-plugin-cert.pem"
       ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN: "/usr/src/app/src/st-fm-plugin-ca.pem"
       ST_FM_PLUGIN_JWT_KEY: "/usr/src/app/src/private-key"
-      ST_FM_PLUGIN_REJECT_UNAUTHORIZED_CONNECTION: "false"
       
       ST_FM_PLUGIN_DATABASE_HOST: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local"
       ST_FM_PLUGIN_DATABASE_PORT: 27017
