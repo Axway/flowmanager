@@ -7,3 +7,6 @@ resources:
   - secret-env.yml
   - deployment.yml
   - service.yml
+  - deployment-st.yml
+  - service-st.yml
+  - config-map-st.yml

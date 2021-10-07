@@ -5,5 +5,4 @@ resources:
 bases:
   - ../base/flowmanager/
 patchesStrategicMerge:
-  - patch-fm.yml
-  - patch-st.yml
+  - patch.yml
