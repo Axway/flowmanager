@@ -8,9 +8,8 @@ function gen_certs_selfsigned {
 mkdir -p certs
 
 
-cp ./custom-ca/governance/cacert.p12 ./certs/governanceca.p12
 cp ./custom-ca/governance/governanceca.pem ./certs/governanceca.pem
-cp ./custom-ca/governance/uicert.p12 ./certs/uicert.p12
+cp ./custom-ca/governance/uicert.pem ./certs/uicert.pem
 cp ./custom-ca/business/cacert.p12  ./certs/businessca.p12
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem   ./certs/st-fm-plugin-ca.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./certs/st-fm-plugin-cert-key.pem
@@ -29,17 +28,12 @@ else
 	msg_info 'You can manually run: kubectl create secret generic flowmanager-license --from-file=license.xml -n namespace'
 fi
 
-if [ -f ./certs/uicert.p12 ]; then
-    kubectl create secret generic uicert --from-file=./certs/uicert.p12 -n ${NAMESPACE}
+if [ -f ./certs/uicert.pem ]; then
+    kubectl create secret generic uicert --from-file=./certs/uicert.pem -n ${NAMESPACE}
 else
     msg_info "uicert.p12 was not found in ./certs/."
 fi
 
-if [ -f ./certs/governanceca.p12 ]; then
-    kubectl create secret generic governanceca --from-file=./certs/governanceca.p12 -n ${NAMESPACE}
-else
-    msg_info "governanceca.p12 was not found in ./certs/."
-fi
 
 if [ -f ./certs/st-fm-plugin-ca.pem ]; then
     kubectl create secret generic st-fm-plugin-ca --from-file=./certs/st-fm-plugin-ca.pem -n ${NAMESPACE}
@@ -72,7 +66,7 @@ else
 fi
 
 if [ -f ./certs/governanceca.pem ]; then
-    kubectl create secret generic governanceca-st --from-file=./certs/governanceca.pem -n ${NAMESPACE}
+    kubectl create secret generic governanceca --from-file=./certs/governanceca.pem -n ${NAMESPACE}
 else
     msg_info "public-key was not found in ./certs/."
 fi
@@ -91,9 +85,8 @@ function gen_certs_selfsigned_oc {
 mkdir -p certs
 
 
-cp ./custom-ca/governance/cacert.p12 ./certs/governanceca.p12
 cp ./custom-ca/governance/governanceca.pem ./certs/governanceca.pem
-cp ./custom-ca/governance/uicert.p12 ./certs/uicert.p12
+cp ./custom-ca/governance/uicert.pem ./certs/uicert.pem
 cp ./custom-ca/business/cacert.p12  ./certs/businessca.p12
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem   ./certs/st-fm-plugin-ca.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./certs/st-fm-plugin-cert-key.pem
@@ -112,17 +105,12 @@ else
 	msg_info 'You can manually run: oc create secret generic flowmanager-license --from-file=license.xml -n namespace'
 fi
 
-if [ -f ./certs/uicert.p12 ]; then
-    oc create secret generic uicert --from-file=./certs/uicert.p12 -n ${NAMESPACE}
+if [ -f ./certs/uicert.pem ]; then
+    oc create secret generic uicert --from-file=./certs/uicert.pem -n ${NAMESPACE}
 else
     msg_info "uicert.p12 was not found in ./certs/."
 fi
 
-if [ -f ./certs/governanceca.p12 ]; then
-    oc create secret generic governanceca --from-file=./certs/governanceca.p12 -n ${NAMESPACE}
-else
-    msg_info "governanceca.p12 was not found in ./certs/."
-fi
 
 if [ -f ./certs/st-fm-plugin-ca.pem ]; then
     oc create secret generic st-fm-plugin-ca --from-file=./certs/st-fm-plugin-ca.pem -n ${NAMESPACE}
@@ -155,7 +143,7 @@ else
 fi
 
 if [ -f ./certs/governanceca.pem ]; then
-    oc create secret generic governanceca-st --from-file=./certs/governanceca.pem -n ${NAMESPACE}
+    oc create secret generic governanceca --from-file=./certs/governanceca.pem -n ${NAMESPACE}
 else
     msg_info "public-key was not found in ./certs/."
 fi
