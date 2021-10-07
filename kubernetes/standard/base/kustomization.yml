@@ -9,4 +9,4 @@ resources:
   - service.yml
   - deployment-st.yml
   - service-st.yml
-  - config-map-st.yml
+  - config-map-st.yaml
