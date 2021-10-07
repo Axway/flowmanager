@@ -61,8 +61,8 @@ function stop_container() {
 # Delete the container(s)
 function delete_container() {
     podman pod rm -f flowmanager_pod
-    rm -rf ./mongodb_data_container/*
     podman network rm flowmanager_pod-network
+    rm -rf ./mongodb_data_container/*
     echo "Pod 'flowmanager_pod' was deleted"
 }
 

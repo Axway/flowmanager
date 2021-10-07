@@ -47,8 +47,8 @@ spec:
       env:
         - name: ACCEPT_EULA
           value: ""
-        - name: FM_GENERAL_FQDN
-          value: "flowmanager_pod-flowmanager"
+        - name: FM_GENERAL_FQDN     # FQDN of the machine
+          value: ""
         - name: FM_GENERAL_UI_PORT
           value: "8081"
         - name: FM_GENERAL_ENCRYPTION_KEY
@@ -121,8 +121,8 @@ spec:
           value: "8899"
         - name: ST_FM_PLUGIN_SHORT_NAME
           value: "ST"
-        - name: ST_FM_PLUGIN_FM_FQDN
-          value: "flowmanager_pod-flowmanager"
+        - name: ST_FM_PLUGIN_FM_FQDN     # FQDN of the machine
+          value: ""
         - name: ST_FM_PLUGIN_FM_PORT
           value: "8081"
         - name: ST_FM_PLUGIN_SHARED_SECRET
