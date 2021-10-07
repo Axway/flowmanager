@@ -7,9 +7,8 @@ metadata:
     app: flowmanager
 spec:
   ports:
-    - name: flowmanager-https
-      port: 8081
-      targetPort: 8081
+    - name: st-plugin-http
+      targetPort: 8899
       protocol: TCP
   type: "NodePort"
   selector:

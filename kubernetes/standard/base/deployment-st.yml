@@ -24,47 +24,60 @@ spec:
         - name: st-plugin
           image: ""
           imagePullPolicy: IfNotPresent
+          env:
+            - name: ST_FM_PLUGIN_HOST
+              value: "localhost"    
           volumeMounts:
-            - name: license
+            - name: st-fm-plugin-shared-secret
               readOnly: true
-              mountPath: /opt/axway/FlowManager/conf/license/license.xml
-              subPath: license.xml
-            - name: governance
+              mountPath: /usr/src/app/src/st-fm-plugin-shared-secret
+              subPath: st-fm-plugin-shared-secret
+            - name: governanceca-st
               readOnly: true
-              mountPath: /opt/axway/FlowManager/configs/governanceca.p12
-              subPath: governanceca.p12
+              mountPath: /usr/src/app/src/governanceca.pem
+              subPath: governanceca.pem
+            - name: st-fm-plugin-cert-key
+              readOnly: true
+              mountPath: /usr/src/app/src/st-fm-plugin-cert-key.pem
+              subPath: st-fm-plugin-cert-key.pem
+            - name: st-fm-plugin-cert
+              readOnly: true
+              mountPath: /usr/src/app/src/st-fm-plugin-cert.pem
+              subPath: st-fm-plugin-cert.pem
+            - name: st-fm-plugin-ca
+              readOnly: true
+              mountPath: /usr/src/app/src/st-fm-plugin-ca.pem
+              subPath: st-fm-plugin-ca.pem
+            - name: private-key-st
+              readOnly: true
+              mountPath: /usr/src/app/src/private-key.pem
+              subPath: private-key.pem
           ports:
-            - name: fm-https
-              containerPort: 8081
+            - name: st-plugin-http
+              containerPort: 8899
               protocol: TCP
-          livenessProbe:
-            failureThreshold: 2
-            httpGet:
-              path: /api/v2/internals/stability
-              port: 8081
-              scheme: HTTPS
-            initialDelaySeconds: 100
-            periodSeconds: 10
-            successThreshold: 1
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /fm/login
-              port: 8081
-              scheme: HTTPS
-            initialDelaySeconds: 100
-            periodSeconds: 5
-            successThreshold: 3
       volumes:
-        - name: license
+        - name: st-fm-plugin-shared-secret
           secret:
-            secretName: flowmanager-license
+            secretName: st-fm-plugin-shared-secret
             defaultMode: 420
-        - name: uicert
+        - name: governanceca-st
           secret:
-            secretName: flowmanager-uicert
+            secretName: governanceca-st
             defaultMode: 420
-        - name: governance
+        - name: st-fm-plugin-cert-key
           secret:
-            secretName: flowmanager-governance
+            secretName: st-fm-plugin-cert-key
+            defaultMode: 420
+        - name: st-fm-plugin-cert
+          secret:
+            secretName: st-fm-plugin-cert
+            defaultMode: 420
+        - name: st-fm-plugin-ca
+          secret:
+            secretName: st-fm-plugin-ca
+            defaultMode: 420
+        - name: private-key-st
+          secret:
+            secretName: private-key-st
             defaultMode: 420
