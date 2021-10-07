@@ -126,8 +126,9 @@ function stack_deletion() {
   
   kubectl delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found"
   kubectl delete pvc -l app=flowmanager-redis -n ${NAMESPACE} || echo "Redis PVC not found"
-  helm delete flowmanager-redis -n ${NAMESPACE}
-  helm delete flowmanager-mongodb -n ${NAMESPACE}
+  helm delete flowmanager-redis -n ${NAMESPACE} || echo "Redis not found"
+  helm delete flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo not found"
+  
   
   LIST=$($HELM list --namespace ${NAMESPACE} | grep flowmanager | awk '{print $1}')
   for i in ${LIST}
@@ -135,6 +136,8 @@ function stack_deletion() {
     $HELM delete $i -n ${NAMESPACE} 
   done
   
+  kubectl delete --all deployments -n ${NAMESPACE}
+  echo "The secrets were not deleted"
 }
 
 function stack_deletion_oc() {
@@ -142,14 +145,16 @@ function stack_deletion_oc() {
   
   oc delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found"
   oc delete pvc -l app=flowmanager-redis -n ${NAMESPACE} || echo "Redis PVC not found"
-  helm delete flowmanager-redis -n ${NAMESPACE}
-  helm delete flowmanager-mongodb -n ${NAMESPACE}
+  helm delete flowmanager-redis -n ${NAMESPACE} || echo "Redis not found"
+  helm delete flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo not found"
   
   LIST=$($HELM list --namespace ${NAMESPACE} | grep flowmanager | awk '{print $1}')
   for i in ${LIST}
   do
     $HELM delete $i -n ${NAMESPACE} 
   done
+  oc delete --all deployments -n ${NAMESPACE}
+  echo "The secrets were not deleted"
   
 }
 
