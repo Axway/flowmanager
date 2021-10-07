@@ -6,8 +6,6 @@ metadata:
 spec:
   template:
     spec:
-      $setElementOrder/containers:
-        - name: flowmanager
       containers:
         - image: axway/flowmanager:[FLOWMANAGER_VERSION]
           name: flowmanager
@@ -38,6 +36,10 @@ spec:
               value: ""
             - name: FM_CFT_UPDATES_PATH
               value: "/opt/axway/FlowManager/updates/cft/"
+            - name: FM_ST_PLUGIN_CA_FILE
+              value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
+            - name: FM_ST_PLUGIN_PUBLIC_KEY
+              value: "/opt/axway/FlowManager/st-fm-plugin/public-key.pem"
             - name: FM_JVM_XMN
               value: "768M"
             - name: FM_JVM_XMS
@@ -111,7 +113,7 @@ spec:
             - name: ST_FM_PLUGIN_DATABASE_HOST
               value: "flowmanager-mongodb.<NAMESPACE>.svc.cluster.local"
             - name: ST_FM_PLUGIN_DATABASE_PORT
-              value: 27017
+              value: "27017"
             - name: ST_FM_PLUGIN_DATABASE_NAME
               value: "umcft"
             - name: ST_FM_PLUGIN_DATABASE_USER_NAME
@@ -119,9 +121,9 @@ spec:
             - name: ST_FM_PLUGIN_DATABASE_USER_PASSWORD
               value: ""
             - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES
-              value: 15
+              value: "15"
             - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL
-              value: 60
+              value: "60"
             - name: ST_FM_PLUGIN_DATABASE_USE_SSL
               value: "false"
  

@@ -40,6 +40,14 @@ spec:
               readOnly: true
               mountPath: /opt/axway/FlowManager/configs/governanceca.pem
               subPath: governanceca.pem
+            - name: public-key-st
+              readOnly: true
+              mountPath: /opt/axway/FlowManager/st-fm-plugin/public-key.pem
+              subPath: public-key.pem
+            - name: st-fm-plugin-ca
+              readOnly: true
+              mountPath: /opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem
+              subPath: st-fm-plugin-ca.pem              
           ports:
             - name: fm-https
               containerPort: 8081
@@ -74,4 +82,12 @@ spec:
         - name: governance
           secret:
             secretName: governanceca
+            defaultMode: 420
+        - name: st-fm-plugin-ca
+          secret:
+            secretName: st-fm-plugin-ca
+            defaultMode: 420
+        - name: public-key-st
+          secret:
+            secretName: public-key-st
             defaultMode: 420
