@@ -25,7 +25,7 @@ if [ -f ./license.xml ]; then
     kubectl create secret generic license --from-file=./license.xml -n ${NAMESPACE}
 else
     msg_info 'License not found.'
-	msg_info 'You can manually run: kubectl create secret generic flowmanager-license --from-file=license.xml -n namespace'
+	msg_info 'You can manually run: kubectl create secret generic license --from-file=license.xml -n namespace'
 fi
 
 if [ -f ./certs/uicert.pem ]; then

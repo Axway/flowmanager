@@ -125,3 +125,30 @@ spec:
               value: 60
             - name: ST_FM_PLUGIN_DATABASE_USE_SSL
               value: "false"
+ 
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: st-init-template
+  labels:
+    app: flowmanager   
+data:
+  initialize_template.json: |-
+    {
+      "objectsToCreate": [
+        {
+          "type": "ProductPlugin",
+          "object": {
+            "name": "SecureTransport",
+            "description": "Manage flows definition for SecureTransport product.",
+            "shortName": "ST",
+            "pluginConnection": {
+              "url": "https://{{ .Values.env.variables.FM_ST_PLUGIN_FQDN }}/api/v1",
+              "pluginCertificate": "<plugin_ca>"
+            },
+            "pluginSSHKey": "<public_key>"
+          }
+        }
+      ]
+    }             
