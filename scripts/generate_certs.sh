@@ -157,7 +157,7 @@ openssl req -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem -out ./
 openssl x509 -req -days $EXPIRATION_DAYS -CA ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -CAkey ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -CAcreateserial -CAserial ./custom-ca/st-fm-plugin/serial -in ./custom-ca/st-fm-plugin/st-fm-plugin-cert.csr -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem
 
 
-ssh-keygen -b 2048 -t rsa -f ./custom-ca/st-fm-plugin/key -q -N "" 
+ssh-keygen -b 2048 -m pem -f ./custom-ca/st-fm-plugin/key -q -N "" 
 mv ./custom-ca/st-fm-plugin/key ./custom-ca/st-fm-plugin/private-key
 mv ./custom-ca/st-fm-plugin/key.pub ./custom-ca/st-fm-plugin/public-key
 
