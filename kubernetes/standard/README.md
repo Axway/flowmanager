@@ -1,11 +1,13 @@
-
 ## Installation steps for Kubernetes with Standard Manifest Files using flowmanager_helper.sh
 
 ### Prerequisites  
 
-* Kubernetes 1.4+
-* kubectl 1.4+
+* Kubernetes 1.17 - 1.21
 * Helm 3+ (only for Mongo/Redis)
+* Customer certificates and password
+* Customer license
+* Mongodb database (can be installed with flowmanager_helper.sh -m)
+* Redis (only for Flowmanager Multinode, can be installed with flowmanager_helper.sh -r)
 * Nginx(latest stable version) installed and configured for Ingress usage 
 
 ### Steps  
@@ -13,7 +15,7 @@
 2. Install Redis and/or MongoDB using
    >```./flowmanager_helper.sh -m ``` for MongoDB  
    >```./flowmanager_helper.sh -r ``` for Redis
-3. Create the TLS secret for your domain using:
+3. Create the TLS secret for your domain using (mandatory for ST-Plugin):
    >``` kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>```
 4. Copy your license to the [root folder](./) or run the following command in order to create the secret:
    >```kubectl create secret generic flowmanager-license --from-file=license.xml -n <NAMESPACE>```
@@ -31,12 +33,10 @@ Deploy using standard Kubernetes deployment manifest files.
 
 ### Prerequisites
 
-* Kubernetes 1.4+
-* kubectl 1.4+
-* Customer certificates and password
+* Kubernetes 1.17-1.22
 * Customer license
-* Mongodb URL
-* `user` and `password` for Mongodb
+* Mongodb database (can be installed with flowmanager_helper.sh -m)
+* Redis (only for Flowmanager Multinode, can be installed with flowmanager_helper.sh -r)
 * Nginx(latest stable version) installed and configured for Ingress usage
 
 ### How to create secrets for certificates
@@ -44,19 +44,19 @@ Deploy using standard Kubernetes deployment manifest files.
 * License
 
 ```shell
-kubectl create secret generic flowmanager-license --from-file=license.xml
+kubectl create secret generic license --from-file=license.xml -n <namespace>
 ```
 
 * UI
 
 ```shell
-kubectl create secret generic flowmanager-httpskeystore --from-file=uicert.p12
+kubectl create secret generic uicert --from-file=uicert.pem -n <namespace>
 ```
 
 * Governance
 
 ```shell
-kubectl create secret generic flowmanager-governance --from-file=governanceca.p12
+kubectl create secret generic governanceca --from-file=governanceca.pem -n <namespace>
 ```
 
 _**Warning:** Each files used from this step we need to be update the [Deployment file](flowmanager/deployment.yaml)_
@@ -103,17 +103,17 @@ Files to check and modify:
 
 **This stuff permit to deploy only Flowmanager 1 node**
 
-1. Creating manually all secrets for the licence and certificates
+1. Creating manually all secrets for the licence and certificates including tls certificate
 2. Editing manually the yaml file for parameters needed or madatory for the customer
 3. Applying all the files
 ex:
 
 ```shell
-kubectl apply -k ./singlenode
+kubectl apply -k ./singlenode -n <namespace>
 ```
 
 ### ***Remove***
 
 ```shell
-kubectl delete -k ./singlenode
+kubectl delete -k ./singlenode -n <namespace>
 ```
