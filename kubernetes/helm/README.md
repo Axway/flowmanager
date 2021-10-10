@@ -5,6 +5,8 @@
 * Kubernetes 1.17+
 * Helm 3+
 * Customer license
+* Mongodb (can be installed with _flowmanager_helper.sh -m_)
+* Redis (only for Flowmanager Multinode, can be installed with _flowmanager_helper.sh -r_)
 * Nginx(latest stable version) installed and configured for Ingress usage
 
 ## Content
