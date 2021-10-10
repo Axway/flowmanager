@@ -4,6 +4,7 @@
 
 * Kubernetes 1.17+
 * Helm 3+
+* Customer license
 * Nginx(latest stable version) installed and configured for Ingress usage
 
 ## Content
