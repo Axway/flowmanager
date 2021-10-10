@@ -5,6 +5,7 @@ resources:
   - psp.yml
   - role.yml
   - secret-env.yml
+  - secret-env-st.yml
   - deployment.yml
   - service.yml
   - deployment-st.yml

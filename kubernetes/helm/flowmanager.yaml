@@ -204,9 +204,8 @@ st-plugin:
       ST_FM_PLUGIN_HOST: "localhost"
       ST_FM_PLUGIN_PORT: 8899
       ST_FM_PLUGIN_SHORT_NAME: "ST"
-      ST_FM_PLUGIN_FM_FQDN: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
-      ST_FM_PLUGIN_FM_HOST: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
-      ST_FM_PLUGIN_FM_PORT: 8081
+      ST_FM_PLUGIN_FM_FQDN: "<FM_FQDN>" #TLS MANDATORY
+      ST_FM_PLUGIN_FM_PORT: 443
       ST_FM_PLUGIN_SHARED_SECRET: "/usr/src/app/src/st-fm-plugin-shared-secret"
       ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN: "/usr/src/app/src/governanceca.pem"
       ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM: "/usr/src/app/src/st-fm-plugin-cert-key.pem"

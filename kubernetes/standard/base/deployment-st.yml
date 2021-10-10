@@ -24,6 +24,9 @@ spec:
         - name: st-plugin
           image: ""
           imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: st-env
           env:
             - name: ST_FM_PLUGIN_HOST
               value: "localhost"    
@@ -50,8 +53,8 @@ spec:
               subPath: st-fm-plugin-ca.pem
             - name: private-key-st
               readOnly: true
-              mountPath: /usr/src/app/src/private-key.pem
-              subPath: private-key.pem
+              mountPath: /usr/src/app/src/private-key
+              subPath: private-key
           ports:
             - name: st-plugin-http
               containerPort: 8899

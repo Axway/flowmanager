@@ -1,3 +1,4 @@
+## Replace <NAMESPACE> with your namespace
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -11,6 +12,7 @@ spec:
         - image: axway/flowmanager:[FLOWMANAGER_VERSION]
           name: flowmanager
           env:
+            ## In this section you can add / remove parameters according to your needs.
             - name: ACCEPT_EULA
               value: ""
             - name: FM_GENERAL_LOGGING_LEVEL
@@ -18,7 +20,7 @@ spec:
             - name: FM_LOGS_CONSOLE
               value: "yes"
             - name: FM_GENERAL_FQDN
-              value: "localhost"
+              value: ""
             - name: FM_GENERAL_UI_PORT
               value: "443"
             - name: FM_DATABASE_HOST
@@ -41,14 +43,12 @@ spec:
               value: /opt/axway/FlowManager/configs/uicert.pem
             - name: FM_GOVERNANCE_CA_FILE
               value: /opt/axway/FlowManager/configs/governanceca.pem
-            - name: FM_CFT_SHARED_SECRET
-              value: ""
             - name: FM_CFT_UPDATES_PATH
               value: "/opt/axway/FlowManager/updates/cft/"
             - name: FM_ST_PLUGIN_CA_FILE
               value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
             - name: FM_ST_PLUGIN_PUBLIC_KEY
-              value: "/opt/axway/FlowManager/st-fm-plugin/public-key.pem"
+              value: "/opt/axway/FlowManager/st-fm-plugin/public-key"
             - name: FM_JVM_XMN
               value: "768M"
             - name: FM_JVM_XMS
@@ -64,6 +64,7 @@ metadata:
     app: flowmanager
 type: Opaque
 data:
+  ## Base64 values
   FM_GENERAL_ENCRYPTION_KEY: ""
   FM_HTTPS_KEYSTORE_PASSWORD: ""
   FM_CFT_SHARED_SECRET: ""
@@ -98,16 +99,17 @@ spec:
           image: ""
           imagePullPolicy: IfNotPresent
           env:
+            ## In this section you can add / remove parameters according to your needs.
             - name: ST_FM_PLUGIN_PORT
               value: "8899"    
             - name: ST_FM_PLUGIN_SHORT_NAME
               value: "ST"
+            - name: ST_FM_PLUGIN_HOST
+              value: "localhost"     
             - name: ST_FM_PLUGIN_FM_FQDN
-              value: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
-            - name: ST_FM_PLUGIN_FM_HOST
-              value: "flowmanager-core.<YOUR_NAMESPACE>.svc.cluster.local"
+              value: "<FLOWMANAGER_FQDN>" #TLS MANDATORY, MUST BE EQUAL WITH FM_GENERAL_FQDN
             - name: ST_FM_PLUGIN_FM_PORT
-              value: "8081"
+              value: "443"
             - name: ST_FM_PLUGIN_SHARED_SECRET
               value: "/usr/src/app/src/st-fm-plugin-shared-secret"
             - name: ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN
@@ -128,15 +130,23 @@ spec:
               value: "umcft"
             - name: ST_FM_PLUGIN_DATABASE_USER_NAME
               value: ""
-            - name: ST_FM_PLUGIN_DATABASE_USER_PASSWORD
-              value: ""
             - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES
               value: "15"
             - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL
               value: "60"
             - name: ST_FM_PLUGIN_DATABASE_USE_SSL
               value: "false"
- 
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: st-env
+  labels:
+    app: flowmanager
+type: Opaque
+data:
+  ## Base64 values
+  ST_FM_PLUGIN_DATABASE_USER_PASSWORD: ""
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -155,7 +165,7 @@ data:
             "description": "Manage flows definition for SecureTransport product.",
             "shortName": "ST",
             "pluginConnection": {
-              "url": "https://{{ .Values.env.variables.FM_ST_PLUGIN_FQDN }}/api/v1",
+              "url": "https://st-plugin.<NAMESPACE>.svc.cluster.local:8899/api/v1",
               "pluginCertificate": "<plugin_ca>"
             },
             "pluginSSHKey": "<public_key>"
