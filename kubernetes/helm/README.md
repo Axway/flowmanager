@@ -20,7 +20,7 @@
 2. Install Redis and/or MongoDB using
    >```./flowmanager_helper.sh -m ``` for MongoDB  
    >```./flowmanager_helper.sh -r ``` for Redis
-3. Create the TLS secret for your domain using(optional):
+3. Create the TLS secret for your domain using(mandatory for ST-Plugin):
    >``` kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>```
 4. Copy your license to the [root folder](kubernetes/) or run the following command in order to create the secret:
    >```kubectl create secret generic flowmanager-license --from-file=license.xml -n <NAMESPACE>```
