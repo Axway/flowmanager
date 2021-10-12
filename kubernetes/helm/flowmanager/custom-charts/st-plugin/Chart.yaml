@@ -3,7 +3,6 @@ description: ST FM Plugin in ARS.
 name: st-plugin
 keywords:
   - st
-  - st-plugin
   - flowmanager
 version: 0.1.0
 sources:
