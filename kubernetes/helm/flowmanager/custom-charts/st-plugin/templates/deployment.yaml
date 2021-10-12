@@ -52,6 +52,12 @@ spec:
           effect: {{ .effect | quote }}
       {{- end }}
       {{- end }}
+      securityContext:
+{{ toYaml .Values.podSecurityContext | indent 8 }}
+    {{ if .Values.image.imagePullSecretsEnabled }}
+      imagePullSecrets:
+        - name: {{ .Values.image.imagePullSecretsName }}
+    {{ end }}
       containers:
         - name: {{ template "fullname" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
