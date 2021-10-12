@@ -5,10 +5,7 @@ keywords:
   - st
   - st-plugin
   - flowmanager
-version: 0.1.0
-appVersion: 2.0.2
-sources:
-  - https://github.com/Axway/docker-flowmanager/tree/master/kubernetes/helm
+version: 0.1.1
 maintainers:
   - name: Flow Manager Team
     email: flowmanagerrd@axway.com
