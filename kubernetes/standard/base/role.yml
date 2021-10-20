@@ -1,21 +1,17 @@
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
     app: flowmanager
   name: flowmanager
 rules:
-  - apiGroups:
-      - policy
-    resources:
-      - podsecuritypolicies
-    resourceNames:
-      - flowmanager-psp
-    verbs:
-      - use
+  - apiGroups: ["policy"]
+    resources: ["podsecuritypolicies"]
+    resourceNames: ["flowmanager-psp"]
+    verbs: ["use"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: flowmanager-deploy
@@ -29,21 +25,16 @@ rules:
     resources: ["events"]
     verbs: ["list", "watch", "create", "update", "patch"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: flowmanager-read
   labels:
     app: flowmanager
 rules:
-  - apiGroups:
-      - ""
-    resources:
-      - secrets
-      - configmaps
-    verbs:
-      - list
-      - get
+  - apiGroups: [""]
+    resources: ["secrets","configmaps"]
+    verbs: ["list","get"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -59,7 +50,7 @@ subjects:
   - kind: ServiceAccount
     name: flowmanager
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: flowmanager-deploy
@@ -73,7 +64,7 @@ subjects:
   - name: flowmanager
     kind: ServiceAccount
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: flowmanager-read
