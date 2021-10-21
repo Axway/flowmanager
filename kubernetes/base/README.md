@@ -1,7 +1,7 @@
 ## Mongo/Redis
   
 ### Prerequisites
-  * A Kubernetes 1.4+ cluster with Beta APIs enabled  
+  * A Kubernetes 1.7+ cluster with Beta APIs enabled  
   * Helm installed in your cluster  
   * Helm CLI installed in your PC  
     
