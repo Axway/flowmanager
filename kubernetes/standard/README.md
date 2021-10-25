@@ -21,7 +21,7 @@
    >``` kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>```
    For OpenShift clusters, replace _kubectl_ with _oc_.
 4. Copy your license to the [root folder](./) or run the following command in order to create the secret:
-   >```kubectl create secret generic flowmanager-license --from-file=license.xml -n <NAMESPACE>```
+   >```kubectl create secret generic license --from-file=license.xml -n <NAMESPACE>```
    For OpenShift clusters, replace _kubectl_ with _oc_.
 5. Generate the certificates and secrets using:
    >```./flowmanager_helper.sh -gc``` (Kubernetes)
