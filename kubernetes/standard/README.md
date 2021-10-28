@@ -26,7 +26,7 @@
 5. Generate the certificates and secrets using:
    >```./flowmanager_helper.sh -gc``` (Kubernetes)
    >```./flowmanager_helper.sh -gco``` (OpenShift)
-6. Customize [patch.yml](standard/multinode/patch.yml) and [ingress.yml](standard/multinode/ingress.yml) for FM MultiNode and/or [patch.yml](standard/singlenode/patch.yml) and [ingress.yml](standard/singlenode/ingress.yml) for FM SingleNode. You can add and remove any parameter from patch.yml, please check [docs](/docs/).
+6. Customize [patch.yml](./multinode/patch.yml) and [ingress.yml](./multinode/ingress.yml) for FM MultiNode and/or [patch.yml](./singlenode/patch.yml) and [ingress.yml](./singlenode/ingress.yml) for FM SingleNode. You can add and remove any parameter from patch.yml, please check [docs](/docs/).
 7. Install Flow Manager:
    >```./flowmanager_helper.sh -fm-s ``` for FM SingleNode  (Kubernetes)  
    >```./flowmanager_helper.sh -fm-m ``` for FM MultiNode   (Kubernetes)  
@@ -100,7 +100,7 @@ FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 
 Files to check and modify:
 
-* Deployment file: [SingleNode](singlenode/patch.yml) or [MultiNode](multinode/patch.yml)
+* Deployment file: [SingleNode](./singlenode/patch.yml) or [MultiNode](./multinode/patch.yml)
 
 ### How to deploy Flowmanager
 
