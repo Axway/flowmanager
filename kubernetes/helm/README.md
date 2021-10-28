@@ -12,7 +12,7 @@
 
 ## Content
 
-* [Flowmanager deployment](flowmanager/README.md)
+* [Flowmanager deployment](./)
 * [Mongodb deployment](/kubernetes/base/)
 * [Redis deployment](/kubernetes/base/)
 
@@ -60,7 +60,7 @@ kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n
 ```  
 For OpenShift clusters, replace _kubectl_ with _oc_.
 
-**[Flowmanager.yaml](kubernetes/helm/flowmanager.yaml) has to be configured. You can add and remove any parameter from flowmanager.yaml, please check [docs](/docs/).**
+**[Flowmanager.yaml](/kubernetes/helm/flowmanager.yaml) has to be configured. You can add and remove any parameter from flowmanager.yaml, please check [docs](/docs/).**
 
 1. **Helm deployment/upgrade**
 
@@ -77,7 +77,7 @@ helm delete flowmanager --namespace=<your_namespace>
 
 ### Internal Mongodb on Kubernetes
 
-**Caution internal mongodb will be not encrypted with certificate. [MongoDB.yaml](kubernetes/base/mongodb.yaml) has to be configured.**
+**Caution internal mongodb will be not encrypted with certificate. [MongoDB.yaml](/kubernetes/base/mongodb.yaml) has to be configured.**
 
 
 1. **Helm deployment/upgrade**
@@ -94,7 +94,7 @@ helm delete flowmanager-mongodb --namespace=<your_namespace>
 
 ### Internal Redis on Kubernetes
 
-**Caution internal redis will be not encrypted with certificate. [Redis.yaml](kubernetes/base/redis.yaml) has to be configured.**
+**Caution internal redis will be not encrypted with certificate. [Redis.yaml](/kubernetes/base/redis.yaml) has to be configured.**
 
 1. **Helm deployment/upgrade**
 
