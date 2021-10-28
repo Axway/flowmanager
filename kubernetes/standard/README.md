@@ -45,7 +45,7 @@ Deploy using standard Kubernetes deployment manifest files.
 * Customer license and certificates
 * Mongodb 4.2 (can be installed with flowmanager_helper.sh -m)
 * Redis (only for Flowmanager Multinode, can be installed with flowmanager_helper.sh -r)
-* Nginx(latest stable version) installed and configured for Ingress usage
+* Nginx 1.15 and higher, installed and configured for Ingress usage
 * SSL certificate
 
 ### How to create secrets for certificates
