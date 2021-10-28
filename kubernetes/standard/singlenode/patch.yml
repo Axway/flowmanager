@@ -13,13 +13,13 @@ spec:
           env:
             ## In this section you can add / remove parameters according to your needs.
             - name: ACCEPT_EULA
-              value: ""
+              value: "" # set to yes
             - name: FM_GENERAL_LOGGING_LEVEL
               value: "INFO"
             - name: FM_LOGS_CONSOLE
               value: "yes"
             - name: FM_GENERAL_FQDN
-              value: ""
+              value: "<FLOWMANAGER_FQDN>" #Flow Manager host
             - name: FM_GENERAL_UI_PORT
               value: "443"
             - name: FM_DATABASE_HOST
@@ -118,8 +118,6 @@ spec:
               value: "27017"
             - name: ST_FM_PLUGIN_DATABASE_NAME
               value: "umcft"
-            - name: ST_FM_PLUGIN_DATABASE_USER_NAME
-              value: ""
             - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES
               value: "15"
             - name: ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL
@@ -136,7 +134,8 @@ metadata:
 type: Opaque
 data:
   ## Base64 values
-  ST_FM_PLUGIN_DATABASE_USER_PASSWORD: "" 
+  ST_FM_PLUGIN_DATABASE_USER_PASSWORD: ""
+  ST_FM_PLUGIN_DATABASE_USER_NAME: ""
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -7,19 +7,20 @@
 * Customer license
 * Mongodb (can be installed with _flowmanager_helper.sh -m_)
 * Redis (only for Flowmanager Multinode, can be installed with _flowmanager_helper.sh -r_)
-* Nginx(latest stable version) installed and configured for Ingress usage
+* Nginx 1.15 and higher, installed and configured for Ingress usage
+* SSL certificate
 
 ## Content
 
 * [Flowmanager deployment](flowmanager/README.md)
-* [Mongodb deployment](kubernetes/base/)
-* [Redis deployment](kubernetes/base/)
+* [Mongodb deployment](/kubernetes/base/)
+* [Redis deployment](/kubernetes/base/)
 
 **Caution for redis and mongodb you need to accept the usage of external docker images not under Axway responsability.**
 
-## Using flowmanager_helper.sh
+## Deploy using flowmanager_helper.sh
 
-1. Customize [mongodb.yaml](kubernetes/base/mongodb.yaml) and [redis.yaml](kubernetes/base/redis.yaml) according to your needs. 
+1. Customize [mongodb.yaml](/kubernetes/base/mongodb.yaml) and [redis.yaml](/kubernetes/base/redis.yaml) according to your needs. The user and password are mandatory to be changed.
 2. Install Redis and/or MongoDB using
    >```./flowmanager_helper.sh -m ``` for MongoDB  (Kubernetes)  
    >```./flowmanager_helper.sh -r ``` for Redis    (Kubernetes)  
@@ -40,7 +41,7 @@
    >```./flowmanager_helper.sh -fm-ho ```(OpenShift)  
 
 
-## Standard Deployment
+## Deploy using standard k8s commands
 ### Flowmanager
 
 Create kubernetes secrets:

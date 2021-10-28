@@ -7,11 +7,11 @@
 * Customer license and certificates
 * Mongodb 4.2 (can be installed with flowmanager_helper.sh -m)
 * Redis (only for Flowmanager Multinode, can be installed with flowmanager_helper.sh -r)
-* Nginx(latest stable version) installed and configured for Ingress usage
+* Nginx 1.15 and higher, installed and configured for Ingress usage
 * SSL certificate
 
 ### Steps  
-1. Customize [mongodb.yaml](kubernetes/base/mongodb.yaml) and [redis.yaml](kubernetes/base/redis.yaml) according to your needs. 
+1. Customize [mongodb.yaml](/kubernetes/base/mongodb.yaml) and [redis.yaml](/kubernetes/base/redis.yaml) according to your needs. 
 2. Install Redis and/or MongoDB using
    >```./flowmanager_helper.sh -m ``` for MongoDB  (Kubernetes)  
    >```./flowmanager_helper.sh -r ``` for Redis    (Kubernetes)  
