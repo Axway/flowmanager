@@ -7,6 +7,8 @@ core:
   image:
     repository: axway/flowmanager
     tag: ""
+    #imagePullSecretsEnabled: true
+    #imagePullSecretsName: ""
   
   podAnnotations: {}
     #sidecar.istio.io/inject: "false"
@@ -176,6 +178,9 @@ st-plugin:
   image:
     repository: axway/st-fm-plugin
     tag: ""
+    #imagePullSecretsEnabled: true
+    #imagePullSecretsName: ""
+    
   ## Replica/Number of containers
   replicaCount: 1
   ## Deployment type
