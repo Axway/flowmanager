@@ -1,9 +1,8 @@
 ## Mongo/Redis
   
 ### Prerequisites
-  * A Kubernetes 1.7+ cluster with Beta APIs enabled  
-  * Helm installed in your cluster  
-  * Helm CLI installed in your PC  
+  * A Kubernetes 1.7 and higher
+  * Helm 3+
     
     Note: Mongodb/Redis are not maintained by Axway, check [Bitnami MongoDB](https://bitnami.com/stack/mongodb/helm) and [Bitnami Redis](https://bitnami.com/stack/redis/helm)
 ### Instalation steps
