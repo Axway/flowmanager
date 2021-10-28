@@ -29,13 +29,13 @@
 3. Create the TLS secret for your domain using(mandatory for ST-Plugin):
    >``` kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>```  
    For OpenShift clusters, replace _kubectl_ with _oc_.
-4. Copy your license to the [root folder](kubernetes/) or run the following command in order to create the secret:
+4. Copy your license to the [root folder](/kubernetes/) or run the following command in order to create the secret:
    >```kubectl create secret generic license --from-file=license.xml -n <NAMESPACE>```  
    For OpenShift clusters, replace _kubectl_ with _oc_.
 5. Generate the certificates and secrets using:
    >```./flowmanager_helper.sh -gc``` (Kubernetes)  
    >```./flowmanager_helper.sh -gco``` (OpenShift)  
-6. Customize [flowmanager.yaml](kubernetes/helm/flowmanager.yaml). You can add and remove any parameter from flowmanager.yaml, please check [docs](/docs/).
+6. Customize [flowmanager.yaml](/kubernetes/helm/flowmanager.yaml). You can add and remove any parameter from flowmanager.yaml, please check [docs](/docs/).
 7. Install Flow Manager using Helm Charts:
    >```./flowmanager_helper.sh -fm-h ``` (Kubernetes)    
    >```./flowmanager_helper.sh -fm-ho ```(OpenShift)  
