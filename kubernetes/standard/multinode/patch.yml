@@ -14,11 +14,11 @@ spec:
           env:
             ## In this section you can add / remove parameters according to your needs.
             - name: ACCEPT_EULA
-              value: "" # set to yes
+              value: "false" # set to true
             - name: FM_GENERAL_LOGGING_LEVEL
               value: "INFO"
             - name: FM_LOGS_CONSOLE
-              value: "yes"
+              value: "true"
             - name: FM_GENERAL_FQDN
               value: "<FLOWMANAGER_FQDN>" #Flow Manager host
             - name: FM_GENERAL_UI_PORT
@@ -38,7 +38,7 @@ spec:
             - name: FM_REDIS_SSL_ENABLED
               value: "false"
             - name: FM_HTTPS_USE_CUSTOM_CERT
-              value: "no"
+              value: "false"
             - name: FM_HTTPS_KEYSTORE
               value: /opt/axway/FlowManager/configs/uicert.pem
             - name: FM_GOVERNANCE_CA_FILE
