@@ -70,7 +70,7 @@ spec:
           {{- end }}
           ports:
             - name: fm-https
-              containerPort: {{ .Values.service.externalPort }}
+              containerPort: 8081
               protocol: TCP
           {{ if .Values.livenessProbe }}
           livenessProbe:

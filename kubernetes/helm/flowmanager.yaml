@@ -19,12 +19,12 @@ core:
   env:
     variables:
       #In this section you can add / remove parameters according to your needs.
-      ACCEPT_EULA: "no" #set to yes
+      ACCEPT_EULA: "false" #set to true
       FM_GENERAL_FQDN: "localhost"
       FM_GENERAL_HTTP_PORT: 8081
       FM_GENERAL_UI_PORT: 443
       FM_GENERAL_ENCRYPTION_KEY: "<YOUR_SECRET>"
-      FM_LOGS_CONSOLE: "yes"
+      FM_LOGS_CONSOLE: "true"
       FM_GENERAL_LOGGING_LEVEL: "INFO"
       FM_GOVERNANCE_CA_FILE: "/opt/axway/FlowManager/configs/governanceca.pem"
       FM_GOVERNANCE_CA_PASSWORD: "<YOUR_SECRET>"
@@ -132,20 +132,11 @@ core:
 
   ## Configure readiness and liveness for health check
   readinessProbe:
-    failureThreshold: 3
-    httpGet:
-      path: /fm/login
-      port: 8081
-      scheme: HTTP
     initialDelaySeconds: 100
     periodSeconds: 5
     successThreshold: 3
 
   livenessProbe:
-    httpGet:
-      path: /api/v2/internals/stability
-      port: 8081
-      scheme: HTTP
     initialDelaySeconds: 100
     successThreshold: 1
     failureThreshold: 2

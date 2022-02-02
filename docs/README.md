@@ -8,18 +8,18 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |-------------|------------|---------------|-----------------|
 |FLOWMANAGER_IMAGE_URL*|No|URL from where you want to get the image|`axway/flowmanager`|
 |FLOWMANAGER_VERSION*|Yes|App version based on docker image||
-|ACCEPT_EULA|Yes|Indicates your acceptance of the End User License Agreement|`yes`|
+|ACCEPT_EULA|Yes|Indicates your acceptance of the End User License Agreement|`false`|
 |FM_GENERAL_FQDN|Yes|URL address of the FlowManager instance||
 |FM_GENERAL_UI_PORT|Yes|FlowManager UI port|`8081`|
 |FM_GENERAL_ENCRYPTION_KEY|Yes|FlowManager's encryption key||
 |FM_GENERAL_LOGGING_LEVEL|No|FlowManager's logging levels|`INFO`|
-|FM_LOGS_CONSOLE|No|Enable logs in the console|`yes`|
+|FM_LOGS_CONSOLE|No|Enable logs in the console|`true`|
 |FM_GENERAL_CUSTOM_LOCATION_PATH|No|The location of logs inside of the docker image||
 |FM_GOVERNANCE_CA_FILE|Yes|File name and path to governance certificate||
 |FM_GOVERNANCE_CA_PASSWORD|Yes| Governance certificate password||
 |FM_HTTPS_USE_CUSTOM_CERT|No|Flag which informs FlowManager that you are using custom certificates|`true`|
 |FM_HTTPS_KEYSTORE|Yes|File name and path to HTTPS certificate||
-|FM_HTTPS_CERT_ALIAS|No|Alias of the HTTPS certificate|`ui`|
+|FM_HTTPS_CERT_ALIAS|No|Alias of the HTTPS certificate||
 |FM_HTTPS_KEYSTORE_PASSWORD|Yes|HTTPS certificate password||
 |FM_HTTPS_DISABLED|No|Set on `true` if the ssl requests are handled by a gateway (SSL termination)|`false`|
 |FM_CFT_SHARED_SECRET|No|FlowManager's shared secret||
