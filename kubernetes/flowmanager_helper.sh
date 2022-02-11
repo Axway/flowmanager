@@ -3,8 +3,8 @@
 
 source $(dirname $0)/helm/helper_functions/msg_functions.sh
 source $(dirname $0)/helm/helper_functions/helm_functions.sh
-source $(dirname $0)/base/helper_functions/mongodb_functions.sh
-source $(dirname $0)/base/helper_functions/redis_functions.sh
+source $(dirname $0)/dbs/helper_functions/mongodb_functions.sh
+source $(dirname $0)/dbs/helper_functions/redis_functions.sh
 source $(dirname $0)/helm/helper_functions/flowmanger_functions.sh
 source $(dirname $0)/helm/helper_functions/gen_secrets.sh
 source $(dirname $0)/standard/helper_functions/flowmanager_multi.sh
@@ -13,8 +13,8 @@ source $(dirname $0)/standard/helper_functions/flowmanager_single.sh
 
 export HELM="helm"
 export FILE_FM=$(dirname $0)/helm/flowmanager.yaml
-export FILE_REDIS=$(dirname $0)/base/redis.yaml
-export FILE_MONGO=$(dirname $0)/base/mongodb.yaml
+export FILE_REDIS=$(dirname $0)/dbs/redis.yaml
+export FILE_MONGO=$(dirname $0)/dbs/mongodb.yaml
 
 
 ###########################################

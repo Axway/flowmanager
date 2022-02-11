@@ -4,16 +4,16 @@ kind: Deployment
 metadata:
   name: st-plugin
   labels:
-    app: flowmanager
+    app: flowmanager-st
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flowmanager
+      app: flowmanager-st
   template:
     metadata:
       labels:
-        app: flowmanager
+        app: flowmanager-st
     spec:
       serviceAccountName: flowmanager
       securityContext:
@@ -27,9 +27,13 @@ spec:
           envFrom:
             - secretRef:
                 name: st-env
-          env:
-            - name: ST_FM_PLUGIN_HOST
-              value: "localhost"    
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"           
           volumeMounts:
             - name: st-fm-plugin-shared-secret
               readOnly: true

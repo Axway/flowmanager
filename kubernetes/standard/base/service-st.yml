@@ -4,12 +4,12 @@ kind: Service
 metadata:
   name: st-plugin
   labels:
-    app: flowmanager
+    app: flowmanager-st
 spec:
   ports:
     - name: st-plugin-http
       port: 8899
       protocol: TCP
-  type: "NodePort"
+  type: "ClusterIP"
   selector:
-    app: flowmanager
+    app: flowmanager-st

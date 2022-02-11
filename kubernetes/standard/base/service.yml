@@ -11,6 +11,6 @@ spec:
       port: 8081
       targetPort: 8081
       protocol: TCP
-  type: "NodePort"
+  type: "ClusterIP"
   selector:
     app: flowmanager

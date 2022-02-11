@@ -7,11 +7,10 @@ metadata:
   labels:
     app: flowmanager
   annotations:
-    kubernetes.io/ingress.class: nginx
-    #nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    ingress.kubernetes.io/force-ssl-redirect: "true"
     ingress.kubernetes.io/secure-upstream: "true"
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
     - hosts:
