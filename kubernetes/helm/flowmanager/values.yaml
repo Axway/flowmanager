@@ -70,8 +70,8 @@ core:
     failureThreshold: 3
     httpGet:
       path: /fm/login
-      port: 8081
-      scheme: HTTP
+      port: 443
+      scheme: HTTPS
     initialDelaySeconds: 100
     periodSeconds: 5
     successThreshold: 3
@@ -79,8 +79,8 @@ core:
   livenessProbe:
     httpGet:
       path: /api/v2/internals/stability
-      port: 8081
-      scheme: HTTP
+      port: 443
+      scheme: HTTPS
     initialDelaySeconds: 100
     successThreshold: 1
     failureThreshold: 2

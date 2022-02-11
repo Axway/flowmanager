@@ -20,8 +20,7 @@ core:
     variables:
       #In this section you can add / remove parameters according to your needs.
       ACCEPT_EULA: "false" #set to true
-      FM_GENERAL_FQDN: "localhost"
-      FM_GENERAL_HTTP_PORT: 8081
+      FM_GENERAL_FQDN: "<FLOWMANAGER_FQDN>"
       FM_GENERAL_UI_PORT: 443
       FM_GENERAL_ENCRYPTION_KEY: "<YOUR_SECRET>"
       FM_LOGS_CONSOLE: "true"
@@ -29,7 +28,6 @@ core:
       FM_GOVERNANCE_CA_FILE: "/opt/axway/FlowManager/configs/governanceca.pem"
       FM_GOVERNANCE_CA_PASSWORD: "<YOUR_SECRET>"
       FM_CFT_UPDATES_PATH: "/opt/axway/FlowManager/updates/cft/"
-      FM_HTTPS_DISABLED: "true"
       FM_HTTPS_USE_CUSTOM_CERT: "false"
 
       ## MongoDb
@@ -57,10 +55,6 @@ core:
       FM_JVM_XMX: "2G"
       FM_JVM_XMS: "512M"
       FM_JVM_XMN: "768M"
-      FM_JVM_DEBUG_ENABLED: "false"
-      FM_JVM_DEBUG_PORT: "8000"
-      FM_JVM_DEBUG_SUSPEND: "false"
-      FM_JVM_EXTRA_ARGS: ""
 
     
   ## Volumes
@@ -132,11 +126,19 @@ core:
 
   ## Configure readiness and liveness for health check
   readinessProbe:
+    httpGet:
+      path: /fm/login
+      port: 443
+      scheme: HTTPS
     initialDelaySeconds: 100
     periodSeconds: 5
     successThreshold: 3
 
   livenessProbe:
+    httpGet:
+      path: /api/v2/internals/stability
+      port: 443
+      scheme: HTTPS
     initialDelaySeconds: 100
     successThreshold: 1
     failureThreshold: 2
@@ -146,10 +148,9 @@ core:
     enabled: false
     #annotations:
     #  nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    #  nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    #  nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     #  ingress.kubernetes.io/secure-upstream: "true"
     #  kubernetes.io/ingress.class: "nginx"
-    #  kubernetes.io/tls-acme: "true"
     #secretName: tls
     #tls:
     #  - hosts:
@@ -200,15 +201,10 @@ st-plugin:
       ST_FM_PLUGIN_HOST: "localhost"
       ST_FM_PLUGIN_PORT: 8899
       ST_FM_PLUGIN_SHORT_NAME: "ST"
-      ST_FM_PLUGIN_FM_FQDN: "<FM_FQDN>" #TLS MANDATORY
+      ST_FM_PLUGIN_FM_FQDN: "<FLOWMANAGER_FQDN>" #TLS MANDATORY
       ST_FM_PLUGIN_FM_PORT: 443
-      ST_FM_PLUGIN_SHARED_SECRET: "/usr/src/app/src/st-fm-plugin-shared-secret"
-      ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN: "/usr/src/app/src/governanceca.pem"
-      ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
-      ST_FM_PLUGIN_CERT_PEM: "/usr/src/app/src/st-fm-plugin-cert.pem"
-      ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN: "/usr/src/app/src/st-fm-plugin-ca.pem"
-      ST_FM_PLUGIN_JWT_KEY: "/usr/src/app/src/private-key"
       
+      ##MongoDB Parameters
       ST_FM_PLUGIN_DATABASE_HOST: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local"
       ST_FM_PLUGIN_DATABASE_PORT: 27017
       ST_FM_PLUGIN_DATABASE_NAME: umcft
@@ -217,6 +213,14 @@ st-plugin:
       ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES: 15
       ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL: 60
       ST_FM_PLUGIN_DATABASE_USE_SSL: "false"
+      
+      ##ST Plugin Files
+      ST_FM_PLUGIN_SHARED_SECRET: "/usr/src/app/src/st-fm-plugin-shared-secret"
+      ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN: "/usr/src/app/src/governanceca.pem"
+      ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
+      ST_FM_PLUGIN_CERT_PEM: "/usr/src/app/src/st-fm-plugin-cert.pem"
+      ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN: "/usr/src/app/src/st-fm-plugin-ca.pem"
+      ST_FM_PLUGIN_JWT_KEY: "/usr/src/app/src/private-key"
 
   ## Readiness
   readinessProbeDisabled: true
@@ -224,13 +228,13 @@ st-plugin:
   resourcesDisabled: true
   resources:
     requests:
-      cpu: 256m
+      cpu: 500m
       memory: 1Gi
       ephemeralStorage: 2Gi
     limits:
-      cpu: 512m
+      cpu: 1000m
       memory: 2Gi
-      ephemeralStorage: 2Gi
+      ephemeralStorage: 3Gi
   ## Service
   service:
     type: ClusterIP

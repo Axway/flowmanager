@@ -8,6 +8,8 @@ spec:
   replicas: 3
   template:
     spec:
+      #imagePullSecrets:
+      # - name: regcred
       containers:
         - image: axway/flowmanager:[FLOWMANAGER_VERSION]
           name: flowmanager
@@ -15,20 +17,36 @@ spec:
             ## In this section you can add / remove parameters according to your needs.
             - name: ACCEPT_EULA
               value: "false" # set to true
-            - name: FM_GENERAL_LOGGING_LEVEL
-              value: "INFO"
-            - name: FM_LOGS_CONSOLE
-              value: "true"
             - name: FM_GENERAL_FQDN
               value: "<FLOWMANAGER_FQDN>" #Flow Manager host
             - name: FM_GENERAL_UI_PORT
               value: "443"
+            - name: FM_GENERAL_LOGGING_LEVEL
+              value: "INFO"
+            - name: FM_LOGS_CONSOLE
+              value: "true"
+            - name: FM_GOVERNANCE_CA_FILE
+              value: /opt/axway/FlowManager/configs/governanceca.pem
+            - name: FM_CFT_UPDATES_PATH
+              value: "/opt/axway/FlowManager/updates/cft/"
+            - name: FM_HTTPS_USE_CUSTOM_CERT
+              value: "false"
+              
+            ##MongoDB section
             - name: FM_DATABASE_HOST
               value: "flowmanager-mongodb.<NAMESPACE>.svc.cluster.local:27017"
             - name: FM_DATABASE_NAME
               value: "umcft"
             - name: FM_DATABASE_USE_SSL
               value: "false"
+            
+            ##ST Plugin
+            - name: FM_ST_PLUGIN_CA_FILE
+              value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
+            - name: FM_ST_PLUGIN_PUBLIC_KEY
+              value: "/opt/axway/FlowManager/st-fm-plugin/public-key"
+              
+            ##Redis section
             - name: FM_REDIS_ENABLED
               value: "true"
             - name: FM_REDIS_HOSTNAME
@@ -37,31 +55,18 @@ spec:
               value: "6379"
             - name: FM_REDIS_SSL_ENABLED
               value: "false"
-            - name: FM_HTTPS_USE_CUSTOM_CERT
-              value: "false"
-            - name: FM_HTTPS_KEYSTORE
-              value: /opt/axway/FlowManager/configs/uicert.pem
-            - name: FM_GOVERNANCE_CA_FILE
-              value: /opt/axway/FlowManager/configs/governanceca.pem
-            - name: FM_CFT_UPDATES_PATH
-              value: "/opt/axway/FlowManager/updates/cft/"
-            - name: FM_ST_PLUGIN_CA_FILE
-              value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
-            - name: FM_ST_PLUGIN_PUBLIC_KEY
-              value: "/opt/axway/FlowManager/st-fm-plugin/public-key"
+
+            - name: FM_JVM_XMX
+              value: "2G"
             - name: FM_JVM_XMN
               value: "768M"
             - name: FM_JVM_XMS
-              value: "2G"
-            - name: FM_JVM_XMX
-              value: "4G"
+              value: "512M"
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: flowmanager-env
-  labels:
-    app: flowmanager
 type: Opaque
 data:
   ## Base64 values
@@ -77,23 +82,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: st-plugin
-  labels:
-    app: flowmanager
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: flowmanager
   template:
-    metadata:
-      labels:
-        app: flowmanager
     spec:
-      serviceAccountName: flowmanager
-      securityContext:
-        fsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1001
+      #imagePullSecrets:
+      # - name: regcred
       containers:
         - name: st-plugin
           image: ""
@@ -110,18 +104,8 @@ spec:
               value: "<FLOWMANAGER_FQDN>" #TLS MANDATORY, MUST BE EQUAL WITH FM_GENERAL_FQDN
             - name: ST_FM_PLUGIN_FM_PORT
               value: "443"
-            - name: ST_FM_PLUGIN_SHARED_SECRET
-              value: "/usr/src/app/src/st-fm-plugin-shared-secret"
-            - name: ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN
-              value: "/usr/src/app/src/governanceca.pem"
-            - name: ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM
-              value: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
-            - name: ST_FM_PLUGIN_CERT_PEM
-              value: "/usr/src/app/src/st-fm-plugin-cert.pem"
-            - name: ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN
-              value: "/usr/src/app/src/st-fm-plugin-ca.pem"
-            - name: ST_FM_PLUGIN_JWT_KEY
-              value: "/usr/src/app/src/private-key"
+
+            ##MongoDB Parameters
             - name: ST_FM_PLUGIN_DATABASE_HOST
               value: "flowmanager-mongodb.<NAMESPACE>.svc.cluster.local"
             - name: ST_FM_PLUGIN_DATABASE_PORT
@@ -134,13 +118,25 @@ spec:
               value: "60"
             - name: ST_FM_PLUGIN_DATABASE_USE_SSL
               value: "false"
+              
+            ## ST Plugin files
+            - name: ST_FM_PLUGIN_SHARED_SECRET
+              value: "/usr/src/app/src/st-fm-plugin-shared-secret"
+            - name: ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN
+              value: "/usr/src/app/src/governanceca.pem"
+            - name: ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM
+              value: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
+            - name: ST_FM_PLUGIN_CERT_PEM
+              value: "/usr/src/app/src/st-fm-plugin-cert.pem"
+            - name: ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN
+              value: "/usr/src/app/src/st-fm-plugin-ca.pem"
+            - name: ST_FM_PLUGIN_JWT_KEY
+              value: "/usr/src/app/src/private-key"
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: st-env
-  labels:
-    app: flowmanager
 type: Opaque
 data:
   ## Base64 values
@@ -150,9 +146,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: st-init-template
-  labels:
-    app: flowmanager   
+  name: st-init-template  
 data:
   initialize_template.json: |-
     {

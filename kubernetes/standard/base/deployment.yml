@@ -27,15 +27,18 @@ spec:
           envFrom:
             - secretRef:
                 name: flowmanager-env
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "2000m"
+            limits:
+              memory: "4Gi"
+              cpu: "4000m"
           volumeMounts:
             - name: license
               readOnly: true
               mountPath: /opt/axway/FlowManager/conf/license/license.xml
               subPath: license.xml
-            - name: uicert
-              readOnly: true
-              mountPath: /opt/axway/FlowManager/configs/uicert.pem
-              subPath: uicert.pem
             - name: governance
               readOnly: true
               mountPath: /opt/axway/FlowManager/configs/governanceca.pem
