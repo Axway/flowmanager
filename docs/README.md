@@ -35,6 +35,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_ST_PLUGIN_CA_FILE|Yes|File name and path to the CA of ST plugin||
 |FM_ST_PLUGIN_PUBLIC_KEY|Yes|File name and path to the public key of ST plugin||
 |FM_METRICS_ENABLED|No|Enable metrics for Prometheus|`false`|
+|FM_ST_PLUGIN_DISABLED|No|Disable ST Plugin|`false`|
 |FM_JVM_XMX|No|JVM maximum memory allocation pool|`2G`|
 |FM_JVM_XMS|No|JVM maximum memory allocation pool|`512M`|
 |FM_JVM_XMN|No|JVM size of the heap for the young generation|`768M`|
