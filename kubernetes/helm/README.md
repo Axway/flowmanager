@@ -18,6 +18,8 @@
 
 **Caution for redis and mongodb you need to accept the usage of external docker images not under Axway responsability.**
 
+Flow Manager can be deployed with Helm charts in two ways: using flowmanager_helper.sh or manually.
+
 ## Deploy using flowmanager_helper.sh
 
 1. Customize [mongodb.yaml](/kubernetes/base/mongodb.yaml) and [redis.yaml](/kubernetes/base/redis.yaml) according to your needs. The user and password are mandatory to be changed.
