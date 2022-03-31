@@ -242,6 +242,13 @@ st-plugin:
       - name: st-plugin-http
         internalPort: 8899
         externalPort: 8899
+
+  ## Security parameters
+  #podSecurityContext:
+  #  runAsNonRoot: true
+  #  runAsUser: 1001
+  #  fsGroup: 1000
+  
   ## Volumes
   volumesSecretDisabled: false
   volumesMountsSecretDisabled: false
