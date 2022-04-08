@@ -70,6 +70,31 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_REDIS_SSL_ENABLED|No|Specifies if Redis runs with SSL|`false`|
 |FM_REDIS_SSL_CA|No|Path to the CA certificate used by Redis||
 
+## SAML
+
+|**Parameter**|**Mandatory**|**Description**|**Default value**|
+|-------------|------------|---------------|-----------------|
+|FM_IDP_CONFIGURATION|No|Specifies if the IDP used is `internal` or `custom`|`internal`|
+|FM_IDP_ENTITY_ID|Yes|The clientId from the SAML IDP that will be used when sending authentication requests.||
+|FM_IDP_SSO_DESCRIPTOR|Yes|Path or URL to the IDP descriptor.||
+|FM_IDP_HTTPS_ENABLED|mandatory if FM_IDP_SSO_DESCRIPTOR is an URL|Specifies if IDP uses SSL.|`true`|
+|FM_IDP_SSL_CERTIFICATE|mandatory if FM_IDP_HTTPS_ENABLED is `true`|Path to the SSL certificate of IDP.||
+|FM_IDP_VERIFY_METADATA_SIGNATURE|Yes|Enable or disable IDPSSODescriptor metadata configuration signature verification.|`false`|
+|FM_IDP_METADATA_RELOAD_DELAY|mandatory if FM_IDP_SSO_DESCRIPTOR is an URL|The Identity Provider metadata IDPSSODescriptor reload delay in minutes (only for metadata URL).|`10`|
+|FM_IDP_SIGN_SAML_MESSAGES|Yes|Specifies if the the Service provider will sign all SAML messages sent to the Identity Provider.|`true`|
+|FM_IDP_SIGN_KEYSTORE|mandatory if FM_IDP_SIGN_SAML_MESSAGES is `true`|This property contains the CA and Signing Certificate for signing SAML messages sent to the Identity Provider||
+|FM_IDP_SIGN_KEYSTORE_PASSWORD|mandatory if IDP certificate is encrypted|This property contains the password for the private key for the Identity Provider signing certificate, if it is encrypted.||
+|FM_IDP_SIGNATURE_ALGORITHM|mandatory if FM_IDP_SIGN_SAML_MESSAGES is `true`|The metadata signature algorithm used to sign messages sent to SAML Identity Provider.|`sha-256`|
+|FM_IDP_CANONICALIZATION_ALGORITHM|mandatory if FM_IDP_SIGN_SAML_MESSAGES is `true`|The metadata canonicalization algorithm used to sign messages sent to SAML Identity Provider.|`Exclusive`|
+|FM_IDP_SIGN_AUTHENTICATION_REQUEST|mandatory if FM_IDP_SIGN_SAML_MESSAGES is `true`|Enable or disable Service Provider to sign all authentication requests.|`true`|
+|FM_IDP_SIGN_LOGOUT_REQUEST|mandatory if FM_IDP_SIGN_SAML_MESSAGES is `true`|Enable or disable Service Provider to sign all logout requests.|`true`|
+|FM_IDP_SIGN_LOGOUT_RESPONSE|mandatory if FM_IDP_SIGN_SAML_MESSAGES is `true`|Enable or disable Service Provider to sign all logout responses.|`true`|
+|FM_IDP_SAML_RESPONSE_BINDING|Yes|Service provider response binding.|`HTTP-POST`|
+|FM_IDP_UNSIGNED_ASSERTIONS|Yes|Service Provider will accept or not unsigned assertions from the Identity Provider|`false`|
+|FM_IDP_VERIFY_ASSERTION_EXPIRATION|Yes|Check assertion expiration on the service provider. |`true`|
+|FM_IDP_FM_ACCESS_MANAGER_USERNAME|Yes|Username of the admin user that will be able to map Identity Provider roles to FM roles.||
+
+Note: all SAML parameters are mandatory if FM_IDP_CONFIGURATION is set on `custom`.
 
 ## SecureTransport Plugin
 

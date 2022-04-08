@@ -109,10 +109,10 @@ core:
 
   podAnnotations: {}
 
-  #podSecurityContext:
-  #  runAsNonRoot: true
-  #  runAsUser: 1001
-  #  fsGroup: 1000
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    fsGroup: 1000
 
   containerSecurityContext:
     {}
@@ -235,6 +235,10 @@ st-plugin:
       cpu: 1000m
       memory: 2Gi
       ephemeralStorage: 3Gi
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
   ## Service
   service:
     type: ClusterIP
