@@ -1,7 +1,5 @@
 # Kubernetes
 
-Kubernetes deployment manifests files.
-
 * [Deploy using flowmanager_helper.sh(Helm Charts or standard Kubernetes files)](./)
 * [Deploy using standard Kubernetes files](standard/)
 * [Deploy using Helm charts](helm/)

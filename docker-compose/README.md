@@ -6,11 +6,25 @@ This README refers to managing single-node installations of Flow Manager using `
 
 * [docker](https://docs.docker.com/engine/install/) version 18.x.x or higher
 * [docker-compose](https://docs.docker.com/compose/install/) version 1.27.x or higher
-* Flow Manager Docker Image downloaded from Axway Sphere
 * Flow Manager license and certificates files
 * Mongodb 4.2 Docker Image (if not available in the local docker repository, will be donwloaded from Docker Hub).
 
 ## ***Setup & Run***
+
+#### Create service account & Docker login
+
+* Log in to the Amplify Platform.
+* Select your organization, and from the left menu, click Service Accounts (You should see all service accounts already created).
+* Click + Service Account, and fill in the mandatory fields:
+* Enter a name for the service account.
+* Choose Client Secret for the method.
+* Choose Platform-generated secret for the credentials.
+* Click Save
+* Ensure to securely store the generated client secret because it will be required in further steps.
+* Perform docker login using:
+`docker login -u <SERVICE_ACCOUNT> -p <PASSWORD> docker.repository.axway.com`
+
+#### Install Flow Manager
 
 * Get the zip file from [here](https://github.com/Axway/docker-flowmanager/archive/master.zip) and unzip it
 * Go to `docker-compose` path

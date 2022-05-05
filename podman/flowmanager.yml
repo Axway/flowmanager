@@ -37,7 +37,7 @@ spec:
         - mountPath: /data/db
           name: data
 
-    - image: axway/flowmanager
+    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20220505
       name: flowmanager
       ports:
         - name: fmport
@@ -107,7 +107,7 @@ spec:
         - mountPath: /opt/axway/FlowManager/st-fm-plugin
           name: st-fm-plugin
 
-    - image: axway/st-fm-plugin
+    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0-20220505
       name: st-fm-plugin
       ports:
         - name: stport

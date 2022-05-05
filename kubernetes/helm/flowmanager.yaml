@@ -5,10 +5,10 @@ core:
   replicaCount: 2
   ## Docker image used for the customer
   image:
-    repository: axway/flowmanager
-    tag: ""
-    #imagePullSecretsEnabled: true
-    #imagePullSecretsName: ""
+    repository: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release
+    tag: "2.0.20220505"
+    imagePullSecretsEnabled: true
+    imagePullSecretsName: "regcred"
   
   podAnnotations: {}
     #sidecar.istio.io/inject: "false"
@@ -168,10 +168,10 @@ st-plugin:
   ##
   ## Image and version of ST FM PLUGIN
   image:
-    repository: axway/st-fm-plugin
-    tag: ""
-    #imagePullSecretsEnabled: true
-    #imagePullSecretsName: ""
+    repository: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin
+    tag: "2.0-20220505"
+    imagePullSecretsEnabled: true
+    imagePullSecretsName: "regcred"
     
   ## Replica/Number of containers
   replicaCount: 1

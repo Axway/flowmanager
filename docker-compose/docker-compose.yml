@@ -24,7 +24,7 @@ services:
         - "db.adminCommand('ping')"
   # Create FlowManager container
   flowmanager:
-    image: "${FLOWMANAGER_IMAGE_URL:-axway/flowmanager}:${FLOWMANAGER_VERSION}"
+    image: "${FLOWMANAGER_IMAGE_URL:-docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release}:${FLOWMANAGER_VERSION}"
     stdin_open: true
     tty: true
     environment:
@@ -66,7 +66,7 @@ services:
       - mongodb
     # Create SecureTransport plugin container 
   st-fm-plugin:
-    image: "${ST_FM_PLUGIN_IMAGE_URL:-axway/st-fm-plugin}:${ST_FM_PLUGIN_IMAGE_VERSION}"
+    image: "${ST_FM_PLUGIN_IMAGE_URL:-docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin}:${ST_FM_PLUGIN_IMAGE_VERSION}"
     environment:
       - ST_FM_PLUGIN_HOST=${ST_FM_PLUGIN_HOST:-st-fm-plugin}
       - ST_FM_PLUGIN_PORT=${ST_FM_PLUGIN_PORT:-8899}
