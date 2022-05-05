@@ -6,10 +6,17 @@
 ###########################################
 function flowmanager_deploy_standalone() {
     
+	echo "Please, type your Service Account:"
+    read -s SERVICE_ACCOUNT
+    echo "Type the password of your service account:"
+    read -s SA_PASSWORD
+	msg_info 'Adding flowmanager helm repository'
+	helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
+	msg_info 'Pulling flowmanager helm chart'
+	helm pull axway/flowmanager-helm-prod-buch-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
     msg_output 'Starting flowmanager helm chart installation'
-	helm dep update ./helm/flowmanager
-    $HELM upgrade --install flowmanager ./helm/flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
+    $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-buch-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
 
     if [ "$?" -ne "0" ]; then
         msg_error 'Helm chart deployment failed'
@@ -29,10 +36,17 @@ function flowmanager_deploy_standalone() {
 
 function flowmanager_deploy_standalone_oc() {
     
+	echo "Please, type your Service Account:"
+    read -s SERVICE_ACCOUNT
+    echo "Type the password of your service account:"
+    read -s SA_PASSWORD
+	msg_info 'Adding flowmanager helm repository'
+	helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
+	msg_info 'Pulling flowmanager helm chart'
+	helm pull axway/flowmanager-helm-prod-buch-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
     msg_output 'Starting flowmanager helm chart installation'
-	helm dep update ./helm/flowmanager
-    $HELM upgrade --install flowmanager ./helm/flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
+    $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-buch-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
 
     if [ "$?" -ne "0" ]; then
         msg_error 'Helm chart deployment failed'

@@ -77,6 +77,15 @@ else
     msg_info "st-fm-plugin-shared-secret was not found in ./certs/."
 fi
 
+msg_info 'Create docker-registry secret'
+echo ""
+echo "Please, type your Service Account:"
+read -s SERVICE_ACCOUNT
+echo "Type the password of your service account:"
+read -s SA_PASSWORD
+echo ""
+kubectl create secret docker-registry regcred --docker-server=docker.repository.axway.com --docker-username=$SERVICE_ACCOUNT --docker-password=$SA_PASSWORD -n ${NAMESPACE}
+
 }
 
 function gen_certs_selfsigned_oc {
@@ -154,4 +163,13 @@ else
     msg_info "st-fm-plugin-shared-secret was not found in ./certs/."
 fi
 
+msg_info 'Create docker-registry secret'
+echo ""
+echo "Please, type your Service Account:"
+read -s SERVICE_ACCOUNT
+echo "Type the password of your service account:"
+read -s SA_PASSWORD
+echo ""
+
+oc create secret docker-registry regcred --docker-server=docker.repository.axway.com --docker-username=$SERVICE_ACCOUNT --docker-password=$SA_PASSWORD -n ${NAMESPACE}
 }

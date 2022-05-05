@@ -11,64 +11,38 @@
 * SSL certificate
 
 ### Steps  
-1. Customize [mongodb.yaml](/kubernetes/base/mongodb.yaml) and [redis.yaml](/kubernetes/base/redis.yaml) according to your needs. 
-2. Install Redis and/or MongoDB using
-   >```./flowmanager_helper.sh -m ``` for MongoDB  (Kubernetes)  
-   >```./flowmanager_helper.sh -r ``` for Redis    (Kubernetes)  
-   >```./flowmanager_helper.sh -mo ``` for MongoDB  (OpenShift)  
-   >```./flowmanager_helper.sh -ro ``` for Redis    (OpenShift)  
-3. Create the TLS secret for your domain using (mandatory for ST-Plugin):
-   >``` kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>```
-   For OpenShift clusters, replace _kubectl_ with _oc_.
-4. Copy your license to the [root folder](./) or run the following command in order to create the secret:
-   >```kubectl create secret generic license --from-file=license.xml -n <NAMESPACE>```
-   For OpenShift clusters, replace _kubectl_ with _oc_.
-5. Generate the certificates and secrets using:
-   >```./flowmanager_helper.sh -gc``` (Kubernetes)
-   >```./flowmanager_helper.sh -gco``` (OpenShift)
-6. Customize [patch.yml](./multinode/patch.yml) and [ingress.yml](./multinode/ingress.yml) for FM MultiNode and/or [patch.yml](./singlenode/patch.yml) and [ingress.yml](./singlenode/ingress.yml) for FM SingleNode. You can add and remove any parameter from patch.yml, please check [docs](/docs/).
-7. Install Flow Manager:
-   >```./flowmanager_helper.sh -fm-s ``` for FM SingleNode  (Kubernetes)  
-   >```./flowmanager_helper.sh -fm-m ``` for FM MultiNode   (Kubernetes)  
-   >```./flowmanager_helper.sh -fm-s ``` for FM SingleNode  (Kubernetes)  
-   >```.oc apply -k ./singlenode -n <namespace>``` for FM SingleNode(OpenShift cluster)  
-   >```.oc apply -k ./multinode -n <namespace>```  for FM MultiNode(OpenShift cluster)  
 
+#### 1. Install Mongodb/Redis (if needed) 
 
-## Deploy using standard files
-
-Deploy using standard Kubernetes deployment manifest files.
-
-### Prerequisites
-
-* Kubernetes 1.17 and higher
-* Customer license and certificates
-* Mongodb 4.2 (can be installed with flowmanager_helper.sh -m)
-* Redis (only for Flowmanager Multinode, can be installed with flowmanager_helper.sh -r)
-* Nginx 1.15 and higher, installed and configured for Ingress usage
-* SSL certificate
-
-### How to create secrets for certificates
-
-
+1. Customize mongodb.yaml and redis.yaml according to your needs. The user and password are mandatory to be changed.
+2. Install Redis and/or MongoDB using (Helm required)
 ```shell
-kubectl create secret generic license --from-file=./license.xml -n <NAMESPACE>
-kubectl create secret generic st-fm-plugin-ca --from-file=./certs/st-fm-plugin-ca.pem -n <NAMESPACE>
-kubectl create secret generic uicert --from-file=./certs/uicert.pem -n <NAMESPACE> (if needed)
-kubectl create secret generic st-fm-plugin-ca --from-file=./certs/st-fm-plugin-ca.pem -n <NAMESPACE>
-kubectl create secret generic st-fm-plugin-cert-key --from-file=./certs/st-fm-plugin-cert-key.pem -n <NAMESPACE>
-kubectl create secret generic st-fm-plugin-cert --from-file=./certs/st-fm-plugin-cert.pem -n <NAMESPACE>
-kubectl create secret generic private-key-st --from-file=./certs/private-key -n <NAMESPACE>
-kubectl create secret generic public-key-st --from-file=./certs/public-key -n <NAMESPACE>
-kubectl create secret generic governanceca --from-file=./certs/governanceca.pem -n <NAMESPACE>
-kubectl create secret generic st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n <NAMESPACE>
-kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>
+./flowmanager_helper.sh -m  for MongoDB  (Kubernetes)
+./flowmanager_helper.sh -r  for Redis    (Kubernetes)
+./flowmanager_helper.sh -mo  for MongoDB  (OpenShift)
+./flowmanager_helper.sh -ro  for Redis    (OpenShift)
 ```
 
-### How to create secrets env variables
+#### 2. Create a service account
 
+1. Log in to the Amplify Platform.
+2. Select your organization, and from the left menu, click Service Accounts (You should see all service accounts already created).
+3. Click + Service Account, and fill in the mandatory fields:
+4. Enter a name for the service account.
+5. Choose Client Secret for the method.
+6. Choose Platform-generated secret for the credentials.
+7. Click Save
+8. Ensure to securely store the generated client secret because it will be required in further steps.
 
-Updating each values for the keys related:
+#### 3.Create kubernetes docker registry secret:
+```shell
+   kubectl create secret docker-registry regcred --docker-server=docker.repository.axway.com --docker-username=<SERVICE_ACCOUNT> --docker-password=<PASSWORD> -n <NAMESPACE>
+```   
+For OpenShift clusters, replace _kubectl_ with _oc_.
+
+#### 4. Create secrets enviroment variables
+
+Customize [patch.yml](./multinode/patch.yml) for Flow Manager Multi-Node and/or [patch.yml](./singlenode/patch.yml) for Flow Manager SingleNode with your secrets enviroment variables: 
 
 ```shell
   FM_GENERAL_ENCRYPTION_KEY: ""
@@ -96,28 +70,62 @@ bW9uZ2RiX3Bhc3N3b3Jk
 FM_DATABASE_USER_PASSWORD: "bW9uZ2RiX3Bhc3N3b3Jk"
 ```
 
-### How to configure Flowmanager before deployment
+#### 5. Create license secret
 
-Files to check and modify:
+Copy your license to the [root folder](./) or run the following command in order to create the secret:
+   ```shell
+   kubectl create secret generic license --from-file=license.xml -n <NAMESPACE>
+   ```
+   For OpenShift clusters, replace _kubectl_ with _oc_.
 
-* Deployment file: [SingleNode](./singlenode/patch.yml) or [MultiNode](./multinode/patch.yml)
+#### 6. Create secrets
 
-### How to deploy Flowmanager
-
-
-1. Creating manually all secrets for the licence and certificates including tls certificate
-2. Editing manually the yaml file for parameters needed or madatory for the customer. You can add and remove any parameter from patch.yml, please check [docs](/docs/).
-3. Applying all the files
-ex:
-
+Generate the certificates and secrets using:
 ```shell
-kubectl apply -k ./singlenode -n <namespace>
-or
-kubectl apply -k ./multinode -n <namespace>
+./flowmanager_helper.sh -gc (Kubernetes)
+./flowmanager_helper.sh -gco (OpenShift)
 ```
 
-### ***Remove***
+or:    
 
 ```shell
-kubectl delete -k ./singlenode -n <namespace>
+kubectl create secret generic license --from-file=./license.xml -n <NAMESPACE>
+kubectl create secret generic st-fm-plugin-ca --from-file=./certs/st-fm-plugin-ca.pem -n <NAMESPACE>
+kubectl create secret generic uicert --from-file=./certs/uicert.pem -n <NAMESPACE> (if needed)
+kubectl create secret generic st-fm-plugin-ca --from-file=./certs/st-fm-plugin-ca.pem -n <NAMESPACE>
+kubectl create secret generic st-fm-plugin-cert-key --from-file=./certs/st-fm-plugin-cert-key.pem -n <NAMESPACE>
+kubectl create secret generic st-fm-plugin-cert --from-file=./certs/st-fm-plugin-cert.pem -n <NAMESPACE>
+kubectl create secret generic private-key-st --from-file=./certs/private-key -n <NAMESPACE>
+kubectl create secret generic public-key-st --from-file=./certs/public-key -n <NAMESPACE>
+kubectl create secret generic governanceca --from-file=./certs/governanceca.pem -n <NAMESPACE>
+kubectl create secret generic st-fm-plugin-shared-secret --from-file=./certs/st-fm-plugin-shared-secret -n <NAMESPACE>
+```
+
+#### 7. Create TLS secret
+
+```shell
+kubectl create secret tls tls --cert=path/to/cert/file --key=path/to/key/file -n <NAMESPACE>
+```
+
+#### 8. Customize patch.yaml
+
+Customize [patch.yml](./multinode/patch.yml) and [ingress.yml](./multinode/ingress.yml) for FM MultiNode and/or [patch.yml](./singlenode/patch.yml) and [ingress.yml](./singlenode/ingress.yml) for FM SingleNode. You can add and remove any parameter from patch.yml, please check [docs](/docs/).
+
+#### 9. Install Flow Manager
+
+
+- Using flowmanager_helper.sh (only for Kubernetes clusters):
+```shell
+./flowmanager_helper.sh -fm-s  for FM SingleNode
+./flowmanager_helper.sh -fm-m  for FM MultiNode  
+./flowmanager_helper.sh -fm-s  for FM SingleNode
+```
+
+- Using standard commands:
+
+```shell
+kubectl apply -k ./singlenode -n <namespace> for FM SingleNode(Kubernetes cluster)
+kubectl apply -k ./multinode -n <namespace> for FM MultiNode(Kubernetes cluster)
+oc apply -f ./singlenode -n <namespace> for FM SingleNode(OpenShift cluster)  
+oc apply -f ./multinode -n <namespace>  for FM MultiNode(OpenShift cluster)  
 ```

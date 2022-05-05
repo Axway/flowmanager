@@ -8,10 +8,10 @@ spec:
   replicas: 3
   template:
     spec:
-      #imagePullSecrets:
-      # - name: regcred
+      imagePullSecrets:
+       - name: regcred
       containers:
-        - image: axway/flowmanager:[FLOWMANAGER_VERSION]
+        - image: "docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20220505"
           name: flowmanager
           env:
             ## In this section you can add / remove parameters according to your needs.
@@ -86,11 +86,11 @@ spec:
   replicas: 1
   template:
     spec:
-      #imagePullSecrets:
-      # - name: regcred
+      imagePullSecrets:
+       - name: regcred
       containers:
         - name: st-plugin
-          image: ""
+          image: "docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0-20220505"
           imagePullPolicy: IfNotPresent
           env:
             ## In this section you can add / remove parameters according to your needs.
