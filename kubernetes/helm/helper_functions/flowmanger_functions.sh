@@ -6,12 +6,16 @@
 ###########################################
 function flowmanager_deploy_standalone() {
     
-	echo "Please, type your Service Account:"
-    read -s SERVICE_ACCOUNT
-    echo "Type the password of your service account:"
-    read -s SA_PASSWORD
-	msg_info 'Adding flowmanager helm repository'
-	helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
+	if [[ $(helm repo list | grep axway) ]]; then
+      echo "Axway repository already exists"
+    else
+      echo "Please, type your Service Account:"
+      read -s SERVICE_ACCOUNT
+      echo "Type the password of your service account:"
+      read -s SA_PASSWORD
+	  msg_info 'Adding flowmanager helm repository'
+	  helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
+    fi
 	msg_info 'Pulling flowmanager helm chart'
 	helm pull axway/flowmanager-helm-prod-buch-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
@@ -36,12 +40,16 @@ function flowmanager_deploy_standalone() {
 
 function flowmanager_deploy_standalone_oc() {
     
-	echo "Please, type your Service Account:"
-    read -s SERVICE_ACCOUNT
-    echo "Type the password of your service account:"
-    read -s SA_PASSWORD
-	msg_info 'Adding flowmanager helm repository'
-	helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
+	if [[ $(helm repo list | grep axway) ]]; then
+      echo "Axway repository already exists"
+    else
+      echo "Please, type your Service Account:"
+      read -s SERVICE_ACCOUNT
+      echo "Type the password of your service account:"
+      read -s SA_PASSWORD
+	  msg_info 'Adding flowmanager helm repository'
+	  helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
+    fi
 	msg_info 'Pulling flowmanager helm chart'
 	helm pull axway/flowmanager-helm-prod-buch-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
