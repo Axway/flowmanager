@@ -28,6 +28,7 @@ core:
       FM_GOVERNANCE_CA_FILE: "/opt/axway/FlowManager/configs/governanceca.pem"
       FM_GOVERNANCE_CA_PASSWORD: "<YOUR_SECRET>"
       FM_CFT_UPDATES_PATH: "/opt/axway/FlowManager/updates/cft/"
+      FM_HTTPS_DISABLED: "true"
       FM_HTTPS_USE_CUSTOM_CERT: "false"
 
       ## MongoDb
@@ -37,7 +38,7 @@ core:
       FM_DATABASE_USER_PASSWORD: ""
       FM_DATABASE_USE_SSL: "false"
       FM_DATABASE_CERTIFICATES: ""
-      
+
       ## Redis
       FM_REDIS_ENABLED: "true"
       FM_REDIS_HOSTNAME: "flowmanager-redis-master.<YOUR_NAMESPACE>.svc.cluster.local"
@@ -46,12 +47,12 @@ core:
       FM_REDIS_PASSWORD: ""
       FM_REDIS_SSL_ENABLED: "false"
       FM_REDIS_SSL_CA: ""
-      
+
       ## ST PLUGIN
       FM_ST_PLUGIN_CA_FILE: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
       FM_ST_PLUGIN_PUBLIC_KEY: "/opt/axway/FlowManager/st-fm-plugin/public-key"
       FM_ST_PLUGIN_FQDN: "flowmanager-st-plugin.<YOUR_NAMESPACE>.svc.cluster.local:8899"
-
+ 
       FM_JVM_XMX: "2G"
       FM_JVM_XMS: "512M"
       FM_JVM_XMN: "768M"
@@ -128,8 +129,8 @@ core:
   readinessProbe:
     httpGet:
       path: /fm/login
-      port: 443
-      scheme: HTTPS
+      port: 8081
+      scheme: HTTP
     initialDelaySeconds: 100
     periodSeconds: 5
     successThreshold: 3
@@ -137,8 +138,8 @@ core:
   livenessProbe:
     httpGet:
       path: /api/v2/internals/stability
-      port: 443
-      scheme: HTTPS
+      port: 8081
+      scheme: HTTP
     initialDelaySeconds: 100
     successThreshold: 1
     failureThreshold: 2
@@ -148,9 +149,10 @@ core:
     enabled: false
     #annotations:
     #  nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    #  nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    #  nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     #  ingress.kubernetes.io/secure-upstream: "true"
     #  kubernetes.io/ingress.class: "nginx"
+    #  kubernetes.io/tls-acme: "true"
     #secretName: tls
     #tls:
     #  - hosts:
@@ -203,7 +205,7 @@ st-plugin:
       ST_FM_PLUGIN_SHORT_NAME: "ST"
       ST_FM_PLUGIN_FM_FQDN: "<FLOWMANAGER_FQDN>" #TLS MANDATORY
       ST_FM_PLUGIN_FM_PORT: 443
-      
+
       ##MongoDB Parameters
       ST_FM_PLUGIN_DATABASE_HOST: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local"
       ST_FM_PLUGIN_DATABASE_PORT: 27017
@@ -213,7 +215,7 @@ st-plugin:
       ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES: 15
       ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL: 60
       ST_FM_PLUGIN_DATABASE_USE_SSL: "false"
-      
+
       ##ST Plugin Files
       ST_FM_PLUGIN_SHARED_SECRET: "/usr/src/app/src/st-fm-plugin-shared-secret"
       ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN: "/usr/src/app/src/governanceca.pem"
