@@ -31,12 +31,9 @@ function flowmanager_deploy_standalone() {
       msg_output "Helm chart deployment done"
     fi
 
-    msg_output 'Waiting flowmanager ready'
-    FM_POD=$(kubectl get pods -n ${NAMESPACE} | grep flowmanager | sed -n 1p | awk '{print $1}')
-    kubectl wait pod/${FM_POD} --namespace=${NAMESPACE} --for=condition=Ready --timeout=-20s
 
-    rm -rf ./flowmanager/config
-    fm_end_script ${FILE_FM}
+    rm -rf ./flowmanager/config || echo "config not found"
+	watch kubectl get pods -n ${NAMESPACE}
 }
 
 function flowmanager_deploy_standalone_oc() {
@@ -66,53 +63,10 @@ function flowmanager_deploy_standalone_oc() {
       msg_output "Helm chart deployment done"
     fi
 
-    msg_output 'Waiting flowmanager ready'
-    FM_POD=$(oc get pods -n ${NAMESPACE} | grep flowmanager | sed -n 1p | awk '{print $1}')
-    oc wait pod/${FM_POD} --namespace=${NAMESPACE} --for=condition=Ready --timeout=-20s
-
-    rm -rf ./flowmanager/config
-    fm_end_script ${FILE_FM}
+    rm -rf ./flowmanager/config || echo "config not found"
+	watch oc get pods -n ${NAMESPACE}
 }
 
-
-function fm_end_script() {
-    local VALUES_FILE=$1
-
-    INGRESS_YES=$(yq r ${VALUES_FILE} 'ingress.enabled')
-    SERVICE_TYPE=$(yq r ${VALUES_FILE} 'service.type')
-
-    if [ "${INGRESS_YES}" == "true" ]; then
-        printf ${YELLOW} "[INFOS]"
-        printf ${YELLOW} "[INFOS] ===================================================="
-        printf ${YELLOW} "[INFOS]  DATE : $(date +"%Y-%m-%d_%H:%M:%S")"
-        printf ${YELLOW} "[INFOS]  "
-        printf ${YELLOW} "[INFOS]  Flomanager Url : https://$(kubectl get ing/flowmanager -o jsonpath='{.spec.rules[0].host}')"
-        printf ${YELLOW} "[INFOS]  "
-        printf ${YELLOW} "[INFOS] ===================================================="
-        printf ${YELLOW} "[INFOS]  "
-
-    elif [ "${SERVICE_TYPE}" == "LoadBalancer" ]; then
-        printf ${YELLOW} "[INFOS]"
-        printf ${YELLOW} "[INFOS] ===================================================="
-        printf ${YELLOW} "[INFOS]  DATE : $(date +"%Y-%m-%d_%H:%M:%S")"
-        printf ${YELLOW} "[INFOS]  "
-        printf ${YELLOW} "[INFOS]  Flomanager Url : https://$(kubectl get svc/flowmanager -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
-        printf ${YELLOW} "[INFOS]  "
-        printf ${YELLOW} "[INFOS] ===================================================="
-        printf ${YELLOW} "[INFOS]  "
-    else
-        printf ${YELLOW} "[INFOS]"
-        printf ${YELLOW} "[INFOS] ===================================================="
-        printf ${YELLOW} "[INFOS]  DATE : $(date +"%Y-%m-%d_%H:%M:%S")"
-        printf ${YELLOW} "[INFOS]  "
-        printf ${YELLOW} "[INFOS]  Internal Flomanager Url : http://flowmanager.flowmanager.svc.cluster.local')"
-        printf ${YELLOW} "[INFOS]  "
-        printf ${YELLOW} "[INFOS] ===================================================="
-        printf ${YELLOW} "[INFOS]  "        
-    fi
-    kubectl get all
-    kubectl get ingress
-}
 
 function fm_check_logs() {
     msg_output "Logs for Flowmanager"
