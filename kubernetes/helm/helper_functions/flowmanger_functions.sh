@@ -17,7 +17,7 @@ function flowmanager_deploy_standalone() {
 	  helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
     fi
 	msg_info 'Pulling flowmanager helm chart'
-	helm pull axway/flowmanager-helm-prod-buch-flowmanager
+	helm pull axway/flowmanager-helm-prod-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
     msg_output 'Starting flowmanager helm chart installation'
     $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
@@ -51,7 +51,7 @@ function flowmanager_deploy_standalone_oc() {
 	  helm repo add axway https://helm.repository.axway.com --username $SERVICE_ACCOUNT --password $SA_PASSWORD
     fi
 	msg_info 'Pulling flowmanager helm chart'
-	helm pull axway/flowmanager-helm-prod-buch-flowmanager
+	helm pull axway/flowmanager-helm-prod-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
     msg_output 'Starting flowmanager helm chart installation'
     $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
