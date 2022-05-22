@@ -50,11 +50,6 @@ core:
 
   podAnnotations: {}
 
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 1001
-    fsGroup: 1000
-
   containerSecurityContext:
     {}
     # privileged: false
