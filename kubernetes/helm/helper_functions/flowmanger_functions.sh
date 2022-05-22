@@ -20,7 +20,7 @@ function flowmanager_deploy_standalone() {
 	helm pull axway/flowmanager-helm-prod-buch-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
     msg_output 'Starting flowmanager helm chart installation'
-    $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-buch-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
+    $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
 
     if [ "$?" -ne "0" ]; then
         msg_error 'Helm chart deployment failed'
@@ -54,7 +54,7 @@ function flowmanager_deploy_standalone_oc() {
 	helm pull axway/flowmanager-helm-prod-buch-flowmanager
     msg_info 'Starting flowmanager deployment standalone'
     msg_output 'Starting flowmanager helm chart installation'
-    $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-buch-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
+    $HELM upgrade --install flowmanager axway/flowmanager-helm-prod-flowmanager -f ${FILE_FM} --namespace=${NAMESPACE}
 
     if [ "$?" -ne "0" ]; then
         msg_error 'Helm chart deployment failed'
