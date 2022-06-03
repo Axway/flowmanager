@@ -51,16 +51,17 @@ services:
       - FM_JVM_XMX=${FM_JVM_XMX:-2G}
       - FM_JVM_XMS=${FM_JVM_XMS:-512M}
       - FM_JVM_XMN=${FM_JVM_XMN:-768M}
+      - FM_UNMANAGED_PRODUCT_ENABLED=${UNMANAGED_PRODUCT_ENABLED:-false}
     ports:
       - "${FM_GENERAL_UI_PORT:-8081}:8081"
     volumes:
       - ./files/flowmanager/configs:/opt/axway/FlowManager/configs:rw
       - ./files/flowmanager/license:/opt/axway/FlowManager/conf/license:ro
       - ./files/flowmanager/plugins:/opt/axway/FlowManager/conf/schemas/storage
-      - ./files/flowmanager/updates:/opt/axway/FlowManager/updates:rw
       - ./files/flowmanager/logs:/opt/axway/logs:rw
       - ./files/flowmanager/initialize:/opt/axway/FlowManager/init:ro
       - ./files/st-fm-plugin:/opt/axway/FlowManager/st-fm-plugin
+      - fm_cft_updates:/opt/axway/FlowManager/updates
     restart: unless-stopped
     depends_on:
       - mongodb
@@ -94,5 +95,7 @@ services:
       - flowmanager
 
 volumes:
+  fm_cft_updates:
+    name: fm_cft_updates
   mongodb_data_container:
     name: mongostorage

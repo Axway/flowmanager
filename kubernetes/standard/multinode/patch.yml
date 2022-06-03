@@ -11,7 +11,7 @@ spec:
       imagePullSecrets:
        - name: regcred
       containers:
-        - image: "docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20220505"
+        - image: "docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20220603"
           name: flowmanager
           env:
             ## In this section you can add / remove parameters according to your needs.
@@ -90,7 +90,7 @@ spec:
        - name: regcred
       containers:
         - name: st-plugin
-          image: "docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0-20220505"
+          image: "docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20220603"
           imagePullPolicy: IfNotPresent
           env:
             ## In this section you can add / remove parameters according to your needs.

@@ -39,6 +39,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_JVM_XMX|No|JVM maximum memory allocation pool|`2G`|
 |FM_JVM_XMS|No|JVM maximum memory allocation pool|`512M`|
 |FM_JVM_XMN|No|JVM size of the heap for the young generation|`768M`|
+|FM_UNMANAGED_PRODUCT_ENABLED|No|Enables the Unmanaged Product plugin in Flow Manager|`false`|
 
 ## MongoDB
 
