@@ -6,7 +6,7 @@ core:
   ## Docker image used for the customer
   image:
     repository: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release
-    tag: "2.0.20220505"
+    tag: "2.0.20220603"
     imagePullSecretsEnabled: true
     imagePullSecretsName: "regcred"
   
@@ -171,7 +171,7 @@ st-plugin:
   ## Image and version of ST FM PLUGIN
   image:
     repository: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin
-    tag: "2.0-20220505"
+    tag: "2.0.20220603"
     imagePullSecretsEnabled: true
     imagePullSecretsName: "regcred"
     
