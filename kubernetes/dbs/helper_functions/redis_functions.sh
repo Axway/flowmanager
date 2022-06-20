@@ -10,7 +10,7 @@ function redis_deploy_standalone() {
 
     msg_info 'Starting redis deployment standalone'
     msg_output 'Starting redis helm chart installation'
-	helm repo add bitnami https://charts.bitnami.com/bitnami || echo "Repo already exists"
+	helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/eb5f9a9513d987b519f0ecd732e7031241c50328/bitnami || echo "Repo already exists"
     $HELM upgrade --install flowmanager-redis -f ${FILE_REDIS} bitnami/redis --version 14.8.8 --namespace=${NAMESPACE} --wait
 
     if [ "$?" -ne "0" ]; then

@@ -10,7 +10,7 @@ function mongodb_deploy_standalone() {
 
     msg_info 'Starting mongodb deployment standalone'
     msg_output 'Starting mongodb helm chart installation'
-	helm repo add bitnami https://charts.bitnami.com/bitnami || echo "Repo already exists"
+	helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/eb5f9a9513d987b519f0ecd732e7031241c50328/bitnami || echo "Repo already exists"
 	$HELM upgrade --install flowmanager-mongodb -f ${FILE_MONGO} bitnami/mongodb --version 10.23.10 --namespace=${NAMESPACE} --wait
 
     if [ "$?" -ne "0" ]; then
