@@ -67,14 +67,14 @@ spec:
           command: ["sh", "-c", {{ .Values.container.command | quote }}]
           {{- end }}
           env:
-          {{- if .Values.envFromConfigMapDisabled }}
+          {{- if .Values.envFromSecretKeyRefDisabled }}
           {{- else }}
           {{- $dot := . }}
-          {{- range $key, $value := .Values.configMap.data }}
+          {{- range $key, $value := .Values.secretKeyRef.variables }}
             - name: {{ $key }}
               valueFrom:
-                configMapKeyRef:
-                  name: {{ $dot.Values.configMap.name | quote }}
+                secretKeyRef:
+                  name: {{ $value }}
                   key: {{ $key }}
           {{- end }}
           {{- end }}
@@ -84,6 +84,12 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
           {{- end }}
+          {{- end }}
+          {{- if .Values.envFromConfigMapRefDisabled }}
+          {{- else }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configMapRefName }}
           {{- end }}
           ports:
           {{- range .Values.container.ports }}

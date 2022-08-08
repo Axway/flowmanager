@@ -13,11 +13,9 @@ core:
     #sidecar.istio.io/inject: "false"
 
   ## Environment variables
-  envFromConfigMapDisabled: true
-  envFromValueDisabled: false
-  env:
-    variables:
-      ACCEPT_EULA: "no"
+  envFromValueDisabled: true
+  envFromConfigMapRefDisabled: true
+  envFromSecretKeyRefDisabled: true
    
   ## Volumes
   volumesSecretDisabled: false
@@ -135,12 +133,9 @@ st-plugin:
   tolerationsDisabled: true
 
   ## Environment variables
-  envFromConfigMapDisabled: true
-  envFromValueDisabled: false
-  env:
-    variables:
-      ST_FM_PLUGIN_PORT: 8899
-      ST_FM_PLUGIN_SHORT_NAME: "ST"
+  envFromValueDisabled: true
+  envFromConfigMapRefDisabled: true
+  envFromSecretKeyRefDisabled: true
 
   ## Readiness
   readinessProbeDisabled: true

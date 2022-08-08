@@ -14,7 +14,11 @@ core:
     #sidecar.istio.io/inject: "false"
 
   ## Environment variables
-  envFromConfigMapDisabled: true
+  envFromConfigMapRefDisabled: true
+    ##configMapRefName: configMap
+  envFromSecretKeyRefDisabled: true
+    ##variables:
+    ##  key_name: secret_name    
   envFromValueDisabled: false
   env:
     variables:
@@ -195,7 +199,11 @@ st-plugin:
   nodeSelectorDisabled: true
   tolerationsDisabled: true
   ## Environment variables
-  envFromConfigMapDisabled: true
+  envFromConfigMapRefDisabled: true
+    ##configMapRefName: configMap
+  envFromSecretKeyRefDisabled: true
+    ##variables:
+    ##  key_name: secret_name  
   envFromValueDisabled: false
   env:
     variables:

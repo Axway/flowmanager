@@ -10,11 +10,9 @@ core:
     tag: 2.0.200709
 
   ## Environment variables
-  envFromConfigMapDisabled: true
-  envFromValueDisabled: false
-  env:
-    variables:
-      ACCEPT_EULA: "no"
+  envFromValueDisabled: true
+  envFromConfigMapRefDisabled: true
+  envFromSecretKeyRefDisabled: true
       
     
   ## Volumes
