@@ -36,23 +36,29 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          {{- if .Values.envFromConfigMapDisabled }}
-          {{- else }}
-          {{- $dot := . }}
-          {{- range $key, $value := .Values.configMap.data }}
-            - name: {{ $key }}
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ $dot.Values.configMap.name | quote }}
-                  key: {{ $key }}
-          {{- end }}
-          {{- end }}
           {{- if .Values.envFromValueDisabled }}
           {{- else }}
           {{- range $key, $value := .Values.env.variables }}
             - name: {{ $key }}
               value: {{ $value | quote }}
           {{- end }}
+          {{- end }}
+          {{- if .Values.envFromSecretKeyRefDisabled }}
+          {{- else }}
+          {{- $dot := . }}
+          {{- range $key, $value := .Values.secretKeyRef.variables }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $value }}
+                  key: {{ $key }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.envFromConfigMapRefDisabled }}
+          {{- else }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.configMapRefName }}
           {{- end }}
           {{- if .Values.volumesMountsSecretDisabled }}
           {{- else }}
