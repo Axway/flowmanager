@@ -106,14 +106,15 @@ core:
   serviceAccount:
     create: false
     # name: ~
-
   rbac:
     create: false
-
+  ##Kubernetes Cluster Pod Security Policy
   pspEnable: false
-
-  podAnnotations: {}
-
+  pspAssignClusterRole: false
+  ##OpenShift Cluster Security Context Constraints
+  sccEnable: false
+  sccAssignClusterRole: false
+  
   #podSecurityContext:
   #  runAsNonRoot: true
   #  runAsUser: 1001
@@ -188,7 +189,9 @@ st-plugin:
       maxUnavailable: 1
       maxSurge: 0
   podAnnotations: {}
-    #sidecar.istio.io/inject: "false"
+  serviceAccount:
+    useCustom: false
+    ##name: ""
   ## Container command
   containerCommandDisabled: true
   container:
