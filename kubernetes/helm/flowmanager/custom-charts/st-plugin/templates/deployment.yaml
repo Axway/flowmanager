@@ -37,6 +37,9 @@ spec:
         {{ $key }}: {{ $value | quote }}
         {{- end }}
     spec:
+      {{- if .Values.serviceAccount.useCustom }}
+      serviceAccountName: {{  .Values.serviceAccount.name }}
+      {{- end }}
       nodeSelector: {{- if .Values.nodeSelectorDisabled }} {}
       {{- else }}
       {{- range .Values.nodeSelector }}

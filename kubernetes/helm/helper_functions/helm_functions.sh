@@ -68,8 +68,6 @@ function startup_script_oc(){
   type -P oc &>/dev/null && msg_info 'oc is installed.'|| msg_error 'Error: oc is not installed.'
   type -P ${HELM} &>/dev/null && msg_info 'helm is installed.'|| msg_error 'Error: Helm is not installed.'
 
-  msg_output 'Current context set on the namespace flowmanager'
-  oc config set-context --current --namespace=${NAMESPACE}
 
 }
 

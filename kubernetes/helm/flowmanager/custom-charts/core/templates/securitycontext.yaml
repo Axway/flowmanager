@@ -1,0 +1,97 @@
+{{- if .Values.sccEnable -}}
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: {{ template "config.fullname" . }}-scc
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ template "config.name" . }}
+    chart: {{ template "config.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: false
+allowedCapabilities:
+- FOWNER
+- SETUID
+- SETGID
+- DAC_OVERRIDE
+- CHOWN
+- IPC_OWNER
+- IPC_LOCK
+- SYS_CHROOT
+- AUDIT_WRITE
+defaultAddCapabilities: []
+defaultAllowPrivilegeEscalation: false
+forbiddenSysctls:
+- "*"
+fsGroup:
+  type: MustRunAs
+  ranges:
+  - min: 1
+    max: 4294967294
+readOnlyRootFilesystem: false
+requiredDropCapabilities: []
+runAsUser:
+  type: MustRunAsNonRoot
+seLinuxContext:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+  ranges:
+  - min: 1
+    max: 4294967294
+volumes:
+- configMap
+- downwardAPI
+- persistentVolumeClaim
+- projected
+- secret
+- nfs
+---
+{{- if .Values.sccAssignClusterRole -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "config.fullname" . }}-scc
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ template "config.name" . }}
+    chart: {{ template "config.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+rules:
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - {{ template "config.fullname" . }}-scc
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "config.fullname" . }}-scc
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ template "config.name" . }}
+    chart: {{ template "config.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+subjects:
+- kind: Group
+  name: system:authenticated
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: {{ template "config.fullname" . }}-scc
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
+{{- end }}

@@ -50,4 +50,39 @@ spec:
       - min: 1
         max: 65535
   readOnlyRootFilesystem: false
+---
+{{- if .Values.pspAssignClusterRole -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "config.fullname" . }}-psp
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ template "config.name" . }}
+    chart: {{ template "config.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+rules:
+- apiGroups:
+  - policy
+  resourceNames:
+  - {{ template "config.fullname" . }}-psp
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "config.fullname" . }}-psp
+subjects:
+- kind: Group
+  name: system:authenticated
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: {{ template "config.fullname" . }}-psp
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
 {{- end }}
