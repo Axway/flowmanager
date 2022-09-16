@@ -40,6 +40,10 @@ spec:
               value: "false"
               
             ##ST Plugin
+            - name: FM_ST_PLUGIN_HOST
+              value: "https://st-plugin.<NAMESPACE>.svc.cluster.local"
+            - name: FM_ST_PLUGIN_PORT
+              value: "8899"
             - name: FM_ST_PLUGIN_CA_FILE
               value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
             - name: FM_ST_PLUGIN_PUBLIC_KEY

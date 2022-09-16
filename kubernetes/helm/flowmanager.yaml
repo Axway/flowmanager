@@ -53,6 +53,8 @@ core:
       FM_REDIS_SSL_CA: ""
 
       ## ST PLUGIN
+      FM_ST_PLUGIN_HOST: "flowmanager-st-plugin.<YOUR_NAMESPACE>.svc.cluster.local"
+      FM_ST_PLUGIN_PORT: "8899"
       FM_ST_PLUGIN_CA_FILE: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
       FM_ST_PLUGIN_PUBLIC_KEY: "/opt/axway/FlowManager/st-fm-plugin/public-key"
       FM_ST_PLUGIN_FQDN: "flowmanager-st-plugin.<YOUR_NAMESPACE>.svc.cluster.local:8899"
