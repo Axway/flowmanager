@@ -50,6 +50,11 @@ services:
       - FM_ST_PLUGIN_PORT=${FM_ST_PLUGIN_PORT:-8899}
       - FM_ST_PLUGIN_CA_FILE=${FM_ST_PLUGIN_CA_FILE}
       - FM_ST_PLUGIN_PUBLIC_KEY=${FM_ST_PLUGIN_PUBLIC_KEY}
+      - FM_MONITORING_PLUGIN_HOST=${FM_MONITORING_PLUGIN_HOST:-monitoring-fm-plugin}
+      - FM_MONITORING_PLUGIN_PORT=${FM_MONITORING_PLUGIN_PORT:-3000}
+      - FM_MONITORING_PLUGIN_CA_FILE=${FM_MONITORING_PLUGIN_CA_FILE}
+      - FM_MONITORING_PLUGIN_PUBLIC_KEY=${FM_MONITORING_PLUGIN_PUBLIC_KEY}
+      - FM_MONITORING_PLUGIN_DISABLED=${FM_MONITORING_PLUGIN_DISABLED:-true}
       - FM_JVM_XMX=${FM_JVM_XMX:-2G}
       - FM_JVM_XMS=${FM_JVM_XMS:-512M}
       - FM_JVM_XMN=${FM_JVM_XMN:-768M}
@@ -63,6 +68,7 @@ services:
       - ./files/flowmanager/logs:/opt/axway/logs:rw
       - ./files/flowmanager/initialize:/opt/axway/FlowManager/init:ro
       - ./files/st-fm-plugin:/opt/axway/FlowManager/st-fm-plugin
+      - ./files/monitoring-fm-plugin:/opt/axway/FlowManager/monitoring-fm-plugin
       - fm_cft_updates:/opt/axway/FlowManager/updates
     restart: unless-stopped
     depends_on:
@@ -95,6 +101,33 @@ services:
       - ./files/st-fm-plugin:/usr/src/app/src:ro
     depends_on:
       - flowmanager
+    # Create Monitoring plugin container
+#  monitoring-fm-plugin:
+#    image: "${MONITORING_PLUGIN_IMAGE_URL}:${MONITORING_PLUGIN_IMAGE_VERSION}"
+#    environment:
+#      - MONITORING_PLUGIN_HOST=${MONITORING_PLUGIN_HOST:-monitoring-fm-plugin}
+#      - MONITORING_PLUGIN_PORT=${MONITORING_PLUGIN_PORT:-3000}
+#      - MONITORING_PLUGIN_SHORT_NAME=${MONITORING_PLUGIN_SHORT_NAME:-MON}
+#      - MONITORING_PLUGIN_LOG_LEVEL=${MONITORING_PLUGIN_LOG_LEVEL:-info}
+#      - MONITORING_PLUGIN_FM_FQDN=${FM_GENERAL_FQDN}
+#      - MONITORING_PLUGIN_FM_PORT=${FM_GENERAL_UI_PORT:-8081}
+#      - MONITORING_PLUGIN_SHARED_SECRET=${MONITORING_PLUGIN_SHARED_SECRET}
+#      - MONITORING_PLUGIN_FM_GOV_CA_FULL_CHAIN=${MONITORING_PLUGIN_FM_GOV_CA_FULL_CHAIN}
+#      - MONITORING_PLUGIN_PRIVATE_KEY_PEM=${MONITORING_PLUGIN_PRIVATE_KEY_PEM}
+#      - MONITORING_PLUGIN_CERT_PEM=${MONITORING_PLUGIN_CERT_PEM}
+#      - MONITORING_PLUGIN_CA_CHAIN=${MONITORING_PLUGIN_CA_CHAIN}
+#      - MONITORING_PLUGIN_JWT_KEY=${MONITORING_PLUGIN_JWT_KEY}
+#      - MONITORING_PLUGIN_DB_HOST=${MONITORING_PLUGIN_DB_HOST:-mongodb}
+#      - MONITORING_PLUGIN_DB_PORT=${MONITORING_PLUGIN_DB_PORT:-27017}
+#      - MONITORING_PLUGIN_DB_NAME=${MONITORING_PLUGIN_DB_NAME}
+#      - MONITORING_PLUGIN_DB_USER_NAME=${MONITORING_PLUGIN_DB_USER_NAME}
+#      - MONITORING_PLUGIN_DB_USER_PASSWORD=${MONITORING_PLUGIN_DB_USER_PASSWORD}
+#      - MONITORING_PLUGIN_PRIVATE_KEY_PASSWORD=${MONITORING_PLUGIN_PRIVATE_KEY_PASSWORD:-""}
+#      - MONITORING_PLUGIN_JWT_KEY_PASSWORD=${MONITORING_PLUGIN_JWT_KEY_PASSWORD:-""}
+#    volumes:
+#      - ./files/monitoring-fm-plugin:/usr/src/app/conf:ro
+#    depends_on:
+#      - flowmanager
 
 volumes:
   fm_cft_updates:

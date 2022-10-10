@@ -1,0 +1,11 @@
+apiVersion: v1
+description: Monitoring Plugin
+name: monitoring-plugin
+keywords:
+  - monitoring
+version: 0.1.1
+sources:
+  - https://github.com/Axway/flowmanager/tree/master/kubernetes/helm
+maintainers:
+  - name: Flow Manager Team
+    email: flowmanagerrd@axway.com

@@ -167,3 +167,75 @@ st-plugin:
   tls: false
   ingress:
     enabled: false   
+
+##
+## Monitoring plugin deployment
+##
+monitoring-plugin:
+  ##
+  ## Default values for Monitoring PLUGIN deployment
+  ##
+  ## Image and version of Monitoring PLUGIN
+  image:
+    repository: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-plugin
+    tag: "2.0.20221005"
+
+  ## Replica/Number of containers
+  replicaCount: 1
+
+  ## Deployment type
+  deployment:
+    strategy:
+      rollingUpdateType: RollingUpdate
+      maxUnavailable: 1
+      maxSurge: 0
+  
+  podAnnotations: {}
+    #sidecar.istio.io/inject: "false"
+
+  ## Container command
+  containerCommandDisabled: true
+  container:
+    ports:
+      - name: monitoring-plugin-http
+        internalPort: 3000
+
+  ## Node selector
+  nodeSelectorDisabled: true
+  tolerationsDisabled: true
+
+  ## Environment variables
+  envFromValueDisabled: true
+  envFromConfigMapRefDisabled: true
+  envFromSecretKeyRefDisabled: true
+
+  ## Readiness
+  readinessProbeDisabled: true
+  ## Resources
+  resourcesDisabled: true
+  resources:
+    requests:
+      cpu: 256m
+      memory: 1Gi
+      ephemeralStorage: 2Gi
+    limits:
+      cpu: 512m
+      memory: 2Gi
+      ephemeralStorage: 2Gi
+
+  ## Volumes
+  volumesSecretDisabled: false
+  volumesMountsSecretDisabled: false
+    
+  ## Service
+  service:
+    type: ClusterIP
+    ports:
+      - name: monitoring-plugin-http
+        internalPort: 3000
+       #externalPort: 3000
+       
+  ## Ingress
+  tls: false
+  ingress:
+    enabled: false   

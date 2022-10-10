@@ -14,8 +14,8 @@ cp ./custom-ca/business/cacert.p12  ./certs/businessca.p12
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem   ./certs/st-fm-plugin-ca.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./certs/st-fm-plugin-cert-key.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./certs/st-fm-plugin-cert.pem
-cp ./custom-ca/st-fm-plugin/private-key ./certs/private-key
-cp ./custom-ca/st-fm-plugin/public-key ./certs/public-key
+cp ./custom-ca/st-fm-plugin/st-fm-plugin-private-key.pem ./certs/st-fm-plugin-private-key.pem
+cp ./custom-ca/st-fm-plugin/st-fm-plugin-public-key.pem ./certs/st-fm-plugin-public-key.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret ./certs/st-fm-plugin-shared-secret
 chmod 755 -R ./certs/
 rm -rf ./custom-ca/
@@ -53,22 +53,22 @@ else
     msg_info "st-fm-plugin-cert.pem was not found in ./certs/."
 fi
 
-if [ -f ./certs/private-key ]; then
-    kubectl create secret generic private-key-st --from-file=./certs/private-key -n ${NAMESPACE}
+if [ -f ./certs/st-fm-plugin-private-key.pem ]; then
+    kubectl create secret generic st-fm-plugin-private-key --from-file=./certs/st-fm-plugin-private-key.pem -n ${NAMESPACE}
 else
-    msg_info "private-key was not found in ./certs/."
+    msg_info "st-fm-plugin-private-key.pem was not found in ./certs/."
 fi
 
-if [ -f ./certs/public-key ]; then
-    kubectl create secret generic public-key-st --from-file=./certs/public-key -n ${NAMESPACE}
+if [ -f ./certs/st-fm-plugin-public-key.pem ]; then
+    kubectl create secret generic st-fm-plugic-public-key.pem --from-file=./certs/st-fm-plugin-public-key.pem -n ${NAMESPACE}
 else
-    msg_info "public-key was not found in ./certs/."
+    msg_info "st-fm-plugin-public-key.pem was not found in ./certs/."
 fi
 
 if [ -f ./certs/governanceca.pem ]; then
     kubectl create secret generic governanceca --from-file=./certs/governanceca.pem -n ${NAMESPACE}
 else
-    msg_info "public-key was not found in ./certs/."
+    msg_info "governanceca.pem was not found in ./certs/."
 fi
 
 if [ -f ./certs/st-fm-plugin-shared-secret ]; then
@@ -100,8 +100,8 @@ cp ./custom-ca/business/cacert.p12  ./certs/businessca.p12
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem   ./certs/st-fm-plugin-ca.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./certs/st-fm-plugin-cert-key.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./certs/st-fm-plugin-cert.pem
-cp ./custom-ca/st-fm-plugin/private-key ./certs/private-key
-cp ./custom-ca/st-fm-plugin/public-key ./certs/public-key
+cp ./custom-ca/st-fm-plugin/st-fm-plugin-private-key.pem ./certs/st-fm-plugin-private-key.pem
+cp ./custom-ca/st-fm-plugin/st-fm-plugin-public-key.pem ./certs/st-fm-plugin-public-key.pem
 cp ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret ./certs/st-fm-plugin-shared-secret
 chmod 755 -R ./certs/
 rm -rf ./custom-ca/
@@ -139,22 +139,22 @@ else
     msg_info "st-fm-plugin-cert.pem was not found in ./certs/."
 fi
 
-if [ -f ./certs/private-key ]; then
-    oc create secret generic private-key-st --from-file=./certs/private-key -n ${NAMESPACE}
+if [ -f ./certs/st-fm-plugin-private-key.pem ]; then
+    oc create secret generic st-fm-plugin-private-key --from-file=./certs/st-fm-plugin-private-key.pem -n ${NAMESPACE}
 else
-    msg_info "private-key was not found in ./certs/."
+    msg_info "st-fm-plugin-private-key.pem was not found in ./certs/."
 fi
 
-if [ -f ./certs/public-key ]; then
-    oc create secret generic public-key-st --from-file=./certs/public-key -n ${NAMESPACE}
+if [ -f ./certs/st-fm-plugin-public-key.pem ]; then
+    oc create secret generic st-fm-plugin-public-key --from-file=./certs/st-fm-plugin-public-key.pem -n ${NAMESPACE}
 else
-    msg_info "public-key was not found in ./certs/."
+    msg_info "st-fm-plugin-public-key.pem was not found in ./certs/."
 fi
 
 if [ -f ./certs/governanceca.pem ]; then
     oc create secret generic governanceca --from-file=./certs/governanceca.pem -n ${NAMESPACE}
 else
-    msg_info "public-key was not found in ./certs/."
+    msg_info "governanceca.pem was not found in ./certs/."
 fi
 
 if [ -f ./certs/st-fm-plugin-shared-secret ]; then
