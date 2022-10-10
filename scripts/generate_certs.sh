@@ -64,7 +64,7 @@ policy = policy_match
 serial = $root/serial
 default_days = $EXPIRATION_DAYS
 
-[ req ] 
+[ req ]
 distinguished_name = req_distinguished_name
 x509_extensions = v3_ca # The extensions to add to the self signed cert
 prompt = no
@@ -129,6 +129,40 @@ function pem() {
     cat $cert.pem >> $pemCert.pem
 }
 
+function gen_generic_plugin_certs() {
+  local plugin_name=$1
+
+  rm -rf ./custom-ca/"$plugin_name"/
+  mkdir -p ./custom-ca/"$plugin_name"
+
+  openssl genrsa -out ./custom-ca/"$plugin_name"/"$plugin_name"-ca-key.pem 2048
+  openssl req -x509 -new -key ./custom-ca/"$plugin_name"/"$plugin_name"-ca-key.pem -days $EXPIRATION_DAYS -out ./custom-ca/"$plugin_name"/"$plugin_name"-ca.pem -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=rootCA/emailAddress=aa@aa.com'
+  openssl genrsa -out ./custom-ca/"$plugin_name"/"$plugin_name"-cert-key.pem 2048
+  openssl req -new -key ./custom-ca/"$plugin_name"/"$plugin_name"-cert-key.pem -out ./custom-ca/"$plugin_name"/"$plugin_name"-cert.csr -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=client/emailAddress=bb@bb.com'
+  openssl x509 -req -days $EXPIRATION_DAYS -CA ./custom-ca/"$plugin_name"/"$plugin_name"-ca.pem -CAkey ./custom-ca/"$plugin_name"/"$plugin_name"-ca-key.pem -CAcreateserial -CAserial ./custom-ca/"$plugin_name"/serial -in ./custom-ca/"$plugin_name"/"$plugin_name"-cert.csr -out ./custom-ca/"$plugin_name"/"$plugin_name"-cert.pem
+
+  ssh-keygen -b 2048 -m pem -f ./custom-ca/"$plugin_name"/key -q -N ""
+  openssl rsa -in ./custom-ca/"$plugin_name"/key -pubout -out ./custom-ca/"$plugin_name"/"$plugin_name"-public-key.pem
+  mv ./custom-ca/"$plugin_name"/key ./custom-ca/"$plugin_name"/"$plugin_name"-private-key.pem
+}
+
+function gen_st_fm_plugin_certs() {
+  gen_generic_plugin_certs st-fm-plugin
+  openssl rand -base64 500 | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1 > ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret
+}
+
+function gen_monitoring_fm_plugin_certs() {
+  gen_generic_plugin_certs monitoring-fm-plugin
+}
+
+if [[ -n "${1-}" && "$1" == "monitoring-fm-plugin" ]]; then
+  gen_monitoring_fm_plugin_certs
+  return
+elif [[ -n "${1-}" && "$1" == "st-fm-plugin" ]]; then
+  gen_st_fm_plugin_certs
+  return
+fi
+
 # Start to generate PEM certs
 gen_ca governance
 gen_cert governance ui
@@ -146,19 +180,7 @@ chmod 755 ./custom-ca/governance/uicert.pem
 chmod 755 ./custom-ca/business/cacert.p12
 
 # generate ST plugin certs
-if [ ! -d ./custom-ca/st-fm-plugin ]; then
-  mkdir ./custom-ca/st-fm-plugin
-fi
+gen_st_fm_plugin_certs
 
-openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem 2048
-openssl req -x509 -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -days $EXPIRATION_DAYS -out ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=rootCA/emailAddress=aa@aa.com'
-openssl genrsa -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem 2048
-openssl req -new -key ./custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert.csr -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=client/emailAddress=bb@bb.com'
-openssl x509 -req -days $EXPIRATION_DAYS -CA ./custom-ca/st-fm-plugin/st-fm-plugin-ca.pem -CAkey ./custom-ca/st-fm-plugin/st-fm-plugin-ca-key.pem -CAcreateserial -CAserial ./custom-ca/st-fm-plugin/serial -in ./custom-ca/st-fm-plugin/st-fm-plugin-cert.csr -out ./custom-ca/st-fm-plugin/st-fm-plugin-cert.pem
-
-
-ssh-keygen -b 2048 -m pem -f ./custom-ca/st-fm-plugin/key -q -N "" 
-mv ./custom-ca/st-fm-plugin/key ./custom-ca/st-fm-plugin/private-key
-mv ./custom-ca/st-fm-plugin/key.pub ./custom-ca/st-fm-plugin/public-key
-
-openssl rand -base64 500 | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1 > ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret
+# generate Monitoring plugin certs
+gen_monitoring_fm_plugin_certs

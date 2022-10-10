@@ -37,7 +37,7 @@ spec:
         - mountPath: /data/db
           name: data
 
-    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20220603
+    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20221005
       name: flowmanager
       ports:
         - name: fmport
@@ -88,7 +88,17 @@ spec:
         - name: FM_ST_PLUGIN_CA_FILE
           value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
         - name: FM_ST_PLUGIN_PUBLIC_KEY
-          value: "/opt/axway/FlowManager/st-fm-plugin/public-key"
+          value: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-public-key.pem"
+        - name: FM_MONITORING_PLUGIN_HOST
+          value: "flowmanager_pod-monitoring-fm-plugin"
+        - name: FM_MONITORING_PLUGIN_PORT
+          value: "3000"
+        - name: FM_MONITORING_PLUGIN_CA_FILE
+          value: "/opt/axway/FlowManager/monitoring-fm-plugin/monitoring-fm-plugin-ca.pem"
+        - name: FM_MONITORING_PLUGIN_PUBLIC_KEY
+          value: "/opt/axway/FlowManager/monitoring-fm-plugin/monitoring-fm-plugin-public-key.pem"
+        - name: FM_MONITORING_PLUGIN_DISABLED
+          value: "true"
         - name: FM_JVM_XMX
           value: "2G"
         - name: FM_JVM_XMS
@@ -112,8 +122,10 @@ spec:
           name: initialize
         - mountPath: /opt/axway/FlowManager/st-fm-plugin
           name: st-fm-plugin
+        - mountPath: /opt/axway/FlowManager/monitoring-fm-plugin
+          name: monitoring-fm-plugin
 
-    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20220603
+    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20220913
       name: st-fm-plugin
       ports:
         - name: stport
@@ -142,7 +154,7 @@ spec:
         - name: ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN
           value: "/usr/src/app/src/st-fm-plugin-ca.pem"
         - name: ST_FM_PLUGIN_JWT_KEY
-          value: "/usr/src/app/src/private-key"
+          value: "/usr/src/app/src/st-fm-plugin-private-key.pem"
         - name: ST_FM_PLUGIN_DATABASE_HOST
           value: "flowmanager_pod-mongodb"
         - name: ST_FM_PLUGIN_DATABASE_PORT
@@ -163,7 +175,62 @@ spec:
           value: ""  
       volumeMounts:
         - mountPath: /usr/src/app/src
-          name: st-fm-plugin          
+          name: st-fm-plugin  
+
+    - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20221005
+      name: monitoring-fm-plugin
+      ports:
+        - name: monitoringport
+          hostPort: 3000
+          containerPort: 3000
+          protocol: tcp
+      env:
+        - name: MONITORING_PLUGIN_HOST
+          value: "flowmanager_pod-monitoring-fm-plugin"
+        - name: MONITORING_PLUGIN_PORT
+          value: "3000"
+        - name: MONITORING_PLUGIN_SHORT_NAME
+          value: "MON"
+        - name: MONITORING_PLUGIN_FM_FQDN     # FQDN of the machine
+          value: ""
+        - name: MONITORING_PLUGIN_FM_PORT
+          value: "8081"
+        - name: MONITORING_PLUGIN_SHARED_SECRET
+          value: ""
+        - name: MONITORING_PLUGIN_FM_GOV_CA_FULL_CHAIN
+          value: "governanceca.pem"
+        - name: MONITORING_PLUGIN_PRIVATE_KEY_PEM
+          value: "monitoring-fm-plugin-cert-key.pem"
+        - name: MONITORING_PLUGIN_CERT_PEM
+          value: "monitoring-fm-plugin-cert.pem"  
+        - name: MONITORING_PLUGIN_CA_CHAIN
+          value: "monitoring-fm-plugin-ca.pem"
+        - name: MONITORING_PLUGIN_JWT_KEY
+          value: "monitoring-fm-plugin-private-key.pem"
+        - name: MONITORING_PLUGIN_DB_HOST
+          value: "flowmanager_pod-mongodb"
+        - name: MONITORING_PLUGIN_DB_PORT
+          value: "27017"
+        - name: MONITORING_PLUGIN_DB_NAME
+          value: "umcft"
+        - name: MONITORING_PLUGIN_DB_USER_NAME
+          value: ""
+        - name:  MONITORING_PLUGIN_DB_USER_PASSWORD
+          value: ""
+        - name: MONITORING_PLUGIN_DB_SSL_ENABLE
+          value: "false"
+        - name: MONITORING_PLUGIN_DB_SSL_CERT_FILE
+          value: ""
+        - name: MONITORING_PLUGIN_DB_SSL_KEY_FILE
+          value: ""
+        - name: MONITORING_PLUGIN_DB_SSL_KEY_PASSWORD
+          value: ""
+        - name: MONITORING_PLUGIN_DB_SSL_CA_FILE
+          value: ""
+      volumeMounts:
+        - mountPath: /usr/src/app/conf
+          name: monitoring-fm-plugin
+
   volumes:
     - hostPath:
         path: ./files/mongo/scripts
@@ -204,4 +271,8 @@ spec:
     - hostPath:
         path: ./files/st-fm-plugin
         type: Directory
-      name: st-fm-plugin      
+      name: st-fm-plugin
+    - hostPath:
+        path: ./files/monitoring-fm-plugin
+        type: Directory
+      name: monitoring-fm-plugin

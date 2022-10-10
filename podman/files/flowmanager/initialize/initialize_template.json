@@ -12,6 +12,20 @@
         },
         "pluginSSHKey": "<public_key>"
       }
+    },
+     {
+      "type": "ProductPlugin",
+      "object": {
+        "name": "Monitoring",
+        "description": "Use this plugin to extract monitoring information directly in the Flow Manager UI. Check documentation for more information about usage.",
+        "shortName": "MON",
+        "pluginConnection": {
+          "url": "https://flowmanager_pod-monitoring-fm-plugin:3000/api",
+          "pluginCertificate": "<plugin_ca>"
+        },
+        "pluginSSHKey": "<public_key>"
+      }
     }
+
   ]
 }

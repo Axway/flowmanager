@@ -6,7 +6,7 @@ core:
   ## Docker image used for the customer
   image:
     repository: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release
-    tag: "2.0.20220603"
+    tag: "2.0.20221005"
     imagePullSecretsEnabled: true
     imagePullSecretsName: "regcred"
   
@@ -56,8 +56,14 @@ core:
       FM_ST_PLUGIN_HOST: "flowmanager-st-plugin.<YOUR_NAMESPACE>.svc.cluster.local"
       FM_ST_PLUGIN_PORT: "8899"
       FM_ST_PLUGIN_CA_FILE: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem"
-      FM_ST_PLUGIN_PUBLIC_KEY: "/opt/axway/FlowManager/st-fm-plugin/public-key"
+      FM_ST_PLUGIN_PUBLIC_KEY: "/opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-public-key.pem"
       FM_ST_PLUGIN_FQDN: "flowmanager-st-plugin.<YOUR_NAMESPACE>.svc.cluster.local:8899"
+
+      ## Monitoring Plugin
+      FM_MONITORING_PLUGIN_HOST: "flowmanager-monitoring-plugin.<YOUR_NAMESPACE>.svc.cluster.local"
+      FM_MONITORING_PLUGIN_PORT: "8899"
+      FM_MONITORING_PLUGIN_CA_FILE: "/opt/axway/FlowManager/monitoring-fm-plugin/monitoring-fm-plugin-ca.pem"
+      FM_MONITORING_PLUGIN_PUBLIC_KEY: "/opt/axway/FlowManager/monitoring-fm-plugin/monitoring-fm-plugin-public-key.pem"
  
       FM_JVM_XMX: "2G"
       FM_JVM_XMS: "512M"
@@ -84,10 +90,20 @@ core:
       mountPath: /opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-ca.pem
       subPath: st-fm-plugin-ca.pem
     ## ST Plugin Public Key    
-    - volumeName: public-key-st
-      secretName: public-key-st
-      mountPath: /opt/axway/FlowManager/st-fm-plugin/public-key
-      subPath: public-key
+    - volumeName: st-fm-plugin-public-key
+      secretName: st-fm-plugin-public-key
+      mountPath: /opt/axway/FlowManager/st-fm-plugin/st-fm-plugin-public-key.pem
+      subPath: st-fm-plugin-public-key.pem
+    ## Monitoring Plugin CA
+    - volumeName: monitoring-fm-plugin-ca
+      secretName: monitoring-fm-plugin-ca
+      mountPath: /opt/axway/FlowManager/monitoring-fm-plugin/monitoring-fm-plugin-ca.pem
+      subPath: monitoring-fm-plugin-ca.pem
+    ## Monitoring Plugin public key
+    - volumeName: monitoring-fm-plugin-public-key
+      secretName: monitoring-fm-plugin-public-key
+      mountPath: /opt/axway/FlowManager/monitoring-fm-plugin/monitoring-fm-plugin-public-key.pem
+      subPath: monitoring-fm-plugin-public-key.pem 
   
   ## Resources specification       
   resources:
@@ -178,7 +194,7 @@ st-plugin:
   ## Image and version of ST FM PLUGIN
   image:
     repository: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin
-    tag: "2.0.20220603"
+    tag: "2.0.20220913"
     imagePullSecretsEnabled: true
     imagePullSecretsName: "regcred"
     
@@ -216,7 +232,7 @@ st-plugin:
       ST_FM_PLUGIN_HOST: "localhost"
       ST_FM_PLUGIN_PORT: 8899
       ST_FM_PLUGIN_SHORT_NAME: "ST"
-      ST_FM_PLUGIN_FM_FQDN: "<FLOWMANAGER_FQDN>" #TLS MANDATORY
+      ST_FM_PLUGIN_FM_FQDN: "<FLOWMANAGER_FQDN>"
       ST_FM_PLUGIN_FM_PORT: 443
 
       ##MongoDB Parameters
@@ -235,7 +251,7 @@ st-plugin:
       ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
       ST_FM_PLUGIN_CERT_PEM: "/usr/src/app/src/st-fm-plugin-cert.pem"
       ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN: "/usr/src/app/src/st-fm-plugin-ca.pem"
-      ST_FM_PLUGIN_JWT_KEY: "/usr/src/app/src/private-key"
+      ST_FM_PLUGIN_JWT_KEY: "/usr/src/app/src/st-fm-plugin-private-key.pem"
 
   ## Readiness
   readinessProbeDisabled: true
@@ -288,7 +304,128 @@ st-plugin:
       secretName: st-fm-plugin-ca
       mountPath: /usr/src/app/src/st-fm-plugin-ca.pem
       subPath: st-fm-plugin-ca.pem
-    - volumeName: private-key-st
-      secretName: private-key-st
-      mountPath: /usr/src/app/src/private-key
-      subPath: private-key
+    - volumeName: st-fm-plugin-private-key
+      secretName: st-fm-plugin-private-key
+      mountPath: /usr/src/app/src/st-fm-plugin-private-key.pem
+      subPath: st-fm-plugin-private-key.pem
+
+##
+## Monitoring Plugin deployment
+##
+monitoring-plugin:
+  ##
+  ## Default values for Monitoring PLUGIN deployment
+  ##
+  ## Image and version of Monitoring PLUGIN
+  image:
+    repository: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-plugin
+    tag: "2.0.20221005"
+    imagePullSecretsEnabled: false
+    imagePullSecretsName: "regcred"
+    
+  ## Replica/Number of containers
+  replicaCount: 1
+  ## Deployment type
+  deployment:
+    strategy:
+      rollingUpdateType: RollingUpdate
+      maxUnavailable: 1
+      maxSurge: 0
+  podAnnotations: {}
+    #sidecar.istio.io/inject: "false"
+  ## Container command
+  containerCommandDisabled: true
+  container:
+    ports:
+      - name: monitoring-http
+        internalPort: 3000
+  ## Node selector
+  nodeSelectorDisabled: true
+  tolerationsDisabled: true
+  ## Environment variables
+  envFromConfigMapRefDisabled: true
+    ##configMapRefName: configMap
+  envFromSecretKeyRefDisabled: true
+    ##variables:
+    ##  key_name: secret_name  
+  envFromValueDisabled: false
+  env:
+    variables:
+      #In this section you can add / remove parameters according to your needs.
+      MONITORING_PLUGIN_HOST: "localhost"
+      MONITORING_PLUGIN_PORT: 3000
+      MONITORING_PLUGIN_SHORT_NAME: "MON"
+      MONITORING_PLUGIN_FM_FQDN: "<FLOWMANAGER_FQDN>"
+      MONITORING_PLUGIN_FM_PORT: 443
+
+      ##MongoDB Parameters
+      MONITORING_PLUGIN_DB_HOST: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local"
+      MONITORING_PLUGIN_DB_PORT: 27017
+      MONITORING_PLUGIN_DB_NAME: "umcft"
+      MONITORING_PLUGIN_DB_USER_NAME: ""
+      MONITORING_PLUGIN_DB_USER_PASSWORD: ""
+      MONITORING_PLUGIN_DB_CONNECTION_RETRIES: 15
+      MONITORING_PLUGIN_DB_CONNECTION_RETRY_INTERVAL: 60
+      MONITORING_PLUGIN_DB_SSL_ENABLE: "false"
+
+      ##Monitoring Plugin Files
+      MONITORING_PLUGIN_SHARED_SECRET: ""
+      MONITORING_PLUGIN_FM_GOV_CA_FULL_CHAIN: "governanceca.pem"
+      MONITORING_PLUGIN_PRIVATE_KEY_PEM: "monitoring-fm-plugin-cert-key.pem"
+      MONITORING_PLUGIN_CERT_PEM: "monitoring-fm-plugin-cert.pem"
+      MONITORING_PLUGIN_CA_CHAIN: "monitoring-fm-plugin-ca.pem"
+      MONITORING_PLUGIN_JWT_KEY: "monitoring-fm-plugin-private-key.pem"
+      MONITORING_PLUGIN_LOG_LEVEL: "debug"
+      MONITORING_PLUGIN_SKIP_HOSTNAME_VERIFICATION: "true"
+
+  ## Readiness
+  readinessProbeDisabled: true
+  ## Resources
+  resourcesDisabled: true
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+      ephemeralStorage: 2Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+      ephemeralStorage: 3Gi
+  ## Service
+  service:
+    type: ClusterIP
+    ports:
+      - name: monitoring-plugin-http
+        internalPort: 3000
+        externalPort: 3000
+
+  ## Security parameters
+  #podSecurityContext:
+  #  runAsNonRoot: true
+  #  runAsUser: 1001
+  #  fsGroup: 1000
+  
+  ## Volumes
+  volumesSecretDisabled: false
+  volumesMountsSecretDisabled: false
+  volumes:                                 
+    - volumeName: governanceca
+      secretName: governanceca
+      mountPath: /usr/src/app/conf/governanceca.pem
+      subPath: governanceca.pem
+    - volumeName: monitoring-fm-plugin-cert-key
+      secretName: monitoring-fm-plugin-cert-key
+      mountPath: /usr/src/app/conf/monitoring-fm-plugin-cert-key.pem
+      subPath: monitoring-fm-plugin-cert-key.pem 
+    - volumeName: monitoring-fm-plugin-cert
+      secretName: monitoring-fm-plugin-cert
+      mountPath: /usr/src/app/conf/monitoring-fm-plugin-cert.pem
+      subPath: monitoring-fm-plugin-cert.pem  
+    - volumeName: monitoring-fm-plugin-ca
+      secretName: monitoring-fm-plugin-ca
+      mountPath: /usr/src/app/conf/monitoring-fm-plugin-ca.pem
+      subPath: monitoring-fm-plugin-ca.pem
+    - volumeName: monitoring-fm-private-key
+      secretName: monitoring-fm-private-key
+      mountPath: /usr/src/app/conf/monitoring-fm-plugin-private-key.pem
+      subPath: monitoring-fm-plugin-private-key.pem

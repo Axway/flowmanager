@@ -11,3 +11,8 @@ dependencies:
     tags:
       - flowmanager
       - st
+  # - name: monitoring-plugin
+  #   version: 0.1.1
+  #   repository: file://custom-charts/monitoring-plugin
+  #   tags:
+  #     - monitoring

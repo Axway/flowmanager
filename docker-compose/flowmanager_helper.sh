@@ -10,40 +10,94 @@ done
 # Example: ./flowmanager_helper.sh [setup/start/restart/stop/status/help...]
 
 PROJECT_NAME="flowmanager"
+GOV_CA_FILE="../scripts/custom-ca/governance/cacert.pem"
+MON_FM_PLUGIN_NAME="monitoring-fm-plugin"
+ST_FM_PLUGIN_NAME="st-fm-plugin"
+
+function copy_config_generic_plugin() {
+  local plugin_name=$1
+  info_message "INFO: Copying $plugin_name certificates..."
+  if [[ -f "$GOV_CA_FILE" ]]; then
+    cp "$GOV_CA_FILE" ./files/"$plugin_name"/governanceca.pem
+  fi
+  cp ../scripts/custom-ca/"$plugin_name"/"$plugin_name"-ca.pem ./files/"$plugin_name"/
+  cp ../scripts/custom-ca/"$plugin_name"/"$plugin_name"-cert.pem ./files/"$plugin_name"/
+  cp ../scripts/custom-ca/"$plugin_name"/"$plugin_name"-cert-key.pem ./files/"$plugin_name"/
+  cp ../scripts/custom-ca/"$plugin_name"/"$plugin_name"-private-key.pem ./files/"$plugin_name"/
+  cp ../scripts/custom-ca/"$plugin_name"/"$plugin_name"-public-key.pem ./files/"$plugin_name"/
+  chmod -R 755 ./files/"$plugin_name"
+  info_message "INFO: $plugin_name certificates were generated and copied successfully."
+}
+
+function copy_config_st_fm_plugin() {
+    # Copy generated ST-FM plugin certificates in files/st-fm-plugin
+    cp ../scripts/custom-ca/$ST_FM_PLUGIN_NAME/$ST_FM_PLUGIN_NAME-shared-secret ./files/$ST_FM_PLUGIN_NAME/
+    copy_config_generic_plugin $ST_FM_PLUGIN_NAME
+}
+
+function generate_config_st_fm_plugin() {
+    cd ../scripts/
+    source ./generate_certs.sh st-fm-plugin
+    cd -
+
+    # Create .env file
+    if [ ! -f .env ]; then
+      cp env.template .env
+    fi
+
+    copy_config_st_fm_plugin
+}
+
+function copy_config_monitoring_fm_plugin() {
+    # Copy generated Monitoring plugin certificates in files/monitoring-fm-plugin
+    copy_config_generic_plugin $MON_FM_PLUGIN_NAME
+
+    MONITORING_PLUGIN_SHARED_SECRET=$(openssl rand -base64 500 | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+    sed -i "s/MONITORING_PLUGIN_SHARED_SECRET=.*/MONITORING_PLUGIN_SHARED_SECRET=\"$MONITORING_PLUGIN_SHARED_SECRET\"/g" .env
+    info_message "INFO: $MON_FM_PLUGIN_NAME shared secret was generated and updated in the configuration."
+}
+
+function generate_config_monitoring_fm_plugin() {
+    cd ../scripts/
+    source ./generate_certs.sh monitoring-fm-plugin
+    cd -
+
+    # Create .env file
+    if [ ! -f .env ]; then
+      cp env.template .env
+    fi
+
+    copy_config_monitoring_fm_plugin
+}
 
 # Generate and copy generated certificates in the right configs path
 function gen_config() {
-
     # Generate certificates
     cd ../scripts/
     source ./generate_certs.sh
     cd -
 
     # Copy generated certificates in FM configs space
-    info_message "INFO: Copying certificates in configs folder..."
+    info_message "INFO: Copying FM certificates in configs folder..."
 
     cp ../scripts/custom-ca/governance/governanceca.pem ./files/$PROJECT_NAME/configs/
     cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
     cp ../scripts/custom-ca/governance/uicert.pem ./files/$PROJECT_NAME/configs/
-    cp ../scripts/custom-ca/governance/cacert.pem ./files/st-fm-plugin/governanceca.pem
-    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-ca.pem ./files/st-fm-plugin/
-    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert.pem ./files/st-fm-plugin/
-    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-cert-key.pem ./files/st-fm-plugin/
-    cp ../scripts/custom-ca/st-fm-plugin/*key ./files/st-fm-plugin/
-    cp ../scripts/custom-ca/st-fm-plugin/st-fm-plugin-shared-secret ./files/st-fm-plugin/
-    chmod -R 755 ./files/st-fm-plugin
 
     # Create .env file
     if [ ! -f .env ]; then
         cp env.template .env
     fi
 
+    copy_config_st_fm_plugin
+    copy_config_monitoring_fm_plugin
+
     sed -i "s/FM_GOVERNANCE_CA_PASSWORD=.*/FM_GOVERNANCE_CA_PASSWORD=\"$PASSWORD\"/g" .env
     sed -i "s/FM_HTTPS_KEYSTORE_PASSWORD=.*/FM_HTTPS_KEYSTORE_PASSWORD=\"$PASSWORD\"/g" .env
 
     # List config files
     if [ $? -eq 0 ]; then
-        info_message "INFO: Certificates were generated and copied successfully to configs folder."
+        info_message "INFO: Operation was successful."
     else
         error_message "ERROR: There was an error generating or copying the certificates."
         exit 1
@@ -96,7 +150,7 @@ function stop_container() {
         docker-compose stop $name
         exit 0;
     fi
-    
+
 }
 
 # Delete the container(s)
@@ -122,7 +176,9 @@ function usage() {
     echo "--------"
     echo "Usage: ./${PROJECT_NAME}_helper.sh [option]"
     echo "  options:"
-    echo "    setup  : Generates certificates and creates the .env file."
+    echo "    setup  : Generates certificates and keys for Flow Manager, Monitoring-FM Plugin, ST-FM Plugin, and creates the .env file."
+    echo "           [--st-fm-plugin | -st]: Generates certificates and keys for ST-FM Plugin."
+    echo "           [--monitoring-fm-plugin | -mon]: Generates certificates and keys for Monitoring-FM Plugin."
     echo "    start  : Starts all containers."
     echo "    restart: Restarts all containers."
     echo "    stop   : Stops all containers."
@@ -143,9 +199,29 @@ if [[ $@ ]]; then
     do
         case "$1" in
             setup)
+              if [[ -z "${2-}" ]]; then
                 gen_config
-                shift
-                ;;
+              fi
+              shift
+              while (( $# ))
+              do
+                case "$1" in
+                --monitoring-fm-plugin | -mon)
+                  generate_config_monitoring_fm_plugin
+                  shift
+                  ;;
+                --st-fm-plugin | -st)
+                  generate_config_st_fm_plugin
+                  shift
+                  ;;
+                *)
+                  error_message "ERROR: Invalid option $1. Type help option for more information."
+                  exit 0
+                  ;;
+                esac
+              done
+              shift
+              ;;
             start)
                 if [ -z "${2-}" ]; then
                     start_container
@@ -178,7 +254,7 @@ if [[ $@ ]]; then
                 status_container
                 shift
                 ;;
-            delete)                
+            delete)
                 delete_container
                 shift
                 ;;
