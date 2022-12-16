@@ -355,28 +355,26 @@ monitoring-plugin:
       MONITORING_PLUGIN_HOST: "localhost"
       MONITORING_PLUGIN_PORT: 3000
       MONITORING_PLUGIN_SHORT_NAME: "MON"
-      MONITORING_PLUGIN_FM_FQDN: "<FLOWMANAGER_FQDN>"
+      MONITORING_PLUGIN_FM_HOST: "<FLOWMANAGER_FQDN>"
       MONITORING_PLUGIN_FM_PORT: 443
 
       ##MongoDB Parameters
-      MONITORING_PLUGIN_DB_HOST: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local"
-      MONITORING_PLUGIN_DB_PORT: 27017
+      MONITORING_PLUGIN_DB_ENDPOINTS: "flowmanager-mongodb.<YOUR_NAMESPACE>.svc.cluster.local:27017"
       MONITORING_PLUGIN_DB_NAME: "umcft"
       MONITORING_PLUGIN_DB_USER_NAME: ""
       MONITORING_PLUGIN_DB_USER_PASSWORD: ""
       MONITORING_PLUGIN_DB_CONNECTION_RETRIES: 15
       MONITORING_PLUGIN_DB_CONNECTION_RETRY_INTERVAL: 60
-      MONITORING_PLUGIN_DB_SSL_ENABLE: "false"
+      MONITORING_PLUGIN_DB_USE_SSL: "false"
 
       ##Monitoring Plugin Files
       MONITORING_PLUGIN_SHARED_SECRET: ""
-      MONITORING_PLUGIN_FM_GOV_CA_FULL_CHAIN: "governanceca.pem"
+      MONITORING_PLUGIN_TRUSTSTORE: "governanceca.pem"
       MONITORING_PLUGIN_PRIVATE_KEY_PEM: "monitoring-fm-plugin-cert-key.pem"
       MONITORING_PLUGIN_CERT_PEM: "monitoring-fm-plugin-cert.pem"
       MONITORING_PLUGIN_CA_CHAIN: "monitoring-fm-plugin-ca.pem"
       MONITORING_PLUGIN_JWT_KEY: "monitoring-fm-plugin-private-key.pem"
       MONITORING_PLUGIN_LOG_LEVEL: "debug"
-      MONITORING_PLUGIN_SKIP_HOSTNAME_VERIFICATION: "true"
 
   ## Readiness
   readinessProbeDisabled: true
