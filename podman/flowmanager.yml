@@ -191,13 +191,13 @@ spec:
           value: "3000"
         - name: MONITORING_PLUGIN_SHORT_NAME
           value: "MON"
-        - name: MONITORING_PLUGIN_FM_FQDN     # FQDN of the machine
+        - name: MONITORING_PLUGIN_FM_HOST     # host of the machine
           value: ""
         - name: MONITORING_PLUGIN_FM_PORT
           value: "8081"
         - name: MONITORING_PLUGIN_SHARED_SECRET
           value: ""
-        - name: MONITORING_PLUGIN_FM_GOV_CA_FULL_CHAIN
+        - name: MONITORING_PLUGIN_TRUSTSTORE
           value: "governanceca.pem"
         - name: MONITORING_PLUGIN_PRIVATE_KEY_PEM
           value: "monitoring-fm-plugin-cert-key.pem"
@@ -207,25 +207,17 @@ spec:
           value: "monitoring-fm-plugin-ca.pem"
         - name: MONITORING_PLUGIN_JWT_KEY
           value: "monitoring-fm-plugin-private-key.pem"
-        - name: MONITORING_PLUGIN_DB_HOST
-          value: "flowmanager_pod-mongodb"
-        - name: MONITORING_PLUGIN_DB_PORT
-          value: "27017"
+        - name: MONITORING_PLUGIN_DB_ENDPOINTS
+          value: "flowmanager_pod-mongodb:27017"
         - name: MONITORING_PLUGIN_DB_NAME
           value: "umcft"
         - name: MONITORING_PLUGIN_DB_USER_NAME
           value: ""
-        - name:  MONITORING_PLUGIN_DB_USER_PASSWORD
+        - name: MONITORING_PLUGIN_DB_USER_PASSWORD
           value: ""
-        - name: MONITORING_PLUGIN_DB_SSL_ENABLE
+        - name: MONITORING_PLUGIN_DB_USE_SSL
           value: "false"
-        - name: MONITORING_PLUGIN_DB_SSL_CERT_FILE
-          value: ""
-        - name: MONITORING_PLUGIN_DB_SSL_KEY_FILE
-          value: ""
-        - name: MONITORING_PLUGIN_DB_SSL_KEY_PASSWORD
-          value: ""
-        - name: MONITORING_PLUGIN_DB_SSL_CA_FILE
+        - name: MONITORING_PLUGIN_DB_CERTIFICATES
           value: ""
       volumeMounts:
         - mountPath: /usr/src/app/conf
