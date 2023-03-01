@@ -92,10 +92,10 @@ function start_container() {
 }
 
 # Restart the container(s)
-function update_container() {
+function restart_container() {
     podman pod rm -f flowmanager_pod
     podman play kube ./flowmanager.yml --network=flowmanager_pod-network
-    echo "Pod 'flowmanager_pod' was updated"
+    echo "Flow Manager was restarted"
 }
 
 # Check the container(s)
@@ -105,8 +105,9 @@ function status_container() {
 
 # Stop the container(s)
 function stop_container() {
-    podman pod stop flowmanager_pod
-    echo "Pod 'flowmanager_pod' was stopped"
+    podman pod rm -f flowmanager_pod
+    podman network rm flowmanager_pod-network
+    echo "Flow Manager was stopped"
 }
 
 # Delete the container(s)
@@ -114,7 +115,7 @@ function delete_container() {
     podman pod rm -f flowmanager_pod
     podman network rm flowmanager_pod-network
     rm -rf ./mongodb_data_container/*
-    echo "Pod 'flowmanager_pod' was deleted"
+    echo "Flow Manager was stopped and MongoDB's content was deleted"
 }
 
 # Inspect the container(s)
@@ -129,15 +130,14 @@ function usage() {
     echo "--------"
     echo "Usage: ./${PROJECT_NAME}_helper.sh [option]"
     echo "  options:"
-    echo "    setup  : Generates certificates and keys for Flow Manager, Monitoring-FM Plugin, ST-FM Plugin, and creates the .env file."
+    echo "    setup  : Generates certificates and keys for Flow Manager, Monitoring-FM Plugin, ST-FM Plugin."
     echo "           [--st-fm-plugin | -st]: Generates certificates and keys for ST-FM Plugin."
     echo "           [--monitoring-fm-plugin | -mon]: Generates certificates and keys for Monitoring-FM Plugin."
     echo "    start  : Starts all containers."
     echo "    restart: Restarts all containers."
     echo "    stop   : Stops all containers."
     echo "    status : Shows the status of all containers."
-    echo "    migrate: Migrate old docker compose model to .env file model."
-    echo "    delete : Deletes all containers (including database!) and other parts related to the containers, like storage."
+    echo "    delete : Stops all containers and deletes the MongoDB database content."
     echo "    logs   : Gets logs from all containers."
     echo "    help   : Shows the usage of this script."
     echo ""
@@ -187,11 +187,11 @@ if [[ $@ ]]; then
                 stop_container
                 shift
                 ;;
-            update)
+            restart)
                 if [ -z "${2-}" ]; then
-                    update_container
+                    restart_container
                 else
-                    update_container $2
+                    restart_container $2
                 fi
                 shift
                 ;;
