@@ -6,6 +6,6 @@ Generate `PEM`, `P12` and keystore in `JKS` format.
 
 * Run `./generate_certs.sh` script file.
 
-## Upgrade Mongo 3.6 to Mongo 4.2
+## Upgrade Mongo 4.2 to Mongo 5.0 (Docker only)
 
-* Run `./upgradeMongo42.sh` script file from this location.
+* Run `./upgradeMongo.sh` script file from this location.
