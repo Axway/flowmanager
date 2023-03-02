@@ -122,9 +122,7 @@ function stack_confirm_deletion_oc() {
 function stack_deletion() {
   msg_error 'Starting Stack deletion'
   
-  kubectl delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found"
-  kubectl delete pvc -l app=flowmanager-redis -n ${NAMESPACE} || echo "Redis PVC not found"
-  helm delete flowmanager-redis -n ${NAMESPACE} || echo "Redis not found"
+  kubectl delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found"    
   helm delete flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo not found"
   
   
@@ -141,9 +139,7 @@ function stack_deletion() {
 function stack_deletion_oc() {
   msg_error 'Starting Stack deletion'
   
-  oc delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found"
-  oc delete pvc -l app=flowmanager-redis -n ${NAMESPACE} || echo "Redis PVC not found"
-  helm delete flowmanager-redis -n ${NAMESPACE} || echo "Redis not found"
+  oc delete pvc -l app=flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo PVC not found" 
   helm delete flowmanager-mongodb -n ${NAMESPACE} || echo "Mongo not found"
   
   LIST=$($HELM list --namespace ${NAMESPACE} | grep flowmanager | awk '{print $1}')

@@ -3,7 +3,7 @@
 * [Deploy using flowmanager_helper.sh(Helm Charts or standard Kubernetes files)](./)
 * [Deploy using standard Kubernetes files](standard/)
 * [Deploy using Helm charts](helm/)
-* [Deploy MongoDB/Redis](base/)
+* [Deploy MongoDB](base/)
 
 ## Flowmanager helper script
 
@@ -16,23 +16,19 @@ usage: ./flowmanager_helper.sh args
       [-fm-s | -fm-singlenode]    FM SingleNode  K8S files
       [-fm-m | -fm-multinode]     FM MultiNode   K8S files
       [-fm-h ]                    FM             Helm
-      [-r | -redis]               Redis          Helm
       [-m | -mongodb]             MongoDb        Helm
       [-da | -delete-all]         Delete all resources
       [-logs-fm]                  Logs FlowManager
       [-logs-mongodb]             Logs Mongodb
-      [-logs-redis]               Logs Redis
       ###############
       ###OpenShift###
       ###############
       [-gco]                      Generate certs & Create secrets
       [-fm-ho]                    FM            Helm
-      [-ro | -redis-openshift]    Redis         Helm
       [-mo | -mongodb-openshift]  MongoDb       Helm
       [-dao | -delete-all-oc]     Delete all resources
       [-logs-fm-oc]               Logs FlowManager
       [-logs-mongodb-oc]          Logs Mongodb
-      [-logs-redis-oc]            Logs Redis
 sample:
  ./helm-helper.sh -gc -fm-h
 or
@@ -44,17 +40,14 @@ or
  - **[-fm-s | -fm-singlenode]** : Install and Start FlowManager SingleNode using standard K8S. [Change the values here](standard/singlenode/)
  - **[-fm-m | -fm-multinode]**  : Install and Start FlowManager MultiNode using standard K8S. [Change the values here](standard/multinode/)
  - **[-fm-h | -fm-flowmanager]**: Install and Start FlowManager MultiNode using Helm. [Change the values here](helm/flowmanager.yaml)
- - **[-r | -redis]**            : Install and Start Redis using Helm.[Change the values here](base/redis.yaml)
  - **[-m | -mongodb]**          : Install and Start MongoDb using Helm.[Change the values here](base/mongodb.yaml)
  - **[-da | -delete-all]**      : Delete all the resources from a namespace.
  - **[-logs-fm]**               : Check FlowManager logs.
  - **[-logs-mongodb]**          : Check MongoDb logs.
- - **[-logs-redis]**            : Check Redis logs.
  - **[-gco]**                   : Generate certificates and create kubernetes secrets in a OpenShift cluster.
  - **[-fm-ho]**                 : Install and Start FlowManager MultiNode using Helm in a OpenShift cluster. [Change the values here](helm/flowmanager.yaml)
- - **[-ro | -redis-openshift]**    : Install and Start Redis using Helm in a OpenShift cluster.[Change the values here](base/redis.yaml)
  - **[-mo | -mongodb-openshift]**  : Install and Start MongoDb using Helm in a OpenShift cluster.[Change the values here](base/mongodb.yaml)
  - **[-dao | -delete-all-oc]**     : Delete all the resources from a namespace in a OpenShift cluster.
  - **[-logs-fm-oc]**               : Check FlowManager logs in a OpenShift cluster.
  - **[-logs-mongodb-oc]**          : Check MongoDb logs in a OpenShift cluster .
- - **[-logs-redis-oc]**            : Check Redis logs in a OpenShift cluster.
+ 

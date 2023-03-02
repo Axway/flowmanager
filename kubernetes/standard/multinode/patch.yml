@@ -50,16 +50,6 @@ spec:
             - name: FM_ST_PLUGIN_PUBLIC_KEY
               value: "/opt/axway/FlowManager/st-fm-plugin/public-key"
               
-            ##Redis section
-            - name: FM_REDIS_ENABLED
-              value: "true"
-            - name: FM_REDIS_HOSTNAME
-              value: "flowmanager-redis-master.<NAMESPACE>.svc.cluster.local"
-            - name: FM_REDIS_PORT
-              value: "6379"
-            - name: FM_REDIS_SSL_ENABLED
-              value: "false"
-
             - name: FM_JVM_XMX
               value: "2G"
             - name: FM_JVM_XMN
