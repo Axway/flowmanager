@@ -3,24 +3,21 @@
 ### Prerequisites  
 
 * Kubernetes 1.17 and higher
-* Helm 3+ (only for Mongo/Redis)
+* Helm 3+ (only for Mongo)
 * Customer license and certificates
 * Mongodb 4.2 (can be installed with flowmanager_helper.sh -m)
-* Redis (only for Flowmanager Multinode, can be installed with flowmanager_helper.sh -r)
 * Nginx 1.15 and higher, installed and configured for Ingress usage
 * SSL certificate
 
 ### Steps  
 
-#### 1. Install Mongodb/Redis (if needed) 
+#### 1. Install Mongodb (if needed) 
 
-1. Customize mongodb.yaml and redis.yaml according to your needs. The user and password are mandatory to be changed.
-2. Install Redis and/or MongoDB using (Helm required)
+1. Customize mongodb.yaml according to your needs. The user and password are mandatory to be changed.
+2. Install MongoDB using (Helm required)
 ```shell
 ./flowmanager_helper.sh -m  for MongoDB  (Kubernetes)
-./flowmanager_helper.sh -r  for Redis    (Kubernetes)
 ./flowmanager_helper.sh -mo  for MongoDB  (OpenShift)
-./flowmanager_helper.sh -ro  for Redis    (OpenShift)
 ```
 
 #### 2. Create a service account

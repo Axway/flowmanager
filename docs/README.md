@@ -58,19 +58,6 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |MONGO_CA_FILE|No|Contains the root certificate chain from the Certificate Authority||
 |MONGO_PEM_KEY_FILE|No|Contains both the TLS/SSL certificate and key||
 
-## Redis
-
-|**Parameter**|**Mandatory**|**Description**|**Default value**|
-|-------------|------------|---------------|-----------------|
-|FM_REDIS_ENABLED|No|Specifies if Redis is enabled|`false`|
-|FM_REDIS_HOSTNAME|No|hostname of the Redis instance||
-|FM_REDIS_PORT|No|The port of the connection between FM and Redis|`6379`|
-|FM_REDIS_AUTH_ENABLED|No|Specifies if the Redis instance is protected by a password|`false`|
-|FM_REDIS_PASSWORD|No|The password needed for authentication to Redis||
-|FM_REDIS_USER|No|Only for Redis 6.x; it should be empty if the default user is used||
-|FM_REDIS_SSL_ENABLED|No|Specifies if Redis runs with SSL|`false`|
-|FM_REDIS_SSL_CA|No|Path to the CA certificate used by Redis||
-
 ## SAML
 
 |**Parameter**|**Mandatory**|**Description**|**Default value**|

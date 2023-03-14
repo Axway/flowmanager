@@ -43,15 +43,6 @@ core:
       FM_DATABASE_USE_SSL: "false"
       FM_DATABASE_CERTIFICATES: ""
 
-      ## Redis
-      FM_REDIS_ENABLED: "true"
-      FM_REDIS_HOSTNAME: "flowmanager-redis-master.<YOUR_NAMESPACE>.svc.cluster.local"
-      FM_REDIS_PORT: 6379
-      FM_REDIS_USER: "default"
-      FM_REDIS_PASSWORD: ""
-      FM_REDIS_SSL_ENABLED: "false"
-      FM_REDIS_SSL_CA: ""
-
       ## ST PLUGIN
       FM_ST_PLUGIN_HOST: "flowmanager-st-plugin.<YOUR_NAMESPACE>.svc.cluster.local"
       FM_ST_PLUGIN_PORT: "8899"

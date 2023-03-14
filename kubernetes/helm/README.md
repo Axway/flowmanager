@@ -6,21 +6,18 @@
 * Helm 3+
 * Customer license
 * Mongodb
-* Redis (only for Flowmanager Multinode)
 * Nginx 1.15 and higher, installed and configured for Ingress usage
 * SSL certificate
 
 ## Content
 
-### 1. Install Mongodb/Redis (if needed) 
+### 1. Install Mongodb (if needed) 
 
-1. Customize mongodb.yaml and redis.yaml according to your needs. The user and password are mandatory to be changed.
-2. Install Redis and/or MongoDB using
+1. Customize mongodb.yaml according to your needs. The user and password are mandatory to be changed.
+2. Install MongoDB using
 ```shell
 ./flowmanager_helper.sh -m  for MongoDB  (Kubernetes)
-./flowmanager_helper.sh -r  for Redis    (Kubernetes)
 ./flowmanager_helper.sh -mo  for MongoDB  (OpenShift)
-./flowmanager_helper.sh -ro  for Redis    (OpenShift)
 ```
 
 ### 2. Create a service account
