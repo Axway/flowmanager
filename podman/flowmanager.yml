@@ -37,7 +37,7 @@ spec:
         - mountPath: /data/db
           name: data
 
-    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20230227
+    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20230406
       name: flowmanager
       ports:
         - name: fmport
@@ -67,8 +67,8 @@ spec:
           value: "/opt/axway/FlowManager/configs/governanceca.pem"
         - name: FM_GOVERNANCE_CA_PASSWORD
           value: ""
-        - name: FM_DATABASE_HOST
-          value: "flowmanager_pod-mongodb"
+        - name: FM_DATABASE_ENDPOINTS
+          value: "flowmanager_pod-mongodb:27017"
         - name: FM_DATABASE_USER_NAME
           value: ""
         - name: FM_DATABASE_USER_PASSWORD
@@ -155,10 +155,8 @@ spec:
           value: "/usr/src/app/src/st-fm-plugin-ca.pem"
         - name: ST_FM_PLUGIN_JWT_KEY
           value: "/usr/src/app/src/st-fm-plugin-private-key.pem"
-        - name: ST_FM_PLUGIN_DATABASE_HOST
-          value: "flowmanager_pod-mongodb"
-        - name: ST_FM_PLUGIN_DATABASE_PORT
-          value: "27017"
+        - name: ST_FM_PLUGIN_DATABASE_ENDPOINTS
+          value: "flowmanager_pod-mongodb:27017"
         - name: ST_FM_PLUGIN_DATABASE_NAME
           value: "umcft"
         - name: ST_FM_PLUGIN_DATABASE_USER_NAME
