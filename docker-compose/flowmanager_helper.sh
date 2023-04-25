@@ -112,9 +112,9 @@ function start_container() {
         exit 1
     else
         if [ -z "$name" ]; then
-            docker-compose up -d
+            docker compose up -d
         else
-            docker-compose up -d $name
+            docker compose up -d $name
             exit 0
         fi
     fi
@@ -124,9 +124,9 @@ function start_container() {
 function restart_container() {
     local name=${1-}
     if [ -z "$name" ]; then
-        docker-compose restart
+        docker compose restart
     else
-        docker-compose restart $name
+        docker compose restart $name
         exit 0;
     fi
 }
@@ -138,16 +138,16 @@ function migrate() {
 
 # Check the container(s)
 function status_container() {
-    docker-compose ps
+    docker compose ps
 }
 
 # Stop the container(s)
 function stop_container() {
     local name=${1-}
     if [ -z "$name" ]; then
-        docker-compose stop
+        docker compose stop
     else
-        docker-compose stop $name
+        docker compose stop $name
         exit 0;
     fi
 
@@ -155,16 +155,16 @@ function stop_container() {
 
 # Delete the container(s)
 function delete_container() {
-    docker-compose down -v
+    docker compose down -v
 }
 
 # Restart the container(s)
 function log_container() {
     local name=${1-}
     if [ -z "$name" ]; then
-        docker-compose logs
+        docker compose logs
     else
-        docker-compose logs $name
+        docker compose logs $name
         exit 0;
     fi
 }
