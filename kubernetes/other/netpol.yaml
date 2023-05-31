@@ -1,0 +1,149 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: ingress-egress-flowmanager
+  namespace: flowmanager
+spec:
+  order: 10
+  types:
+  - Ingress
+  - Egress
+  ingress:
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-internal-https) && (service.app.axway.com/fm-internal-https in { 'client', 'both' })
+    destination:
+      selector: has(service.app.axway.com/fm-internal-https) && (service.app.axway.com/fm-internal-https in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-mongodb) && (service.app.axway.com/fm-mongodb in { 'client', 'both' })
+    destination:
+      selector: has(service.app.axway.com/fm-mongodb) && (service.app.axway.com/fm-mongodb in { 'server', 'both' })
+      ports:
+      - 27017
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-internal-bridge) && (service.app.axway.com/fm-internal-bridge in { 'client', 'both' })
+    destination:
+      selector: has(service.app.axway.com/fm-internal-bridge) && (service.app.axway.com/fm-internal-bridge in { 'server', 'both' })
+      ports:
+      - 8080
+  - action: Allow
+    protocol: TCP
+    source:
+      namespaceSelector: projectcalico.org/name == "add-ons"
+      selector: has(app.kubernetes.io/name) && app.kubernetes.io/name == 'ingress-nginx'
+    destination:
+      selector: has(service.app.axway.com/fm-external-https) && (service.app.axway.com/fm-external-https in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: TCP
+    source:
+      namespaceSelector: projectcalico.org/name == "add-ons"
+      selector: has(app.kubernetes.io/name) && app.kubernetes.io/name == 'ingress-nginx'
+    destination:
+      selector: has(service.app.axway.com/fm-external-bridge) && (service.app.axway.com/fm-external-bridge in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: TCP
+    source:
+      namespaceSelector: projectcalico.org/name == "monitoring"
+      selector: has(app) && app == "prometheus"
+    destination:
+      selector: has(service.app.axway.com/fm-internal-https) && (service.app.axway.com/fm-internal-https in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: role == 'nodes-subnet-vpc-cidr'
+    destination:
+      selector: has(service.app.axway.com/fm-mongodb) && (service.app.axway.com/fm-mongodb in { 'server', 'both' })
+      ports:
+      - 27017
+
+
+  egress:
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-internal-https) && (service.app.axway.com/fm-internal-https in { 'client', 'both' })
+    destination:
+      selector: has(service.app.axway.com/fm-internal-https) && (service.app.axway.com/fm-internal-https in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-mongodb) && (service.app.axway.com/fm-mongodb in { 'client', 'both' })
+    destination:
+      selector: has(service.app.axway.com/fm-mongodb) && (service.app.axway.com/fm-mongodb in { 'server', 'both' })
+      ports:
+      - 27017
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-internal-bridge) && (service.app.axway.com/fm-internal-bridge in { 'client', 'both' })
+    destination:
+      selector: has(service.app.axway.com/fm-internal-bridge) && (service.app.axway.com/fm-internal-bridge in { 'server', 'both' })
+      ports:
+      - 8080
+  - action: Allow
+    protocol: TCP
+    source:
+      namespaceSelector: projectcalico.org/name == "add-ons"
+      selector: has(app.kubernetes.io/name) && app.kubernetes.io/name == 'ingress-nginx'
+    destination:
+      selector: has(service.app.axway.com/fm-external-https) && (service.app.axway.com/fm-external-https in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: TCP
+    source:
+      namespaceSelector: projectcalico.org/name == "add-ons"
+      selector: has(app.kubernetes.io/name) && app.kubernetes.io/name == 'ingress-nginx'
+    destination:
+      selector: has(service.app.axway.com/fm-external-bridge) && (service.app.axway.com/fm-external-bridge in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: TCP
+    source:
+      namespaceSelector: projectcalico.org/name == "monitoring"
+      selector: has(app) && app == "prometheus"
+    destination:
+      selector: has(service.app.axway.com/fm-internal-https) && (service.app.axway.com/fm-internal-https in { 'server', 'both' })
+      ports:
+      - 8443
+  - action: Allow
+    protocol: UDP
+    source:
+      selector: has(app.kubernetes.io/name) && app.kubernetes.io/name == 'mongodb'
+    destination:
+      selector: role == 'nodes-subnet-vpc-cidr'
+      ports:
+      - 53
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-mongodb) && (service.app.axway.com/fm-mongodb in { 'server', 'both' })
+    destination:
+      selector: all()
+      namespaceSelector: projectcalico.org/name == "flowmanager"
+      ports:
+      - 1:65535
+  - action: Allow
+    protocol: TCP
+    source:
+      selector: has(service.app.axway.com/fm-internal-https) && (service.app.axway.com/fm-internal-https in { 'server', 'both' })
+    destination:
+      selector: role == "any-address"
+      ports:
+      - 443

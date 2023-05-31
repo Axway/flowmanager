@@ -13,3 +13,11 @@ custom-ca
 *.p12
 *.pem
 *.jks
+# Terraform
+terraform.tfstate
+terraform.tfstate.backup
+
+.terraform*
+tmp*
+/helpers/custom-ca/
+/resources/kubernetes-secrets/

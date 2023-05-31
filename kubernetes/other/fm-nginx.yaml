@@ -1,0 +1,28 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: egress-nginx-flowmanager
+  namespace: add-ons
+spec:
+  order: 10
+  types:
+  - Egress
+  egress:
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: has(app.kubernetes.io/name) && app.kubernetes.io/name == 'ingress-nginx'
+      destination:
+        namespaceSelector: projectcalico.org/name == "flowmanager"
+        selector: has(service.app.axway.com/fm-external-https) && (service.app.axway.com/fm-external-https in { 'server', 'both' })
+        ports:
+        - 8443
+    - action: Allow
+      protocol: TCP
+      source:
+        selector: has(app.kubernetes.io/name) && app.kubernetes.io/name == 'ingress-nginx'
+      destination:
+        namespaceSelector: projectcalico.org/name == "flowmanager"
+        selector: has(service.app.axway.com/fm-external-bridge) && (service.app.axway.com/fm-external-bridge in { 'server', 'both' })
+        ports:
+        - 8443
