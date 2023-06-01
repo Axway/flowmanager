@@ -1,0 +1,797 @@
+fm-core:
+  # Enable generation and deployment of 'fm-core' component
+  enabled: true
+
+  # ###################################################
+  # Common Level Configuration
+  # ###################################################
+
+  # Extra Labels that will be applied to all generated K8S configurations.
+  extraCommonLabels: {}
+
+  # Extra 'Match' Labels that will be used to select elements for all generated K8S configurations(spec.selector, spec.selector.matchLabel).
+  extraCommonMatchLabels: {}
+
+  # ###################################################
+  # Workload Level Configuration
+  # ###################################################
+
+  deployment:
+    # Number of replica for the deployment
+    replicaCount: 2
+    # Extra Labels that will be applied to the deployment configuration.
+    extraLabels: {}
+    # Annotations that will be applied to the deployment configuration.
+    annotations: {}
+    # The deployment strategy to use to replace existing pods with new ones : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#deploymentspec-v1-apps
+    strategy: {}
+
+  # ###################################################
+  # Security Level Configuration
+  # ###################################################
+
+  serviceAccount:
+    # Create the Service Account configuration
+    create: true
+    # If name is not set and create is true, a name is generated using the template full name
+    name: ""
+    # Extra labels to add to the service account
+    extraLabels: {}
+    # Annotations to add to the service account
+    annotations: {}
+
+  rbac:
+    # Create and Manage Role Based Access Control configuration
+    create: true
+
+  psp:
+    # Create and Manage Pod Security Policies.
+    create: true
+    # Should Cluster roles be created and assigned to that PSP.
+    assignClusterRole: true
+
+  # ###################################################
+  # Service Level configuration
+  # ###################################################
+
+  service:
+    # List of Ports exposed as endpoints to the service.
+    ports:
+        # Unique name of the port for the service
+      - name: https
+        # Endpoint port inside the service
+        internalPort: 8443
+        # (Optional) : Endpoint port exposed outside of the service
+        externalPort: 8443
+        # (default: TCP) : Protocol on the Endpoint's port.
+        protocol: TCP
+
+  ingress:
+    # Create the Ingress configuration
+    create: true
+    # Annotations that will be applied to the deployment configuration.
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/proxy-body-size: 256m
+      ingress.kubernetes.io/secure-upstream: "true"
+      kubernetes.io/ingress.class: "nginx"
+      kubernetes.io/tls-acme: "false"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # Activate TLS for selected hosts
+    tls:
+    # Hosts that should use TLS
+    - hosts:
+        - "FromTerraform"
+      # Name of the secret containing the public UI certificate (Recommended)
+      secretName: tls
+    # List of hosts, URL paths and ports (name of a service port) to use as public access points.
+    hosts:
+    - host: "FromTerraform"
+      paths:
+      - path: "/"
+        servicePortName: https
+
+  # ###################################################
+  # Pod Level configuration
+  # ###################################################
+
+  pod:
+    # List of Extra Label to add only to the pods
+    extraLabels: {}
+    # List of annotations to add to the pods
+    annotations: {}
+
+    # Security Context for the pod: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podsecuritycontext-v1-core
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      supplementalGroups: [1000]
+
+    # Add tolerations for pods: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#toleration-v1-core
+    # tolerations:
+    # - key: "workload"
+    #   operator: "Equal"
+    #   value: "apps"
+    #   effect: "NoSchedule"
+
+    # # Add pod scheduling constraints: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#affinity-v1-core
+    # affinity: {}
+
+    # # NodeSelector is a pod scheduling feature used to decide on which node a pod will run.
+    # # Selector must match a node's labels for the pod to be scheduled on that node.
+    # # More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    # nodeSelector:
+    #   node.kubernetes.io/instancegroup: apps
+    #   beta.kubernetes.io/os: linux
+
+  # ###################################################
+  # Container Level Configuration
+  # ###################################################
+
+  container:
+    image:
+        # (Required) Repository where to pull the image from
+        # repository: FromTerraform
+        # (Required) Tag of the image to pull
+        # tag: FromTerraform
+        # Secret used to pull from the repository
+        # imagePullSecretsName: "FromTerraform"
+        pullPolicy: "Always"
+
+    # Security Context for the container: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#securitycontext-v1-core
+    securityContext:
+
+      privileged: false
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+
+    # Resource requirements for the container: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#resourcerequirements-v1-core
+    resources:
+      requests:
+        cpu: "1000m"
+        memory: "1Gi"
+      limits:
+        cpu: "2000m"
+        memory: "2Gi"
+
+    # Readiness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
+    readinessProbe:
+      httpGet:
+        path: /fm/login
+        port: 8443
+        scheme: HTTPS
+      initialDelaySeconds: 120
+      periodSeconds: 5
+      successThreshold: 3
+
+    # Liveness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
+    livenessProbe:
+      httpGet:
+        path: /api/v2/internals/stability
+        port: 8443
+        scheme: HTTPS
+      initialDelaySeconds: 120
+      successThreshold: 1
+      failureThreshold: 2
+      periodSeconds: 10
+
+    env:
+      # Name of the secret used to populate the env variables. (data keys will be used as variable names)
+      fromSecrets:
+      - name: flowmanager-core-security-env-vars
+
+      # Name of the ConfigMap used to populate the env variables. (map keys will be used as variable names)
+      fromConfigMaps: []
+        # - name: configMapName
+
+      # Extra environment variables to populate in the container.
+      variables:
+        #In this section you can add / remove parameters according to your needs.
+        ACCEPT_EULA: "true" #set to true
+
+        # Public URL & Ports
+        # FM_GENERAL_FQDN: "FromTerraform"
+        FM_GENERAL_UI_PORT: 443
+
+        # internal URL & Ports
+        # FM_INTERNAL_HOST: "FromTerraform"
+        FM_GENERAL_INTERNAL_PORTS: "8443"
+
+        FM_LOGS_CONSOLE: "true"
+        FM_GENERAL_LOGGING_LEVEL: "INFO"
+        FM_CFT_UPDATES_PATH: "/opt/axway/FlowManager/updates/cft/"
+
+        FM_HTTPS_USE_CUSTOM_CERT: "false"
+        FM_METRICS_ENABLED: "true"
+        FM_MULTINODE_ENABLED: "true"
+
+        #Bridge
+        FM_PROXY_ENABLED: "true"
+        # FM_PROXY_HOST: "FromTerraform"
+        FM_PROXY_PORT: "8080"
+
+        ## MongoDbk
+        # FM_DATABASE_HOST: "FromTerraform"
+        # FM_DATABASE_ENDPOINTS: ""FromTerraform"
+        FM_DATABASE_REPLICA_SET: "rs0"
+        # FM_DATABASE_NAME: "FromTerraform"
+        # FM_DATABASE_USER_NAME: "FromTerraform"
+        FM_DATABASE_USE_SSL: "true"
+
+        ## ST PLUGIN
+        #FM_ST_PLUGIN_HOST:  "FromTerraform"
+        FM_ST_PLUGIN_PORT: "8443"
+
+        FM_JVM_XMX: "2G"
+        FM_JVM_XMS: "512M"
+        FM_JVM_XMN: "768M"
+
+        # Secret Files :
+        FM_GOVERNANCE_CA_FILE: "/security/governanceca.p12"
+        FM_DATABASE_CERTIFICATES: "/security/mongodb-ca.pem"
+        FM_ST_PLUGIN_CA_FILE: "/security/st-fm-plugin-ca.pem"
+        FM_ST_PLUGIN_PUBLIC_KEY: "/security/st-fm-plugin-public-key.pem"
+
+        FM_CORE_PRIVATEKEY: "/security/fm-core-jwt-private-key.pem"
+        FM_CFTPLUGIN_PRIVATEKEY: "/security/fm-cftplugin-jwt-private-key.pem"
+        FM_BRIDGE_PUBLICKEY: "/security/fm-bridge-jwt-public-key.pem"
+
+        ## Secret Environnement Variables (remove if using '.env.fromSecrets' to provision):
+        # FM_GENERAL_ENCRYPTION_KEY: ""
+        # FM_GOVERNANCE_CA_PASSWORD: ""
+        # FM_DATABASE_USER_PASSWORD: ""
+
+    volumes:
+      # Create Volumes and Mount points from secrets
+      fromSecrets:
+      - volumeName: license
+        secretName: flowmanager-core-license
+        defaultMode: 402
+        optional: false
+        # Mount configuration (volume name will be filled implicitly): https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#volumemount-v1-core
+        mount:
+          mountPath: /opt/axway/FlowManager/conf/license/license.xml
+          readOnly: true
+          subPath: license.xml
+          subPathExpr: ""
+      - volumeName: security-files
+        secretName: flowmanager-core-security-files
+        defaultMode: 402
+        optional: false
+        # Mount configuration (volume name will be filled implicitly): https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#volumemount-v1-core
+        mount:
+          mountPath: /security
+          readOnly: true
+
+      # Create Volumes and Mount points from ConfigMaps
+      fromConfigMaps:
+      - volumeName: init-template
+        configMapName: init-template
+        optional: false
+        # Mount configuration (volume name will be filled implicitly): https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#volumemount-v1-core
+        mount:
+          mountPath: /opt/axway/FlowManager/init/initialize_template.json
+          readOnly: true
+          subPath: initialize_template.json
+
+      #Create Volumes and Mount points from ConfigMaps
+      fromClaimTemplates: []
+        # - volumeName: customVolumeName
+        #   annotations:
+        #     nfs.io/storage-path: "buffers"
+        #   # Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
+        #   storageClassName: "efs"
+        #   # contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
+        #   accessModes:
+        #     - ReadWriteMany
+        #   # Resources to allocate to the Volume Claim : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#resourcerequirements-v1-core
+        #   resources:
+        #     requests:
+        #       storage: 100Mi
+        #   # Mount configuration (volume name will be filled implicitly): https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#volumemount-v1-core
+        #   mount:
+        #     mountPath: /some/mountPath3
+        #     readOnly: true
+        #     subPath: ""
+        #     subPathExpr: ""
+fm-st-plugin:
+  # Enable generation and deployment of 'fm-st-plugin' component
+  enabled: true
+
+  # ###################################################
+  # Common Level Configuration
+  # ###################################################
+
+  # Extra Labels that will be applied to all generated K8S configurations.
+  extraCommonLabels: {}
+
+  # Extra 'Match' Labels that will be used to select elements for all generated K8S configurations(spec.selector, spec.selector.matchLabel).
+  extraCommonMatchLabels: {}
+
+  # ###################################################
+  # Workload Level Configuration
+  # ###################################################
+
+  deployment:
+    # Number of replica for the deployment
+    replicaCount: 2
+    # Extra Labels that will be applied to the deployment configuration.
+    extraLabels: {}
+    # Annotations that will be applied to the deployment configuration.
+    annotations: {}
+    # The deployment strategy to use to replace existing pods with new ones : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#deploymentspec-v1-apps
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+
+
+
+  # ###################################################
+  # Security Level Configuration
+  # ###################################################
+
+  serviceAccount:
+    # Create the Service Account configuration
+    create: true
+    # If name is not set and create is true, a name is generated using the template full name
+    name: ""
+    # Extra labels to add to the service account
+    extraLabels: {}
+    # Annotations to add to the service account
+    annotations: {}
+
+  rbac:
+    # Create and Manage Role Based Access Control configuration
+    create: true
+
+  psp:
+    # Create and Manage Pod Security Policies.
+    create: true
+    # Should Cluster roles be created and assigned to that PSP.
+    assignClusterRole: true
+
+  # ###################################################
+  # Service Level configuration
+  # ###################################################
+
+  service:
+    # List of Ports exposed as endpoints to the service.
+    ports:
+        # Unique name of the port for the service
+      - name: https
+        # Endpoint port inside the service
+        internalPort: 8443
+        # (Optional) : Endpoint port exposed outside of the service
+        externalPort: 8443
+        # (default: TCP) : Protocol on the Endpoint's port.
+        protocol: TCP
+
+  ingress:
+    # Create the Ingress configuration
+    create: false
+    # Annotations that will be applied to the deployment configuration.
+    annotations: {}
+    # Activate TLS for selected hosts
+    tls: []
+    # List of hosts, URL paths and ports (name of a service port) to use as public access points.
+    hosts: []
+
+  # ###################################################
+  # Pod Level configuration
+  # ###################################################
+
+  pod:
+    # List of Extra Label to add only to the pods
+    extraLabels: {}
+    # List of annotations to add to the pods
+    annotations: {}
+
+    # Security Context for the pod: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podsecuritycontext-v1-core
+    podSecurityContext:
+      runAsUser: 10001
+      runAsGroup: 10001
+      fsGroup: 10001
+      supplementalGroups: [10001]
+
+    # # Add tolerations for pods: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#toleration-v1-core
+    # tolerations:
+    # - key: "workload"
+    #   operator: "Equal"
+    #   value: "apps"
+    #   effect: "NoSchedule"
+
+    # # Add pod scheduling constraints: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#affinity-v1-core
+    # affinity: {}
+
+    # # NodeSelector is a pod scheduling feature used to decide on which node a pod will run.
+    # # Selector must match a node's labels for the pod to be scheduled on that node.
+    # # More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    # nodeSelector:
+    #   node.kubernetes.io/instancegroup: apps
+    #   beta.kubernetes.io/os: linux
+
+  # ###################################################
+  # Container Level Configuration
+  # ###################################################
+
+  container:
+    image:
+        # (Required) Repository where to pull the image from
+        repository: "flowmanager-stplugin-docker-release.<TBD>/st-fm-plugin"
+        # (Required) Tag of the image to pull
+        tag: "2.0.20230504"
+        # Secret used to pull from the repository
+        # imagePullSecretsName: "FromTerraform"
+
+    # Security Context for the container: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#securitycontext-v1-core
+    securityContext:
+      privileged: false
+      seccompProfile:
+        type: RuntimeDefault
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      runAsUser: 10001
+      runAsGroup: 10001
+
+    # Resource requirements for the container: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#resourcerequirements-v1-core
+    resources:
+      requests:
+        cpu: 256m
+        memory: 1Gi
+        ephemeral-storage: 2Gi
+      limits:
+        cpu: 512m
+        memory: 2Gi
+        ephemeral-storage: 2Gi
+
+    # Readiness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
+    readinessProbe:
+      exec:
+        command:
+        - sh
+        - "-c"
+        - "/usr/bin/node /usr/src/app/resources/st-fm-plugin/backend/checks/healthcheck.js"
+      initialDelaySeconds: 30
+      periodSeconds: 30
+      successThreshold: 3
+      timeoutSeconds: 10
+
+    # Liveness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
+    livenessProbe:
+      exec:
+        command:
+        - sh
+        - "-c"
+        - "/usr/bin/node /usr/src/app/resources/st-fm-plugin/backend/checks/healthcheck.js"
+      initialDelaySeconds: 15
+      successThreshold: 1
+      failureThreshold: 2
+      periodSeconds: 30
+      timeoutSeconds: 10
+
+    env:
+      # Name of the secret used to populate the env variables. (data keys will be used as variable names)
+      fromSecrets:
+      - name: flowmanager-st-plugin-security-env-vars
+
+      # Name of the ConfigMap used to populate the env variables. (map keys will be used as variable names)
+      fromConfigMaps: []
+
+      # Extra environment variables to populate in the container.
+      variables:
+        #In this section you can add / remove parameters according to your needs.
+        # ST_FM_PLUGIN_HOST: "FromTerraform"
+        ST_FM_PLUGIN_PORT: 8443
+        ST_FM_PLUGIN_SHORT_NAME: "ST"
+        # ST_FM_PLUGIN_FM_INTERNAL_HOST: "FromTerraform"
+        # ST_FM_PLUGIN_FM_FQDN: "FromTerraform"
+        ST_FM_PLUGIN_FM_PORT: 8443
+        ST_FM_PLUGIN_DATABASE_SKIP_HOSTNAME_VERIFICATION : "true"
+
+        ##MongoDB Parameters
+        # ST_FM_PLUGIN_DATABASE_ENDPOINTS: "FromTerraform"
+        # ST_FM_PLUGIN_DATABASE_REPLICA_SET: "rs0"
+        # ST_FM_PLUGIN_DATABASE_NAME:  "FromTerraform"
+        # ST_FM_PLUGIN_DATABASE_USER_NAME:  "FromTerraform"
+        ST_FM_PLUGIN_DATABASE_CONNECTION_RETRIES: 15
+        ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL: 60
+        ST_FM_PLUGIN_DATABASE_USE_SSL: "true"
+
+        ##ST Plugin Files
+        ST_FM_PLUGIN_SHARED_SECRET: "/security/st-fm-plugin-shared-secret"
+        ST_FM_PLUGIN_FM_GOV_CA_FULL_CHAIN: "/security/governanceca.pem"
+        ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM: "/security/st-fm-plugin-cert-key.pem"
+        ST_FM_PLUGIN_CERT_PEM: "/security/st-fm-plugin-cert.pem"
+        ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN: "/security/st-fm-plugin-ca.pem"
+        ST_FM_PLUGIN_JWT_KEY: "/security/private-key"
+        ST_FM_PLUGIN_SA_PRIVATEKEY: "/security/private-key"
+        ST_FM_PLUGIN_DATABASE_CERTIFICATES : "/security/mongodb.pem"
+
+        # ST Plugin FlowManager SaaS integration with FM Bridge
+        ST_FM_PLUGIN_FM_DEPLOYMENT_MODE: "saas"
+        ST_FM_PLUGIN_IS_PRIVATE_CLOUD : "true"
+        # ST_FM_PLUGIN_SAAS_BRIDGE_HOST: "FromTerraform"
+        ST_FM_PLUGIN_SAAS_BRIDGE_PORT: "8080"
+
+        ## Secret Environnement Variables (remove if using '.env.fromSecrets' to provision):
+        # ST_FM_PLUGIN_DATABASE_USER_PASSWORD:  ""
+
+    volumes:
+      # Create Volumes and Mount points from secrets
+      fromSecrets:
+      - volumeName: security-files
+        secretName: flowmanager-st-plugin-security-files
+        defaultMode: 402
+        optional: false
+        # Mount configuration (volume name will be filled implicitly): https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#volumemount-v1-core
+        mount:
+          mountPath: /security
+          readOnly: true
+
+      # Create Volumes and Mount points from ConfigMaps
+      fromConfigMaps: []
+
+      # Create Volumes and Mount points from ConfigMaps
+      fromClaimTemplates: []
+fm-bridge:
+  # Enable generation and deployment of 'fm-bridge' component
+  enabled: true
+
+  # ###################################################
+  # Common Level Configuration
+  # ###################################################
+
+  # Extra Labels that will be applied to all generated K8S configurations.
+  extraCommonLabels: {}
+
+  # Extra 'Match' Labels that will be used to select elements for all generated K8S configurations(spec.selector, spec.selector.matchLabel).
+  extraCommonMatchLabels: {}
+
+  # ###################################################
+  # Workload Level Configuration
+  # ###################################################
+
+  statefulset:
+    # Number of replica for the StatefulSet
+    replicaCount: 2
+    # Extra Labels that will be applied to the StatefulSet configuration.
+    extraLabels: {}
+    # Annotations that will be applied to the StatefulSet configuration.
+    annotations: {}
+    # The deployment strategy to use to replace existing pods with new ones : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#deploymentspec-v1-apps
+    updateStrategy: {}
+      # type: RollingUpdate
+      # rollingUpdate:
+      #   maxUnavailable: 1
+      #   partition: 0
+
+  # ###################################################
+  # Security Level Configuration
+  # ###################################################
+
+  serviceAccount:
+    # Create the Service Account configuration
+    create: true
+    # If name is not set and create is true, a name is generated using the template full name
+    name: ""
+    # Extra labels to add to the service account
+    extraLabels: {}
+    # Annotations to add to the service account
+    annotations: {}
+
+  rbac:
+    # Create and Manage Role Based Access Control configuration
+    create: true
+
+  psp:
+    # Create and Manage Pod Security Policies.
+    create: true
+    # Should Cluster roles be created and assigned to that PSP.
+    assignClusterRole: true
+
+  # ###################################################
+  # Service Level configuration
+  # ###################################################
+
+  service:
+    # List of Ports exposed as endpoints to the service.
+    ports:
+        # Unique name of the port for the service
+      - name: https-external
+        # Endpoint port inside the service
+        internalPort: 8443
+        # (Optional) : Endpoint port exposed outside of the service
+        externalPort: 8443
+        # (default: TCP) : Protocol on the Endpoint's port.
+        protocol: TCP
+      - name: https-internal
+        # Endpoint port inside the service
+        internalPort: 8080
+        # (Optional) : Endpoint port exposed outside of the service
+        externalPort: 8080
+        # (default: TCP) : Protocol on the Endpoint's port.
+        protocol: TCP
+
+        
+
+  ingress:
+    # Create the Ingress configuration
+    create: true
+    # Annotations that will be applied to the deployment configuration.
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      ingress.kubernetes.io/secure-upstream: "true"
+      kubernetes.io/ingress.class: "nginx"
+      kubernetes.io/tls-acme: "true"
+    # Activate TLS for selected hosts
+    tls:
+    # Hosts that should use TLS
+    - hosts:
+        - "FromTerraform"
+      # Name of the secret containing the public UI certificate (Recommended)
+      secretName: tls
+    # List of hosts, URL paths and ports (name of a service port) to use as public access points.
+    hosts:
+    - host: "FromTerraform"
+      paths:
+      - path: "/"
+        servicePortName: https-external
+
+  # ###################################################
+  # Pod Level configuration
+  # ###################################################
+
+  pod:
+    # List of Extra Label to add only to the pods
+    extraLabels: {}
+      # service.app.axway.com/fm-external-bridge: "both"                                                                                                               │
+      # service.app.axway.com/fm-internal-bridge: "both"
+    # List of annotations to add to the pods
+    annotations: {}
+
+    # Security Context for the pod: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podsecuritycontext-v1-core
+    securityContext:
+      runAsUser: 10001
+      runAsGroup: 10001
+      fsGroup: 10001
+      supplementalGroups: [10001]
+
+    # # Add tolerations for pods: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#toleration-v1-core
+    # tolerations:
+    # - key: "workload"
+    #   operator: "Equal"
+    #   value: "apps"
+    #   effect: "NoSchedule"
+
+    # # Add pod scheduling constraints: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core
+    # affinity: {}
+
+    # # NodeSelector is a pod scheduling feature used to decide on which node a pod will run.
+    # # Selector must match a node's labels for the pod to be scheduled on that node.
+    # # More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    # nodeSelector:
+    #   node.kubernetes.io/instancegroup: apps
+    #   beta.kubernetes.io/os: linux
+
+  # ###################################################
+  # Container Level Configuration
+  # ###################################################
+
+  container:
+    image:
+        # (Required) Repository where to pull the image from
+        repository: flowmanager-bridge-docker-release.artifactory.axway.com/release
+        # (Required) Tag of the image to pull
+        tag: 2.0.20230505
+        # Secret used to pull from the repository
+        # imagePullSecretsName: "FromTerraform"
+
+    # Security Context for the container: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#securitycontext-v1-core
+    securityContext:
+      privileged: false
+      seccompProfile:
+        type: RuntimeDefault
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+      runAsNonRoot: true
+      runAsUser: 10001
+      runAsGroup: 10001
+
+    # Resource requirements for the container: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#resourcerequirements-v1-core
+    resources:
+      requests:
+        cpu: 256m
+        memory: 256Mi
+        ephemeral-storage: 100Mi
+      limits:
+        cpu: 512m
+        memory: 512Mi
+        ephemeral-storage: 100Mi
+
+    # Readiness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 15
+      periodSeconds: 5
+      successThreshold: 3
+
+    # Liveness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 15
+      successThreshold: 1
+      failureThreshold: 2
+      periodSeconds: 5
+
+    env:
+      # Name of the secret used to populate the env variables. (data keys will be used as variable names)
+      fromSecrets:
+      - name: flowmanager-bridge-security-env-vars
+
+      # Name of the ConfigMap used to populate the env variables. (map keys will be used as variable names)
+      fromConfigMaps: []
+
+      # Extra environment variables to populate in the container.
+      variables:
+        JWK_URL: ""
+        PROXY_AUTHN_CLAIMS: "iss:MON,iss:ST,iss:FM,iss:cftplugin,iss:CFTPLUGIN"
+        JWT_SHORT_NAME: bridge
+        JWT_KEY: /security/dosa-key.pem
+        FM_CA: "-"
+        # FM_URL: FromTerraform
+        # WHITELIST: FromTerraform
+        HEALTHCHECKPORT: 8080
+        PROXY_PORT: 8080
+        BRIDGE_PORT: 8443
+        BRIDGE_CERT: /security/fm-bridge-chain.pem
+        BRIDGE_KEY: /security/fm-bridge-key.pem
+        # DISCOVERY_URLS: FromTerraform
+        DISCOVERY_URLS_CA: "-"
+
+        ## Secret Environnement Variables (remove if using '.env.fromSecrets' to provision):
+        # JWT_KEY_PASSWORD:
+        # BRIDGE_KEY_PASSWORD:
+
+    volumes:
+      # Create Volumes and Mount points from secrets
+      fromSecrets:
+      - volumeName: security-files
+        secretName: flowmanager-bridge-security-files
+        defaultMode: 402
+        optional: false
+        # Mount configuration (volume name will be filled implicitly): https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#volumemount-v1-core
+        mount:
+          mountPath: /security
+          readOnly: true
+
+      # Create Volumes and Mount points from ConfigMaps
+      fromConfigMaps: []
+
+      # Create Volumes and Mount points from ConfigMaps
+      fromClaimTemplates: []
