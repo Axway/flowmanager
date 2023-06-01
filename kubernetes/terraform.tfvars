@@ -22,11 +22,11 @@ image-bitnami-mongodb-tag = "5.0.17-debian-11-r2"
 
 # Flowmanager Images
 image-mft-fm-core-repo = "flowmanager-docker-snapshot-buch.<TBD>/flowmanager_release"
-image-mft-fm-core-tag = "2.0.20230504"
+image-mft-fm-core-tag = "REPLACEME"
 image-mft-fm-st-plugin-repo = "flowmanager-stplugin-docker-release.<TBD>/st-fm-plugin"
-image-mft-fm-st-plugin-tag = "2.0.20230504"
+image-mft-fm-st-plugin-tag = "REPLACEME"
 image-mft-fm-bridge-repo = "flowmanager-bridge-docker-release.<TBD>/release"
-image-mft-fm-bridge-tag = "2.0.20230505"
+image-mft-fm-bridge-tag = "REPLACEME"
 
 # Registry details
 registry_server = "REPLACEME"

@@ -34,7 +34,7 @@ Please refer to [AWS Credentials Best Practices
 [Confluence]](https://techweb.axway.com/confluence/display/RDAPI/AWS+Credentials+Best+Practices#AWSCredentialsBestPractices-nativeAWSCLI)
 for more guidance.
 
-> NB: **You must specify those environment variable when executing Docker commands.
+> NB: **You must specify those environment variables when executing Docker commands.
 > Refer to the [Deploying a cluster](#deploying-a-cluster) section below for an example.**
 
 You're now all set to use the EKS Docker image to manage your EKS clusters.
@@ -66,7 +66,7 @@ You may need to add --role-arn if you need to assume the role of your cluster ad
 - Save the generated token (using a secure password vault is a recommended practice here).
 - To use the token (for rest API calls and Helm CLI): use your e-mail as username and token as password.
 
-### Configure helm on the machine taht will run the terraform :
+### Configure helm on the machine that will run the terraform :
 
 ```bash
 # Configure Bitnami repository for Mondodb

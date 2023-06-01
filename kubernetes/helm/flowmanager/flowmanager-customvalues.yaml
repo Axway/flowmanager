@@ -133,9 +133,9 @@ fm-core:
   container:
     image:
         # (Required) Repository where to pull the image from
-        # repository: FromTerraform # "flowmanager-docker-release.artifactory.axway.com/flowmanager_release"
+        # repository: FromTerraform
         # (Required) Tag of the image to pull
-        # tag: FromTerraform # "2.0.2211021817"
+        # tag: FromTerraform
         # Secret used to pull from the repository
         # imagePullSecretsName: "FromTerraform"
         pullPolicy: "Always"
@@ -208,7 +208,7 @@ fm-core:
         FM_GENERAL_INTERNAL_PORTS: "8443"
 
         FM_LOGS_CONSOLE: "true"
-        FM_GENERAL_LOGGING_LEVEL: "DEBUG"
+        FM_GENERAL_LOGGING_LEVEL: "INFO"
         FM_CFT_UPDATES_PATH: "/opt/axway/FlowManager/updates/cft/"
 
         FM_HTTPS_USE_CUSTOM_CERT: "false"
@@ -229,7 +229,6 @@ fm-core:
         FM_DATABASE_USE_SSL: "true"
 
         ## ST PLUGIN
-        #FM_ST_PLUGIN_FQDN: "flowmanager-st-plugin.flowmanager-private-saas.svc.cluster.local:8443"
         #FM_ST_PLUGIN_HOST:  "FromTerraform"
         FM_ST_PLUGIN_PORT: "8443"
 
@@ -430,9 +429,9 @@ fm-st-plugin:
   container:
     image:
         # (Required) Repository where to pull the image from
-        repository: "flowmanager-stplugin-docker-snapshot.artifactory.axway.com/dev/nninov-trd-6801"
+        repository: "flowmanager-stplugin-docker-release.<TBD>/st-fm-plugin"
         # (Required) Tag of the image to pull
-        tag: "202212011235"
+        tag: "2.0.20230504"
         # Secret used to pull from the repository
         # imagePullSecretsName: "FromTerraform"
 
@@ -700,7 +699,7 @@ fm-bridge:
         # (Required) Repository where to pull the image from
         repository: flowmanager-bridge-docker-release.artifactory.axway.com/release
         # (Required) Tag of the image to pull
-        tag: release-20221109
+        tag: 2.0.20230505
         # Secret used to pull from the repository
         # imagePullSecretsName: "FromTerraform"
 

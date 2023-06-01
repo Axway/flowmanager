@@ -22,13 +22,13 @@ variable "cluster-domain" {
 
 variable "mft-fm-helm-release-name" {
   type = string
-  description = "Name of the MFT flow manager realease."
+  description = "Name of the MFT flow manager release."
   default = "mft-flowmanager-release"
 }
 
 variable "mft-mongodb-helm-release-name" {
   type = string
-  description = "Name of the MFT MongoDb realease."
+  description = "Name of the MFT MongoDb release."
   default = "mft-mongodb-release"
 }
 
