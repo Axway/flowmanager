@@ -27,6 +27,7 @@ services:
     image: "${FLOWMANAGER_IMAGE_URL:-docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release}:${FLOWMANAGER_VERSION}"
     stdin_open: true
     tty: true
+    user: "${FM_UID:-10000}:${FM_GID:-10000}"
     environment:
       - ACCEPT_EULA=${ACCEPT_EULA}
       - FM_GENERAL_FQDN=${FM_GENERAL_FQDN}
@@ -59,6 +60,7 @@ services:
       - FM_JVM_XMS=${FM_JVM_XMS:-512M}
       - FM_JVM_XMN=${FM_JVM_XMN:-768M}
       - FM_UNMANAGED_PRODUCT_ENABLED=${FM_UNMANAGED_PRODUCT_ENABLED:-false}
+    tmpfs: /tmp
     ports:
       - "${FM_GENERAL_UI_PORT:-8081}:8081"
     volumes:
@@ -76,6 +78,7 @@ services:
     # Create SecureTransport plugin container 
   st-fm-plugin:
     image: "${ST_FM_PLUGIN_IMAGE_URL:-docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin}:${ST_FM_PLUGIN_IMAGE_VERSION}"
+    user: "${ST_FM_PLUGIN_UID:-10000}:${ST_FM_PLUGIN_GID:-10000}"
     environment:
       - ST_FM_PLUGIN_HOST=${ST_FM_PLUGIN_HOST:-st-fm-plugin}
       - ST_FM_PLUGIN_PORT=${ST_FM_PLUGIN_PORT:-8899}
@@ -96,6 +99,7 @@ services:
       - ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL=${ST_FM_PLUGIN_DATABASE_CONNECTION_RETRY_INTERVAL:-60}
       - ST_FM_PLUGIN_DATABASE_USE_SSL=${ST_FM_PLUGIN_DATABASE_USE_SSL:-false}
       - ST_FM_PLUGIN_DATABASE_CERTIFICATES=${ST_FM_PLUGIN_DATABASE_CERTIFICATES}
+    tmpfs: /tmp
     volumes:
       - ./files/st-fm-plugin:/usr/src/app/src:ro
     depends_on:
@@ -103,6 +107,7 @@ services:
     # Create Monitoring plugin container
   monitoring-fm-plugin:
     image: "${MONITORING_PLUGIN_IMAGE_URL}:${MONITORING_PLUGIN_IMAGE_VERSION}"
+    user: "${MONITORING_PLUGIN_UID:-10000}:${MONITORING_PLUGIN_GID:-10000}"
     environment:
       - MONITORING_PLUGIN_HOST=${MONITORING_PLUGIN_HOST:-monitoring-fm-plugin}
       - MONITORING_PLUGIN_PORT=${MONITORING_PLUGIN_PORT:-3000}
@@ -124,6 +129,7 @@ services:
       - MONITORING_PLUGIN_DB_CERTIFICATES=${MONITORING_PLUGIN_DB_CERTIFICATES}
       - MONITORING_PLUGIN_PRIVATE_KEY_PASSWORD=${MONITORING_PLUGIN_PRIVATE_KEY_PASSWORD:-""}
       - MONITORING_PLUGIN_JWT_KEY_PASSWORD=${MONITORING_PLUGIN_JWT_KEY_PASSWORD:-""}
+    tmpfs: /tmp
     volumes:
       - ./files/monitoring-fm-plugin:/usr/src/app/conf:ro
     depends_on:

@@ -37,7 +37,7 @@ spec:
         - mountPath: /data/db
           name: data
 
-    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20230406
+    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20230728
       name: flowmanager
       ports:
         - name: fmport
@@ -125,7 +125,7 @@ spec:
         - mountPath: /opt/axway/FlowManager/monitoring-fm-plugin
           name: monitoring-fm-plugin
 
-    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20230406
+    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20230728
       name: st-fm-plugin
       ports:
         - name: stport
@@ -175,7 +175,7 @@ spec:
         - mountPath: /usr/src/app/src
           name: st-fm-plugin  
 
-    - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20230406
+    - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20230728
       name: monitoring-fm-plugin
       ports:
         - name: monitoringport
