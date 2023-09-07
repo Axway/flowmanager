@@ -37,7 +37,7 @@ spec:
         - mountPath: /data/db
           name: data
 
-    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20230803
+    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20230901
       name: flowmanager
       ports:
         - name: fmport
@@ -58,6 +58,12 @@ spec:
         - name: FM_HTTPS_KEYSTORE
           value: "/opt/axway/FlowManager/configs/uicert.pem"
         - name: FM_HTTPS_KEYSTORE_PASSWORD
+          value: ""
+        - name: FM_HTTPS_CLIENT_USE_CUSTOM_CERT
+          value: "false"
+        - name: FM_HTTPS_CLIENT_KEYSTORE
+          value: ""
+        - name: FM_HTTPS_CLIENT_KEYSTORE_PASSWORD
           value: ""
         - name: FM_LOGS_CONSOLE
           value: "true"
@@ -125,7 +131,7 @@ spec:
         - mountPath: /opt/axway/FlowManager/monitoring-fm-plugin
           name: monitoring-fm-plugin
 
-    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20230803
+    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20230901
       name: st-fm-plugin
       ports:
         - name: stport
@@ -175,7 +181,7 @@ spec:
         - mountPath: /usr/src/app/src
           name: st-fm-plugin  
 
-    - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20230803
+    - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20230901
       name: monitoring-fm-plugin
       ports:
         - name: monitoringport
