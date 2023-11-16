@@ -22,6 +22,7 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_HTTPS_CERT_ALIAS|No|Alias of the HTTPS certificate||
 |FM_HTTPS_KEYSTORE_PASSWORD|Yes|HTTPS certificate password||
 |FM_HTTPS_DISABLED|No|Set on `true` if the ssl requests are handled by a gateway (SSL termination)|`false`|
+|FM_USER_INITIAL_PASSWORD|No|Initial user password||
 |FM_CFT_SHARED_SECRET|No|FlowManager's shared secret||
 |FM_CFT_UPDATES_PATH|Yes|The path needed to update CFT plugin||
 |FM_DATABASE_HOST|No|MongoDB host name|`mongodb`|
