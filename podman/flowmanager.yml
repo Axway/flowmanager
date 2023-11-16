@@ -113,6 +113,8 @@ spec:
           value: "768M"
         - name: FM_UNMANAGED_PRODUCT_ENABLED
           value: "false"
+        - name: FM_USER_INITIAL_PASSWORD
+          value: ""
       volumeMounts:
         - mountPath: /opt/axway/FlowManager/configs
           name: configs
