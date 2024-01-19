@@ -1,0 +1,12 @@
+apiVersion: v1  
+kind: Secret  
+metadata:  
+  name: flowmanager-bridge-security-files
+type: Opaque  
+data:  
+  dosa-key.pem: fm-bridge-jwt-private-key.pem
+  dosa.json: fm-bridge-jwt-dosa.json
+  fm-bridge-chain.pem: fm-bridge-cert-chain.pem
+  fm-bridge-key.pem: fm-bridge-cert-key.pem
+  fm-governance-ca.pem: fm-governance-ca-full-chain-pem.content
+  governanceca.p12: flowmanager-core/files/fm-governance-ca-full-chain.pem

@@ -1,0 +1,13 @@
+apiVersion: v1  
+kind: Secret  
+metadata:  
+  name: flowmanager-core-security-files
+type: Opaque  
+data:  
+  fm-core-jwt-private-key.pem: <fm-core-jwt-private-key.pem.base64>
+  governanceca.p12: <fm-governance-ca.p12.base64>
+  mongodb-ca.pem: <fm-mongodb-ca.pem.base64>
+  st-fm-plugin-ca.pem: <st-fm-plugin-server-ca-full-chain.pem.base64>
+  st-fm-plugin-public-key.pem: <st-fm-plugin-server-public-key.pem.base64>
+  fm-bridge-jwt-public-key.pem: <fm-bridge-jwt-public-key.pem.base64>
+  fm-cftplugin-jwt-private-key.pem: <fm-cftplugin-jwt-private-key.pem.base64> 

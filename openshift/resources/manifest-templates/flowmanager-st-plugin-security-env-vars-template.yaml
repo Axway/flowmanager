@@ -1,0 +1,7 @@
+apiVersion: v1  
+kind: Secret  
+metadata:  
+  name: flowmanager-st-plugin-security-env-vars
+type: Opaque  
+data:  
+  ST_FM_PLUGIN_DATABASE_USER_PASSWORD: "replace" 

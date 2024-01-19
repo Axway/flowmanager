@@ -1,0 +1,9 @@
+apiVersion: v1  
+kind: Secret  
+metadata:  
+  name: flowmanager-core-security-env-vars
+type: Opaque  
+data:  
+  FM_DATABASE_USER_PASSWORD: "replace" 
+  FM_GENERAL_ENCRYPTION_KEY: "replace" 
+  FM_GOVERNANCE_CA_PASSWORD: "replace" 
