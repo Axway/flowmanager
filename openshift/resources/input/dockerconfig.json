@@ -1,0 +1,9 @@
+{
+    "auths": {
+        "*.artifactory.axway.com": {
+            "username": "REPLACE",
+            "password": "REPLACE",
+            "auth": "REPLACE"
+        }
+    }
+}

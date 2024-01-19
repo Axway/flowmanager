@@ -1,0 +1,13 @@
+apiVersion: v1  
+kind: Secret  
+metadata:  
+  name: flowmanager-st-plugin-security-files
+type: Opaque  
+data:  
+  governanceca.pem: <fm-governance-ca.p12.base64>
+  mongodb.pem: <fm-mongodb-ca.pem.base64>
+  private-key: <st-fm-plugin-jwt-private-key.pem.base64>
+  st-fm-plugin-ca.pem: <st-fm-plugin-server-ca-full-chain.pem.base64>
+  st-fm-plugin-cert-key.pem: <st-fm-plugin-server-cert-key.pem.base64>
+  st-fm-plugin-cert.pem: <st-fm-plugin-server-cert.pem.base64>
+  st-fm-plugin-shared-secret: <st-fm-plugin-shared-secret>
