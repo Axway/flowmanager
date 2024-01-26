@@ -23,7 +23,7 @@
           "url": "https://monitoring-fm-plugin:3000/api",
           "pluginCertificate": "<plugin_ca>"
         },
-        "pluginSSHKey": "public_key>"
+        "pluginSSHKey": "<public_key>"
       }
     }
   ]
