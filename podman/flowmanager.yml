@@ -178,7 +178,9 @@ spec:
         - name: ST_FM_PLUGIN_DATABASE_USE_SSL
           value: "false"
         - name: ST_FM_PLUGIN_DATABASE_CERTIFICATES
-          value: ""  
+          value: ""
+        - name: ST_FM_PLUGIN_PESIT_PWD_UPPERCASE
+          value: "false"  
       volumeMounts:
         - mountPath: /usr/src/app/src
           name: st-fm-plugin  
