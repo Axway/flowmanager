@@ -173,6 +173,7 @@ fm-core:
       initialDelaySeconds: 120
       periodSeconds: 5
       successThreshold: 3
+      timeoutSeconds: 10
 
     # Liveness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
     livenessProbe:
@@ -184,6 +185,7 @@ fm-core:
       successThreshold: 1
       failureThreshold: 2
       periodSeconds: 10
+      timeoutSeconds: 10
 
     env:
       # Name of the secret used to populate the env variables. (data keys will be used as variable names)
@@ -737,6 +739,7 @@ fm-bridge:
       initialDelaySeconds: 15
       periodSeconds: 5
       successThreshold: 3
+      timeoutSeconds: 10
 
     # Liveness Probe of the container : https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#probe-v1-core
     livenessProbe:
@@ -748,6 +751,7 @@ fm-bridge:
       successThreshold: 1
       failureThreshold: 2
       periodSeconds: 5
+      timeoutSeconds: 10
 
     env:
       # Name of the secret used to populate the env variables. (data keys will be used as variable names)
