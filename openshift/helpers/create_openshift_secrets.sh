@@ -50,6 +50,7 @@ cp "${ARG_SOURCE_FOLDER}/governance/dosa-core-key.pem" "${ARG_TARGET_FOLDER}/flo
 cp "${ARG_SOURCE_FOLDER}/governance/dosa-cftplugin-key.pem" "${ARG_TARGET_FOLDER}/flowmanager-core/files/fm-cftplugin-jwt-private-key.pem"
 openssl rand -base64 500 | tr -dc 'a-zA-Z0-9_-' | fold -w 12 | head -n 1 > "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-general-encryption-key"
 cp "${ARG_SOURCE_FOLDER}/certs_and_keys_password" "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-governance-ca-password"
+touch "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-user-initial-password"
 
 cp "${ARG_SOURCE_FOLDER}/st-fm-plugin/private-key" "${ARG_TARGET_FOLDER}/flowmanager-st-plugin/files/st-fm-plugin-jwt-private-key.pem"
 cp "${ARG_SOURCE_FOLDER}/st-fm-plugin/st-fm-plugin-ca.pem" "${ARG_TARGET_FOLDER}/flowmanager-st-plugin/files/st-fm-plugin-server-ca-full-chain.pem"
@@ -230,11 +231,13 @@ oc create secret generic mongodb-secret-env-vars \
 # Flow Manager Core
 FM_GENERAL_ENCRYPTION_KEY=$(cat "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-general-encryption-key")
 FM_GOVERNANCE_CA_PASSWORD=$(cat "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-governance-ca-password")
+FM_USER_INITIAL_PASSWORD=$(cat "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-user-initial-password")
 
 oc create secret generic flowmanager-core-security-env-vars \
     --from-literal=FM_DATABASE_USER_PASSWORD=${MONGODB_FM_USER_PASSWORD} \
     --from-literal=FM_GENERAL_ENCRYPTION_KEY=${FM_GENERAL_ENCRYPTION_KEY} \
     --from-literal=FM_GOVERNANCE_CA_PASSWORD=${FM_GOVERNANCE_CA_PASSWORD} \
+    --from-literal=FM_USER_INITIAL_PASSWORD=${FM_USER_INITIAL_PASSWORD} \
     -n ${NAMESPACE}
 
 # Flow Manager SecureTransport Plugin

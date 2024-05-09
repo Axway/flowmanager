@@ -83,6 +83,9 @@ data "local_file" "fm-core-jwt-private-key-pem" {
 data "local_file" "fm-cftplugin-jwt-private-key-pem" {
    filename = "${path.module}/resources/kubernetes-secrets/flowmanager-core/files/fm-cftplugin-jwt-private-key.pem"
 }
+data "local_file" "fm-user-initial-password" {
+   filename = "${path.module}/resources/kubernetes-secrets/flowmanager-core/vars/fm-user-initial-password"
+}
 
 
 # ##################################

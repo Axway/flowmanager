@@ -41,6 +41,7 @@ cp "${ARG_SOURCE_FOLDER}/governance/dosa-core-key.pem" "${ARG_TARGET_FOLDER}/flo
 cp "${ARG_SOURCE_FOLDER}/governance/dosa-cftplugin-key.pem" "${ARG_TARGET_FOLDER}/flowmanager-core/files/fm-cftplugin-jwt-private-key.pem"
 openssl rand -base64 500 | tr -dc 'a-zA-Z0-9_-' | fold -w 12 | head -n 1 > "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-general-encryption-key"
 cp "${ARG_SOURCE_FOLDER}/certs_and_keys_password" "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-governance-ca-password"
+touch "${ARG_TARGET_FOLDER}/flowmanager-core/vars/fm-user-initial-password"
 
 cp "${ARG_SOURCE_FOLDER}/st-fm-plugin/private-key" "${ARG_TARGET_FOLDER}/flowmanager-st-plugin/files/st-fm-plugin-jwt-private-key.pem"
 cp "${ARG_SOURCE_FOLDER}/st-fm-plugin/st-fm-plugin-ca.pem" "${ARG_TARGET_FOLDER}/flowmanager-st-plugin/files/st-fm-plugin-server-ca-full-chain.pem"
