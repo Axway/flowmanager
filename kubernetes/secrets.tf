@@ -65,6 +65,7 @@ resource "kubernetes_secret" "flowmanager-core-security-env-vars" {
     FM_GENERAL_ENCRYPTION_KEY = "${trimspace(data.local_file.fm-general-encryption-key.content)}"
     FM_GOVERNANCE_CA_PASSWORD = "${trimspace(data.local_file.fm-governance-ca-password.content)}"
     FM_DATABASE_USER_PASSWORD = "${trimspace(data.local_file.mongodb-fm-user-password.content)}"
+    FM_USER_INITIAL_PASSWORD = "${trimspace(data.local_file.fm-user-initial-password.content)}"
   }
 
 }
