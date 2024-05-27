@@ -18,7 +18,7 @@ helmchart-mft-flomanager-repo = "mft-helm-release"
 helmchart-mft-flomanager-tag = "2.0.20230526"
 
 # Mongo DB Image
-image-bitnami-mongodb-tag = "5.0.17-debian-11-r2"
+image-bitnami-mongodb-tag = "5.0.22-debian-11-r5"
 
 # Flowmanager Images
 image-mft-fm-core-repo = "flowmanager-docker-snapshot-buch.<TBD>/flowmanager_release"
