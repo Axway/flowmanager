@@ -93,6 +93,18 @@ variable "image-mft-fm-bridge-tag" {
   default = "release-20221109"
 }
 
+variable "external-mongodb" {
+  type = bool
+  description = "Toggle between managed and external MongoDB. Default = false"
+  default = false
+}
+
+variable "mongodb-fm-endpoints" {
+  type = string
+  description = "External MongoDB addresses."
+  default = "replace"
+}
+
 variable "mongodb-replica-set-name" {
   type = string
   description = "(Optional) MongDB Replica Set Name"
