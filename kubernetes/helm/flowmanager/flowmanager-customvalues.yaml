@@ -46,9 +46,9 @@ fm-core:
 
   psp:
     # Create and Manage Pod Security Policies.
-    create: true
+    create: false
     # Should Cluster roles be created and assigned to that PSP.
-    assignClusterRole: true
+    assignClusterRole: false
 
   # ###################################################
   # Service Level configuration
@@ -223,7 +223,6 @@ fm-core:
         FM_PROXY_PORT: "8080"
 
         ## MongoDbk
-        # FM_DATABASE_HOST: "FromTerraform"
         # FM_DATABASE_ENDPOINTS: ""FromTerraform"
         FM_DATABASE_REPLICA_SET: "rs0"
         # FM_DATABASE_NAME: "FromTerraform"
@@ -360,9 +359,9 @@ fm-st-plugin:
 
   psp:
     # Create and Manage Pod Security Policies.
-    create: true
+    create: false
     # Should Cluster roles be created and assigned to that PSP.
-    assignClusterRole: true
+    assignClusterRole: false
 
   # ###################################################
   # Service Level configuration
@@ -603,9 +602,9 @@ fm-bridge:
 
   psp:
     # Create and Manage Pod Security Policies.
-    create: true
+    create: false
     # Should Cluster roles be created and assigned to that PSP.
-    assignClusterRole: true
+    assignClusterRole: false
 
   # ###################################################
   # Service Level configuration

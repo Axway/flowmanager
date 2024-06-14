@@ -1,24 +1,14 @@
 # From cluster configuration
-fm-namespace = "appspace-fm-sample"
-
-# Helm release names
-mft-fm-helm-release-name = "mft-flowmanager-release"
-mft-mongodb-helm-release-name = "mft-mongodb-release"
+fm-namespace = "flowmanager"
 
 # public FQDN
 fm-core-public-fqdn = "flowmanager-fm-sample.fm.axwaytest.net"
 fm-bridge-public-fqdn = "fm-bridge-fm-sample.fm.axwaytest.net"
 
-# Helm Charts
-# This will be replaced by an Axway location
-helmchart-bitnami-mongodb-repo = "https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami" 
-helmchart-bitnami-mongodb-tag = "13.5.0"
-
+# FM helm chart
+mft-fm-helm-release-name = "mft-flowmanager-release"
 helmchart-mft-flomanager-repo = "mft-helm-release"
 helmchart-mft-flomanager-tag = "2.0.20230526"
-
-# Mongo DB Image
-image-bitnami-mongodb-tag = "5.0.22-debian-11-r5"
 
 # Flowmanager Images
 image-mft-fm-core-repo = "flowmanager-docker-snapshot-buch.<TBD>/flowmanager_release"
@@ -27,6 +17,26 @@ image-mft-fm-st-plugin-repo = "flowmanager-stplugin-docker-release.<TBD>/st-fm-p
 image-mft-fm-st-plugin-tag = "REPLACEME"
 image-mft-fm-bridge-repo = "flowmanager-bridge-docker-release.<TBD>/release"
 image-mft-fm-bridge-tag = "REPLACEME"
+
+#MongoDB toggle
+#true = external MongoDB
+#false = managed MongoDB
+#Depending on the option, you can comment out the other MongoDB related variables
+external-mongodb = false
+
+#Managed MongoDB
+image-bitnami-mongodb-tag = "5.0.22-debian-11-r5"
+mft-mongodb-helm-release-name = "mft-mongodb-release"
+helmchart-bitnami-mongodb-repo = "https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami" 
+helmchart-bitnami-mongodb-tag = "13.5.0"
+
+#External MongoDB
+# mongodb-replica-set-name = "rs0"
+# mongodb-fm-core-database-username = "flowmanageruser"
+# mongodb-fm-st-plugin-database-username = "stpluginuser"
+# mongodb-fm-core-database-name = "flowmanager"
+# mongodb-fm-st-plugin-database-name = "stplugin"
+# mongodb-fm-endpoints = "REPLACE:27017"
 
 # Registry details
 registry_server = "REPLACEME"

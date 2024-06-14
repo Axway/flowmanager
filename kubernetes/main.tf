@@ -7,6 +7,7 @@
 
 resource "helm_release" "mongodb" {
   name       = var.mft-mongodb-helm-release-name
+  count      = var.external-mongodb ? 0 : 1
 
   # Cannot use recent bitnami manifest because of old mongodb version.
   # repository = "https://charts.bitnami.com/bitnami"
@@ -111,7 +112,7 @@ resource "helm_release" "flowmanager" {
 
   set {
     name  = "fm-core.container.env.variables.FM_DATABASE_ENDPOINTS"
-    value = "${var.mft-mongodb-helm-release-name}-0.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}\\,${var.mft-mongodb-helm-release-name}-1.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}"
+    value = (var.external-mongodb) ? var.mongodb-fm-endpoints : "${var.mft-mongodb-helm-release-name}-0.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}\\,${var.mft-mongodb-helm-release-name}-1.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}"
   }
 
   set {
@@ -176,7 +177,7 @@ resource "helm_release" "flowmanager" {
 
   set {
     name  = "fm-st-plugin.container.env.variables.ST_FM_PLUGIN_DATABASE_ENDPOINTS"
-    value = "${var.mft-mongodb-helm-release-name}-0.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}:27017\\,${var.mft-mongodb-helm-release-name}-1.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}:27017"
+    value = (var.external-mongodb) ? var.mongodb-fm-endpoints : "${var.mft-mongodb-helm-release-name}-0.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}\\,${var.mft-mongodb-helm-release-name}-1.${var.mft-mongodb-helm-release-name}-headless.${var.fm-namespace}.svc.${var.cluster-domain}"
   }
 
    set {
