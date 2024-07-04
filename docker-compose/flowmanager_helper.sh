@@ -124,9 +124,11 @@ function start_container() {
 function restart_container() {
     local name=${1-}
     if [ -z "$name" ]; then
-        docker compose restart
+        docker compose down
+        docker compose up -d
     else
-        docker compose restart $name
+        docker compose down $name
+        docker compose up -d $name
         exit 0;
     fi
 }
@@ -145,20 +147,20 @@ function status_container() {
 function stop_container() {
     local name=${1-}
     if [ -z "$name" ]; then
-        docker compose stop
+        docker compose down
     else
-        docker compose stop $name
+        docker compose down $name
         exit 0;
     fi
 
 }
 
-# Delete the container(s)
+# Delete the container(s) + mongo data
 function delete_container() {
     docker compose down -v
 }
 
-# Restart the container(s)
+# logs
 function log_container() {
     local name=${1-}
     if [ -z "$name" ]; then
@@ -184,7 +186,7 @@ function usage() {
     echo "    stop   : Stops all containers."
     echo "    status : Shows the status of all containers."
     echo "    migrate: Migrate old docker compose model to .env file model."
-    echo "    delete : Deletes all containers (including database!) and other parts related to the containers, like storage."
+    echo "    delete : Deletes all containers (including database!) and the MongoDB storage."
     echo "    logs   : Gets logs from all containers."
     echo "    help   : Shows the usage of this script."
     echo ""

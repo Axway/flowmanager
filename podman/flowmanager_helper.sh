@@ -86,15 +86,14 @@ function gen_config() {
 
 # Start the container(s)
 function start_container() {
-    podman network create flowmanager_pod-network
-    podman play kube ./flowmanager.yml --network=flowmanager_pod-network
+    podman play kube ./flowmanager.yml
     echo "FlowManager was installed."
 }
 
 # Restart the container(s)
 function restart_container() {
     podman pod rm -f flowmanager_pod
-    podman play kube ./flowmanager.yml --network=flowmanager_pod-network
+    podman play kube ./flowmanager.yml
     echo "Flow Manager was restarted"
 }
 
@@ -106,21 +105,20 @@ function status_container() {
 # Stop the container(s)
 function stop_container() {
     podman pod rm -f flowmanager_pod
-    podman network rm flowmanager_pod-network
     echo "Flow Manager was stopped"
 }
 
 # Delete the container(s)
 function delete_container() {
     podman pod rm -f flowmanager_pod
-    podman network rm flowmanager_pod-network
     rm -rf ./mongodb_data_container/*
     echo "Flow Manager was stopped and MongoDB's content was deleted"
 }
 
-# Inspect the container(s)
-function inspect() {
-    podman pod inspect flowmanager_pod
+# logs
+function get_logs()
+{
+    podman pod logs flowmanager_pod
 }
 
 # How to use the script
@@ -203,12 +201,8 @@ if [[ $@ ]]; then
                 delete_container
                 shift
                 ;;
-            inspect)
-                if [ -z "${2-}" ]; then
-                    inspect
-                else
-                    inspect $2
-                fi
+            logs)
+                get_logs
                 shift
                 ;;
             help)
