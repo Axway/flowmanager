@@ -504,6 +504,7 @@ fm-st-plugin:
         # ST_FM_PLUGIN_FM_FQDN: "FromTerraform"
         ST_FM_PLUGIN_FM_PORT: 8443
         ST_FM_PLUGIN_DATABASE_SKIP_HOSTNAME_VERIFICATION : "true"
+        ST_FM_PLUGIN_ST_CONNECTION_TIMEOUT_SECONDS : 300
 
         ##MongoDB Parameters
         # ST_FM_PLUGIN_DATABASE_ENDPOINTS: "FromTerraform"
