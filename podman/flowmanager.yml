@@ -6,7 +6,7 @@ metadata:
   name: flowmanager_pod
 spec:
   containers:
-    - image: mongo:5.0
+    - image: mongo:6.0
       name: mongodb
       args:
         - '-f'
@@ -37,7 +37,7 @@ spec:
         - mountPath: /data/db
           name: data
 
-    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20231003
+    - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20240628
       name: flowmanager
       ports:
         - name: fmport
@@ -133,7 +133,7 @@ spec:
         - mountPath: /opt/axway/FlowManager/monitoring-fm-plugin
           name: monitoring-fm-plugin
 
-    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20231003
+    - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20240628
       name: st-fm-plugin
       ports:
         - name: stport
@@ -181,11 +181,13 @@ spec:
           value: ""
         - name: ST_FM_PLUGIN_PESIT_PWD_UPPERCASE
           value: "false"  
+        - name: ST_FM_PLUGIN_ST_CONNECTION_TIMEOUT_SECONDS
+          value: "300"
       volumeMounts:
         - mountPath: /usr/src/app/src
           name: st-fm-plugin  
 
-    - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20231003
+    - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20240628
       name: monitoring-fm-plugin
       ports:
         - name: monitoringport

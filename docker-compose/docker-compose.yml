@@ -2,7 +2,7 @@ version: "3.6"
 services:
   # Create MongoDB container
   mongodb:
-    image: "${MONGO_IMAGE_URL:-mongo}:${MONGO_IMAGE_VERSION:-5.0}"
+    image: "${MONGO_IMAGE_URL:-mongo}:${MONGO_IMAGE_VERSION:-6.0}"
     environment:
       - MONGO_INTERNAL_PORT=${MONGO_INTERNAL_PORT:-27017}
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
@@ -104,6 +104,7 @@ services:
       - ST_FM_PLUGIN_DATABASE_USE_SSL=${ST_FM_PLUGIN_DATABASE_USE_SSL:-false}
       - ST_FM_PLUGIN_DATABASE_CERTIFICATES=${ST_FM_PLUGIN_DATABASE_CERTIFICATES}
       - ST_FM_PLUGIN_PESIT_PWD_UPPERCASE=${ST_FM_PLUGIN_PESIT_PWD_UPPERCASE}
+      - ST_FM_PLUGIN_ST_CONNECTION_TIMEOUT_SECONDS=${ST_FM_PLUGIN_ST_CONNECTION_TIMEOUT_SECONDS:-300}
     tmpfs: /tmp
     volumes:
       - ./files/st-fm-plugin:/usr/src/app/src:ro
