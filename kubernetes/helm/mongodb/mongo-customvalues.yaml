@@ -95,7 +95,7 @@ customLivenessProbe:
     command:
     - sh
     - -c
-    - mongo ${MONGODB_CLIENT_EXTRA_FLAGS} --host $MONGODB_ADVERTISED_HOSTNAME --port $MONGODB_PORT_NUMBER --eval "db.adminCommand('ping')"
+    - mongosh ${MONGODB_CLIENT_EXTRA_FLAGS} --host $MONGODB_ADVERTISED_HOSTNAME --port $MONGODB_PORT_NUMBER --eval "db.adminCommand('ping')"
 readinessProbe:
   enabled: false
 customReadinessProbe:
@@ -108,7 +108,7 @@ customReadinessProbe:
     command:
     - sh
     - -c
-    - mongo ${MONGODB_CLIENT_EXTRA_FLAGS} --host $MONGODB_ADVERTISED_HOSTNAME --port $MONGODB_PORT_NUMBER --eval 'db.isMaster().ismaster || db.isMaster().secondary' | grep -q 'true'
+    - mongosh ${MONGODB_CLIENT_EXTRA_FLAGS} --host $MONGODB_ADVERTISED_HOSTNAME --port $MONGODB_PORT_NUMBER --eval 'db.isMaster().ismaster || db.isMaster().secondary' | grep -q 'true'
 
 arbiter:
   podLabels:
