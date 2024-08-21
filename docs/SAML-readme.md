@@ -24,7 +24,6 @@ The following parameters must be added in the [docker-compose.yml](/docker-compo
   &ndash; FM_IDP_SAML_RESPONSE_BINDING=\${FM_IDP_SAML_RESPONSE_BINDING:-HTTP-POST}<br/>
   &ndash; FM_IDP_UNSIGNED_ASSERTIONS=\${FM_IDP_UNSIGNED_ASSERTIONS:-false}<br/>
   &ndash; FM_IDP_VERIFY_ASSERTION_EXPIRATION=\${FM_IDP_VERIFY_ASSERTION_EXPIRATION:-true}<br/>
-  &ndash; FM_IDP_FM_ACCESS_MANAGER_USERNAME=\${FM_IDP_FM_ACCESS_MANAGER_USERNAME}
 
 Next, the [.env](/docker-compose/env.template) file should be updated with the values of these parameters:<br/>
 `.env`<br/>
@@ -45,7 +44,6 @@ Next, the [.env](/docker-compose/env.template) file should be updated with the v
 &emsp;FM_IDP_SAML_RESPONSE_BINDING=HTTP-POST<br/>
 &emsp;FM_IDP_UNSIGNED_ASSERTIONS=true<br/>
 &emsp;FM_IDP_VERIFY_ASSERTION_EXPIRATION=true<br/>
-&emsp;FM_IDP_FM_ACCESS_MANAGER_USERNAME=<br/>
 
 # 2. Podman
 
@@ -87,8 +85,6 @@ The same parameters as for docker-compose must be added in the [flowmanager.yml]
  &nbsp;&nbsp; value: "true"<br/>
   &ndash; name: FM_IDP_VERIFY_ASSERTION_EXPIRATION<br/>
  &nbsp;&nbsp; value: "true"<br/>
-  &ndash; name: FM_IDP_FM_ACCESS_MANAGER_USERNAME<br/>
- &nbsp;&nbsp; value: ""<br/>
 
 # 3. Kubernetes Standard files
 The same parameters as for docker-compose must be added in the [patch.yml for single node](/kubernetes/standard/singlenode/patch.yml) or [patch.yml for multi node](/kubernetes/standard/multinode/patch.yml) file, in the `flowmanager` env section:<br/>
@@ -129,8 +125,6 @@ The same parameters as for docker-compose must be added in the [patch.yml for si
  &nbsp;&nbsp; value: "true"<br/>
   &ndash; name: FM_IDP_VERIFY_ASSERTION_EXPIRATION<br/>
  &nbsp;&nbsp; value: "true"<br/>
-  &ndash; name: FM_IDP_FM_ACCESS_MANAGER_USERNAME<br/>
- &nbsp;&nbsp; value: ""<br/>
   
 # 4. Helm
 The same parameters as for docker-compose must be added in the [flowmanager.yaml](/kubernetes/helm/flowmanager.yaml) file, in the `flowmanager` variables section:<br/>
@@ -152,6 +146,5 @@ FM_IDP_SIGN_LOGOUT_RESPONSE: "true"<br/>
 FM_IDP_SAML_RESPONSE_BINDING: "HTTP-POST"<br/>
 FM_IDP_UNSIGNED_ASSERTIONS: "true"<br/>
 FM_IDP_VERIFY_ASSERTION_EXPIRATION: "true"<br/>
-FM_IDP_FM_ACCESS_MANAGER_USERNAME: ""<br/>
 
 **Note**: for more information regarding the values of the SAML parameters, check this [file](README.md) or the official documentation of Flow Manager. 

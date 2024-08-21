@@ -81,7 +81,6 @@ All active Environment variables/parameters for Flow Manager, including all the 
 |FM_IDP_SAML_RESPONSE_BINDING|Yes|Service provider response binding.|`HTTP-POST`|
 |FM_IDP_UNSIGNED_ASSERTIONS|Yes|Service Provider will accept or not unsigned assertions from the Identity Provider|`false`|
 |FM_IDP_VERIFY_ASSERTION_EXPIRATION|Yes|Check assertion expiration on the service provider. |`true`|
-|FM_IDP_FM_ACCESS_MANAGER_USERNAME|Yes|Username of the admin user that will be able to map Identity Provider roles to FM roles.||
 
 Note: all SAML parameters are mandatory if FM_IDP_CONFIGURATION is set on `custom`.
 
