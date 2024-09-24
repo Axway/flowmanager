@@ -112,7 +112,7 @@ services:
       - flowmanager
     # Create Monitoring plugin container
   monitoring-fm-plugin:
-    image: "${MONITORING_PLUGIN_IMAGE_URL}:${MONITORING_PLUGIN_IMAGE_VERSION}"
+    image: "${MONITORING_PLUGIN_IMAGE_URL:-docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin}:${MONITORING_PLUGIN_IMAGE_VERSION}"
     user: "${MONITORING_PLUGIN_UID:-10000}:${MONITORING_PLUGIN_GID:-10000}"
     environment:
       - MONITORING_PLUGIN_HOST=${MONITORING_PLUGIN_HOST:-monitoring-fm-plugin}
