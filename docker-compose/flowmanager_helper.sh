@@ -13,6 +13,7 @@ PROJECT_NAME="flowmanager"
 GOV_CA_FILE="../scripts/custom-ca/governance/cacert.pem"
 MON_FM_PLUGIN_NAME="monitoring-fm-plugin"
 ST_FM_PLUGIN_NAME="st-fm-plugin"
+BRIDGE_FM_NAME="fm-bridge"
 
 function copy_config_generic_plugin() {
   local plugin_name=$1
@@ -83,6 +84,17 @@ function gen_config() {
     cp ../scripts/custom-ca/governance/governanceca.pem ./files/$PROJECT_NAME/configs/
     cp ../scripts/custom-ca/business/cacert.p12 ./files/$PROJECT_NAME/configs/businessca.p12
     cp ../scripts/custom-ca/governance/uicert.pem ./files/$PROJECT_NAME/configs/
+    cp ../scripts/custom-ca/fm-bridge/fm-bridge-jwt-public-key.pem ./files/$PROJECT_NAME/configs/
+    cp ../scripts/custom-ca/governance/fm-core-jwt-key.pem ./files/$PROJECT_NAME/configs/
+    cp ../scripts/custom-ca/fm-bridge/fm-bridge-cert.pem ./files/$BRIDGE_FM_NAME/
+    cp ../scripts/custom-ca/governance/bridge-key.pem ./files/$BRIDGE_FM_NAME/fm-bridge-cert-key.pem
+    cp ../scripts/custom-ca/fm-bridge/fm-bridge-jwt-private-key.pem ./files/$BRIDGE_FM_NAME/
+    cp ../scripts/custom-ca/fm-bridge/fm-bridge-jwt-public-key.pem ./files/$BRIDGE_FM_NAME/
+    cp ../scripts/custom-ca/fm-bridge/fm-bridge-dosa.json ./files/$BRIDGE_FM_NAME/
+    cp ../scripts/custom-ca/governance/cacert.pem ./files/$BRIDGE_FM_NAME/governanceca.pem
+
+    chmod -R 755 ./files/$PROJECT_NAME/configs/
+    chmod -R 755 ./files/$BRIDGE_FM_NAME/
 
     # Create .env file
     if [ ! -f .env ]; then
@@ -94,6 +106,8 @@ function gen_config() {
 
     sed -i "s/FM_GOVERNANCE_CA_PASSWORD=.*/FM_GOVERNANCE_CA_PASSWORD=\"$PASSWORD\"/g" .env
     sed -i "s/FM_HTTPS_KEYSTORE_PASSWORD=.*/FM_HTTPS_KEYSTORE_PASSWORD=\"$PASSWORD\"/g" .env
+    sed -i "s/JWT_KEY_PASSWORD=.*/JWT_KEY_PASSWORD=\"$PASSWORD\"/g" .env
+    sed -i "s/BRIDGE_KEY_PASSWORD=.*/BRIDGE_KEY_PASSWORD=\"$PASSWORD\"/g" .env
 
     # List config files
     if [ $? -eq 0 ]; then
