@@ -8,6 +8,8 @@ set -euo pipefail
 #   - Keystore in JKS
 ##
 
+HOSTNAME=$(hostname)
+FQDN=$(hostname -f)
 CURRENT_DIR=$PWD
 PASSWORD="abc"
 SECOND_PASSWORD="bcd"
@@ -49,7 +51,7 @@ function gen_ca() {
 [ ca ]
 default_ca = miniCA
 
-[policy_match]
+[ policy_match ]
 commonName = supplied
 countryName = optional
 stateOrProvinceName = optional
@@ -59,10 +61,12 @@ certificate = $root/cacert.pem
 database = $root/index.txt
 private_key = $root/cacert-key.pem
 new_certs_dir = $root
-default_md = sha1
+default_md = sha256
 policy = policy_match
 serial = $root/serial
 default_days = $EXPIRATION_DAYS
+
+copy_extensions = copy
 
 [ req ]
 distinguished_name = req_distinguished_name
@@ -74,20 +78,20 @@ subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
 basicConstraints = critical,CA:true
 keyUsage = cRLSign, keyCertSign, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
-# subjectAltName = @alt_names
+subjectAltName = @alt_names
 
-[alt_names]
-DNS.1 =$site
+[ alt_names ]
+DNS.1 = $HOSTNAME
 
 [ req_distinguished_name ]
 emailAddress = example@example.com
-commonName = $name
-countryName = FR
+commonName = $site
+countryName = RO
 organizationName = ACME
 
 EOF
 
-    openssl req -x509 -days $EXPIRATION_DAYS -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $root/cacert.pem -keyout $root/cacert-key.pem -config $root/ca.cnf
+    openssl req -x509 -days $EXPIRATION_DAYS -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -extensions v3_ca -out $root/cacert.pem -keyout $root/cacert-key.pem -config $root/ca.cnf
 }
 
 # Genereate PEM certs
@@ -98,7 +102,7 @@ function gen_cert() {
     local site="$name.$caname.com"
 
     echo "gen_cert $caname $name $site ..."
-    openssl req -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $caroot/$name-csr.pem -keyout $caroot/$name-key.pem -subj "/C=FR/O=ACME/CN=$site/OU=ACME-OU"
+    openssl req -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $caroot/$name-csr.pem -keyout $caroot/$name-key.pem -subj "/C=RO/O=ACME/CN=$HOSTNAME/OU=ACME-OU" -addext "subjectAltName = DNS:$FQDN"
     openssl ca -config $caroot/ca.cnf -passin pass:$PASSWORD -batch -notext -in $caroot/$name-csr.pem -out $caroot/$name.pem
 }
 
@@ -179,8 +183,35 @@ chmod 755 ./custom-ca/governance/governanceca.pem
 chmod 755 ./custom-ca/governance/uicert.pem
 chmod 755 ./custom-ca/business/cacert.p12
 
+# generate FM CORE JWT key
+openssl genrsa -out ./custom-ca/governance/fm-core-jwt-key.pem 2048
+
 # generate ST plugin certs
 gen_st_fm_plugin_certs
 
 # generate Monitoring plugin certs
 gen_monitoring_fm_plugin_certs
+
+rm -rf ./custom-ca/fm-bridge/
+mkdir -p ./custom-ca/fm-bridge/
+
+# generate Bridge certs and keys
+echo "unique_subject = no" >> ./custom-ca/governance/index.txt.attr
+gen_cert governance bridge
+cat ./custom-ca/governance/bridge.pem > ./custom-ca/fm-bridge/fm-bridge-cert.pem
+cat ./custom-ca/governance/cacert.pem >> ./custom-ca/fm-bridge/fm-bridge-cert.pem
+
+# generate Bridge Service Account key pair
+openssl genrsa -passout pass:$PASSWORD -out  ./custom-ca/fm-bridge/fm-bridge-jwt-private-key.pem 2048
+openssl rsa -in ./custom-ca/fm-bridge/fm-bridge-jwt-private-key.pem -outform PEM -pubout -out ./custom-ca/fm-bridge/fm-bridge-jwt-public-key.pem
+
+# generate Bridge Service Account json
+name="BRIDGE"
+clientId="BRIDGE"
+cat >./custom-ca/fm-bridge/fm-bridge-dosa.json <<EOF
+{
+  "name": "$name",
+  "clientId": "$clientId",
+  "publicKey": "$(tr -d '\n' < "./custom-ca/fm-bridge/fm-bridge-jwt-public-key.pem")"
+}
+EOF

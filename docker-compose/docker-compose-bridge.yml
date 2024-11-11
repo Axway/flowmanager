@@ -1,0 +1,67 @@
+version: "3.6"
+services:
+  
+  mongodb:
+    extends: 
+      file: docker-compose.yml
+      service: mongodb
+  
+  flowmanager:
+    extends: 
+      file: docker-compose.yml
+      service: flowmanager
+    environment:
+      - FM_PROXY_ENABLED=${FM_PROXY_ENABLED:-false}
+      - FM_PROXY_HOST=${FM_PROXY_HOST:-fm-bridge}
+      - FM_PROXY_PORT=${FM_PROXY_PORT:-8080}
+      - FM_BRIDGE_PUBLICKEY=${FM_BRIDGE_PUBLICKEY}
+      - FM_CORE_PRIVATEKEY=${FM_CORE_PRIVATEKEY}
+      - FM_CORE_KEY_PASSWORD=${FM_CORE_KEY_PASSWORD}
+    
+  st-fm-plugin:
+    extends: 
+      file: docker-compose.yml
+      service: st-fm-plugin
+    environment: 
+      - ST_FM_PLUGIN_FM_DEPLOYMENT_MODE=${ST_FM_PLUGIN_FM_DEPLOYMENT_MODE:-}
+      - ST_FM_PLUGIN_BRIDGE_HOST=${ST_FM_PLUGIN_BRIDGE_HOST:-fm-bridge}
+      - ST_FM_PLUGIN_BRIDGE_PORT=${ST_FM_PLUGIN_BRIDGE_PORT:-8080}
+    
+  monitoring-fm-plugin:
+    extends:
+      file: docker-compose.yml
+      service: monitoring-fm-plugin
+
+  fm-bridge:
+    image: "${BRIDGE_IMAGE_URL}:${BRIDGE_IMAGE_VERSION}"
+    environment:
+      - PROXY_AUTHN_CLAIMS=${PROXY_AUTHN_CLAIMS:-iss:BRIDGE,iss:FM;iss:ST,iss:CFTPLUGIN}
+      - JWT_KEY=/conf/${JWT_KEY:-fm-bridge-jwt-private-key.pem}
+      - JWT_KEY_PASSWORD=${JWT_KEY_PASSWORD:-}
+      - JWT_SHORT_NAME=${JWT_NAME:-BRIDGE}
+      - DISCOVERY_URLS=${DISCOVERY_URLS:-https://${FM_GENERAL_FQDN}:${BRIDGE_PORT:-8443}}
+      - DISCOVERY_URLS_CA=/conf/${DISCOVERY_URLS_CA:-governanceca.pem}
+      - FM_URL=${FM_URL:-https://${FM_GENERAL_FQDN}:${FM_GENERAL_UI_PORT:-8081}}
+      - FM_CA=/conf/${FM_CA:-governanceca.pem}
+      - WHITELIST=${WHITELIST:-${FM_GENERAL_FQDN}}
+      - PROXY_HOST=${PROXY_HOST:-0.0.0.0}
+      - PROXY_PORT=${PROXY_PORT:-8080}
+      - BRIDGE_PORT=${BRIDGE_PORT:-8443}
+      - BRIDGE_CERT=/conf/${BRIDGE_CERT:-fm-bridge-cert.pem}
+      - BRIDGE_KEY=/conf/${BRIDGE_KEY:-fm-bridge-cert-key.pem}
+      - BRIDGE_KEY_PASSWORD=${BRIDGE_KEY_PASSWORD:-}
+      - AGENTS=${AGENTS}
+      - AGENTS_CA=/conf/${AGENTS_CA:-fm-agent-ca.pem}
+      - DOSA=/conf/${DOSA:-fm-bridge-dosa.json}
+      - DOSA_KEY=/conf/${DOSA_KEY:-fm-bridge-jwt-private-key.pem}
+    volumes:
+      - ./files/fm-bridge:/conf
+    ports:
+      - "${PROXY_PORT:-8008}:${PROXY_PORT:-8080}"
+      - "${BRIDGE_PORT:-8443}:${BRIDGE_PORT:-8443}"
+
+volumes:
+  fm_cft_updates:
+    name: fm_cft_updates
+  mongodb_data_container:
+    name: mongostorage
