@@ -147,3 +147,13 @@ spec:
       selector: role == "any-address"
       ports:
       - 443
+  - action: Allow
+    protocol: TCP
+    source:
+      namespaceSelector: projectcalico.org/name == "flowmanager"
+      selector: has(service.app.axway.com/fm-external-https) && (service.app.axway.com/fm-external-https in { 'server', 'both' })
+    destination:
+      ports:
+      - 1309
+      - 1305
+      - 1303
