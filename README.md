@@ -1,28 +1,24 @@
-# Amplify Flow Manager (2.0) Deploy
+# Amplify Flow Manager (2.0)
 
 Deploy Amplify Flow Manager on multiple container orchestration systems.
 
-## Docker-compose
+## Docker
 
-The files needed to run Flow Manager 2.0 orchestrated with docker-compose in a single-node environment can be found in [docker-compose](docker-compose/) folder.
-
-## Kubernetes
-
-All deployment manifest files (standard and Helm) can be found in [kubernetes](kubernetes/) folder.
+The configuration files and scripts needed to deploy Flow Manager using Docker can be found in the [docker-compose](docker-compose/) directory.
 
 ## Podman
 
-Deployment manifest files can be found [here](podman/).
+The configuration files and scripts needed to deploy Flow Manager using Podman can be found in the [podman](podman/) directory. 
 
-### Contribute
+## Kubernetes
 
-Contributions are always welcome.
+The configuration files and scripts needed to deploy Flow Manager using Kubernetes can be found in the [kubernetes](kubernetes/) directory. The official documentation for this type of deployment can be found [here](https://docs.axway.com/bundle/FlowManager_20_allOS_en_HTML5/page/kubernetes_deployment.html).
 
-* Fork the repo
-* Create a pull request against master
-* Be sure tests pass (if exists)
+## OpenShift
 
-Check [GitHub Flow](https://guides.github.com/introduction/flow/) for details.
+The configuration files and scripts needed to deploy Flow Manager using OpenShift can be found in the [openshift](openshift/) directory. The official documentation for this type of deployment can be found [here](https://docs.axway.com/bundle/FlowManager_20_allOS_en_HTML5/page/openshift_v2_deployment.html).
+
+Information on the Flow Manager OpenShift v1 deployment (legacy) can be found [here](https://docs.axway.com/bundle/FlowManager_20_allOS_en_HTML5/page/openshift_v1_deployment__legacy_.html).
 
 ### Authors
 
