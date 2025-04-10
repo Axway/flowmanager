@@ -6,7 +6,7 @@ metadata:
   name: flowmanager_pod
 spec:
   containers:
-    - image: mongo:6.0
+    - image: mongo:7.0
       name: mongodb
       args:
         - '-f'
