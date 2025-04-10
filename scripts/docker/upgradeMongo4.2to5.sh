@@ -17,16 +17,18 @@ fi
 
 cd ../../docker-compose/
 
-docker exec -it docker-compose-mongodb-1 bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.2' } )\""
+docker exec -it docker-compose-mongodb-1 bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.2'} )\""
 docker compose down
 sed -i "s/MONGO_IMAGE_VERSION:-4.2/MONGO_IMAGE_VERSION:-4.4/g" ./docker-compose.yml
+sed -i "s/MONGO_IMAGE_VERSION=.*/MONGO_IMAGE_VERSION=\"4.4\"" .env
 docker compose up -d mongodb
 while [ "$(docker inspect -f {{.State.Health.Status}} docker-compose-mongodb-1)" != "healthy" ]; do  sleep 2; echo "Waiting for mongo.."; done
-docker exec -it docker-compose-mongodb-1 bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.4' } )\""
+docker exec -it docker-compose-mongodb-1 bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.4'} )\""
 docker compose down
 sed -i "s/MONGO_IMAGE_VERSION:-4.4/MONGO_IMAGE_VERSION:-5.0/g" ./docker-compose.yml
+sed -i "s/MONGO_IMAGE_VERSION=.*/MONGO_IMAGE_VERSION=\"5.0\"" .env
 docker compose up -d
 while [ "$(docker inspect -f {{.State.Health.Status}} docker-compose-mongodb-1)" != "healthy" ]; do  sleep 2; echo "Waiting for mongo.."; done
-docker exec -it docker-compose-mongodb-1 bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '5.0' } )\""
+docker exec -it docker-compose-mongodb-1 bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '5.0'} )\""
 
 echo "MongoDB was upgraded to 5.0!"

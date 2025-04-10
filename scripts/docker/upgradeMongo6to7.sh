@@ -17,10 +17,10 @@ fi
 
 cd ../../docker-compose/
 docker compose down
-sed -i "s/MONGO_IMAGE_VERSION:-5.0/MONGO_IMAGE_VERSION:-6.0/g" ./docker-compose.yml
-sed -i "s/MONGO_IMAGE_VERSION=.*/MONGO_IMAGE_VERSION=\"6.0\"" .env
+sed -i "s/MONGO_IMAGE_VERSION:-6.0/MONGO_IMAGE_VERSION:-7.0/g" ./docker-compose.yml
+sed -i "s/MONGO_IMAGE_VERSION=.*/MONGO_IMAGE_VERSION=\"7.0\"" .env
 docker compose up -d
 while [ "$(docker inspect -f {{.State.Health.Status}} docker-compose-mongodb-1)" != "healthy" ]; do  sleep 2; echo "Waiting for mongo.."; done
-docker exec -it docker-compose-mongodb-1 bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '6.0'} )\""
+docker exec -it docker-compose-mongodb-1 bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '7.0', confirm: true} )\""
 
-echo "MongoDB was upgraded to 6.0!"
+echo "MongoDB was upgraded to 7.0!"

@@ -17,12 +17,12 @@ fi
 
 cd ../../podman/
 podman pod rm -f flowmanager_pod
-sed -i "s/mongo:5.0/mongo:6.0/g" ./flowmanager.yml
+sed -i "s/mongo:6.0/mongo:7.0/g" ./flowmanager.yml
 podman play kube ./flowmanager.yml
 
 echo "Waiting for mongo.."
 sleep 30
 
-podman exec -it flowmanager_pod-mongodb bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '6.0'} )\""
+podman exec -it flowmanager_pod-mongodb bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '7.0', confirm: true} )\""
 
-echo "MongoDB was upgraded to 6.0!"
+echo "MongoDB was upgraded to 7.0!"

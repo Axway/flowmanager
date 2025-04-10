@@ -16,7 +16,7 @@ if [ ! -f ../../podman/flowmanager.yml ]; then
 fi
 
 cd ../../podman/
-podman exec -it flowmanager_pod-mongodb bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.2' } )\""
+podman exec -it flowmanager_pod-mongodb bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.2'} )\""
 podman pod rm -f flowmanager_pod
 sed -i "s/mongo:4.2/mongo:4.4/g" ./flowmanager.yml
 podman play kube ./flowmanager.yml
@@ -24,7 +24,7 @@ podman play kube ./flowmanager.yml
 echo "Waiting for mongo.."
 sleep 30
 
-podman exec -it flowmanager_pod-mongodb bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.4' } )\""
+podman exec -it flowmanager_pod-mongodb bash -c "mongo -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '4.4'} )\""
 podman pod rm -f flowmanager_pod
 sed -i "s/mongo:4.4/mongo:5.0/g" ./flowmanager.yml
 podman play kube ./flowmanager.yml
@@ -32,6 +32,6 @@ podman play kube ./flowmanager.yml
 echo "Waiting for mongo.."
 sleep 30
 
-podman exec -it flowmanager_pod-mongodb bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '5.0' } )\""
+podman exec -it flowmanager_pod-mongodb bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '5.0'} )\""
 
 echo "MongoDB was upgraded to 5.0!"
