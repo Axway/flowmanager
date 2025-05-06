@@ -25,7 +25,7 @@ image-mft-fm-bridge-tag = "REPLACEME"
 external-mongodb = false
 
 #Managed MongoDB
-image-bitnami-mongodb-tag = "6.0.13-debian-11-r21"
+image-bitnami-mongodb-tag = "7.0.15-debian-12-r2"
 mft-mongodb-helm-release-name = "mft-mongodb-release"
 helmchart-bitnami-mongodb-repo = "https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami" 
 helmchart-bitnami-mongodb-tag = "13.5.0"
