@@ -11,11 +11,11 @@ helmchart-mft-flomanager-repo = "mft-helm-release"
 helmchart-mft-flomanager-tag = "2.0.20230526"
 
 # Flowmanager Images
-image-mft-fm-core-repo = "flowmanager-docker-snapshot-buch.<TBD>/flowmanager_release"
+image-mft-fm-core-repo = "flowmanager-docker-release.artifactory.axway.com/flowmanager_release"
 image-mft-fm-core-tag = "REPLACEME"
-image-mft-fm-st-plugin-repo = "flowmanager-stplugin-docker-release.<TBD>/st-fm-plugin"
+image-mft-fm-st-plugin-repo = "flowmanager-stplugin-docker-release.artifactory.axway.com/st-fm-plugin"
 image-mft-fm-st-plugin-tag = "REPLACEME"
-image-mft-fm-bridge-repo = "flowmanager-bridge-docker-release.<TBD>/release"
+image-mft-fm-bridge-repo = "flowmanager-bridge-docker-release.artifactory.axway.com/release"
 image-mft-fm-bridge-tag = "REPLACEME"
 
 #MongoDB toggle
@@ -25,7 +25,7 @@ image-mft-fm-bridge-tag = "REPLACEME"
 external-mongodb = false
 
 #Managed MongoDB
-image-bitnami-mongodb-tag = "5.0.22-debian-11-r5"
+image-bitnami-mongodb-tag = "6.0.13-debian-11-r21"
 mft-mongodb-helm-release-name = "mft-mongodb-release"
 helmchart-bitnami-mongodb-repo = "https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami" 
 helmchart-bitnami-mongodb-tag = "13.5.0"
