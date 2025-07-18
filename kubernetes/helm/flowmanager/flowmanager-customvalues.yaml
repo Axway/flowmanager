@@ -286,7 +286,19 @@ fm-core:
           subPath: initialize_template.json
 
       #Create Volumes and Mount points from ConfigMaps
-      fromClaimTemplates: []
+      fromClaimTemplates:
+      - volumeName: cftupdates
+        readOnly: false
+        storageClassName: "local-storage"
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 5Gi
+        mount:
+          mountPath: /opt/axway/FlowManager/updates/cft
+          readOnly: false
+
         # - volumeName: customVolumeName
         #   annotations:
         #     nfs.io/storage-path: "buffers"
