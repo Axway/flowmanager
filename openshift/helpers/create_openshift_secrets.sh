@@ -223,7 +223,7 @@ oc create secret generic mongodb-secret-env-vars \
     --from-literal=mongodb-metrics-password="" \
     --from-literal=mongodb-passwords=${MONGODB_PASSWORDS} \
     --from-literal=mongodb-replica-set-key=${MONGODB_REPLICA_SET_KEY} \
-    --from-literal=mongodb-root-password=${MONGODB_REPLICA_SET_KEY} \
+    --from-literal=mongodb-root-password=${MONGODB_ROOT_PASSWORD} \
     -n ${NAMESPACE}
 
 
