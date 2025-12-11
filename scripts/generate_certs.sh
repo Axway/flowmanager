@@ -10,43 +10,20 @@ set -euo pipefail
 
 HOSTNAME=$(hostname)
 FQDN=$(hostname -f)
-CURRENT_DIR=$PWD
-PASSWORD="abc"
-SECOND_PASSWORD="bcd"
-
-# Input Variables
-while [ "$PASSWORD" != "$SECOND_PASSWORD" ]
-do
-    echo "Please, choose a password for the certificates:"
-    read -s PASSWORD
-    echo "Type the password again:"
-    read -s SECOND_PASSWORD
-
-    if [ "$PASSWORD" != "$SECOND_PASSWORD" ]
-    then
-        echo
-        echo "The passwords do not match!"
-        echo
-    fi
-done
-
-echo
-echo "Set EXPIRATION_DAYS for the certificates: "
-read EXPIRATION_DAYS
-echo $EXPIRATION_DAYS
+PASSWORD="$2"
+EXPIRATION_DAYS="$3"
+CA_PASSWORD="$4"
 
 # Generate CA
 function gen_ca() {
-    local name=$1
-    local root=./custom-ca/$name
-    local site="$name.com"
-    echo "gen_ca name $site ..."
+  local name=$1
+  local root=./custom-ca/$name
+  local site="$name.com"
+  echo "gen_ca name $site ..."
 
-    rm -rf $root
-    mkdir -p $root
-    > $root/index.txt
-    echo -n "01" > $root/serial
-    cat >$root/ca.cnf <<EOF
+  touch "$root/index.txt"
+  echo -n "01" >"$root/serial"
+  cat >"$root/ca.cnf" <<EOF
 
 [ ca ]
 default_ca = miniCA
@@ -78,7 +55,6 @@ subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
 basicConstraints = critical,CA:true
 keyUsage = cRLSign, keyCertSign, nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
-subjectAltName = @alt_names
 
 [ alt_names ]
 DNS.1 = $HOSTNAME
@@ -91,127 +67,140 @@ organizationName = ACME
 
 EOF
 
-    openssl req -x509 -days $EXPIRATION_DAYS -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -extensions v3_ca -out $root/cacert.pem -keyout $root/cacert-key.pem -config $root/ca.cnf
+  openssl req -x509 -days "$EXPIRATION_DAYS" -passin "pass:$PASSWORD" -passout "pass:$PASSWORD" -batch -newkey rsa:2048 -extensions v3_ca -out "$root/cacert.pem" -keyout "$root/cacert-key.pem" -config "$root/ca.cnf"
 }
 
-# Genereate PEM certs
+# Generate PEM certs
 function gen_cert() {
-    local name=$2
-    local caname=$1
-    local caroot=./custom-ca/$caname
-    local site="$name.$caname.com"
+  local name=$2
+  local caname=$1
+  local caroot=./custom-ca/$caname
+  local site="$name.$caname.com"
 
-    echo "gen_cert $caname $name $site ..."
-    openssl req -passin pass:$PASSWORD -passout pass:$PASSWORD -batch -newkey rsa:2048 -out $caroot/$name-csr.pem -keyout $caroot/$name-key.pem -subj "/C=RO/O=ACME/CN=$HOSTNAME/OU=ACME-OU" -addext "subjectAltName = DNS:$FQDN"
-    openssl ca -config $caroot/ca.cnf -passin pass:$PASSWORD -batch -notext -in $caroot/$name-csr.pem -out $caroot/$name.pem
+  echo "gen_cert $caname $name $site ..."
+
+  openssl req -passin "pass:$PASSWORD" -passout "pass:$PASSWORD" -batch -newkey rsa:2048 -out "$caroot/$name-csr.pem" -keyout "$caroot/$name-key.pem" -subj "/C=RO/O=ACME/CN=$HOSTNAME/OU=ACME-OU" -addext "subjectKeyIdentifier=hash" -addext "basicConstraints=critical,CA:false" -addext "keyUsage=nonRepudiation,digitalSignature,keyEncipherment,keyAgreement" -addext "extendedKeyUsage=serverAuth,clientAuth" -addext "subjectAltName=DNS:$FQDN"
+
+  openssl ca -config "$caroot/ca.cnf" -passin "pass:$CA_PASSWORD" -batch -notext -in "$caroot/$name-csr.pem" -out "$caroot/$name.pem"
 }
 
 # Generate P12 certs
 function p12() {
-    local path=$1
-    local alias=$2
+  local path=$1
+  local alias=$2
 
-    echo "p12 $1 ..."
-    openssl pkcs12 -export -out $path.p12 -name $alias -in $path.pem -inkey $path-key.pem -passin pass:$PASSWORD -passout pass:$PASSWORD
+  echo "p12 $1 ..."
+  openssl pkcs12 -export -out "$path.p12" -name "$alias" -in "$path.pem" -inkey "$path-key.pem" -passin "pass:$PASSWORD" -passout "pass:$PASSWORD"
 }
 
-# Create Keystore
-function jks() {
-    local path=$1
-    local alias=$2
-    echo "jks $1 ..."
-    keytool -importkeystore -srckeystore $path.p12 -srcstoretype pkcs12 -srcstorepass $PASSWORD -srcalias $alias -destkeystore $path.jks -deststoretype jks -deststorepass $PASSWORD -destalias $alias
+# Create PEM ca
+function pem_ca() {
+  local cert=$1
+  local key=$2
+  local pemCert=$3
+
+  cat "$key.pem" >"$pemCert.pem"
+  cat "$cert.pem" >>"$pemCert.pem"
 }
 
-# Create PEM certs
-function pem() {
-    local cert=$1
-    local key=$2
-    local pemCert=$3
-
-    cat $key.pem > $pemCert.pem
-    cat $cert.pem >> $pemCert.pem
+function create_or_remove_cert_directory() {
+  local name=$1
+  rm -rf "./custom-ca/$name"
+  mkdir -p "./custom-ca/$name"
 }
 
-function gen_generic_plugin_certs() {
-  local plugin_name=$1
-
-  rm -rf ./custom-ca/"$plugin_name"/
-  mkdir -p ./custom-ca/"$plugin_name"
-
-  openssl genrsa -out ./custom-ca/"$plugin_name"/"$plugin_name"-ca-key.pem 2048
-  openssl req -x509 -new -key ./custom-ca/"$plugin_name"/"$plugin_name"-ca-key.pem -days $EXPIRATION_DAYS -out ./custom-ca/"$plugin_name"/"$plugin_name"-ca.pem -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=rootCA/emailAddress=aa@aa.com'
-  openssl genrsa -out ./custom-ca/"$plugin_name"/"$plugin_name"-cert-key.pem 2048
-  openssl req -new -key ./custom-ca/"$plugin_name"/"$plugin_name"-cert-key.pem -out ./custom-ca/"$plugin_name"/"$plugin_name"-cert.csr -subj '/C=ro/ST=buch/L=buch/O=axway/OU=fm/CN=client/emailAddress=bb@bb.com'
-  openssl x509 -req -days $EXPIRATION_DAYS -CA ./custom-ca/"$plugin_name"/"$plugin_name"-ca.pem -CAkey ./custom-ca/"$plugin_name"/"$plugin_name"-ca-key.pem -CAcreateserial -CAserial ./custom-ca/"$plugin_name"/serial -in ./custom-ca/"$plugin_name"/"$plugin_name"-cert.csr -out ./custom-ca/"$plugin_name"/"$plugin_name"-cert.pem
-
-  ssh-keygen -b 2048 -m pem -f ./custom-ca/"$plugin_name"/key -q -N ""
-  openssl rsa -in ./custom-ca/"$plugin_name"/key -pubout -out ./custom-ca/"$plugin_name"/"$plugin_name"-public-key.pem
-  mv ./custom-ca/"$plugin_name"/key ./custom-ca/"$plugin_name"/"$plugin_name"-private-key.pem
+function gen_plugin_certs() {
+  local PLUGIN_NAME=$1
+  create_or_remove_cert_directory "$PLUGIN_NAME"
+  gen_ca "$PLUGIN_NAME"
+  gen_cert "$PLUGIN_NAME" "$PLUGIN_NAME-cert" "$PASSWORD"
+  cp "./custom-ca/$PLUGIN_NAME/cacert.pem" "./custom-ca/$PLUGIN_NAME/$PLUGIN_NAME-ca.pem"
 }
 
-function gen_st_fm_plugin_certs() {
-  gen_generic_plugin_certs st-fm-plugin
-  openssl rand -base64 500 | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1 > ./custom-ca/st-fm-plugin/st-fm-plugin-shared-secret
+function gen_keys() {
+  local PLUGIN_NAME=$1
+  if [ ! -f "./custom-ca/$PLUGIN_NAME-keys" ]; then
+    mkdir -p "./custom-ca/$PLUGIN_NAME-keys"
+  fi
+  openssl genrsa -out "./custom-ca/$PLUGIN_NAME-keys/$PLUGIN_NAME-private-key.pem" 2048
+  openssl rsa -in "./custom-ca/$PLUGIN_NAME-keys/$PLUGIN_NAME-private-key.pem" -outform PEM -pubout -out "./custom-ca/$PLUGIN_NAME-keys/$PLUGIN_NAME-public-key.pem"
 }
 
-function gen_monitoring_fm_plugin_certs() {
-  gen_generic_plugin_certs monitoring-fm-plugin
+function gen_shared_secret() {
+  local PLUGIN_NAME=$1
+  openssl rand -base64 500 | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1 >"./custom-ca/$PLUGIN_NAME-keys/$PLUGIN_NAME-shared-secret"
 }
 
-if [[ -n "${1-}" && "$1" == "monitoring-fm-plugin" ]]; then
-  gen_monitoring_fm_plugin_certs
-  return
-elif [[ -n "${1-}" && "$1" == "st-fm-plugin" ]]; then
-  gen_st_fm_plugin_certs
-  return
-fi
+function gen_govca() {
+  create_or_remove_cert_directory governance
+  gen_ca governance
+  pem_ca ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key ./custom-ca/governance/governanceca
+}
 
-# Start to generate PEM certs
-gen_ca governance
-gen_cert governance ui
-gen_ca business
+function gen_businessca() {
+  create_or_remove_cert_directory business
+  gen_ca business
+  p12 ./custom-ca/business/cacert business
+  mv ./custom-ca/business/cacert.p12 ./custom-ca/business/businessca.p12
+}
 
-# generate governance CA and ui cert
-pem ./custom-ca/governance/cacert ./custom-ca/governance/cacert-key ./custom-ca/governance/governanceca
-pem ./custom-ca/governance/ui ./custom-ca/governance/ui-key ./custom-ca/governance/uicert
+function gen_certs_fm_bridge() {
+  create_or_remove_cert_directory fm-bridge
+  echo "unique_subject = no" >>./custom-ca/governance/index.txt.attr
+  gen_cert governance bridge
+  cat ./custom-ca/governance/bridge.pem >./custom-ca/fm-bridge/fm-bridge-cert.pem
+  cat ./custom-ca/governance/cacert.pem >>./custom-ca/fm-bridge/fm-bridge-cert.pem
+  cp ./custom-ca/governance/bridge-key.pem ./custom-ca/fm-bridge/fm-bridge-cert-key.pem
+}
 
-# generate business CA
-p12 ./custom-ca/business/cacert business
-
-chmod 755 ./custom-ca/governance/governanceca.pem
-chmod 755 ./custom-ca/governance/uicert.pem
-chmod 755 ./custom-ca/business/cacert.p12
-
-# generate FM CORE JWT key
-openssl genrsa -out ./custom-ca/governance/fm-core-jwt-key.pem 2048
-
-# generate ST plugin certs
-gen_st_fm_plugin_certs
-
-# generate Monitoring plugin certs
-gen_monitoring_fm_plugin_certs
-
-rm -rf ./custom-ca/fm-bridge/
-mkdir -p ./custom-ca/fm-bridge/
-
-# generate Bridge certs and keys
-echo "unique_subject = no" >> ./custom-ca/governance/index.txt.attr
-gen_cert governance bridge
-cat ./custom-ca/governance/bridge.pem > ./custom-ca/fm-bridge/fm-bridge-cert.pem
-cat ./custom-ca/governance/cacert.pem >> ./custom-ca/fm-bridge/fm-bridge-cert.pem
-
-# generate Bridge Service Account key pair
-openssl genrsa -passout pass:$PASSWORD -out  ./custom-ca/fm-bridge/fm-bridge-jwt-private-key.pem 2048
-openssl rsa -in ./custom-ca/fm-bridge/fm-bridge-jwt-private-key.pem -outform PEM -pubout -out ./custom-ca/fm-bridge/fm-bridge-jwt-public-key.pem
-
-# generate Bridge Service Account json
-name="BRIDGE"
-clientId="BRIDGE"
-cat >./custom-ca/fm-bridge/fm-bridge-dosa.json <<EOF
+function gen_keys_fm_bridge() {
+  gen_keys fm-bridge
+  mv ./custom-ca/fm-bridge-keys/fm-bridge-private-key.pem ./custom-ca/fm-bridge-keys/fm-bridge-jwt-private-key.pem
+  mv ./custom-ca/fm-bridge-keys/fm-bridge-public-key.pem ./custom-ca/fm-bridge-keys/fm-bridge-jwt-public-key.pem
+  # generate Bridge Service Account json
+  name="BRIDGE"
+  clientId="BRIDGE"
+  cat >./custom-ca/fm-bridge-keys/fm-bridge-dosa.json <<EOF
 {
   "name": "$name",
   "clientId": "$clientId",
-  "publicKey": "$(tr -d '\n' < "./custom-ca/fm-bridge/fm-bridge-jwt-public-key.pem")"
+  "publicKey": "$(tr -d '\n' <"./custom-ca/fm-bridge-keys/fm-bridge-jwt-public-key.pem")"
 }
 EOF
+}
+
+case "${1-}" in
+--generate-governance-ca)
+  gen_govca
+  ;;
+--generate-business-ca)
+  gen_businessca
+  ;;
+--generate-st-fm-plugin-certs)
+  gen_plugin_certs st-fm-plugin
+  ;;
+--generate-st-fm-plugin-keys)
+  gen_keys st-fm-plugin
+  gen_shared_secret st-fm-plugin
+  ;;
+--generate-monitoring-fm-plugin-certs)
+  gen_plugin_certs monitoring-fm-plugin
+  ;;
+--generate-monitoring-fm-plugin-keys)
+  gen_keys monitoring-fm-plugin
+  gen_shared_secret monitoring-fm-plugin
+  ;;
+--generate-fm-bridge-certs)
+  gen_certs_fm_bridge
+  ;;
+--generate-fm-bridge-keys)
+  gen_keys_fm_bridge
+  ;;
+--generate-fm-core-keys)
+  gen_keys fm-core
+  mv ./custom-ca/fm-core-keys/fm-core-private-key.pem ./custom-ca/fm-core-keys/fm-core-jwt-key.pem
+  ;;
+*)
+  echo "Invalid option: ${1-}"
+  ;;
+esac
