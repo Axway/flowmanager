@@ -73,6 +73,10 @@ spec:
           value: "/opt/axway/FlowManager/configs/governanceca.pem"
         - name: FM_GOVERNANCE_CA_PASSWORD
           value: ""
+        - name: FM_OLD_GOV_CA_PASSWORD
+          value: ""
+        - name: FM_OLD_GOV_CA_FILE
+          value: ""
         - name: FM_DATABASE_ENDPOINTS
           value: "flowmanager_pod-mongodb:27017"
         - name: FM_DATABASE_USER_NAME
@@ -157,6 +161,8 @@ spec:
           value: "/usr/src/app/src/governanceca.pem"
         - name: ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PEM
           value: "/usr/src/app/src/st-fm-plugin-cert-key.pem"
+        - name: ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PASSWORD_PATH
+          value: "/usr/src/app/src/st-fm-plugin-private-key-password.txt"
         - name: ST_FM_PLUGIN_CERT_PEM
           value: "/usr/src/app/src/st-fm-plugin-cert.pem"  
         - name: ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN
@@ -207,10 +213,14 @@ spec:
           value: "8081"
         - name: MONITORING_PLUGIN_SHARED_SECRET
           value: ""
+        - name: MONITORING_PLUGIN_SHARED_SECRET_FILE
+          value: "monitoring-fm-plugin-shared-secret"
         - name: MONITORING_PLUGIN_TRUSTSTORE
           value: "governanceca.pem"
         - name: MONITORING_PLUGIN_PRIVATE_KEY_PEM
           value: "monitoring-fm-plugin-cert-key.pem"
+        - name: MONITORING_PLUGIN_PRIVATE_KEY_PASSWORD_FILE
+          value: "monitoring-fm-plugin-private-key-password.txt"
         - name: MONITORING_PLUGIN_CERT_PEM
           value: "monitoring-fm-plugin-cert.pem"  
         - name: MONITORING_PLUGIN_CA_CHAIN

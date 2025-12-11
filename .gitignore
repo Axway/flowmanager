@@ -9,7 +9,7 @@
 logs
 .log
 # Certs
-# custom-ca
+custom-ca
 *.p12
 *.pem
 *.jks
@@ -19,3 +19,6 @@ terraform.tfstate.backup
 
 .terraform*
 tmp*
+
+st-fm-plugin-shared-secret
+*.json
