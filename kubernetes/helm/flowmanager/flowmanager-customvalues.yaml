@@ -444,7 +444,7 @@ fm-st-plugin:
         # (Required) Repository where to pull the image from
         repository: "flowmanager-stplugin-docker-release.<TBD>/st-fm-plugin"
         # (Required) Tag of the image to pull
-        tag: "2.0.20230504"
+        tag: "2.0.20251218"
         # Secret used to pull from the repository
         # imagePullSecretsName: "FromTerraform"
 
@@ -713,7 +713,7 @@ fm-bridge:
         # (Required) Repository where to pull the image from
         repository: flowmanager-bridge-docker-release.artifactory.axway.com/release
         # (Required) Tag of the image to pull
-        tag: 2.0.20230505
+        tag: 2.0.20250613
         # Secret used to pull from the repository
         # imagePullSecretsName: "FromTerraform"
 

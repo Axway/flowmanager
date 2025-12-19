@@ -450,7 +450,7 @@ fm-st-plugin:
         # (Required) Repository where to pull the image from
         repository: "REPLACE-WITH-DOCKER-REPOSITORY"
         # (Required) Tag of the image to pull
-        tag: "2.0.20231213"
+        tag: "2.0.20251218"
         # Secret used to pull from the repository
         imagePullSecretsName: "registry-credentials"
 
@@ -718,7 +718,7 @@ fm-bridge:
         # (Required) Repository where to pull the image from
         repository: "REPLACE-WITH-DOCKER-REPOSITORY"
         # (Required) Tag of the image to pull
-        tag: "2.0.20231218"
+        tag: "2.0.20250613"
         # Secret used to pull from the repository
         imagePullSecretsName: "registry-credentials"
 
