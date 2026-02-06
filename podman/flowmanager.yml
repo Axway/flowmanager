@@ -6,7 +6,7 @@ metadata:
   name: flowmanager_pod
 spec:
   containers:
-    - image: mongo:7.0
+    - image: mongo:7.0.29
       name: mongodb
       args:
         - '-f'
@@ -29,6 +29,9 @@ spec:
           value: ""
         - name: MONGO_APP_PASS
           value: ""
+          #- name: MONGO_APP_PASS_FILE
+      # value: "/opt/mongo-app-pass"
+
       volumeMounts:
         - mountPath: /docker-entrypoint-initdb.d
           name: scripts
@@ -36,7 +39,6 @@ spec:
           name: config
         - mountPath: /data/db
           name: data
-
     - image: docker.repository.axway.com/flowmanager-docker-prod/2.0/flowmanager_release:2.0.20251218
       name: flowmanager
       ports:
@@ -47,7 +49,7 @@ spec:
       env:
         - name: ACCEPT_EULA
           value: ""
-        - name: FM_GENERAL_FQDN     # FQDN of the machine
+        - name: FM_GENERAL_FQDN # FQDN of the machine
           value: ""
         - name: FM_GENERAL_UI_PORT
           value: "8081"
@@ -119,6 +121,21 @@ spec:
           value: "false"
         - name: FM_USER_INITIAL_PASSWORD
           value: ""
+      # - name: FM_USER_INITIAL_PASSWORD_FILE
+      #   value: "/opt/axway/FlowManager/configs/fm-user-initial-password"
+      # - name: FM_GOVERNANCE_CA_PASSWORD_FILE
+      #   value: "/opt/axway/FlowManager/configs/fm-governance-ca-password"
+      # - name: FM_HTTPS_KEYSTORE_PASSWORD_FILE
+      #   value: "/opt/axway/FlowManager/configs/fm-https-keystore-password"
+      # - name: FM_HTTPS_CLIENT_KEYSTORE_PASSWORD_FILE
+      #   value: "/opt/axway/FlowManager/configs/fm-https-client-keystore-password"
+      # - name: FM_DATABASE_USER_PASSWORD_FILE
+      #   value: "/opt/axway/FlowManager/configs/fm-database-user-password"
+      # - name: FM_CFTPLUGIN_PRIVATEKEY_PASSWORD_FILE
+      #   value: "/opt/axway/FlowManager/configs/fm-cftplugin-privatekey-password"
+      # - name: FM_CORE_PRIVATEKEY_PASSWORD_FILE
+      #   value: "/opt/axway/FlowManager/configs/fm-core-privatekey-password"
+
       volumeMounts:
         - mountPath: /opt/axway/FlowManager/configs
           name: configs
@@ -136,7 +153,6 @@ spec:
           name: st-fm-plugin
         - mountPath: /opt/axway/FlowManager/monitoring-fm-plugin
           name: monitoring-fm-plugin
-
     - image: docker.repository.axway.com/flowmanager-stplugin-docker-prod/2.0/st-fm-plugin:2.0.20251218
       name: st-fm-plugin
       ports:
@@ -151,7 +167,7 @@ spec:
           value: "8899"
         - name: ST_FM_PLUGIN_SHORT_NAME
           value: "ST"
-        - name: ST_FM_PLUGIN_FM_FQDN     # FQDN of the machine
+        - name: ST_FM_PLUGIN_FM_FQDN # FQDN of the machine
           value: ""
         - name: ST_FM_PLUGIN_FM_PORT
           value: "8081"
@@ -164,7 +180,7 @@ spec:
         - name: ST_FM_PLUGIN_SERVER_PRIVATE_KEY_PASSWORD_PATH
           value: "/usr/src/app/src/st-fm-plugin-private-key-password.txt"
         - name: ST_FM_PLUGIN_CERT_PEM
-          value: "/usr/src/app/src/st-fm-plugin-cert.pem"  
+          value: "/usr/src/app/src/st-fm-plugin-cert.pem"
         - name: ST_FM_PLUGIN_SERVER_CA_FULL_CHAIN
           value: "/usr/src/app/src/st-fm-plugin-ca.pem"
         - name: ST_FM_PLUGIN_JWT_KEY
@@ -186,13 +202,15 @@ spec:
         - name: ST_FM_PLUGIN_DATABASE_CERTIFICATES
           value: ""
         - name: ST_FM_PLUGIN_PESIT_PWD_UPPERCASE
-          value: "false"  
+          value: "false"
         - name: ST_FM_PLUGIN_ST_CONNECTION_TIMEOUT_SECONDS
           value: "300"
+      # - name: ST_FM_PLUGIN_DATABASE_USER_PASSWORD_FILE
+      #   value: "/usr/src/app/src/st-fm-plugin-database-user-password"
+
       volumeMounts:
         - mountPath: /usr/src/app/src
-          name: st-fm-plugin  
-
+          name: st-fm-plugin
     - image: docker.repository.axway.com/flowmanager-monitoringplugin-docker-prod/2.0/monitoring-fm-plugin:2.0.20251218
       name: monitoring-fm-plugin
       ports:
@@ -207,7 +225,7 @@ spec:
           value: "3000"
         - name: MONITORING_PLUGIN_SHORT_NAME
           value: "MON"
-        - name: MONITORING_PLUGIN_FM_HOST     # host of the machine
+        - name: MONITORING_PLUGIN_FM_HOST # host of the machine
           value: ""
         - name: MONITORING_PLUGIN_FM_PORT
           value: "8081"
@@ -222,7 +240,7 @@ spec:
         - name: MONITORING_PLUGIN_PRIVATE_KEY_PASSWORD_FILE
           value: "monitoring-fm-plugin-private-key-password.txt"
         - name: MONITORING_PLUGIN_CERT_PEM
-          value: "monitoring-fm-plugin-cert.pem"  
+          value: "monitoring-fm-plugin-cert.pem"
         - name: MONITORING_PLUGIN_CA_CHAIN
           value: "monitoring-fm-plugin-ca.pem"
         - name: MONITORING_PLUGIN_JWT_KEY
@@ -239,10 +257,12 @@ spec:
           value: "false"
         - name: MONITORING_PLUGIN_DB_CERTIFICATES
           value: ""
+      # - name: MONITORING_PLUGIN_DB_USER_PASSWORD_FILE
+      #   value: "/usr/src/app/conf/monitoring-plugin-db-user-password"
+
       volumeMounts:
         - mountPath: /usr/src/app/conf
           name: monitoring-fm-plugin
-
   volumes:
     - hostPath:
         path: ./files/mongo/scripts

@@ -149,6 +149,35 @@ function log_container() {
     podman pod logs flowmanager_pod
 }
 
+# Create empty password files for Flow Manager and plugins
+function create_passwords_file() {
+    info_message "INFO: Creating empty password files for Flow Manager and plugins..."
+
+    # File list
+    password_files=(
+        "./files/flowmanager/configs/fm-governance-ca-password"
+        "./files/flowmanager/configs/fm-database-user-password"
+        "./files/flowmanager/configs/fm-https-keystore-password"
+        "./files/flowmanager/configs/fm-user-initial-password"
+        "./files/flowmanager/configs/fm-https-client-keystore-password"
+        "./files/flowmanager/configs/fm-cftplugin-privatekey-password"
+        "./files/flowmanager/configs/fm-core-privatekey-password"
+        "./files/st-fm-plugin/st-fm-plugin-database-user-password"
+        "./files/mongo/config/mongo-app-pass"
+        "./files/monitoring-fm-plugin/monitoring-plugin-db-user-password"
+    )
+
+    # Create empty files
+    for file_path in "${password_files[@]}"; do
+        : > "$file_path"
+        chmod 600 "$file_path"
+        info_message "INFO: Created empty file $file_path"
+    done
+
+    info_message "INFO: All password files created successfully."
+}
+
+
 # How to use the script
 function usage() {
     echo "--------"
@@ -182,6 +211,7 @@ function usage() {
     echo "    delete : Deletes all containers (including database!) and the MongoDB storage."
     echo "    logs   : Gets logs from all containers."
     echo ""
+    echo "    create-passwords-file   : create required password files."
     echo "  Help:"
     echo "    help   : Shows the usage of this script."
     echo ""
@@ -334,6 +364,10 @@ if [[ $* ]]; then
             fi
         fi
         chmod -R 755 ./files
+        ;;
+    create-passwords-file) 
+      create_passwords_file
+      shift
         ;;
     start)
         if [ -z "${2-}" ]; then
