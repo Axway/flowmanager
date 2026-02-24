@@ -2,6 +2,10 @@
 
 echo 'Creating application user, pass and db'
 
+if [ -n "$MONGO_APP_PASS_FILE" ] && [ -f "$MONGO_APP_PASS_FILE" ]; then
+  export MONGO_APP_PASS="$(cat "$MONGO_APP_PASS_FILE")"
+fi
+
 # Create application user
 mongosh ${MONGO_APP_DATABASE} \
         --host localhost \
