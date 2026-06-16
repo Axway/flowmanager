@@ -121,6 +121,8 @@ spec:
           value: "false"
         - name: FM_USER_INITIAL_PASSWORD
           value: ""
+      #  - name: FM_ENCRYPTION_MASTER_KEY
+      #    value: ""
       # - name: FM_USER_INITIAL_PASSWORD_FILE
       #   value: "/opt/axway/FlowManager/configs/fm-user-initial-password"
       # - name: FM_GOVERNANCE_CA_PASSWORD_FILE
@@ -205,6 +207,8 @@ spec:
           value: "false"
         - name: ST_FM_PLUGIN_ST_CONNECTION_TIMEOUT_SECONDS
           value: "300"
+      #  - name: ST_MASTER_KEY
+      #    value: ""
       # - name: ST_FM_PLUGIN_DATABASE_USER_PASSWORD_FILE
       #   value: "/usr/src/app/src/st-fm-plugin-database-user-password"
 
@@ -257,6 +261,8 @@ spec:
           value: "false"
         - name: MONITORING_PLUGIN_DB_CERTIFICATES
           value: ""
+      #  - name: MONITORING_PLUGIN_MASTER_KEY
+      #    value: ""
       # - name: MONITORING_PLUGIN_DB_USER_PASSWORD_FILE
       #   value: "/usr/src/app/conf/monitoring-plugin-db-user-password"
 

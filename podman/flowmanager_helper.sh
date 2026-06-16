@@ -79,7 +79,7 @@ function create_plugin_cert_private_key_password_file() {
     local PLUGIN_NAME=$1
     local CERT_PASS=$2
 
-    echo "$CERT_PASS" >"./files/$PLUGIN_NAME/$PLUGIN_NAME-private-key-password.txt"
+    printf '%s' "$CERT_PASS" >"./files/$PLUGIN_NAME/$PLUGIN_NAME-private-key-password.txt"
 }
 
 function generate_and_copy_everything() {
