@@ -99,16 +99,6 @@ resource "helm_release" "flowmanager" {
     value = "${var.mft-fm-helm-release-name}-fm-core.${var.fm-namespace}.svc.${var.cluster-domain}"
   }
 
-  set {
-    name  = "fm-core.ingress.tls[0].hosts[0]"
-    value = var.fm-core-public-fqdn
-  }
-
-
-  set {
-    name  = "fm-core.ingress.hosts[0].host"
-    value = var.fm-core-public-fqdn
-  }
 
   set {
     name  = "fm-core.container.env.variables.FM_DATABASE_ENDPOINTS"
@@ -218,16 +208,6 @@ resource "helm_release" "flowmanager" {
     value = "${var.mft-fm-helm-release-name}-fm-core.${var.fm-namespace}.svc.${var.cluster-domain}"
   }
 
-  set {
-    name  = "fm-bridge.ingress.tls[0].hosts[0]"
-    value = var.fm-bridge-public-fqdn
-  }
-
-  set {
-    name  = "fm-bridge.ingress.hosts[0].host"
-    value = var.fm-bridge-public-fqdn
-  }
-
   # ######################################
   #  Image: registry credentials
   # ######################################
@@ -259,4 +239,62 @@ resource "helm_release" "flowmanager" {
     kubernetes_secret.flowmanager-bridge-security-env-vars,
     helm_release.mongodb,
   ]
+}
+resource "kubernetes_manifest" "transport_server_fm_core_app" {
+  manifest = {
+    apiVersion = "k8s.nginx.org/v1"
+    kind       = "TransportServer"
+    metadata = {
+      name = "fm-core-app"
+      namespace = var.fm-namespace
+    }
+    spec = {
+      listener = {
+        name     = "tls-passthrough"
+        protocol = "TLS_PASSTHROUGH"
+      }
+      host = var.fm-core-public-fqdn
+      upstreams = [
+        {
+          name    = "fm-core-app"
+          service = "${var.mft-fm-helm-release-name}-fm-core"
+          port    = 8443
+        }
+      ]
+      action = {
+        pass = "fm-core-app"
+      }
+    }
+  }
+
+  depends_on = [ helm_release.flowmanager ]
+}
+
+resource "kubernetes_manifest" "transport_server_fm_bridge_app" {
+  manifest = {
+    apiVersion = "k8s.nginx.org/v1"
+    kind       = "TransportServer"
+    metadata = {
+      name = "fm-bridge-app"
+      namespace = var.fm-namespace
+    }
+    spec = {
+      listener = {
+        name     = "tls-passthrough"
+        protocol = "TLS_PASSTHROUGH"
+      }
+      host = var.fm-bridge-public-fqdn
+      upstreams = [
+        {
+          name    = "fm-bridge-app"
+          service = "${var.mft-fm-helm-release-name}-fm-bridge"
+          port    = 8443
+        }
+      ]
+      action = {
+        pass = "fm-bridge-app"
+      }
+    }
+  }
+  depends_on = [ helm_release.flowmanager ]
 }
