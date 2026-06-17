@@ -91,6 +91,8 @@ spec:
           value: "false"
         - name: FM_DATABASE_CERTIFICATES
           value: ""
+        - name: FM_DATABASE_URI
+          value: ""
         - name: FM_CFT_UPDATES_PATH
           value: "/opt/axway/FlowManager/updates/cft/"
         - name: FM_ST_PLUGIN_HOST
@@ -203,6 +205,8 @@ spec:
           value: "false"
         - name: ST_FM_PLUGIN_DATABASE_CERTIFICATES
           value: ""
+        - name: ST_FM_PLUGIN_DATABASE_URI
+          value: ""
         - name: ST_FM_PLUGIN_PESIT_PWD_UPPERCASE
           value: "false"
         - name: ST_FM_PLUGIN_ST_CONNECTION_TIMEOUT_SECONDS
@@ -260,6 +264,8 @@ spec:
         - name: MONITORING_PLUGIN_DB_USE_SSL
           value: "false"
         - name: MONITORING_PLUGIN_DB_CERTIFICATES
+          value: ""
+        - name: MONITORING_PLUGIN_DB_URI
           value: ""
       #  - name: MONITORING_PLUGIN_MASTER_KEY
       #    value: ""
