@@ -18,7 +18,7 @@ fi
 cd ../../docker-compose/
 docker compose down
 sed -i "s/MONGO_IMAGE_VERSION:-7.0/MONGO_IMAGE_VERSION:-8.0/g" ./docker-compose.yml
-sed -i "s/MONGO_IMAGE_VERSION=.*/MONGO_IMAGE_VERSION="8.0"/' .env
+sed -i "s/MONGO_IMAGE_VERSION=.*/MONGO_IMAGE_VERSION="8.0"/" .env
 docker compose up -d
 while [ "$(docker inspect -f {{.State.Health.Status}} docker-compose-mongodb-1)" != "healthy" ]; do  sleep 2; echo "Waiting for mongo.."; done
 docker exec -it docker-compose-mongodb-1 bash -c "mongosh -u $ROOT_DB_USER -p $ROOT_DB_PASS --eval \"db.adminCommand( {setFeatureCompatibilityVersion: '8.0', confirm: true} )\""
